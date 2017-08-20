@@ -1,0 +1,53 @@
+
+a {text-decoration:none}
+a:link{color:black;}
+a:visited{color:black;}
+
+
+.my_box {
+float: right;
+padding: 0px 0px 0px 0px; /* 상, 우, 좌, 하 */
+text-align: right; /* left, center, right */
+border: 0px solid;
+background-color: #FFFFFF;
+font-family: Verdana,Gulim, 'Times New Roman';
+color: #0000ff;
+font-size: 8pt; 
+font-weight: normal; /* normal, bold, bolder, lighter, 100, 200, 300, 400, 500, 600, 700, 800, 900 */
+font-style: normal; /* normal, italic, oblique */;
+}
+
+
+/* PoP Up */
+
+#mask {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}
+
+#boxes .window {
+  position:fixed;
+  left:0;
+  top:0;
+  width:440px;
+  height:200px;
+  display:none;
+  z-index:9999;
+}
+
+
+#boxes #dialog {
+  width:700px;
+  height:500px;
+  background-color:#ffffff;
+}
+
+
+td.middle_body_inputs {height:30px; text-align:right; font-size:12px;}
+iframe { border:0; padding:0; margin:0; width:100%; }
+
+/* PoP Up */

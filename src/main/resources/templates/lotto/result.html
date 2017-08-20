@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>야구 게임</title>
+
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div class="container">
+		<h1>로또 게임</h1>
+		<form class="form-horizontal" action="/lotto">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">결과</label>
+				<div class="col-sm-10">
+
+					<p class="form-control-static">구매한 로또 번호</p>
+					{{#buyerLottoTickets}}
+					<p class="form-control-static">{{lottoNumbers}}</p>
+					{{/buyerLottoTickets}}
+
+					<p class="form-control-static">로또 당첨 번호</p>
+					<p class="form-control-static">{{WinningLotto.lottoNumbers}} + 보너스 숫자 : {{bonusLottoNumber}}</p>
+					<p class="form-control-static">3개 일치 (5000원) -
+						{{result.countOfMatch3}} 개</p>
+					<p class="form-control-static">4개 일치 (50000원) -
+						{{result.countOfMatch4}} 개</p>
+					<p class="form-control-static">5개 일치 (1500000원) -
+						{{result.countOfMatch5}} 개</p>
+					<p class="form-control-static">5개 일치, 보너스 볼 일치(30000000원) -
+						{{result.bonusCountOfMatch}} 개</p>
+					<p class="form-control-static">6개 일치 (2000000000원) -
+						{{result.countOfMatch6}} 개</p>
+					<p class="form-control-static">총 수익률은 {{report}} %</p>
+				</div>
+			</div>
+
+
+		</form>
+		<br />
+</body>
+</html>

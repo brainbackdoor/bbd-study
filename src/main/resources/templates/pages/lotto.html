@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> include/head}}
+
+<body>
+	<div id="wrapper">
+		<!-- Navigation -->
+		{{> include/nav}} {{#sessionedUser}}
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">
+						로또게임&nbsp;&nbsp; {{^result}}<a href="/pages/lotto" class="btn btn-default">Reset Button</a>{{/result}}
+					</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">구매내역</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-6">
+									{{^inputPay}}{{^buyerLottoTickets}}
+									<form name="question" method="post" action="/input/lotto">
+										<div class="form-group">
+											<label>Input Payment</label> <input class="form-control"
+												name="inputPay" id="inputPay" placeholder="지불금액을 입력하세요">
+										</div>
+
+										<button type="submit" class="btn btn-default">Payment
+											Button</button>
+										&nbsp;총 보유금액 : {{money}}
+									</form>
+									{{/buyerLottoTickets}}{{/inputPay}} {{#inputPay}}
+									<form name="question" method="post" action="/lotto/game">
+										<div class="form-group">
+											<label>입금된 금액</label>
+											<fieldset disabled>
+												<input class="form-control" name="inputPay" id="inputPay"
+													value="{{inputPay}}">
+											</fieldset>
+											<input type="hidden" name="inputPay" id="inputPay"value={{inputPay}}>
+											<input type="hidden" name="userId" id="userId"value={{sessionedUser.userId}}>
+										</div>
+										{{^buyerLottoTickets}}
+										<button type="submit"name="means" class="btn btn-default" value="automatic">자동 발급</button>
+										{{#means}}
+											<button type="submit" name="means" class="btn btn-default" value="manual">수동 발급</button>
+										&nbsp;총 보유금액 : {{money}}
+										<div class="form-group">
+											<label>Text area</label>
+											<textarea id="inputManual" name="inputManual" class="form-control" rows="3"></textarea>
+										</div>
+										{{/means}}
+										{{^means}}
+											<input type="hidden" name="inputManual" id="inputManual"value="default">
+											<button type="submit" name="means" class="btn btn-default" value="unset">수동 발급</button>
+										&nbsp;총 보유금액 : {{money}}
+										{{/means}}
+									</form>
+												{{/buyerLottoTickets}}
+									<!-- /.row -->
+									{{#result}}
+									<div class="row">
+
+										<!-- /.col-lg-6 -->
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">로또 결과</div>
+												<!-- /.panel-heading -->
+												<div class="panel-body">
+													<div class="table-responsive">
+														<table class="table">
+
+															<tbody>
+																<tr class="default">
+																	<td>3개 일치 (5000원)</td>
+																	<td>{{result.countOfMatch3}} 개</td>
+																</tr>
+																<tr class="info">
+																	<td>4개 일치 (50000원)</td>
+																	<td>{{result.countOfMatch4}} 개</td>
+																</tr>
+																<tr class="warning">
+																	<td>5개 일치 (1500000원)</td>
+																	<td>{{result.countOfMatch5}} 개</td>
+																</tr>
+																<tr class="danger">
+																	<td>5개 일치, 보너스 볼 일치(30000000원)</td>
+																	<td>{{result.bonusCountOfMatch}} 개</td>
+																</tr>
+																<tr class="success">
+																	<td>6개 일치 (2000000000원)</td>
+																	<td>{{result.countOfMatch6}} 개</td>
+																</tr>
+																<p class="form-control-static">총 수익률은 {{report}} %</p>
+															</tbody>
+														</table>
+													</div>
+													<!-- /.table-responsive -->
+												</div>
+												<!-- /.panel-body -->
+											</div>
+											<!-- /.panel -->
+										</div>
+										<!-- /.col-lg-6 -->
+										<!-- /.row -->
+									</div>
+									<!-- /.row -->
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">구매한 로또 번호</div>
+												<!-- /.panel-heading -->
+												<div class="panel-body">
+													<div class="table-responsive">
+														<table
+															class="table table-striped table-bordered table-hover">
+
+															<tbody>
+																{{#buyerLottoTickets}}
+																<tr>
+																	<td style="text-align: center">{{@index}}</td>
+																	<td>{{lottoNumbers}}</td>
+																</tr>
+																{{/buyerLottoTickets}}
+
+															</tbody>
+														</table>
+													</div>
+													<!-- /.table-responsive -->
+												</div>
+												<!-- /.panel-body -->
+											</div>
+											<!-- /.panel -->
+										</div>
+										<!-- /.col-lg-6 -->
+
+										<!-- /.col-lg-6 -->
+									</div>
+									<!-- /.row -->
+
+									<!-- /.row -->
+
+									{{/result}} {{/inputPay}}
+								</div>
+								<!-- /.col-lg-6 (nested) -->
+
+								<!-- /.col-lg-6 (nested) -->
+							</div>
+							<!-- /.row (nested) -->
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /#page-wrapper -->
+	</div>
+	<!-- /#wrapper -->
+	{{/sessionedUser}} {{^sessionedUser}} {{>include/login}}
+	{{/sessionedUser}} {{>include/footer}}
+	
+</body>
+
+</html>
