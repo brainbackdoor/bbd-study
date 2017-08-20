@@ -17,7 +17,6 @@ public class Buyer {
 	}
 
 	public ArrayList<Lotto> buyingLottoTickets(int countLotto, String[] buyerManualLottoTickets) {
-		System.out.println(buyerManualLottoTickets);
 		manualCreateMultipleLotto(countLotto, buyerManualLottoTickets);
 		return lottoTickets;
 	}

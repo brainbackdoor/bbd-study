@@ -31,6 +31,7 @@ public class UserController {
 	public ModelAndView show(HttpSession session) {
 		Object value = session.getAttribute("sessionedUser");
 		User user = (User) value;
+		System.out.println(user.getUserId());
 		User dbUser = userRepository.findByUserId(user.getUserId());
 		session.setAttribute("sessionedUser", dbUser);
 		ModelAndView mav = new ModelAndView("index");
@@ -55,6 +56,13 @@ public class UserController {
 
 	@PostMapping("")
 	public String create(User user) {
+		
+		try {
+			throwPasswordException(user.getPassword().length());
+		} catch(MyException mye) {
+			mye.printStackTrace();
+			return "redirect:/";
+		}
 		userRepository.save(user);
 		return  "redirect:/";
 	}
@@ -99,5 +107,17 @@ public class UserController {
 	public ModelAndView logout(HttpSession session) {
 		session.removeAttribute("sessionedUser");
 		return new ModelAndView("redirect:/");
+	}
+	
+	
+	static public void throwPasswordException(int number) throws MyException{
+		try {
+			if(number<8) {
+				throw new  MyException("Password is over than 8");
+				
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
