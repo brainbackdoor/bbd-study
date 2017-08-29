@@ -5,9 +5,15 @@ public class Piece {
 	Type type;
 	Position pos;
 	char representation;
+	State state;
+
+	public enum State {
+		INITIAL, LIVE, DEAD;
+	}
 
 	public enum Color {
 		WHITE, BLACK, NOCOLOR;
+
 	}
 
 	public enum Type {
@@ -35,10 +41,27 @@ public class Piece {
 		}
 	}
 
+	Piece(Piece piece, Position pos) {
+		this.color = piece.color;
+		this.type = piece.type;
+		this.representation = piece.representation;
+		this.pos = pos;
+		this.state = (piece.type == Type.PAWN) ? State.INITIAL : State.LIVE;
+	}
+
+	Piece(Piece piece, Position pos, State state) {
+		this.color = piece.color;
+		this.type = piece.type;
+		this.representation = piece.representation;
+		this.pos = pos;
+		this.state = state;
+	}
+
 	Piece(Color color, Type type) {
 		this.color = color;
 		this.type = type;
 		this.representation = (color == Color.BLACK) ? type.getBlackRepresentation() : type.getWhiteRepresentation();
+		this.state = (type == Type.PAWN) ? State.INITIAL : State.LIVE;
 	}
 
 	Piece(Color color, Type type, Position pos) {
@@ -46,10 +69,27 @@ public class Piece {
 		this.type = type;
 		this.pos = pos;
 		this.representation = (color == Color.BLACK) ? type.getBlackRepresentation() : type.getWhiteRepresentation();
+		this.state = (type == Type.PAWN) ? State.INITIAL : State.LIVE;
+	}
+
+	public void setStateLive() {
+		this.state = State.LIVE;
+	}
+
+	public void setStateDead() {
+		this.state = State.DEAD;
 	}
 
 	public Position getPos() {
 		return pos;
+	}
+
+	public int getxPos() {
+		return pos.getxPos();
+	}
+
+	public int getyPos() {
+		return pos.getyPos();
 	}
 
 	public Color getColor() {
@@ -62,6 +102,10 @@ public class Piece {
 
 	public char getRepresentation() {
 		return representation;
+	}
+
+	public State getState() {
+		return state;
 	}
 
 	@Override

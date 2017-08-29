@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bbd.chess.Piece.Color;
+import bbd.chess.Piece.State;
 import bbd.chess.Piece.Type;
 
 public class Board {
@@ -15,14 +16,14 @@ public class Board {
 
 	public void setPositionOfPiece(Piece piece, String nextPosition) {
 
-		pieces.set(new Position(nextPosition).arrayNumPosition(), piece);
 		pieces.set(piece.getPos().arrayNumPosition(), new Piece(Color.NOCOLOR, Type.NO_PIECE));
+		pieces.set(new Position(nextPosition).arrayNumPosition(), new Piece(piece, new Position(nextPosition)));
 
 	}
 
 	public void setPositionOfPiece(String priPosition, String nextPosition) {
 		if (Position.checkMovement(findPiece(priPosition), nextPosition)) {
-			pieces.set(new Position(nextPosition).arrayNumPosition(), findPiece(priPosition));
+			pieces.set(new Position(nextPosition).arrayNumPosition(),new Piece(findPiece(priPosition), new Position(nextPosition), State.LIVE));
 			pieces.set(new Position(priPosition).arrayNumPosition(), new Piece(Color.NOCOLOR, Type.NO_PIECE));
 		}
 	}
@@ -36,7 +37,7 @@ public class Board {
 		double count = 0;
 		for (int i = 0; i < 64; i++) {
 			if (pieces.get(i).getColor().equals(color)) {
-				System.out.println(color + ":" + pieces.get(i).getType().getDefaultPoint());
+//				System.out.println(color + ":" + pieces.get(i).getType().getDefaultPoint());
 				count += pieces.get(i).getType().getDefaultPoint();
 			}
 		}
@@ -48,8 +49,8 @@ public class Board {
 	 */
 	public void initialze() {
 		for (int i = 1; i <= 8; i++) {
-			// initializeLine(i);
-			initializedefault(i);
+			 initializeLine(i);
+//			initializedefault(i);
 		}
 	}
 
