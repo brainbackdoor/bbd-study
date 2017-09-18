@@ -41,7 +41,7 @@ public class IndexController {
 		
 		model.addAttribute("cars", cars);
 
-		return "game";
+		return "ajaxGame";
 	}
 	
 	@GetMapping("/result")

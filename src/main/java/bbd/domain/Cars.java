@@ -9,14 +9,13 @@ public class Cars {
 	public void add(Car car) {
 		cars.add(car);	
 	}
-	int count() {
+	public int getCount() {
 		return this.cars.size();
 	}
 	
 	public List<Car> getCars() {
 		return this.cars;
 	}
-	
 	
 	public void moveCars() {
 		for (Car car : cars) {

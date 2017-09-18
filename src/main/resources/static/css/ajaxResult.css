@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.name {
+    display: inline-block;
+    width:100px;
+    margin-top:10px;
+    border-right: 1px solid red;
+    
+}
+.position {
+    display: inline-block
+}
