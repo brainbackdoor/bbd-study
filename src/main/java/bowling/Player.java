@@ -3,6 +3,7 @@ package bowling;
 public class Player {
 	String name;
 	Score score;
+	Result result;
 
 	Player(String name) throws Exception {
 		if (!confirmPlayerName(name)) {

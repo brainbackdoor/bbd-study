@@ -6,6 +6,16 @@ import org.junit.Test;
 
 public class ScoreTest {
 Score score = new Score();
+
+	@Test
+	public void 스트라이크_테스트() {
+		score.inputFrameScore(0);
+		score.inputFrameScore(2);
+		score.inputFrameScore(4);
+		int temp = score.calculate(0);
+		System.out.println("결과 : "+temp);
+	}
+
 	@Test
 	public void inputTest() {
 
