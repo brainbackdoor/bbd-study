@@ -13,7 +13,6 @@ public class Game {
 		players = new ArrayList<>();
 
 		inputPlayerNumber();
-
 		inputPlayersName();
 	}
 
