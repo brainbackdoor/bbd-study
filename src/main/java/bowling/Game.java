@@ -2,6 +2,7 @@ package bowling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -14,6 +15,13 @@ public class Game {
 
 		inputPlayerNumber();
 		inputPlayersName();
+	}
+
+	public void playGame(Player player) {
+		for (int i = 0; i < 10; i++) {
+			player.rollingBall(i);	
+		}
+		
 	}
 
 	private void inputPlayersName() {
@@ -38,6 +46,10 @@ public class Game {
 
 	public List<Player> getPlayers() {
 		return players;
+	}
+
+	public int getPlayerNum() {
+		return playerNum;
 	}
 
 }
