@@ -4,23 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Result {
-	List<Integer> resultScore = new ArrayList<>();
-
-	
+	ArrayList<Integer> resultScore = new ArrayList<>();
+	int turn =0;
 	
 	public void calculateResult(Score score) {
-		for (int turn = 0; turn < 10; turn++) {
-			resultScore.add(getResultScoreTurn(turn - 1) + score.calculate(turn));
+		int sum = score.calculate(new Turn(0));
+		for (int frame = 1; frame <= resultScore.size(); frame++) {
+
+			sum += score.calculate(new Turn(frame * 2));
+		}
+		appendResultScore(score, sum);
+	}
+
+	private void appendResultScore(Score score, int sum) {
+		if(!score.checkStrike(new Turn(turn * 2))) {
+			resultScore.add(turn,sum);
+			turn ++;
+		}else {
+			resultScore.add(sum);
 		}
 	}
 
-	public int getResultScoreTurn(int turn) {
-		if (turn >= 0) {
-			return resultScore.get(turn);
+	public int getResultScoreFrame(int frame) {
+		if (frame >= 0) {
+			return resultScore.get(frame);
 		}
 		return 0;
 	}
 
-	
+	public int getResultScoreSpareFrame(int frame) {
+		return resultScore.get(frame + 1);
+	}
 
+	public int playTurn() {
+		return resultScore.size();
+	}
 }

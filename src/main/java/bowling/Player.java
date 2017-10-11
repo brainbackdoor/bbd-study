@@ -4,6 +4,7 @@ public class Player {
 	String name;
 	Score score;
 	Result result;
+	int lastScore = 0;
 
 	Player(String name) throws Exception {
 		if (!confirmPlayerName(name)) {
@@ -14,15 +15,17 @@ public class Player {
 		this.result = new Result();
 	}
 
-	public void rollingBall(int turn) {
-		score.inputFrameScore(turn*2);
-		if(score.getFrameScore(turn*2)!=10) {
-			score.inputRestFrameScore(turn*2+1,score.getFrameScore(turn*2));
-		}
+	public void rollingBall(Turn turn) {
+		score.oneFrame(turn);
+		lastScore = score.getFrameScore(turn.getFirst());
 	}
-	
+
+	public void rollingRestBall(Turn turn) {
+		score.oneRestFrame(turn);
+		lastScore = score.getFrameScore(turn.getSecond());
+	}
+
 	public void calculateResultScore() {
-		
 		result.calculateResult(score);
 	}
 
@@ -40,8 +43,30 @@ public class Player {
 	public Score getScore() {
 		return score;
 	}
-	public int getResultScoreTurn(int turn) {
 
-		return result.getResultScoreTurn(turn);
+	public int getResultScoreFrame(int turn) {
+		return result.getResultScoreFrame(turn);
 	}
+
+	public int getResultScoreSpareFrame(int turn) {
+		return result.getResultScoreSpareFrame(turn);
+	}
+
+	public boolean isOneMoreRollingBall(Turn turn) {
+		if (!score.isStrike(turn)) {
+			return true;
+		}
+		return false;
+	}
+
+	public int getTurn() {
+		return result.playTurn();
+	}
+
+	public boolean isNoOpen(int turn) {
+		if (getResultScoreFrame(turn) != 10)
+			return true;
+		return false;
+	}
+
 }

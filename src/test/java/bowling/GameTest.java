@@ -43,6 +43,22 @@ public class GameTest {
 					+ (players.get(0).getScore().getFrameScore(i*2)+players.get(0).getScore().getFrameScore(i*2+1)));
 		}
 	}
+	
+	@Test
+	public void 한명_게임_한턴() {
+		game.init();
+		players = game.getPlayers();
+		game.playGame(players.get(0),0);
+		game.playGame(players.get(0),1);
+		game.playGame(players.get(0),2);
+		for (int i = 0; i < 10; i++) {
+			System.out.println(players.get(0).getScore().getFrameScore(i*2)
+					+" + "
+					+ players.get(0).getScore().getFrameScore(i*2+1)
+					+" = "
+					+ (players.get(0).getScore().getFrameScore(i*2)+players.get(0).getScore().getFrameScore(i*2+1)));
+		}
+	}
 
 	@Test
 	public void 초기입력값_출력() {

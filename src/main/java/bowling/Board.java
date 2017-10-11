@@ -3,45 +3,75 @@ package bowling;
 import java.util.List;
 
 public class Board {
-	StringBuilder sb = new StringBuilder();
+	static String field = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
-	public void showBoard(Game game) {
-		sb.append("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n");
-		List<Player> players = game.getPlayers();
+	public void showBoard(Player player) {
+		System.out.println(player.getName() + "'s turn : " + player.lastScore + "\n");
+		System.out.println(field + "\n");
 
-		for (int i = 0; i < game.getPlayerNum(); i++) {
-			appendPlayerScore(sb, players.get(i));
-		}
-
-		System.out.println(sb);
-
+		showPoint(player);
+		showResult(player);
 	}
-
-	private StringBuilder appendPlayerScore(StringBuilder sb, Player player) {
+/*
+ * Player's Bowling Result
+ */
+	private void showResult(Player player) {
+		System.out.print("|      |");
+		for (int frame = 0; frame < player.getTurn(); frame++) {
+			System.out.print("  "+ convertNumber(player.getResultScoreFrame(frame))+"  |");
+		}
+		for (int frame = 0; frame < 10 -player.getTurn(); frame++) {
+			System.out.print("      |");
+		}
+		System.out.println();
+	}
+	
+	private String convertNumber(int number) {
+		if(number<10) {
+			return "0"+Integer.toString(number);
+		}
+		return Integer.toString(number);
+	}
+	
+/*
+ * Player's Bowling Game Point
+ */
+	private void showPoint(Player player) {
 		Score score = player.getScore();
-		sb.append("|  ").append(player.getName());
+		showPlayerName(player);
 		for (int i = 0; i < 10; i++) {
-
-			sb.append(" |  ").append(confirmFrameScoreFirst(score.getFrameScore(i * 2)));
-			sb.append(confirmFrameScoreSecond(score.getFrameScore(i * 2 + 1)));
-
+			showPlayerScore(score, new Turn(i * 2));
 		}
-		sb.append(" |");
-
-		return sb;
+		System.out.println();
 	}
 
-	private String confirmFrameScoreFirst(int frameScore) {
-		if (frameScore == 0) {
-			return " ";
+	private void showPlayerScore(Score score, Turn turn) {
+		System.out.print("  " + showFrameScoreFirst(score.getFrameScore(turn.getFirst())));
+		if(!score.isStrike(turn)) {
+			System.out.print(showFrameScoreSecond(score.getFrameScore(turn.getSecond()), score.getFrameScore(turn.getFirst())));
+		}
+	}
+
+	private void showPlayerName(Player player) {
+		System.out.print("|  " + player.getName() + " |");
+	}
+
+	private String showFrameScoreFirst(int frameScore) {
+		if (frameScore == 10) {
+			return "X   |";
 		}
 		return Integer.toString(frameScore);
 	}
 
-	private String confirmFrameScoreSecond(int frameScore) {
-		if (frameScore == 0) {
-			return "  ";
+	private String showFrameScoreSecond(int frameScore, int priScore) {
+		if (frameScore + priScore == 10) {
+			return "|/ |";
 		}
-		return "|" + Integer.toString(frameScore);
+		return "|" + Integer.toString(frameScore)+" |";
+	}
+
+
+	public void showTurn(Player player) {
+
 	}
 }

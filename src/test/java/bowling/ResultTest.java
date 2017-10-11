@@ -20,14 +20,14 @@ public class ResultTest {
 		
 		Score score = players.get(0).getScore();
 		for (Player player : players) {
-			game.playGame(player);
+			game.playGame(player,0);
 			player.calculateResultScore();
 		}
 		
 		for (Player player : players) {
 			for (int i = 0; i < 10; i++) {
 				System.out.println(players.get(0).getScore().getFrameScore(i * 2) + " + "
-						+ players.get(0).getScore().getFrameScore(i * 2 + 1) + " = " + player.getResultScoreTurn(i));
+						+ players.get(0).getScore().getFrameScore(i * 2 + 1) + " = " + player.getResultScoreFrame(i));
 			}
 			
 		}
@@ -37,7 +37,7 @@ public class ResultTest {
 	public void 한명_결과_계산() {
 		game.init();
 		players = game.getPlayers();
-		game.playGame(players.get(0));
+		game.playGame(players.get(0),0);
 		Score score = players.get(0).getScore();
 		for (int i = 0; i < 10; i++) {
 			System.out.println(players.get(0).getScore().getFrameScore(i * 2) + " + "

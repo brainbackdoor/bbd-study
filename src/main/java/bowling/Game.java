@@ -8,20 +8,31 @@ import java.util.Scanner;
 public class Game {
 	List<Player> players;
 	int playerNum;
+	Board board;
 
 	public void init() {
 		String playerName;
 		players = new ArrayList<>();
-
+		board = new Board();
 		inputPlayerNumber();
 		inputPlayersName();
 	}
 
-	public void playGame(Player player) {
-		for (int i = 0; i < 10; i++) {
-			player.rollingBall(i);	
+	public void playGame(Player player, Turn frame) {
+		Turn priFrame = new Turn(frame.getFirst() / 2 - 1);
+		player.rollingBall(frame);
+
+		if (player.isOneMoreRollingBall(frame)) {
+			board.showBoard(player);
+			player.rollingRestBall(frame);
 		}
-		
+		player.calculateResultScore();
+		board.showBoard(player);
+	}
+
+	public void playGameFinalize(Player player) {
+		player.calculateResultScore();
+		board.showBoard(player);
 	}
 
 	private void inputPlayersName() {

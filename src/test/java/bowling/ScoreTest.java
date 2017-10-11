@@ -10,16 +10,16 @@ Score score = new Score();
 	@Test
 	public void 스트라이크_테스트() {
 		score.inputFrameScore(0);
+		score.inputFrameScore(1);
 		score.inputFrameScore(2);
-		score.inputFrameScore(4);
-		int temp = score.calculate(0);
+		int temp = score.calculate(new Turn(2));
 		System.out.println("결과 : "+temp);
 	}
 
 	@Test
 	public void inputTest() {
 
-		score.inputFrameScore(0);
+//		score.inputFrameScore(0);
 		System.out.println(score.getFrameScore(0));
 	}
 //	@Test
