@@ -9,7 +9,6 @@ public class Game {
 	int playerNum;
 
 	public void init() {
-
 		String playerName;
 		players = new ArrayList<>();
 
