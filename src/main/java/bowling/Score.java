@@ -35,6 +35,7 @@ public class Score {
 	}
 
 	public int calculate(int turn) {
+		
 		if(checkStrike(getFrameScore(turn*2))) {
 			return calculateStrike(turn);
 		}

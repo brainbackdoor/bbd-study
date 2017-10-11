@@ -11,6 +11,7 @@ public class Player {
 		}
 		this.name = name;
 		this.score = new Score();
+		this.result = new Result();
 	}
 
 	public void rollingBall(int turn) {
@@ -18,6 +19,11 @@ public class Player {
 		if(score.getFrameScore(turn*2)!=10) {
 			score.inputRestFrameScore(turn*2+1,score.getFrameScore(turn*2));
 		}
+	}
+	
+	public void calculateResultScore() {
+		
+		result.calculateResult(score);
 	}
 
 	public boolean confirmPlayerName(String playerName) {
@@ -34,5 +40,8 @@ public class Player {
 	public Score getScore() {
 		return score;
 	}
+	public int getResultScoreTurn(int turn) {
 
+		return result.getResultScoreTurn(turn);
+	}
 }

@@ -5,22 +5,22 @@ import java.util.List;
 
 public class Result {
 	List<Integer> resultScore = new ArrayList<>();
+
+	
 	
 	public void calculateResult(Score score) {
-		for (int i = 0; i < 10; i++) {
-			
-			resultScore.add(getResultScorePriTurn(i-1)+score.calculate(i));
-
-			System.out.println(resultScore.get(i));
+		for (int turn = 0; turn < 10; turn++) {
+			resultScore.add(getResultScoreTurn(turn - 1) + score.calculate(turn));
 		}
 	}
-	
-	private int getResultScorePriTurn(int pos) {
-		if(pos >= 0) {
-			return resultScore.get(pos);
+
+	public int getResultScoreTurn(int turn) {
+		if (turn >= 0) {
+			return resultScore.get(turn);
 		}
 		return 0;
 	}
+
 	
 
 }
