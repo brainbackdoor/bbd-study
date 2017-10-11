@@ -19,11 +19,11 @@ public class GameTest {
 		for (Player player : players) {
 			game.playGame(player);
 			for (int i = 0; i < 10; i++) {
-				System.out.println(player.getScore().getframeScore(i*2)
+				System.out.println(player.getScore().getFrameScore(i*2)
 						+" + "
-						+ player.getScore().getframeScore(i*2+1)
+						+ player.getScore().getFrameScore(i*2+1)
 						+" = "
-						+ (player.getScore().getframeScore(i*2)+player.getScore().getframeScore(i*2+1)));
+						+ (player.getScore().getFrameScore(i*2)+player.getScore().getFrameScore(i*2+1)));
 			}		
 			System.out.println("");
 		}
@@ -36,11 +36,11 @@ public class GameTest {
 		players = game.getPlayers();
 		game.playGame(players.get(0));
 		for (int i = 0; i < 10; i++) {
-			System.out.println(players.get(0).getScore().getframeScore(i*2)
+			System.out.println(players.get(0).getScore().getFrameScore(i*2)
 					+" + "
-					+ players.get(0).getScore().getframeScore(i*2+1)
+					+ players.get(0).getScore().getFrameScore(i*2+1)
 					+" = "
-					+ (players.get(0).getScore().getframeScore(i*2)+players.get(0).getScore().getframeScore(i*2+1)));
+					+ (players.get(0).getScore().getFrameScore(i*2)+players.get(0).getScore().getFrameScore(i*2+1)));
 		}
 	}
 

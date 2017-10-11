@@ -20,7 +20,14 @@ Result result = new Result();
 		players = game.getPlayers();
 		game.playGame(players.get(0));
 		Score score = players.get(0).getScore();
-		result.calculateResult(score);
+		for (int i = 0; i < 10; i++) {
+			System.out.println(players.get(0).getScore().getFrameScore(i*2)
+					+" + "
+					+ players.get(0).getScore().getFrameScore(i*2+1)
+					+" = "
+					+ score.calculate(i));
+		}
+		
 		
 		
 	}

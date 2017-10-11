@@ -22,8 +22,8 @@ public class Board {
 		sb.append("|  ").append(player.getName());
 		for (int i = 0; i < 10; i++) {
 
-			sb.append(" |  ").append(confirmFrameScoreFirst(score.getframeScore(i * 2)));
-			sb.append(confirmFrameScoreSecond(score.getframeScore(i * 2 + 1)));
+			sb.append(" |  ").append(confirmFrameScoreFirst(score.getFrameScore(i * 2)));
+			sb.append(confirmFrameScoreSecond(score.getFrameScore(i * 2 + 1)));
 
 		}
 		sb.append(" |");

@@ -15,8 +15,8 @@ public class Player {
 
 	public void rollingBall(int turn) {
 		score.inputFrameScore(turn*2);
-		if(score.getframeScore(turn*2)!=10) {
-			score.inputRestFrameScore(turn*2+1,score.getframeScore(turn*2));
+		if(score.getFrameScore(turn*2)!=10) {
+			score.inputRestFrameScore(turn*2+1,score.getFrameScore(turn*2));
 		}
 	}
 

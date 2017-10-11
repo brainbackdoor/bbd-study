@@ -20,7 +20,7 @@ Score score = new Score();
 	public void inputTest() {
 
 		score.inputFrameScore(0);
-		System.out.println(score.getframeScore(0));
+		System.out.println(score.getFrameScore(0));
 	}
 //	@Test
 //	public void 랜덤점수_테스트() {

@@ -14,15 +14,15 @@ public class Score {
 	}
 
 	public void inputFrameScore(int pos) {
-//		frameScore.add(pos, randomScore());
-		frameScore.add(pos, 10);
+		frameScore.add(pos, randomScore());
+//		frameScore.add(pos, 10);
 	}
 
 	public void inputRestFrameScore(int pos, int point) {
 		frameScore.add(pos, randomRestScore(point));
 	}
 
-	public int getframeScore(int pos) {
+	public int getFrameScore(int pos) {
 		return frameScore.get(pos);
 	}
 
@@ -34,28 +34,47 @@ public class Score {
 		return new Random().nextInt(10 - point) + 1;
 	}
 
-	public int calculate(int pos) {
-		if(checkStrike(getframeScore(pos*2))) {
-			return calculateStrike(pos);
+	public int calculate(int turn) {
+		if(checkStrike(getFrameScore(turn*2))) {
+			return calculateStrike(turn);
 		}
-		return 0;
+		if(checkSpare(getFrameScore(turn*2),getFrameScore(turn*2+1))) {
+			return calculateSpare(turn);
+		}	
+		return getFrameScore(turn*2) + getFrameScore(turn*2+1);
 	}
 
+
+
 	private int calculateStrike(int pos) {
-		int firstSumScore = getframeScore((pos + 1) * 2);
+		int firstSumScore = getFrameScore((pos + 1) * 2);
 		int secondSumScore = extractSecondSumScore(pos, firstSumScore);
-		return getframeScore(pos * 2) + firstSumScore + secondSumScore;
+		return 10 + firstSumScore + secondSumScore;
 	}
 
 	private int extractSecondSumScore(int pos, int firstSumScore) {
 		if (checkStrike(firstSumScore)) {
-			return getframeScore((pos + 2) * 2);
+			return getFrameScore((pos + 2) * 2);
 		}
-		return getframeScore((pos + 1) * 2 + 1);
+		return getFrameScore((pos + 1) * 2 + 1);
 	}
 
+
+	
 	private boolean checkStrike(int point) {
 		if (point == 10) {
+			return true;
+		}
+		return false;
+	}
+	
+	private int calculateSpare(int pos) {
+		int firstSumScore = getFrameScore((pos + 1) * 2);
+		return 10 + firstSumScore;
+	}
+	
+	private boolean checkSpare(int pointFirst, int pointSecond) {
+		if (pointFirst + pointSecond == 10) {
 			return true;
 		}
 		return false;
