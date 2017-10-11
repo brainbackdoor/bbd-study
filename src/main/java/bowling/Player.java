@@ -2,13 +2,14 @@ package bowling;
 
 public class Player {
 	String name;
-	int Score;
+	Score score;
 
 	Player(String name) throws Exception{
 		if(!confirmPlayerName(name)) {
 			throw new Exception();
 		}
 		this.name = name;
+		this.score = new Score(); 
 	}
 	
 	public boolean confirmPlayerName (String playerName) {
@@ -21,8 +22,8 @@ public class Player {
 	public String getName() {
 		return name;
 	}
-	public int getScore() {
-		return Score;
+	public Score getScore() {
+		return score;
 	}
 	
 	
