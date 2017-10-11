@@ -27,8 +27,7 @@ Result result = new Result();
 					+" = "
 					+ score.calculate(i));
 		}
-		
-		
+		result.calculateResult(score);
 		
 	}
 

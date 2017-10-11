@@ -9,10 +9,17 @@ public class Result {
 	public void calculateResult(Score score) {
 		for (int i = 0; i < 10; i++) {
 			
-			resultScore.add(score.calculate(i));
+			resultScore.add(getResultScorePriTurn(i-1)+score.calculate(i));
 
-			System.out.println(score.getFrameScore(i));
+			System.out.println(resultScore.get(i));
 		}
+	}
+	
+	private int getResultScorePriTurn(int pos) {
+		if(pos >= 0) {
+			return resultScore.get(pos);
+		}
+		return 0;
 	}
 	
 
