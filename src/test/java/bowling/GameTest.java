@@ -17,7 +17,11 @@ public class GameTest {
 		players = game.getPlayers();
 		game.playGame(players.get(0));
 		for (int i = 0; i < 10; i++) {
-			System.out.println(players.get(0).getScore().getframeScore(i));
+			System.out.println(players.get(0).getScore().getframeScore(i*2)
+					+" + "
+					+ players.get(0).getScore().getframeScore(i*2+1)
+					+" = "
+					+ (players.get(0).getScore().getframeScore(i*2)+players.get(0).getScore().getframeScore(i*2+1)));
 		}
 	}
 

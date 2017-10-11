@@ -14,7 +14,9 @@ public class Score {
 	public void inputFrameScore(int pos) {
 		frameScore.add(pos,randomScore());
 	}
-	
+	public void inputRestFrameScore(int pos,int point) {
+		frameScore.add(pos,randomRestScore(point));
+	}	
 	public int getframeScore(int pos) {
 		return frameScore.get(pos);
 	}
@@ -22,5 +24,7 @@ public class Score {
 	private int randomScore() {
 		return new Random().nextInt(10) + 1;
 	}
-
+	private int randomRestScore(int point) {
+		return new Random().nextInt(10-point) + 1;
+	}
 }
