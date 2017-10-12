@@ -4,7 +4,7 @@ public class Turn {
 	int first;
 	int second;
 
-	Turn(int turn) {
+	public Turn(int turn) {
 		this.first = turn;
 		this.second = turn + 1;
 	}

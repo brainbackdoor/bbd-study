@@ -18,7 +18,6 @@ public class Score {
 	 */
 	public void inputFrameScore(int pos) {
 		frameScore.add(pos, randomScore());
-		// frameScore.add(pos, 10);
 	}
 
 	private int randomScore() {
@@ -60,10 +59,10 @@ public class Score {
 	private int calculateStrike(int turn) {
 		Turn nextTurn = generateNextTurn(turn);
 		int firstSumScore = getFrameScore(nextTurn.getFirst());
-		if(checkStrike(nextTurn)) {
-			Turn nextnextTurn = generateNextTurn(nextTurn.getFirst());
-			return 10 + firstSumScore + nextnextTurn.getFirst();
-		}
+//		if(checkStrike(nextTurn)) {
+//			Turn nextnextTurn = generateNextTurn(nextTurn.getFirst());
+//			return 10 + firstSumScore + nextnextTurn.getFirst();
+//		}
 		
 		int secondSumScore = getFrameScore(nextTurn.getSecond());
 		return 10 + firstSumScore + secondSumScore;

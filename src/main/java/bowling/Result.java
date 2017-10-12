@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Result {
 	ArrayList<Integer> resultScore = new ArrayList<>();
-	int turn =0;
 	
 	public void calculateResult(Score score) {
 		int sum = score.calculate(new Turn(0));
@@ -17,12 +16,7 @@ public class Result {
 	}
 
 	private void appendResultScore(Score score, int sum) {
-		if(!score.checkStrike(new Turn(turn * 2))) {
-			resultScore.add(turn,sum);
-			turn ++;
-		}else {
 			resultScore.add(sum);
-		}
 	}
 
 	public int getResultScoreFrame(int frame) {

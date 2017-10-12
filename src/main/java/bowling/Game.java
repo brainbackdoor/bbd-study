@@ -10,38 +10,30 @@ public class Game {
 	int playerNum;
 	Board board;
 
-	public void init() {
+	public void init(int number, String name) {
 		String playerName;
 		players = new ArrayList<>();
 		board = new Board();
-		inputPlayerNumber();
-		inputPlayersName();
+		inputPlayerNumber(number);
+		inputPlayersName(name);
 	}
 
-	public void playGame(Player player, Turn frame) {
-		Turn priFrame = new Turn(frame.getFirst() / 2 - 1);
+	public Player playGame(Player player, Turn frame) {
 		player.rollingBall(frame);
 
 		if (player.isOneMoreRollingBall(frame)) {
-			board.showBoard(player);
 			player.rollingRestBall(frame);
+			player.calculateResultScore();
+			return player;
 		}
-		player.calculateResultScore();
-		board.showBoard(player);
+		return player;
 	}
 
-	public void playGameFinalize(Player player) {
-		player.calculateResultScore();
-		board.showBoard(player);
-	}
-
-	private void inputPlayersName() {
-		Scanner scannerName = new Scanner(System.in);
-
+	private void inputPlayersName(String name) {
+		String[] names = name.split(",");
 		for (int i = 0; i < playerNum; i++) {
-			System.out.printf("플레이어 %d의 이름은?(3 english letters):", i + 1);
 			try {
-				players.add(i, new Player(scannerName.nextLine()));
+				players.add(i, new Player(names[i]));
 			} catch (Exception e) {
 				i--;
 				continue;
@@ -49,18 +41,12 @@ public class Game {
 		}
 	}
 
-	private void inputPlayerNumber() {
-		Scanner scannerP = new Scanner(System.in);
-		System.out.println("How many people?");
-		playerNum = scannerP.nextInt();
+	public void inputPlayerNumber(int number) {
+		this.playerNum = number;
 	}
 
 	public List<Player> getPlayers() {
 		return players;
-	}
-
-	public int getPlayerNum() {
-		return playerNum;
 	}
 
 }

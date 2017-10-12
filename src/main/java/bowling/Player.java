@@ -36,20 +36,8 @@ public class Player {
 		return true;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public Score getScore() {
-		return score;
-	}
-
 	public int getResultScoreFrame(int turn) {
 		return result.getResultScoreFrame(turn);
-	}
-
-	public int getResultScoreSpareFrame(int turn) {
-		return result.getResultScoreSpareFrame(turn);
 	}
 
 	public boolean isOneMoreRollingBall(Turn turn) {
@@ -63,10 +51,12 @@ public class Player {
 		return result.playTurn();
 	}
 
-	public boolean isNoOpen(int turn) {
-		if (getResultScoreFrame(turn) != 10)
-			return true;
-		return false;
+	public String getName() {
+		return name;
+	}
+
+	public Score getScore() {
+		return score;
 	}
 
 }
