@@ -13,25 +13,25 @@ public class ResultTest {
 	List<Player> players = new ArrayList<>();
 	Result result = new Result();
 	Turn frame = new Turn(0);
-	@Test
-	public void 여러명_결과_계산() {
-		game.init(1,"PTJ");
-		players = game.getPlayers();
-		
-		Score score = players.get(0).getScore();
-		for (Player player : players) {
-			game.playGame(player,frame);
-			player.calculateResultScore();
-		}
-		
-		for (Player player : players) {
-			for (int i = 0; i < 10; i++) {
-				System.out.println(players.get(0).getScore().getFrameScore(i * 2) + " + "
-						+ players.get(0).getScore().getFrameScore(i * 2 + 1) + " = " + player.getResultScoreFrame(i));
-			}
-			
-		}
-	}
+//	@Test
+//	public void 여러명_결과_계산() {
+//		game.init(1,"PTJ");
+//		players = game.getPlayers();
+//		
+//		Score score = players.get(0).getScore();
+//		for (Player player : players) {
+//			game.playGame(player,frame);
+//			player.calculateResultScore();
+//		}
+//		
+//		for (Player player : players) {
+//			for (int i = 0; i < 10; i++) {
+//				System.out.println(players.get(0).getScore().getFrameScore(i * 2) + " + "
+//						+ players.get(0).getScore().getFrameScore(i * 2 + 1) + " = " + player.getResultScoreFrame(i));
+//			}
+//			
+//		}
+//	}
 
 //	@Test
 //	public void 한명_결과_계산() {
