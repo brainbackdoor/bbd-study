@@ -10,9 +10,23 @@ public class Player {
 		if (!confirmPlayerName(name)) {
 			throw new Exception();
 		}
+		if (!isLetter(name)) {
+			throw new Exception();
+		}
 		this.name = name;
 		this.score = new Score();
 		this.result = new Result();
+	}
+
+	private boolean isLetter(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			String chk = str.substring(i, i + 1);
+			if (!chk.matches(".*[A-Z]*.")) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public void rollingBall(Turn turn) {
