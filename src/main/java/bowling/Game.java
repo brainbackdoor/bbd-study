@@ -30,7 +30,7 @@ public class Game {
 	}
 
 	private void inputPlayersName(String name) {
-		String[] names = name.split(",");
+		String[] names = name.replace(" ", "").split(",");
 		for (int i = 0; i < playerNum; i++) {
 			try {
 				players.add(i, new Player(names[i]));

@@ -38,7 +38,7 @@
 										
 									</form>
 									{{/inputNumber}} {{#inputNumber}}{{^inputName}}
-									<form name="question" method="post" action="/input/name">
+									<form name="question" method="post" action="/input/init">
 										<div class="form-group">
 											<label>참여자 수</label>
 											<fieldset disabled>
@@ -49,7 +49,7 @@
 										
 										<div class="form-group">
 											<label>Text area</label>
-											<textarea id="inputName" name="inputName" class="form-control" rows="3"></textarea>
+											<textarea id="inputName" name="inputName" class="form-control" rows="3" placeholder="영어 대문자 3글자로 입력하세요"></textarea>
 										</div>
 										<input type="hidden" name="inputNumber" value="{{inputNumber}}">
 											<button type="submit" name="means" class="btn btn-default" value="manual">게임 준비</button>

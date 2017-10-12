@@ -28,8 +28,8 @@ public class BowlingController {
 		return mav;
 	}
 	
-	@PostMapping("/input/name")
-	public ModelAndView name(String inputName, String inputNumber) {
+	@PostMapping("/input/init")
+	public ModelAndView init(String inputName, String inputNumber) {
 		ModelAndView mav = new ModelAndView("/bowling/init");
 		
 		game = new Game();
