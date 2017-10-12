@@ -3,12 +3,14 @@
 
 ### [Code Squad Test] Bowling Game Web Service
 
+---
+
 #### Additional Plans
 
-##### Business Logic Improvement
+- Business Logic Improvement
 
-##### Exceptions
+- Exceptions
 
-##### Authentication 
+- Authentication 
 
 
