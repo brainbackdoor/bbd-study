@@ -10,7 +10,7 @@ public class PlayerTest {
 	public void 이름입려예외처리() {
 		Player player;
 		try {
-			player = new Player("DGs");
+			player = new Player("DGS");
 			assertEquals("DGS", player.getName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
