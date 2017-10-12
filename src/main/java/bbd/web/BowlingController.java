@@ -58,6 +58,8 @@ public class BowlingController {
 		mav.addObject("frame", frame+1);
 		if(frame+1 == 10) {
 			mav.addObject("finish", 1);
+		} else if(frame != 0) {
+			mav.addObject("game", 1);
 		}
 		return mav;
 	}
