@@ -58,13 +58,13 @@ public class GameTest {
 		}
 	}
 
-	@Test
-	public void 초기입력값_출력() {
-		game.init(1,"PTJ");
-		players = game.getPlayers();
-		for (Player player : players) {
-			assertEquals("PPP",player.getName());
-		}
-	}
+//	@Test
+//	public void 초기입력값_출력() {
+//		game.init(1,"PTJ");
+//		players = game.getPlayers();
+//		for (Player player : players) {
+//			assertEquals("PPP",player.getName());
+//		}
+//	}
 
 }

@@ -33,18 +33,18 @@ public class ResultTest {
 		}
 	}
 
-	@Test
-	public void 한명_결과_계산() {
-		Turn frame = new Turn(0);
-		players = game.getPlayers();
-		game.playGame(players.get(0),frame);
-		Score score = players.get(0).getScore();
-		for (int i = 0; i < 10; i++) {
-			System.out.println(players.get(0).getScore().getFrameScore(i * 2) + " + "
-					+ players.get(0).getScore().getFrameScore(i * 2 + 1) + " = ");
-		}
-//		result.calculateResult(score);
-
-	}
+//	@Test
+//	public void 한명_결과_계산() {
+//		Turn frame = new Turn(0);
+//		players = game.getPlayers();
+//		game.playGame(players.get(0),frame);
+//		Score score = players.get(0).getScore();
+//		for (int i = 0; i < 10; i++) {
+//			System.out.println(players.get(0).getScore().getFrameScore(i * 2) + " + "
+//					+ players.get(0).getScore().getFrameScore(i * 2 + 1) + " = ");
+//		}
+////		result.calculateResult(score);
+//
+//	}
 
 }

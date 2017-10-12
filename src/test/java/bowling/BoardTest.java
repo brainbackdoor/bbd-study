@@ -14,23 +14,23 @@ public class BoardTest {
 	List<Player> players = new ArrayList<>();
 	Result result = new Result();
 
-	@Test
-	public void 여러명_결과_계산_출력() {
-		game.init(1,"PTJ");
-		players = game.getPlayers();
-
-		Score score = players.get(0).getScore();
-		for (int i = 0; i < 10; i++) {
-			for (Player player : players) {
-
-				game.playGame(player, new Turn(i * 2));
-				
-			}
-		}
+//	@Test
+//	public void 여러명_결과_계산_출력() {
+//		game.init(1,"PTJ");
+//		players = game.getPlayers();
+//
+//		Score score = players.get(0).getScore();
+//		for (int i = 0; i < 10; i++) {
+//			for (Player player : players) {
+//
+//				game.playGame(player, new Turn(i * 2));
+//				
+//			}
+//		}
 //		for (Player player : players) {
 //			game.playGameFinalize(player);
 //		}
-	}
+//	}
 
 	@Test
 	public void 초기출력_테스트() {
