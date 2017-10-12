@@ -2,13 +2,4 @@
 language: java
 before_install:
   - chmod +x mvnw
-deploy:
-  provider: elasticbeanstalk
-  skip_cleanup: true
-  access_key_id: "AKIAJCXZX2XHDLYDTFBA"
-  secret_access_key:
-    secure: "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"
-  region: "ap-northeast-2"  
-  app: "test2"
-  env: "Test2-env"
-  bucket_name: "elasticbeanstalk-ap-northeast-2-652011093701"
+
