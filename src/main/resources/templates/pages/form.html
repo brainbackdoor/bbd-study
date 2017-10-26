@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{{> include/head}}
+<script>
+{{> include/util}}
+
+</script>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        {{> include/nav}}
+        <br><br>
+        
+<div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">학부모 회원가입 </h3>
+                    </div>
+                    <div class="panel-body">
+                    <form name="password_form" method="post" action="/users/join">
+                            <fieldset>
+							<div class="form-group">
+                  				<label for="user_id">STEP 1</label>
+                  				<input type="email" class="form-control" id="user_id" name="user_id" placeholder="이메일 주소 (example@example.com)">
+              				</div>                            
+							<button type="submit" class="btn btn-lg btn-success btn-block">이메일 인증</button>
+							<br><br>
+              <div class="form-group">
+                  <label for="password1">비밀번호</label>
+                  <input type="password" class="form-control" id="password1" name="password1" onkeyup="verify.check()" placeholder="Password">
+              </div>
+			  <div class="form-group">
+                  <label for="password2">비밀번호 확인</label>
+                  <input type="password" class="form-control" id="password2" name="password2" onkeyup="verify.check()" placeholder="Password">
+              </div>              
+              <div id="password_result"> </div> 
+              <button type="button" class="btn btn-success clearfix pull-right">회원가입</button>							
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
