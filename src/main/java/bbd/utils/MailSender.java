@@ -20,7 +20,7 @@ public class MailSender {
 	String host = "smtp.naver.com";
 	final String user = "linl14";
 	final String password = "ahrzosel1!";
-	final String domain = "http://localhost:8080/users/form2nd";
+	final String domain = "http://localhost:8080/users/parentJoinForm2nd";
 	
 	
 	// Get the session object

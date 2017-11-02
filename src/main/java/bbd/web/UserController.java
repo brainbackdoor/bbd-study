@@ -15,7 +15,7 @@ import bbd.utils.MailSender;
 @RequestMapping("/users")
 public class UserController {
 
-	@PostMapping("/join")
+	@PostMapping("/parentJoin")
 	public String login(String user_id)   {
 		MailSender joinAuthMail = new MailSender();
 		Db db = new Db();
@@ -25,13 +25,13 @@ public class UserController {
 		db.setToken(user_id, token);
 		
 		joinAuthMail.sendMail(user_id,token);
-		return "redirect:/pages/authWait";
+		return "redirect:/pages/parentJoinAuthWaitForm";
 		
 	}
 
-	@GetMapping("form2nd")
+	@GetMapping("parentJoinForm2nd")
 	public ModelAndView form2nd(String token) {
-		ModelAndView mav = new ModelAndView("/pages/form2nd");
+		ModelAndView mav = new ModelAndView("/pages/parentJoinForm2nd");
 		Db db = new Db();
 		db.connection();
 		String email_id =db.getEmail(token); 

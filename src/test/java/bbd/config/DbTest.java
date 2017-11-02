@@ -35,8 +35,8 @@ public class DbTest {
 	public void 토큰조회테스트() {
 		Db db = new Db();
 		db.connection();
-		String token = db.getEmail("abc@google.com");
-		assertEquals("0",token);
+		String token = db.getEmail("ddd@google.com");
+		assertEquals("123456",token);
 	}
 
 	@Test
