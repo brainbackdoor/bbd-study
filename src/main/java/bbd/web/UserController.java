@@ -1,62 +1,48 @@
 package bbd.web;
 
-import java.util.Random;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import bbd.config.Db;
+import bbd.dao.UserDao;
+import bbd.model.Token;
+import bbd.model.User;
 import bbd.utils.MailSender;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@PostMapping("/parentJoin")
-	public String login(String user_id)   {
+	public String login(String emailId) {
 		MailSender joinAuthMail = new MailSender();
-		Db db = new Db();
-		db.connection();
-		
-		String token = generateToken();
-		db.setToken(user_id, token);
-		
-		joinAuthMail.sendMail(user_id,token);
+		UserDao userDao = new UserDao();
+		Token token = new Token(emailId);
+		userDao.insertToken(token);
+
+		joinAuthMail.sendMail(emailId, token);
 		return "redirect:/pages/parentJoinAuthWaitForm";
-		
 	}
 
 	@GetMapping("parentJoinForm2nd")
-	public ModelAndView form2nd(String token) {
+	public ModelAndView form2nd(int tokenNumber) {
 		ModelAndView mav = new ModelAndView("/pages/parentJoinForm2nd");
-		Db db = new Db();
-		db.connection();
-		String email_id =db.getEmail(token); 
-		if(email_id!="") {
-			mav.addObject("email_id", email_id);
-			System.out.println("Email : "+ email_id);
-			System.out.println("Token : "+token);
-			db.delToken(token);
+
+		UserDao userDao = new UserDao();
+		Token token = userDao.findByToken(tokenNumber);
+		User user = userDao.findUserByUserId(token.getEmailId());
+
+		if (user != null) {
+			mav.addObject("email_id", user.getEmailId());
+			log.debug("Email : " + user.getEmailId());
+			log.debug("Token : " + token.getToken());
+			userDao.deleteToken(token);
 		}
 		return mav;
 	}
-	
-//	@PostMapping("enroll")
-//	public String enroll(String )
-	private String generateToken() {
-		Random rand = new Random();
-		int token = rand.nextInt(1000000000)+100000000;
-		if(token > 1000000000) {
-			token = token-100000000;
-		}
-		return Integer.toString(token);
-	}
-	
-	private void connectionDB() {
-
-	}
-	
 }

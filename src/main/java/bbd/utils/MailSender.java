@@ -1,28 +1,23 @@
 package bbd.utils;
 
-import java.util.Date;
 import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+
+import bbd.model.Token;
 
 public class MailSender {
 	String host = "smtp.naver.com";
-	final String user = "linl14";
-	final String password = "ahrzosel1!";
-	final String domain = "http://localhost:8080/users/parentJoinForm2nd";
-	
-	
+	final String user = "NAVER_ID";
+	final String password = "PASSWORD";
+	final String domain = "URL";
+
 	// Get the session object
 	Properties props = new Properties();
 
@@ -31,7 +26,7 @@ public class MailSender {
 		props.put("mail.smtp.auth", "true");
 	}
 	
-	public void sendMail(String user_id, String token) {
+	public void sendMail(String user_id, Token token) {
 
 		String to = user_id;
 
@@ -46,9 +41,9 @@ public class MailSender {
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-			message.setSubject("Edu-connect 가입 인증 메일입니다.");
+			message.setSubject("가입 인증 메일입니다.");
 
-			message.setText("Link : "+domain+"?token="+token);
+			message.setText("Link : "+domain+"?tokenNumber="+token.getToken());
 
 			Transport.send(message);
 		} catch (MessagingException e) {
