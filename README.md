@@ -1,8 +1,10 @@
 # spring-data-rest-associations
 
 ## Test Guide
-This example is OneToMany Guide for Spring-data-rest
+This example is OneToMany Guide for Spring-data-rest.
+
 In this example, deck and card data were entered via Initializer, but required mapping is required.
+
 So, You should better use [postman](https://www.getpostman.com/) to test 
 
 ```
