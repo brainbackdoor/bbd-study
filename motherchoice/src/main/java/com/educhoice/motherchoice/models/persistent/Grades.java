@@ -1,37 +1,56 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.educhoice.motherchoice.utils.exceptions.NoGradeDefException;
+
+import java.util.Arrays;
+import java.util.List;
+
 public enum Grades {
 
-    PRESCHOOL("유아"),
-    ELEMENTARY("초"),
-    MIDDLE("중"),
-    HIGH("고");
+    PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아"),
+    ELEMENTARY(Arrays.asList(SpecifiedGrades.ELEMENTARY_1, SpecifiedGrades.ELEMENTARY_2, SpecifiedGrades.ELEMENTARY_3, SpecifiedGrades.ELEMENTARY_4, SpecifiedGrades.ELEMENTARY_5, SpecifiedGrades.ELEMENTARY_6), "초"),
+    MIDDLE(Arrays.asList(SpecifiedGrades.MIDDLE_1, SpecifiedGrades.MIDDLE_2, SpecifiedGrades.MIDDLE_3), "중"),
+    HIGH(Arrays.asList(SpecifiedGrades.HIGH_1, SpecifiedGrades.HIGH_2, SpecifiedGrades.HIGH_3), "고");
 
-    private SpecifiedGrades specifiedGrade;
+    private List<SpecifiedGrades> specifiedGrades;
     private String symbol;
 
-    Grades(String symbol) {
+    Grades(List<SpecifiedGrades> specifiedGrades, String symbol) {
+        this.specifiedGrades = specifiedGrades;
         this.symbol = symbol;
     }
 
+    public static Grades findBySpecifiedGrades(SpecifiedGrades grade) {
+        return Arrays.stream(Grades.values()).filter(grades -> grades.isContainingGrade(grade)).findAny().orElseThrow(() -> new NoGradeDefException("no matching grade found!"));
+    }
+
+    private boolean isContainingGrade(SpecifiedGrades grade) {
+        return this.specifiedGrades.stream().anyMatch(g -> g == grade);
+    }
+
     public enum SpecifiedGrades {
-        ELEMENTARY_1("1"),
-        ELEMENTARY_2("2"),
-        ELEMENTARY_3("3"),
-        ELEMENTARY_4("4"),
-        ELEMENTARY_5("5"),
-        ELEMENTARY_6("6"),
-        MIDDLE_1("1"),
-        MIDDLE_2("2"),
-        MIDDLE_3("3"),
-        HIGH_1("1"),
-        HIGH_2("2"),
-        HIGH_3("3");
+        PRESCHOOL_ALL(""),
+        ELEMENTARY_1("초1"),
+        ELEMENTARY_2("초2"),
+        ELEMENTARY_3("초3"),
+        ELEMENTARY_4("초4"),
+        ELEMENTARY_5("초5"),
+        ELEMENTARY_6("초6"),
+        MIDDLE_1("중1"),
+        MIDDLE_2("중2"),
+        MIDDLE_3("중3"),
+        HIGH_1("고1"),
+        HIGH_2("고2"),
+        HIGH_3("고3");
 
         private String symbol;
 
         SpecifiedGrades(String symbol) {
             this.symbol = symbol;
+        }
+
+        public String getSymbol() {
+            return this.symbol;
         }
     }
 
