@@ -20,6 +20,10 @@ public enum Grades {
         this.symbol = symbol;
     }
 
+    public String getSymbol() {
+        return this.symbol;
+    }
+
     public static Grades findBySpecifiedGrades(SpecifiedGrades grade) {
         return Arrays.stream(Grades.values()).filter(grades -> grades.isContainingGrade(grade)).findAny().orElseThrow(() -> new NoGradeDefException("no matching grade found!"));
     }
