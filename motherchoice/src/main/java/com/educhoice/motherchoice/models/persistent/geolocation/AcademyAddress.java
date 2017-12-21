@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.geolocation;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,11 @@ public class AcademyAddress extends Address{
     private long id;
 
     @ManyToOne
+    @JsonIgnore
     private Dong dong;
 
     @OneToOne
+    @JsonIgnore
     private Academy academy;
 
     private String sido;

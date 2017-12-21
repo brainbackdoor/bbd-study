@@ -1,10 +1,13 @@
 package com.educhoice.motherchoice.models.persistent;
 
 import com.educhoice.motherchoice.utils.exceptions.NoGradeDefException;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 import java.util.List;
 
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Grades {
 
     PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아"),
@@ -53,6 +56,7 @@ public enum Grades {
             this.symbol = symbol;
         }
 
+        @JsonValue
         public String getSymbol() {
             return this.symbol;
         }
