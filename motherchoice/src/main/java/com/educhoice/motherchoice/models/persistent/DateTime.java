@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -23,7 +24,10 @@ public class DateTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long dateTimeId;
 
+    @NotNull
     private Time startTime;
+
+    @NotNull
     private Time endTime;
 
     @Enumerated(value = EnumType.ORDINAL)
