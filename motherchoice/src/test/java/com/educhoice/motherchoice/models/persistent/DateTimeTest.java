@@ -2,21 +2,25 @@ package com.educhoice.motherchoice.models.persistent;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
 public class DateTimeTest {
 
+    private static final Logger log = LoggerFactory.getLogger(DateTimeTest.class);
+
     private DateTime time;
 
     @Before
     public void setUp() {
-        this.time = new DateTime("2017-07-07");
+        this.time = new DateTime("19:30", "21:30", "목");
     }
 
     @Test
     public void 날짜_잘나오는지() {
-        assertEquals("2017-07-07", time.getDate().toString());
+        log.info(this.time.toString());
     }
 
 }
