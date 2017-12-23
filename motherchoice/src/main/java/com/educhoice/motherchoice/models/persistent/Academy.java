@@ -5,6 +5,8 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,8 +27,9 @@ public class Academy {
     @NotNull
     private String academyName;
 
-    @OneToOne(mappedBy = "academy", cascade = CascadeType.ALL)
-    private AcademyAddress address;
+    @OneToMany(mappedBy = "academyId", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<AcademyAddress> address;
 
     private boolean carAvailable;
 
@@ -72,7 +75,7 @@ public class Academy {
     @Override
     public String toString() {
         return "Academy{" +
-                ", courses=" + courses +
+                "  courses=" + courses +
                 ", academyName='" + academyName + '\'' +
                 ", address=" + address +
                 ", carAvailable=" + carAvailable +

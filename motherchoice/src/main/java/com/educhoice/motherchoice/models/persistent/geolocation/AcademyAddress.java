@@ -16,13 +16,11 @@ public class AcademyAddress extends Address{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private long academyId;
+
     @ManyToOne
     @JsonIgnore
     private Dong dong;
-
-    @OneToOne
-    @JsonIgnore
-    private Academy academy;
 
     private String sido;
     private String sigungu;

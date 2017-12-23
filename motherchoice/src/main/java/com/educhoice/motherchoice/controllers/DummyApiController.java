@@ -22,7 +22,7 @@ public class DummyApiController {
     @CrossOrigin
     public Academy returnDummyAcacdemy() {
         Academy academy = new Academy();
-        academy.setAddress(new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동 683", "10120", "경기도", "김포시"));
+        academy.setAddress(Arrays.asList(new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동 683", "10120", "경기도", "김포시")));
         academy.setCarAvailable(true);
         academy.setAcademyName("포비학원");
         academy.setCourses(returnCourses());
