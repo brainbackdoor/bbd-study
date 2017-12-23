@@ -14,7 +14,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         security
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll();
+
+        security
+                .csrf().disable();
+
+        security
+                .headers().frameOptions().disable();
 
     }
 }

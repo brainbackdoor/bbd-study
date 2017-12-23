@@ -18,7 +18,7 @@ public class Course {
     private long courseId;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "datetimeno")
+    @JoinColumn(name = "courseid")
     private List<DateTime> dateTime;
 
     @Enumerated(EnumType.ORDINAL)
