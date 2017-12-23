@@ -14,11 +14,11 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
+
 public class Academy {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long academyId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -27,7 +27,8 @@ public class Academy {
     @NotNull
     private String academyName;
 
-    @OneToMany(mappedBy = "academyId", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "academyNo")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<AcademyAddress> address;
 
@@ -54,6 +55,26 @@ public class Academy {
 
     public long calculateHighAvgTuition() {
         return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.HIGH).mapToLong(high -> high.getTuition()).average().orElse(0.0);
+    }
+
+    public void setAcademyId(long academyId) {
+        this.academyId = academyId;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public void setAcademyName(String academyName) {
+        this.academyName = academyName;
+    }
+
+    public void setAddress(List<AcademyAddress> address) {
+        this.address = address;
+    }
+
+    public void setCarAvailable(boolean carAvailable) {
+        this.carAvailable = carAvailable;
     }
 
     @Override

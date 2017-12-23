@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent;
 
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.models.persistent.geolocation.Dong;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -31,6 +32,7 @@ public class AcademyTest {
 
     private List<Course> courses;
     private List<AcademyAddress> addresses = Lists.newArrayList();
+    private Dong dong;
 
     @Before
     public void setUp() {
@@ -43,21 +45,26 @@ public class AcademyTest {
         AcademyAddress academyAddress = new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동", "10120", "경기도", "김포시");
         this.addresses.add(academyAddress);
         System.out.println(this.addresses);
+        this.dong = new Dong();
     }
 
     @Test
     public void 학원정보_입력() {
         Academy academy = new Academy();
         academy.setAcademyName("포비학원");
-        academy.setAddress(this.addresses);
+        academy.setAddress(Arrays.asList(new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동", "10120", "경기도", "김포시")));
         academy.setCourses(this.courses);
+//        System.out.println(academy.getAddress().size());
 
         this.academyRepository.save(academy);
         Academy testableAcademy = this.academyRepository.findOne(1L);
         System.out.println(testableAcademy.toString());
+        assertNotNull(this.addresses);
         assertEquals("포비학원", testableAcademy.getAcademyName());
         assertNotNull(testableAcademy.getAddress());
 
         testableAcademy.getAddress().stream().forEach(System.out::println);
     }
+
+
 }

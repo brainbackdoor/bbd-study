@@ -18,7 +18,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long courseId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "courseid")
     private List<DateTime> dateTime;
 
@@ -119,5 +119,16 @@ public class Course {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId=" + courseId +
+                ", dateTime=" + dateTime +
+                ", grades=" + grades +
+                ", coursesClassification=" + coursesClassification +
+                ", title='" + title + '\'' +
+                ", regularCourse=" + regularCourse +
+                ", tuition=" + tuition +
+                '}';
+    }
 }
