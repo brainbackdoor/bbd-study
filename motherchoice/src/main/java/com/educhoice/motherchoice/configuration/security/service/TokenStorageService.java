@@ -34,15 +34,29 @@ public class TokenStorageService {
                 });
     }
 
-    public void confirm(String email) {
-        try {
-            if(this.cache.get(email).isMatchingEmail(email)) {
-                this.cache.invalidate(this.cache.get(email));
-            }
-        } catch(ExecutionException e) {
-            log.error(e.getMessage());
-        }
-
+    public void putToken(Token token) {
+        this.cache.put(token.getEmail(), token);
     }
 
+    private void erase(String email) {
+        try {
+            this.cache.invalidate(email);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public boolean isCorrectToken(String email, String tokenValue) {
+        try {
+            boolean isCorrect = this.cache.get(email).isCorrectToken(tokenValue);
+            if(isCorrect) {
+                System.out.println(String.format("token info : %s, email: %s" , this.cache.get(email).getTokenValue(), this.cache.get(email).getEmail()));
+                this.erase(email);
+                return isCorrect;
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return false;
+    }
 }
