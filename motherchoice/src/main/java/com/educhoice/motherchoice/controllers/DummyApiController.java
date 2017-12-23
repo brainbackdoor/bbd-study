@@ -6,6 +6,7 @@ import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.google.common.collect.Lists;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.List;
 public class DummyApiController {
 
     @GetMapping("/academy")
+    @CrossOrigin
     public Academy returnDummyAcacdemy() {
         Academy academy = new Academy();
         academy.setAddress(new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동 683", "10120", "경기도", "김포시"));

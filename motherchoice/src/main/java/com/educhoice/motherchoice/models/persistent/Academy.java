@@ -37,6 +37,22 @@ public class Academy {
         this.courses.add(course);
     }
 
+    public long calculateAvgTuition() {
+        return (long) this.courses.stream().mapToLong(c -> c.getTuition()).average().orElse(0.0);
+    }
+
+    public long calculateElementaryAvgTuition() {
+        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.ELEMENTARY).mapToLong(elementary -> elementary.getTuition()).average().orElse(0.0);
+    }
+
+    public long calculateMiddleAvgTuition() {
+        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.MIDDLE).mapToLong(middle -> middle.getTuition()).average().orElse(0.0);
+    }
+
+    public long calculateHighAvgTuition() {
+        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.HIGH).mapToLong(high -> high.getTuition()).average().orElse(0.0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
