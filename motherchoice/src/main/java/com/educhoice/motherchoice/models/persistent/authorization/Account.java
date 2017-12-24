@@ -14,11 +14,6 @@ import java.util.List;
 @Setter
 public class Account extends BasicAccount{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long accountId;
-
-
     private String nickname;
 
     @Column

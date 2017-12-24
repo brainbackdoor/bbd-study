@@ -28,11 +28,14 @@ public class Academy {
     private String academyName;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "academyNo")
+    @JoinColumn(name = "academyId")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<AcademyAddress> address;
 
     private boolean carAvailable;
+
+    @Column(name = "wonjangId")
+    private long wonjangId;
 
     public void addCourse(Course course) {
         if(this.courses == null) {

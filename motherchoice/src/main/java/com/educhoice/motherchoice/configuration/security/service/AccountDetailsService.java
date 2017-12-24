@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
+import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.Wonjang;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.WonjangRepository;
@@ -16,19 +17,11 @@ import javax.security.auth.login.AccountNotFoundException;
 public class AccountDetailsService implements UserDetailsService {
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
-    private WonjangRepository wonjangRepository;
+    IntegratedUserQueryService integratedUserQueryService;
 
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
-        SecurityAccount account = null;
-
-
-
-       return account;
+        return new SecurityAccount(integratedUserQueryService.loadByEmail(s));
     }
 }
