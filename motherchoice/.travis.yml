@@ -1,8 +1,0 @@
-notifications:
- slack:
-   rooms:
-     - edu-connect:Rurv5WxxeDgRZ8oi9JWHogQQ#be_github
-script:
-- if [[ "$TRAVIS_BRANCH" == "develop" ]] && [[ "$TRAVIS_PULL_REQUEST" == false ]]; then curl -X GET http://ec2-13-125-21-21.ap-northeast-2.compute.amazonaws.com:9999/deploy/codesquad_BE ; 
-  elif [[ "$TRAVIS_BRANCH" == "master" ]]  && [[ "$TRAVIS_PULL_REQUEST" == false ]]; then  curl -X GET http://ec2-13-125-21-21.ap-northeast-2.compute.amazonaws.com:9999/deploy/codesquad_BE_master; 
-  fi
