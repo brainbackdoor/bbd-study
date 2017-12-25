@@ -1,6 +1,4 @@
 language: java
-services:
-- mysql
 before_install:
 - chmod +x motherchoice/mvnw
 
