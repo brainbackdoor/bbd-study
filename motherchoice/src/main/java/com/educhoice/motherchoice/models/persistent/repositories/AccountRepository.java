@@ -1,7 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.repositories;
 
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
-import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

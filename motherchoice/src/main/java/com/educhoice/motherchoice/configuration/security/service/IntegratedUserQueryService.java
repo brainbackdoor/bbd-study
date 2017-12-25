@@ -13,21 +13,22 @@ import java.util.Optional;
 @Component
 public class IntegratedUserQueryService {
 
-    @Autowired
-    AccountRepository accountRepository;
+	@Autowired
+	AccountRepository accountRepository;
 
-    @Autowired
-    WonjangRepository wonjangRepository;
+	@Autowired
+	WonjangRepository wonjangRepository;
 
-    public BasicAccount loadByEmail(String email) {
+	public BasicAccount loadByEmail(String email) {
 
-        Optional<Account> account = accountRepository.findByEmail(email);
+		Optional<Account> account = accountRepository.findByEmail(email);
 
-        if(account.isPresent()) {
-            return account.get();
-        }
+		if (account.isPresent()) {
+			return account.get();
+		}
 
-        return wonjangRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user not found from both repositories!"));
-    }
-    
+		return wonjangRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("user not found from both repositories!"));
+	}
+
 }

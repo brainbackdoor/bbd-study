@@ -42,9 +42,9 @@ public class AcademyTest {
         expCourse.setGrades(Grades.SpecifiedGrades.ELEMENTARY_6);
         expCourse.setDateTime(Arrays.asList(new DateTime("12:30", "15:30", "월")));
         this.courses.add(expCourse);
-        AcademyAddress academyAddress = new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동", "10120", "경기도", "김포시");
+        AcademyAddress academyAddress = new AcademyAddress("경기도", "김포시", "경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동", "10120");
         this.addresses.add(academyAddress);
-        System.out.println(this.addresses);
+        log.debug("address : {}", this.addresses);
         this.dong = new Dong();
     }
 
@@ -52,13 +52,14 @@ public class AcademyTest {
     public void 학원정보_입력() {
         Academy academy = new Academy();
         academy.setAcademyName("포비학원");
-        academy.setAddress(Arrays.asList(new AcademyAddress("경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동", "10120", "경기도", "김포시")));
+        academy.setAddress(Arrays.asList(new AcademyAddress("경기도", "김포시", "경기도 김포시 유현로 19", "경기도 김포시 유현로 19", "경기도 김포시 풍무동", "10120")));
         academy.setCourses(this.courses);
-//        System.out.println(academy.getAddress().size());
+        log.debug("academy : {}",academy.toString());
+        log.debug("acdemy address : {}", academy.getAddress());
 
         this.academyRepository.save(academy);
         Academy testableAcademy = this.academyRepository.findOne(1L);
-        System.out.println(testableAcademy.toString());
+        log.debug("testableAcademy : {}",testableAcademy.toString());
         assertNotNull(this.addresses);
         assertEquals("포비학원", testableAcademy.getAcademyName());
         assertNotNull(testableAcademy.getAddress());

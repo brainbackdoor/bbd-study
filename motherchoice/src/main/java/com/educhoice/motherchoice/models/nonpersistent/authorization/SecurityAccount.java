@@ -1,13 +1,10 @@
 package com.educhoice.motherchoice.models.nonpersistent.authorization;
 
-import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
-import com.educhoice.motherchoice.models.persistent.authorization.Wonjang;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.security.Security;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
