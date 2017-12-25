@@ -1,9 +1,12 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -13,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Academy {
 
     @Id
@@ -32,8 +36,9 @@ public class Academy {
 
     private boolean carAvailable;
 
-    @Column(name = "wonjangId")
-    private long wonjangId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private CorporateAccount corporateAccount;
 
     public void addCourse(Course course) {
         if(this.courses == null) {
@@ -56,26 +61,6 @@ public class Academy {
 
     public long calculateHighAvgTuition() {
         return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.HIGH).mapToLong(high -> high.getTuition()).average().orElse(0.0);
-    }
-
-    public void setAcademyId(long academyId) {
-        this.academyId = academyId;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public void setAcademyName(String academyName) {
-        this.academyName = academyName;
-    }
-
-    public void setAddress(List<AcademyAddress> address) {
-        this.address = address;
-    }
-
-    public void setCarAvailable(boolean carAvailable) {
-        this.carAvailable = carAvailable;
     }
 
     @Override

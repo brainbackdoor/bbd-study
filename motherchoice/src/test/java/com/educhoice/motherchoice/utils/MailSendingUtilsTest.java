@@ -29,6 +29,9 @@ public class MailSendingUtilsTest {
 	@Autowired
 	RandomStringUtils randomStringUtils;
 
+	@Autowired
+	MailSendingUtils mailSendingUtils;
+
 	@Value("${local.server.port}")
 	private int serverPort;
 
@@ -56,11 +59,9 @@ public class MailSendingUtilsTest {
 
 	@Test
 	public void mailSendTest() {
-		MailSource ms = new MailSource(mailSenderId, mailSenderPassword, mailLinkUrl);
 		log.debug("receiver mail address : {}", receiverMailAddress);
-		log.debug("mail source {}", ms.toString());
-		MailSendingUtils joinAuthMail = new MailSendingUtils(receiverMailAddress, ms);
-		joinAuthMail.sendMailForToken(token);
+		mailSendingUtils.setReceiverMailAddress(receiverMailAddress);
+		mailSendingUtils.sendMailForToken(token);
 	}
 
 }

@@ -3,7 +3,7 @@ package com.educhoice.motherchoice.configuration.security.service;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
-import com.educhoice.motherchoice.models.persistent.repositories.WonjangRepository;
+import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class IntegratedUserQueryService {
 	AccountRepository accountRepository;
 
 	@Autowired
-	WonjangRepository wonjangRepository;
+    CorporateAccountRepository corporateAccountRepository;
 
 	public BasicAccount loadByEmail(String email) {
 
@@ -27,7 +27,7 @@ public class IntegratedUserQueryService {
 			return account.get();
 		}
 
-		return wonjangRepository.findByEmail(email)
+		return corporateAccountRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("user not found from both repositories!"));
 	}
 

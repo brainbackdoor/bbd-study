@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.geolocation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class AcademyAddress{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonIgnore
     private String academyId;
 
 

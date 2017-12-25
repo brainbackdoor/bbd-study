@@ -37,6 +37,7 @@ public class DummyApiController {
         courseOne.setDateTime(Arrays.asList(new DateTime("17:30","19:30","금")));
         courseOne.setTitle("TDD와 클린 코드 with Java");
         courseOne.setGrades(Grades.SpecifiedGrades.ELEMENTARY_6);
+        courseOne.setCoursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE);
         courseOne.setCourseId(1L);
 
         courses.add(courseOne);

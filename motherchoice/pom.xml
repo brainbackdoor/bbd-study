@@ -41,8 +41,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+        <!--Spring WebFlux-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+            <version>5.0.2.RELEASE</version>
+        </dependency>
+        <!--End of Spring-related Dependencies-->
 
-		<dependency>
+        <dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
