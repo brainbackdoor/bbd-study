@@ -28,7 +28,7 @@ public class Account extends BasicAccount{
         this.memberAddress = memberAddress;
     }
 
-    public Account() {}
+    public Account(String email, String password, String nickname, String memberAddress) {}
 
     @Override
     public String toString() {

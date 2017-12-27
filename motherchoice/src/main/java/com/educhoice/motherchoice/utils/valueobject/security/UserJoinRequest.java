@@ -9,11 +9,8 @@ public class UserJoinRequest {
 
     private String email;
     private String password;
+    private String nickname;
+    private String memberAddress;
 
-
-    public enum JoinRequestTypes {
-        PARENTS,
-        CORPORATE;
-    }
 
 }
