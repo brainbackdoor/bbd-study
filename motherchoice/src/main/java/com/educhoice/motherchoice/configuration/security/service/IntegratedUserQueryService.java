@@ -31,4 +31,8 @@ public class IntegratedUserQueryService {
 				.orElseThrow(() -> new UsernameNotFoundException("user not found from both repositories!"));
 	}
 
+	public boolean isExistingEmail(String email) {
+		return accountRepository.findByEmail(email).isPresent() || corporateAccountRepository.findByEmail(email).isPresent();
+	}
+
 }

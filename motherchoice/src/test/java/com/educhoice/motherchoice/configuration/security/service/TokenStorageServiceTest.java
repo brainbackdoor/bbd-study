@@ -34,7 +34,7 @@ public class TokenStorageServiceTest {
     @Test
     public void 키밸류값_잘들어가는지() {
         this.tokenStorageService.putToken(this.token);
-        assertTrue(this.tokenStorageService.isCorrectToken("pobi@codesquad.kr", this.token.getTokenValue()));
+        assertTrue(tokenStorageService.verifyToken(this.token));
     }
 
 

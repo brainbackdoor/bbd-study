@@ -33,26 +33,44 @@ public class TokenStorageService {
 		this.cache.put(token.getEmail(), token);
 	}
 
-	private void erase(String email) {
+	private void certify(String email) {
+	    Token token = null;
 		try {
+			token = this.cache.get(email);
 			this.cache.invalidate(email);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
+		token.setCertified(true);
+		this.cache.put(token.getEmail(), token);
 	}
 
-	public boolean isCorrectToken(String email, String tokenValue) {
+
+	private boolean isCorrectToken(String email, String tokenValue) {
 		try {
 			boolean isCorrect = this.cache.get(email).isCorrectToken(tokenValue);
 			if (isCorrect) {
-				System.out.println(String.format("token info : %s, email: %s", this.cache.get(email).getTokenValue(),
+				log.info(String.format("token info : %s, email: %s", this.cache.get(email).getTokenValue(),
 						this.cache.get(email).getEmail()));
-				this.erase(email);
+				this.certify(email);
 				return isCorrect;
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
+		return false;
+	}
+
+	public boolean verifyToken(Token token) {
+        return this.isCorrectToken(token.getEmail(), token.getTokenValue());
+	}
+
+	public boolean isCertified(String email) {
+	    try {
+            return this.cache.get(email).isCertified();
+        } catch(Exception e) {
+	        log.error(e.getMessage());
+        }
 		return false;
 	}
 }

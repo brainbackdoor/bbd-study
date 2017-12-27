@@ -14,18 +14,26 @@ public class EmailAuthenticationService {
     private TokenStorageService tokenStorageService;
 
     @Autowired
+    private IntegratedUserQueryService integratedUserQueryService;
+
+    @Autowired
     private MailSendingUtils mailSendingUtils;
 
     @Autowired
     private RandomStringUtils randomStringUtils;
 
     public void sendCertEmail(Email email) {
-
         Token token = new Token(email.getAddress(), randomStringUtils.generateRandomString(20));
         tokenStorageService.putToken(token);
+        mailSendingUtils.sendMailForToken(token);
+    }
 
+    public void certifyEmail(Token token) {
+        tokenStorageService.verifyToken(token);
+    }
 
-
+    public boolean isGoodEmail(String email) {
+        return tokenStorageService.isCertified(email) && !integratedUserQueryService.isExistingEmail(email);
     }
 
 }
