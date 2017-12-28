@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,8 +20,12 @@ public class Answer {
 
     private String content;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "answerid")
     private List<Reply> replies;
+
+    @ManyToOne
+    @JsonIgnore
+    private Question question;
 
 }

@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import com.educhoice.motherchoice.models.persistent.Grades.*;
@@ -111,8 +112,13 @@ public class Course {
                 return symbol.equals(this.symbol);
             }
 
-            private static SpecifiedCoursesClassification getSpecifiedCoursesClassificationBySymbol(String symbol) {
+            public static SpecifiedCoursesClassification getSpecifiedCoursesClassificationBySymbol(String symbol) {
                 return Arrays.stream(SpecifiedCoursesClassification.values()).filter(classification -> classification.isCorrectSymbol(symbol)).findAny().orElse(SpecifiedCoursesClassification.UNDEF);
+            }
+
+            @JsonValue
+            public String getSymbol() {
+                return this.symbol;
             }
 
         }

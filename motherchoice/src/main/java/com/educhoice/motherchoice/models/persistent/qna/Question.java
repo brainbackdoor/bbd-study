@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,4 +22,7 @@ public class Question {
 
     @OneToMany
     private List<Academy> academies;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    private List<Answer> answers;
 }
