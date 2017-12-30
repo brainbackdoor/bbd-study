@@ -5,6 +5,7 @@ import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.models.persistent.qna.Answer;
 import com.google.common.collect.Lists;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +22,14 @@ public class DummyApiController {
     @GetMapping("/academy")
     @CrossOrigin
     public Academy returnDummyAcacdemy() {
-        Academy academy = new Academy();
-        academy.setAddress(Arrays.asList(new AcademyAddress("경기도", "김포시", "경기도 김포시 풍무동", "경기도 김포시 유현로 19", "경기도 김포시 풍무동 683", "10120")));
-        academy.setCarAvailable(true);
-        academy.setAcademyName("포비학원");
-        academy.setCourses(returnCourses());
 
-        return academy;
+        return Academy.builder()
+                .address(Arrays.asList(new AcademyAddress("경기도", "김포시", "경기도 김포시 풍무동", "경기도 김포시 유현로 19", "경기도 김포시 풍무동 683", "10120")))
+                .carAvailable(true)
+                .academyName("포비학원")
+                .courses(returnCourses())
+                .build();
+
     }
 
     private List<Course> returnCourses() {
@@ -41,6 +43,9 @@ public class DummyApiController {
         courseOne.setCourseId(1L);
 
         courses.add(courseOne);
+
         return courses;
+
+
     }
 }

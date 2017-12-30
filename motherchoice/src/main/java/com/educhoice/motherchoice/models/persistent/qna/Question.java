@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Question {
+public class Question extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
