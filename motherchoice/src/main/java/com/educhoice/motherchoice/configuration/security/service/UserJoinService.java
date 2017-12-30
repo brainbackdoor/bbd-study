@@ -1,9 +1,8 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
-import com.educhoice.motherchoice.models.nonpersistent.authorization.Email;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
-import com.educhoice.motherchoice.utils.valueobject.security.UserJoinRequest;
+import com.educhoice.motherchoice.valueobject.security.UserJoinRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

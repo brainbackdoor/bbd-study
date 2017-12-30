@@ -1,4 +1,4 @@
-package com.educhoice.motherchoice.utils.valueobject.security;
+package com.educhoice.motherchoice.valueobject.security;
 
 import lombok.Getter;
 import lombok.Setter;

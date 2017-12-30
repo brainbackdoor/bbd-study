@@ -1,7 +1,7 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
-import com.educhoice.motherchoice.utils.valueobject.security.UserJoinRequest;
+import com.educhoice.motherchoice.valueobject.security.UserJoinRequest;
 
 @FunctionalInterface
 public interface UserSignupAction {

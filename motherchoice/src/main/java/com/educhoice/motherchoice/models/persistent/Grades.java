@@ -36,6 +36,7 @@ public enum Grades {
     }
 
     public enum SpecifiedGrades {
+        GRADE_UNDEF("미분류"),
         PRESCHOOL_ALL(""),
         ELEMENTARY_ALL("초등"),
         ELEMENTARY_1("초1"),
@@ -62,6 +63,13 @@ public enum Grades {
         @JsonValue
         public String getSymbol() {
             return this.symbol;
+        }
+
+        public static SpecifiedGrades getGradesByString(String symbol) {
+            if(symbol.isEmpty() || symbol == null) {
+                return GRADE_UNDEF;
+            }
+            return Arrays.stream(SpecifiedGrades.values()).filter(g -> symbol.equals(g.getSymbol())).findAny().orElse(GRADE_UNDEF);
         }
     }
 

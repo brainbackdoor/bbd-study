@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,11 @@ public class DateTime {
 
         WeekDays(String symbol) {
             this.symbol = symbol;
+        }
+
+        @JsonValue
+        public String getSymbol() {
+            return this.symbol;
         }
 
         public static WeekDays getWeekDaysBySymbol(String symbol) {
