@@ -39,20 +39,20 @@ public enum Grades {
         GRADE_UNDEF("미분류"),
         PRESCHOOL_ALL(""),
         ELEMENTARY_ALL("초등"),
-        ELEMENTARY_1("초1"),
-        ELEMENTARY_2("초2"),
-        ELEMENTARY_3("초3"),
-        ELEMENTARY_4("초4"),
-        ELEMENTARY_5("초5"),
-        ELEMENTARY_6("초6"),
+        ELEMENTARY_1("초등1"),
+        ELEMENTARY_2("초등2"),
+        ELEMENTARY_3("초등3"),
+        ELEMENTARY_4("초등4"),
+        ELEMENTARY_5("초등5"),
+        ELEMENTARY_6("초등6"),
         MIDDLE_ALL("중등"),
-        MIDDLE_1("중1"),
-        MIDDLE_2("중2"),
-        MIDDLE_3("중3"),
+        MIDDLE_1("중등1"),
+        MIDDLE_2("중등2"),
+        MIDDLE_3("중등3"),
         HIGH_ALL("고등"),
-        HIGH_1("고1"),
-        HIGH_2("고2"),
-        HIGH_3("고3");
+        HIGH_1("고등1"),
+        HIGH_2("고등2"),
+        HIGH_3("고등3");
 
         private String symbol;
 

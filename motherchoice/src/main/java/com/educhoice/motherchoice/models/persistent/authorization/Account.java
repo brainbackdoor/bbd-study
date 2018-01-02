@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.models.persistent.authorization;
 
 import com.educhoice.motherchoice.models.persistent.geolocation.MemberAddress;
 import com.educhoice.motherchoice.utils.converter.MemberAddrToStringConverter;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Builder
 public class Account extends BasicAccount{
 
     private String nickname;
@@ -17,7 +19,6 @@ public class Account extends BasicAccount{
     @Column
     @Convert(converter = MemberAddrToStringConverter.class)
     private MemberAddress memberAddress;
-
 
     private boolean marketingAllowed;
 
@@ -27,8 +28,6 @@ public class Account extends BasicAccount{
         this.nickname = nickname;
         this.memberAddress = memberAddress;
     }
-
-    public Account(String email, String password, String nickname, String memberAddress) {}
 
     @Override
     public String toString() {

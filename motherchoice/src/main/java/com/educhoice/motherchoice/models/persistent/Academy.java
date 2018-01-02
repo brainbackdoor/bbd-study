@@ -32,8 +32,7 @@ public class Academy {
     @NotNull
     private String academyName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "academyId")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "address")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<AcademyAddress> address;
 

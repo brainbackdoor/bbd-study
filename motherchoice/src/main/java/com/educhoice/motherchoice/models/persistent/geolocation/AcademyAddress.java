@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.geolocation;
 
+import com.educhoice.motherchoice.models.persistent.Academy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +14,11 @@ public class AcademyAddress{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long addressId;
 
-    @JsonIgnore
-    private String academyId;
+    @ManyToOne
+    @JoinColumn(name = "academyId")
+    private Academy academy;
 
 
 //    @ManyToOne
@@ -45,8 +47,7 @@ public class AcademyAddress{
     @Override
     public String toString() {
         return "AcademyAddress{" +
-                "id=" + id +
-                ", academyId=" + academyId +
+                "id=" + addressId +
                 ", sido='" + sido + '\'' +
                 ", sigungu='" + sigungu + '\'' +
                 ", address='" + address + '\'' +
