@@ -5,6 +5,7 @@ import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.models.persistent.geolocation.Dong;
 import com.educhoice.motherchoice.models.persistent.qna.Answer;
 import com.google.common.collect.Lists;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,12 +25,22 @@ public class DummyApiController {
     public Academy returnDummyAcacdemy() {
 
         return Academy.builder()
-                .address(Arrays.asList(new AcademyAddress("경기도", "김포시", "경기도 김포시 풍무동", "경기도 김포시 유현로 19", "경기도 김포시 풍무동 683", "10120")))
+                .address(Arrays.asList(AcademyAddress.builder().address("경기도 김포시 유현로 19").jibunAddress("경기도 김포시 풍무동 583").longitude(37.123123).latitude(127.3121321).build()))
                 .carAvailable(true)
                 .academyName("포비학원")
                 .courses(returnCourses())
                 .build();
 
+    }
+
+    @GetMapping("/dong")
+    @CrossOrigin
+    public Dong returnDong() {
+        return Dong.builder()
+                .dongId(0)
+                .dongName("풍무동")
+                .juso("경기도 김포시")
+                .build();
     }
 
     private List<Course> returnCourses() {

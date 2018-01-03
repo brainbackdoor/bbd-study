@@ -2,15 +2,15 @@ package com.educhoice.motherchoice.models.persistent.authorization;
 
 import com.educhoice.motherchoice.models.persistent.geolocation.MemberAddress;
 import com.educhoice.motherchoice.utils.converter.MemberAddrToStringConverter;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Account extends BasicAccount{
 
@@ -21,13 +21,6 @@ public class Account extends BasicAccount{
     private MemberAddress memberAddress;
 
     private boolean marketingAllowed;
-
-
-    public Account(String email, String password, String nickname, MemberAddress memberAddress) {
-        super(email, password);
-        this.nickname = nickname;
-        this.memberAddress = memberAddress;
-    }
 
     @Override
     public String toString() {

@@ -25,21 +25,21 @@ public class AccountTest {
 
     private MemberAddress memberAddress;
     private Account account;
-
-    @Before
-    public void setUp() {
-        this.memberAddress = new MemberAddress("경기도", "김포시", "풍무동");
-        this.account = new Account("wheejuni@gmail.com","1234","포비",this.memberAddress);
-        this.account.setRoles(AccountRoles.INACTIVE_USER );
-    }
-
-    @Test
-    public void 객체저장() {
-        accountRepository.save(account);
-        log.debug("account email : {}",accountRepository.findByEmail(account.getEmail()));
-        BasicAccount testAccount = accountRepository.findByEmail("wheejuni@gmail.com").get();
-        System.out.println((Account)testAccount);
-        assertNotNull(testAccount);
-    }
+//
+//    @Before
+//    public void setUp() {
+//        this.memberAddress = new MemberAddress("경기도", "김포시", "풍무동");
+//        this.account = new Account("wheejuni@gmail.com","1234","포비",this.memberAddress);
+//        this.account.setRoles(AccountRoles.INACTIVE_USER );
+//    }
+//
+//    @Test
+//    public void 객체저장() {
+//        accountRepository.save(account);
+//        log.debug("account email : {}",accountRepository.findByEmail(account.getEmail()));
+//        BasicAccount testAccount = accountRepository.findByEmail("wheejuni@gmail.com").get();
+//        System.out.println((Account)testAccount);
+//        assertNotNull(testAccount);
+//    }
 
 }

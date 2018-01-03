@@ -2,14 +2,16 @@ package com.educhoice.motherchoice.models.persistent.geolocation;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AcademyAddress{
 
     @Id
@@ -21,10 +23,10 @@ public class AcademyAddress{
     private Academy academy;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "academy_address")
-//    @JsonIgnore
-//    private Dong dong;
+    @ManyToOne
+    @JoinColumn(name = "dongId")
+    @JsonIgnore
+    private Dong dong;
 
     private String sido;
     private String sigungu;
@@ -33,16 +35,8 @@ public class AcademyAddress{
     private String jibunAddress;
     private String zonecode;
 
-    public AcademyAddress() {}
-
-    public AcademyAddress(String sido, String sigungu, String address, String roadAddress, String jibunAddress, String zonecode) {
-        this.sido = sido;
-        this.sigungu = sigungu;
-        this.address = address;
-        this.roadAddress = roadAddress;
-        this.jibunAddress = jibunAddress;
-        this.zonecode = zonecode;
-    }
+    private double latitude;
+    private double longitude;
 
     @Override
     public String toString() {
