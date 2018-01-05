@@ -9,12 +9,13 @@ public enum SocialSigninProviders {
     KAKAO(
             (userinfo -> {
                 Map<String, Object> properties = (Map<String, Object>)userinfo.get("properties");
-                return SocialUserinfo.builder().username((String)properties.get("nickname")).profileUri((String)properties.get("profile_image")).build();
+                int socialId = (int)userinfo.get("id");
+                return SocialUserinfo.builder().socialId(socialId).username((String)properties.get("nickname")).profileUri((String)properties.get("profile_image")).build();
             }), "kakao"),
     NAVER(
             (userinfo -> {
                 Map<String, Object> properties = (Map<String, Object>)userinfo.get("response");
-                return SocialUserinfo.builder().username((String)properties.get("nickname")).profileUri((String)properties.get("profile_image")).build();
+                return SocialUserinfo.builder().socialId(Integer.parseInt((String)properties.get("id"))).username((String)properties.get("nickname")).profileUri((String)properties.get("profile_image")).build();
             }), "naver");
 
     private SocialUserinfoExtractor extractor;

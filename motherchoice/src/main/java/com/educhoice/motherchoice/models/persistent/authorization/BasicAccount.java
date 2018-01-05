@@ -17,8 +17,10 @@ public class BasicAccount {
 
     public enum AccountRoles {
 
+        OAUTH_TEMPORARY_USER,
         PRE_INSPECTION_USER,
         UNPAID_USER,
+        UNPAID_ACADEMY_USER,
         PAID_USER,
         INACTIVE_USER,
         QUIT_USER,
@@ -45,15 +47,24 @@ public class BasicAccount {
     @NotNull
     private String password;
 
+    private int socialId;
+
+    private String profileUri;
+
     @NotNull
     @Enumerated(value = EnumType.ORDINAL)
     private AccountRoles roles;
 
-    public BasicAccount() {}
-
     public BasicAccount(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public BasicAccount(String email, String password, String profileUri, AccountRoles roles) {
+        this.email = email;
+        this.password = password;
+        this.profileUri = profileUri;
+        this.roles = roles;
     }
 
     public boolean isSameEmail(String email) {

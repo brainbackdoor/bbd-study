@@ -9,18 +9,24 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+
 public class Account extends BasicAccount{
 
     private String nickname;
 
-    @Column
-    @Convert(converter = MemberAddrToStringConverter.class)
-    private MemberAddress memberAddress;
+//    @Column
+//    @Convert(converter = MemberAddrToStringConverter.class)
+//    private MemberAddress memberAddress;
+    private String memberAddress;
 
     private boolean marketingAllowed;
+
+    public Account(String username, String password, String nickname, String memberAddress, boolean marketingAllowed, AccountRoles roles) {
+        super(username, password, null, roles);
+        this.nickname = nickname;
+        this.memberAddress = memberAddress;
+        this.marketingAllowed = marketingAllowed;
+    }
 
     @Override
     public String toString() {

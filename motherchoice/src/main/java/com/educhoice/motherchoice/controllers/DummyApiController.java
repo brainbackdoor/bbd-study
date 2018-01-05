@@ -1,17 +1,19 @@
 package com.educhoice.motherchoice.controllers;
 
+import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
+import com.educhoice.motherchoice.configuration.security.service.UserJoinService;
+import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.geolocation.Dong;
-import com.educhoice.motherchoice.models.persistent.qna.Answer;
+import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 import com.google.common.collect.Lists;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,10 +22,12 @@ import java.util.List;
 @RestController
 public class DummyApiController {
 
+    @Autowired
+    private UserJoinService service;
+
     @GetMapping("/academy")
     @CrossOrigin
     public Academy returnDummyAcacdemy() {
-
         return Academy.builder()
                 .address(Arrays.asList(AcademyAddress.builder().address("경기도 김포시 유현로 19").jibunAddress("경기도 김포시 풍무동 583").longitude(37.123123).latitude(127.3121321).build()))
                 .carAvailable(true)
@@ -41,6 +45,15 @@ public class DummyApiController {
                 .dongName("풍무동")
                 .juso("경기도 김포시")
                 .build();
+    }
+
+    @PostMapping("/join/oauth")
+    @PreAuthorize("hasRole('ROLE_OAUTH_TEMPORARY')")
+    public IntegratedUserSigninToken socialJoinRequest(IntegratedUserSigninToken token, @RequestBody UserJoinRequest request) {
+        SecurityAccount account = token.getAccount();
+        service.joinSocialUser(token.getUserinfo(), request);
+
+        return token;
     }
 
     private List<Course> returnCourses() {

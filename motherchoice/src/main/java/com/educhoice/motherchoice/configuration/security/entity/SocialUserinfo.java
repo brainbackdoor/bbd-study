@@ -13,4 +13,6 @@ public class SocialUserinfo {
 
     private String username;
     private String profileUri;
+    private int socialId;
+
 }

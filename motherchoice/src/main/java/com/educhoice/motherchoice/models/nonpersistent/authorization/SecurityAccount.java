@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.nonpersistent.authorization;
 
+import com.educhoice.motherchoice.configuration.security.entity.SocialUserinfo;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,6 +27,10 @@ public class SecurityAccount extends User {
     public SecurityAccount(BasicAccount account) {
         super(account.getEmail(), account.getPassword(), true, true, true, true, makeAuthorities(Arrays.asList(account.getRoles())));
         this.basicAccount = account;
+    }
+
+    public SecurityAccount(SocialUserinfo userinfo) {
+        super(userinfo.getUsername(), "1111", makeAuthorities(Arrays.asList(BasicAccount.AccountRoles.OAUTH_TEMPORARY_USER)));
     }
 
     public BasicAccount getBasicAccount() {

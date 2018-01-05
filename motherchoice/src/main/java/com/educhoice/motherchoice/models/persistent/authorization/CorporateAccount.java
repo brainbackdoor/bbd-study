@@ -15,7 +15,15 @@ public class CorporateAccount extends BasicAccount {
 	private String phoneNo;
 	private String ownerName;
 
-	@OneToMany
-	private List<Academy> ownedAcademies;
+	@OneToOne
+	@JoinColumn(name = "academyId")
+	private Academy academy;
 
+    public CorporateAccount(String email, String password) {
+        super(email, password);
+    }
+
+    public CorporateAccount(String email, String password, String ownerName, String phoneNo, String profileUri, AccountRoles roles) {
+        super(email, password, profileUri, roles);
+    }
 }
