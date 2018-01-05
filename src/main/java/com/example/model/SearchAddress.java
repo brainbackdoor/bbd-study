@@ -30,7 +30,8 @@ public class SearchAddress {
     @Column(name="`value`")
     private String value;
 
+    private String longitude;
     
-    
+    private String latitude;
 }
 
