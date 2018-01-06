@@ -1,6 +1,6 @@
 package com.educhoice.motherchoice.models.nonpersistent.authorization;
 
-import com.educhoice.motherchoice.configuration.security.entity.SocialUserinfo;
+import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 
 public class TemporarySocialAccount extends BasicAccount{

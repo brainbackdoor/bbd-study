@@ -1,9 +1,9 @@
-package com.educhoice.motherchoice.configuration.security.service;
+package com.educhoice.motherchoice.configuration.security.entity;
 
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 
 @FunctionalInterface
 public interface UserSignupAction {
-    public BasicAccount userSignup(UserJoinRequest request);
+    BasicAccount userSignup(UserJoinRequest request);
 }

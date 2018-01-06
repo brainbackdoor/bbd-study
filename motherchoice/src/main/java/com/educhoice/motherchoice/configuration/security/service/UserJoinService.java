@@ -1,8 +1,7 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
-import com.educhoice.motherchoice.configuration.security.entity.SocialUserinfo;
-import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
-import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
+import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
+import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
@@ -32,10 +31,16 @@ public class UserJoinService {
 
     public void joinSocialUser(SocialUserinfo userinfo, UserJoinRequest request) {
         if(request.isCorporateJoinRequest()) {
-            corporateAccountRepository.save((CorporateAccount)request.generateAccount());
+            CorporateAccount account = (CorporateAccount)request.generateAccount();
+            account.setSocialId(userinfo.getSocialId());
+            account.setProfileUri(userinfo.getProfileUri());
+            corporateAccountRepository.save(account);
             return;
         }
-
+        Account account = (Account)request.generateAccount();
+        account.setSocialId(userinfo.getSocialId());
+        account.setProfileUri(userinfo.getProfileUri());
+        accountRepository.save(account);
     }
 
     private boolean isEmailCertified(String email) {

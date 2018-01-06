@@ -21,8 +21,8 @@ public class Account extends BasicAccount{
 
     private boolean marketingAllowed;
 
-    public Account(String username, String password, String nickname, String memberAddress, boolean marketingAllowed, AccountRoles roles) {
-        super(username, password, null, roles);
+    public Account(String username, String password, String nickname, String memberAddress, String profileUri, boolean marketingAllowed, AccountRoles roles) {
+        super(username, password, profileUri, roles);
         this.nickname = nickname;
         this.memberAddress = memberAddress;
         this.marketingAllowed = marketingAllowed;

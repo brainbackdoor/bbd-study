@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.educhoice.motherchoice.models.HashTag;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,6 +42,9 @@ public class Academy {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private CorporateAccount corporateAccount;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HashTag> tags;
 
     public void addCourse(Course course) {
         if(this.courses == null) {

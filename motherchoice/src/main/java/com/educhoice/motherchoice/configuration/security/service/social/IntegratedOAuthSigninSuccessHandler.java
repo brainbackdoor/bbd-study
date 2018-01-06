@@ -1,11 +1,12 @@
 package com.educhoice.motherchoice.configuration.security.service.social;
 
 import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
-import com.educhoice.motherchoice.configuration.security.entity.SocialUserinfo;
+import com.educhoice.motherchoice.configuration.security.entity.oauth.AuthenticationSuccessAction;
+import com.educhoice.motherchoice.configuration.security.entity.oauth.OAuthRequestTypes;
+import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 import com.educhoice.motherchoice.configuration.security.entity.UserLoginExceptionEntity;
 import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
 import com.educhoice.motherchoice.configuration.security.service.SocialSigninProviders;
-import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +28,7 @@ public class IntegratedOAuthSigninSuccessHandler extends SavedRequestAwareAuthen
     private AccountDetailsService accountDetailsService;
 
     private SocialSigninProviders providers;
+    private OAuthRequestTypes types;
 
     public IntegratedOAuthSigninSuccessHandler(String defaultUri) {
         setDefaultTargetUrl(defaultUri);
@@ -38,6 +39,12 @@ public class IntegratedOAuthSigninSuccessHandler extends SavedRequestAwareAuthen
         this.providers = providers;
     }
 
+    public IntegratedOAuthSigninSuccessHandler(String defaultUri, SocialSigninProviders providers, OAuthRequestTypes types) {
+        setDefaultTargetUrl(defaultUri);
+        this.providers = providers;
+        this.types = types;
+    }
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth) throws IOException, ServletException{
 
@@ -46,11 +53,11 @@ public class IntegratedOAuthSigninSuccessHandler extends SavedRequestAwareAuthen
         SocialUserinfo info = this.providers.extractUserInfo((Map<String, Object>)authentication.getUserAuthentication().getDetails());
 
         try {
-            UserDetails details = accountDetailsService.loadUserByUsername(info.getUsername());
+            UserDetails details = accountDetailsService.loadUserBySocialId(info.getSocialId());
             SecurityContextHolder.getContext().setAuthentication(new IntegratedUserSigninToken(details, null, details.getAuthorities()));
         } catch(Exception e) {
-            SecurityContextHolder.getContext().setAuthentication(new IntegratedUserSigninToken(new SecurityAccount(info)));
-            UserLoginExceptionEntity entity = new UserLoginExceptionEntity(e);
+            SecurityContextHolder.getContext().setAuthentication(new IntegratedUserSigninToken(info));
+            UserLoginExceptionEntity entity = new UserLoginExceptionEntity(e, HttpStatus.BAD_REQUEST);
             String json = new ObjectMapper().writeValueAsString(entity);
             writeHttpResponse(res, HttpStatus.BAD_REQUEST, json);
         }

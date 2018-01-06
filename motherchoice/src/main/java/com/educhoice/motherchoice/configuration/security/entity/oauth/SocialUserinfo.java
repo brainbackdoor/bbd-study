@@ -1,4 +1,4 @@
-package com.educhoice.motherchoice.configuration.security.entity;
+package com.educhoice.motherchoice.configuration.security.entity.oauth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class SocialUserinfo {
 
     private String username;
+    private String email;
     private String profileUri;
     private int socialId;
 

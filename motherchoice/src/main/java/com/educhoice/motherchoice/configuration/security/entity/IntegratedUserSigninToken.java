@@ -1,12 +1,12 @@
 package com.educhoice.motherchoice.configuration.security.entity;
 
+import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.security.Security;
 import java.util.Arrays;
 import java.util.Collection;
 

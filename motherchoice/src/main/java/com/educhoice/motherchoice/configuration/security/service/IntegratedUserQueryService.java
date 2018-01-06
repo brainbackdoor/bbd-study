@@ -19,11 +19,16 @@ public class IntegratedUserQueryService {
 	@Autowired
     CorporateAccountRepository corporateAccountRepository;
 
-	public BasicAccount loadByEmail(String email) throws UsernameNotFoundException{
+	public BasicAccount loadByEmail(String email) throws UsernameNotFoundException {
 
 		Optional<Account> account = accountRepository.findByEmail(email);
 		return account.isPresent() ? account.get() : corporateAccountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user not found!"));
 	}
+
+	public BasicAccount loadBySocialId(int socialId) throws UsernameNotFoundException {
+	    Optional<Account> account = accountRepository.findBySocialId(socialId);
+	    return account.isPresent() ? account.get() : corporateAccountRepository.findBySocialId(socialId).orElseThrow(() -> new UsernameNotFoundException("user not found!"));
+    }
 
 	public boolean isExistingEmail(String email) {
 		return accountRepository.findByEmail(email).isPresent() || corporateAccountRepository.findByEmail(email).isPresent();

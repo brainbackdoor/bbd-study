@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.controllers;
 
 import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
+import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
 import com.educhoice.motherchoice.configuration.security.service.UserJoinService;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.models.persistent.Academy;
@@ -24,6 +25,9 @@ public class DummyApiController {
 
     @Autowired
     private UserJoinService service;
+
+    @Autowired
+    private AccountDetailsService accountDetailsService;
 
     @GetMapping("/academy")
     @CrossOrigin
@@ -50,10 +54,9 @@ public class DummyApiController {
     @PostMapping("/join/oauth")
     @PreAuthorize("hasRole('ROLE_OAUTH_TEMPORARY')")
     public IntegratedUserSigninToken socialJoinRequest(IntegratedUserSigninToken token, @RequestBody UserJoinRequest request) {
-        SecurityAccount account = token.getAccount();
         service.joinSocialUser(token.getUserinfo(), request);
 
-        return token;
+        return new IntegratedUserSigninToken((SecurityAccount)accountDetailsService.loadUserBySocialId(token.getUserinfo().getSocialId()));
     }
 
     private List<Course> returnCourses() {

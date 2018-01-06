@@ -17,6 +17,7 @@ public class BasicAccount {
 
     public enum AccountRoles {
 
+        ADMIN,
         OAUTH_TEMPORARY_USER,
         PRE_INSPECTION_USER,
         UNPAID_USER,
@@ -52,7 +53,7 @@ public class BasicAccount {
     private String profileUri;
 
     @NotNull
-    @Enumerated(value = EnumType.ORDINAL)
+    @Enumerated(value = EnumType.STRING)
     private AccountRoles roles;
 
     public BasicAccount(String email, String password) {

@@ -1,11 +1,11 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
-import com.educhoice.motherchoice.configuration.security.entity.SocialUserinfo;
+import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 
 import java.util.Map;
 
 @FunctionalInterface
 public interface SocialUserinfoExtractor {
 
-    public SocialUserinfo retrieveUserinfo(Map<String, Object> userinfo);
+    SocialUserinfo retrieveUserinfo(Map<String, Object> userinfo);
 }
