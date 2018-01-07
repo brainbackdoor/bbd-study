@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class SecurityAccount extends User {
 
+    private static final String ROLE_PREFIX = "ROLE_";
+
     private BasicAccount basicAccount;
     private SocialUserinfo userinfo;
 
@@ -26,12 +28,12 @@ public class SecurityAccount extends User {
 
 
     public SecurityAccount(BasicAccount account) {
-        super(account.getEmail(), account.getPassword(), true, true, true, true, makeAuthorities(Arrays.asList(account.getRoles())));
+        super(account.getLoginId(), account.getPassword(), true, true, true, true, makeAuthorities(Arrays.asList(account.getRoles())));
         this.basicAccount = account;
     }
 
     public SecurityAccount(SocialUserinfo userinfo) {
-        super(userinfo.getUsername(), "1111", makeAuthorities(Arrays.asList(BasicAccount.AccountRoles.OAUTH_TEMPORARY_USER)));
+        super(userinfo.getLoginId(), "1111", makeAuthorities(Arrays.asList(BasicAccount.AccountRoles.OAUTH_TEMPORARY_USER)));
         this.userinfo = userinfo;
     }
 
@@ -44,6 +46,6 @@ public class SecurityAccount extends User {
     }
 
     private static Collection<? extends GrantedAuthority> makeAuthorities(List<BasicAccount.AccountRoles> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getSymbol())).collect(Collectors.toList());
+        return roles.stream().map(r -> new SimpleGrantedAuthority(ROLE_PREFIX + r.getSymbol())).collect(Collectors.toList());
     }
 }

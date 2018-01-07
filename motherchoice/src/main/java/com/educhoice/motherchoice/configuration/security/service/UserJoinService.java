@@ -6,6 +6,7 @@ import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccou
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
+import com.educhoice.motherchoice.utils.exceptions.security.EmailNotCertifiedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -25,21 +26,32 @@ public class UserJoinService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void join(UserJoinRequest request) {
+    public void join(UserJoinRequest request) throws EmailNotCertifiedException{
+        if(!isEmailCertified(request.getLoginId())) {
+            throw new EmailNotCertifiedException("인증되지 않은 이메일입니다.");
+        }
 
+        if(request.isCorporateJoinRequest()) {
+            CorporateAccount account = (CorporateAccount)request.generateAccount();
+            account.encryptPassword(passwordEncoder);
+            corporateAccountRepository.save(account);
+        }
+        Account account = (Account)request.generateAccount();
+        account.encryptPassword(passwordEncoder);
+        accountRepository.save(account);
     }
 
     public void joinSocialUser(SocialUserinfo userinfo, UserJoinRequest request) {
+        request.setAttributesFromSocialInfo(userinfo);
+
         if(request.isCorporateJoinRequest()) {
             CorporateAccount account = (CorporateAccount)request.generateAccount();
-            account.setSocialId(userinfo.getSocialId());
-            account.setProfileUri(userinfo.getProfileUri());
+
             corporateAccountRepository.save(account);
             return;
         }
+
         Account account = (Account)request.generateAccount();
-        account.setSocialId(userinfo.getSocialId());
-        account.setProfileUri(userinfo.getProfileUri());
         accountRepository.save(account);
     }
 

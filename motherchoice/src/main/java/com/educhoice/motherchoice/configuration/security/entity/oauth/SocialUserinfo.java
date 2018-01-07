@@ -1,18 +1,16 @@
 package com.educhoice.motherchoice.configuration.security.entity.oauth;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class SocialUserinfo {
 
-    private String username;
-    private String email;
+    private String loginId;
+    private String nickname;
     private String profileUri;
     private int socialId;
 

@@ -1,18 +1,18 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class BasicAccount {
 
     public enum AccountRoles {
@@ -43,7 +43,7 @@ public class BasicAccount {
     private long accountId;
 
     @NotNull
-    private String email;
+    private String loginId;
 
     @NotNull
     private String password;
@@ -56,20 +56,24 @@ public class BasicAccount {
     @Enumerated(value = EnumType.STRING)
     private AccountRoles roles;
 
-    public BasicAccount(String email, String password) {
-        this.email = email;
+    public BasicAccount(String loginId, String password) {
+        this.loginId = loginId;
         this.password = password;
     }
 
-    public BasicAccount(String email, String password, String profileUri, AccountRoles roles) {
-        this.email = email;
+    public BasicAccount(String loginId, String password, String profileUri, AccountRoles roles) {
+        this.loginId = loginId;
         this.password = password;
         this.profileUri = profileUri;
         this.roles = roles;
     }
 
     public boolean isSameEmail(String email) {
-        return email.equals(this.email);
+        return email.equals(this.loginId);
+    }
+
+    public void encryptPassword(PasswordEncoder encoder) {
+        encoder.encode(this.password);
     }
 
 }

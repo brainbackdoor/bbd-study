@@ -1,8 +1,7 @@
 package com.educhoice.motherchoice.models.persistent;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import com.educhoice.motherchoice.models.persistent.Grades.*;
 
 import javax.persistence.*;
@@ -12,6 +11,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Course {
 
     @Id

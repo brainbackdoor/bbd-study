@@ -5,23 +5,22 @@ import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString
 public class UserJoinRequest {
 
     public enum JoinRequestType {
         PARENTS(0, req -> {
-            return new Account(req.getEmail(), req.getPassword(), req.getNickname(), req.getMemberAddress(), req.getProfileUri(), req.isMarketingAllowed(), BasicAccount.AccountRoles.UNPAID_USER);
+            return new Account(req.getLoginId(), req.getPassword(), req.getNickname(), req.getMemberAddress(), req.getProfileUri(), req.isMarketingAllowed(), BasicAccount.AccountRoles.UNPAID_USER);
         }),
         ACADEMY(1, req -> {
-            return new CorporateAccount(req.getEmail(), req.getPassword(), req.getOriginalName(), req.getPhoneNo(), null, BasicAccount.AccountRoles.PRE_INSPECTION_USER);
+            return new CorporateAccount(req.getLoginId(), req.getPassword(), req.getOriginalName(), req.getPhoneNo(), null, BasicAccount.AccountRoles.PRE_INSPECTION_USER);
         });
 
         private int code;
@@ -43,7 +42,7 @@ public class UserJoinRequest {
 
     }
 
-    private String email;
+    private String loginId;
     private String password;
     private String nickname;
     private String memberAddress;
@@ -62,7 +61,7 @@ public class UserJoinRequest {
     }
 
     public void setAttributesFromSocialInfo(SocialUserinfo info) {
-        this.email = info.getUsername();
+        this.loginId = info.getLoginId();
         this.profileUri = info.getProfileUri();
     }
 }

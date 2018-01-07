@@ -50,7 +50,7 @@ public class TokenStorageService {
 		try {
 			boolean isCorrect = this.cache.get(email).isCorrectToken(tokenValue);
 			if (isCorrect) {
-				log.info(String.format("token info : %s, email: %s", this.cache.get(email).getTokenValue(),
+				log.info(String.format("token info : %s, loginId: %s", this.cache.get(email).getTokenValue(),
 						this.cache.get(email).getEmail()));
 				this.certify(email);
 				return isCorrect;

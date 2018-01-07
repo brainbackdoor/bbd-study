@@ -20,7 +20,7 @@ public class Answer extends BaseTimeEntity{
     private String content;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "answerid")
+    @JoinColumn(name = "answerId")
     private List<Reply> replies;
 
     @ManyToOne

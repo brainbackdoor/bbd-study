@@ -21,8 +21,6 @@ public class Reply {
     @JoinColumn(name = "replyId")
     private BasicAccount account;
 
-
     private String content;
-
 
 }

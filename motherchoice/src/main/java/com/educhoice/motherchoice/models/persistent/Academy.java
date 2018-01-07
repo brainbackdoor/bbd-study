@@ -53,6 +53,14 @@ public class Academy {
         this.courses.add(course);
     }
 
+    public void addHashTags(HashTag tag) {
+        if(this.tags == null) {
+            this.tags = Lists.newArrayList();
+        }
+
+        this.tags.add(tag);
+    }
+
     public long calculateAvgTuition() {
         return (long) this.courses.stream().mapToLong(c -> c.getTuition()).average().orElse(0.0);
     }

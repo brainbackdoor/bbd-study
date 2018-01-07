@@ -36,7 +36,7 @@ public class AccountTest {
 //    @Test
 //    public void 객체저장() {
 //        accountRepository.save(account);
-//        log.debug("account email : {}",accountRepository.findByEmail(account.getEmail()));
+//        log.debug("account loginId : {}",accountRepository.findByEmail(account.getLoginId()));
 //        BasicAccount testAccount = accountRepository.findByEmail("wheejuni@gmail.com").get();
 //        System.out.println((Account)testAccount);
 //        assertNotNull(testAccount);

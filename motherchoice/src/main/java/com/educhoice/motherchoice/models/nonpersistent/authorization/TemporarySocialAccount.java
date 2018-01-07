@@ -10,7 +10,7 @@ public class TemporarySocialAccount extends BasicAccount{
     private SocialUserinfo userinfo;
 
     public TemporarySocialAccount(SocialUserinfo userinfo) {
-        super(userinfo.getUsername(), SOCIAL_TEMPORARY_PWD, userinfo.getProfileUri(), AccountRoles.OAUTH_TEMPORARY_USER);
+        super(userinfo.getLoginId(), SOCIAL_TEMPORARY_PWD, userinfo.getProfileUri(), AccountRoles.OAUTH_TEMPORARY_USER);
         this.userinfo = userinfo;
     }
 

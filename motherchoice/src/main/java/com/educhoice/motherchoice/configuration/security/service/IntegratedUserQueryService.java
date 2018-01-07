@@ -21,8 +21,8 @@ public class IntegratedUserQueryService {
 
 	public BasicAccount loadByEmail(String email) throws UsernameNotFoundException {
 
-		Optional<Account> account = accountRepository.findByEmail(email);
-		return account.isPresent() ? account.get() : corporateAccountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user not found!"));
+		Optional<Account> account = accountRepository.findByLoginId(email);
+		return account.isPresent() ? account.get() : corporateAccountRepository.findByLoginId(email).orElseThrow(() -> new UsernameNotFoundException("user not found!"));
 	}
 
 	public BasicAccount loadBySocialId(int socialId) throws UsernameNotFoundException {
@@ -31,6 +31,6 @@ public class IntegratedUserQueryService {
     }
 
 	public boolean isExistingEmail(String email) {
-		return accountRepository.findByEmail(email).isPresent() || corporateAccountRepository.findByEmail(email).isPresent();
+		return accountRepository.findByLoginId(email).isPresent() || corporateAccountRepository.findByLoginId(email).isPresent();
 	}
 }

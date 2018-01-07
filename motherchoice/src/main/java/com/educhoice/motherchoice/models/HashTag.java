@@ -22,5 +22,4 @@ public class HashTag {
 
     private String title;
 
-
 }
