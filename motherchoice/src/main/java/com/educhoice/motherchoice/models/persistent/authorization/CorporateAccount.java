@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,8 @@ import java.util.List;
 public class CorporateAccount extends BasicAccount {
 
 	private String phoneNo;
+
+	@JsonIgnore
 	private String ownerName;
 
 	@OneToOne

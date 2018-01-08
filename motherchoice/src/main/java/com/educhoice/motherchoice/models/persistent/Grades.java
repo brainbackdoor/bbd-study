@@ -1,6 +1,8 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.educhoice.motherchoice.utils.actions.CalculateGradeAvgTuitionAction;
 import com.educhoice.motherchoice.utils.exceptions.NoGradeDefException;
+import com.educhoice.motherchoice.valueobject.models.academies.GradeDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -8,12 +10,32 @@ import java.util.Arrays;
 import java.util.List;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum Grades {
+public enum Grades implements CalculateGradeAvgTuitionAction{
 
-    PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아"),
-    ELEMENTARY(Arrays.asList(SpecifiedGrades.ELEMENTARY_ALL, SpecifiedGrades.ELEMENTARY_1, SpecifiedGrades.ELEMENTARY_2, SpecifiedGrades.ELEMENTARY_3, SpecifiedGrades.ELEMENTARY_4, SpecifiedGrades.ELEMENTARY_5, SpecifiedGrades.ELEMENTARY_6), "초"),
-    MIDDLE(Arrays.asList(SpecifiedGrades.MIDDLE_ALL, SpecifiedGrades.MIDDLE_1, SpecifiedGrades.MIDDLE_2, SpecifiedGrades.MIDDLE_3), "중"),
-    HIGH(Arrays.asList(SpecifiedGrades.HIGH_ALL, SpecifiedGrades.HIGH_1, SpecifiedGrades.HIGH_2, SpecifiedGrades.HIGH_3), "고");
+    PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아") {
+        @Override
+        public GradeDto generateGradeDto(Academy academy) {
+            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+        }
+    },
+    ELEMENTARY(Arrays.asList(SpecifiedGrades.ELEMENTARY_ALL, SpecifiedGrades.ELEMENTARY_1, SpecifiedGrades.ELEMENTARY_2, SpecifiedGrades.ELEMENTARY_3, SpecifiedGrades.ELEMENTARY_4, SpecifiedGrades.ELEMENTARY_5, SpecifiedGrades.ELEMENTARY_6), "초등") {
+        @Override
+        public GradeDto generateGradeDto(Academy academy) {
+            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+        }
+    },
+    MIDDLE(Arrays.asList(SpecifiedGrades.MIDDLE_ALL, SpecifiedGrades.MIDDLE_1, SpecifiedGrades.MIDDLE_2, SpecifiedGrades.MIDDLE_3), "중등") {
+        @Override
+        public GradeDto generateGradeDto(Academy academy) {
+            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+        }
+    },
+    HIGH(Arrays.asList(SpecifiedGrades.HIGH_ALL, SpecifiedGrades.HIGH_1, SpecifiedGrades.HIGH_2, SpecifiedGrades.HIGH_3), "고등") {
+        @Override
+        public GradeDto generateGradeDto(Academy academy) {
+            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+        }
+    };
 
     private List<SpecifiedGrades> specifiedGrades;
     private String symbol;
@@ -29,6 +51,10 @@ public enum Grades {
 
     public static Grades findBySpecifiedGrades(SpecifiedGrades grade) {
         return Arrays.stream(Grades.values()).filter(grades -> grades.isContainingGrade(grade)).findAny().orElseThrow(() -> new NoGradeDefException("no matching grade found!"));
+    }
+
+    public long calculateAvgTuition(List<Course> courses) {
+        return ((long) courses.stream().filter(c -> this.isContainingGrade(c.getGrades())).mapToLong(c -> c.getTuition()).average().orElse(0L));
     }
 
     private boolean isContainingGrade(SpecifiedGrades grade) {
@@ -71,6 +97,7 @@ public enum Grades {
             }
             return Arrays.stream(SpecifiedGrades.values()).filter(g -> symbol.equals(g.getSymbol())).findAny().orElse(GRADE_UNDEF);
         }
+
     }
 
 }

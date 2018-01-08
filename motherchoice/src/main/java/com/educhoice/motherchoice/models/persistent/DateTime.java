@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class DateTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private long dateTimeId;
 
     @NotNull

@@ -62,6 +62,11 @@ public class Course {
             return Arrays.stream(CoursesClassification.values()).filter(course -> course.isCorrectSymbol(symbol)).findAny().orElse(CoursesClassification.INTEGRATED);
         }
 
+        @JsonValue
+        public String getSymbol() {
+            return this.symbol;
+        }
+
         private boolean isCorrectSymbol(String symbol) {
             return symbol.equals(this.symbol);
         }

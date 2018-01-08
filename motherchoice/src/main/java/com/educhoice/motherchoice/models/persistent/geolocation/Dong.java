@@ -1,6 +1,8 @@
 package com.educhoice.motherchoice.models.persistent.geolocation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +22,10 @@ public class Dong {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long dongId;
 
+    @JsonProperty("dong")
     private String dongName;
+
+    @JsonIgnore
     private String juso;
 
     @OneToMany

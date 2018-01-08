@@ -1,6 +1,8 @@
 package com.educhoice.motherchoice.valueobject.models;
 
 import com.educhoice.motherchoice.models.persistent.Grades;
+import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
+import com.educhoice.motherchoice.valueobject.models.query.QueryStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +28,7 @@ public class AcademyQueryDtoTest {
             "      \"latitude\": 37.4994914,\n" +
             "      \"longitude\": 127.0610527\n" +
             "    },\n" +
-            "    \"grade\": \"중2\",\n" +
+            "    \"grade\": \"중등2\",\n" +
             "    \"subject\": \"영어\",\n" +
             "    \"carAvailable\": true\n" +
             "  }\n" +

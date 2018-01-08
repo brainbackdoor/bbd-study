@@ -1,5 +1,6 @@
-package com.educhoice.motherchoice.valueobject.models;
+package com.educhoice.motherchoice.valueobject.models.query;
 
+import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Getter;
 import lombok.ToString;

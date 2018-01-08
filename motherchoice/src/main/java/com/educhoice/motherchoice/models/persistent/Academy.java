@@ -3,6 +3,7 @@ package com.educhoice.motherchoice.models.persistent;
 import com.educhoice.motherchoice.models.HashTag;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.valueobject.models.academies.GradeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
@@ -65,6 +66,10 @@ public class Academy {
         return (long) this.courses.stream().mapToLong(c -> c.getTuition()).average().orElse(0.0);
     }
 
+    public long calculateKinderAvgTuition() {
+        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.PRESCHOOL).mapToLong(preschool -> preschool.getTuition()).average().orElse(0.0);
+    }
+
     public long calculateElementaryAvgTuition() {
         return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.ELEMENTARY).mapToLong(elementary -> elementary.getTuition()).average().orElse(0.0);
     }
@@ -75,6 +80,17 @@ public class Academy {
 
     public long calculateHighAvgTuition() {
         return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.HIGH).mapToLong(high -> high.getTuition()).average().orElse(0.0);
+    }
+
+    public List<GradeDto> getGradeAvgDtos() {
+        List<GradeDto> dtos = Lists.newArrayList();
+
+        dtos.add(GradeDto.builder().name(Grades.PRESCHOOL.getSymbol()).tuitionAvg(calculateKinderAvgTuition()).build());
+        dtos.add(GradeDto.builder().name(Grades.ELEMENTARY.getSymbol()).tuitionAvg(calculateElementaryAvgTuition()).build());
+        dtos.add(GradeDto.builder().name(Grades.MIDDLE.getSymbol()).tuitionAvg(calculateMiddleAvgTuition()).build());
+        dtos.add(GradeDto.builder().name(Grades.HIGH.getSymbol()).tuitionAvg(calculateHighAvgTuition()).build());
+
+        return dtos;
     }
 
     @Override

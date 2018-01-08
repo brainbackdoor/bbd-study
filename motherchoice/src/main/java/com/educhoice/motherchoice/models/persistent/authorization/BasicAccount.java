@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -43,17 +44,22 @@ public class BasicAccount {
     private long accountId;
 
     @NotNull
+    @JsonIgnore
     private String loginId;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private int socialId;
 
+    @JsonIgnore
     private String profileUri;
 
     @NotNull
     @Enumerated(value = EnumType.STRING)
+    @JsonIgnore
     private AccountRoles roles;
 
     public BasicAccount(String loginId, String password) {

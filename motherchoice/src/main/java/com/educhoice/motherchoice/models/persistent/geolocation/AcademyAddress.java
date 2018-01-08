@@ -25,14 +25,21 @@ public class AcademyAddress{
 
     @ManyToOne
     @JoinColumn(name = "dongId")
-    @JsonIgnore
     private Dong dong;
 
     private String sido;
     private String sigungu;
+
+    @JsonIgnore
     private String address;
+
+    @JsonIgnore
     private String roadAddress;
+
+    @JsonIgnore
     private String jibunAddress;
+
+    @JsonIgnore
     private String zonecode;
 
     private double latitude;

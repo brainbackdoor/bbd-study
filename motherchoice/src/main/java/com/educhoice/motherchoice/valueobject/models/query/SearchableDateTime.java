@@ -1,4 +1,4 @@
-package com.educhoice.motherchoice.valueobject.models;
+package com.educhoice.motherchoice.valueobject.models.query;
 
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;

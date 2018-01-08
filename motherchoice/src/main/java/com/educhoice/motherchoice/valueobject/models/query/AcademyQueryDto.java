@@ -1,7 +1,7 @@
-package com.educhoice.motherchoice.valueobject.models;
+package com.educhoice.motherchoice.valueobject.models.query;
 
-import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades.SpecifiedGrades;
+import com.educhoice.motherchoice.valueobject.models.Location;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
