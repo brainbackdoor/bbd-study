@@ -37,5 +37,12 @@ public class TokenStorageServiceTest {
         assertTrue(tokenStorageService.verifyToken(this.token));
     }
 
+    @Test
+    public void 토큰인증_잘되는지() {
+        this.tokenStorageService.putToken(this.token);
+        this.tokenStorageService.verifyToken(this.token);
+        assertTrue(this.tokenStorageService.isCertified("pobi@codesquad.kr"));
+    }
+
 
 }

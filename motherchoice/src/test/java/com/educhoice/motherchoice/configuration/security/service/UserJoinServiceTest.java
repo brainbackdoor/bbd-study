@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
+import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +52,7 @@ public class UserJoinServiceTest {
         log.debug("prepared user info is : {}" , this.request.toString());
         service.joinSocialUser(this.userinfo, this.request);
         assertNotNull(queryService.loadByEmail("wheejuni@github.com"));
+        assertTrue(queryService.loadByEmail("wheejuni@github.com") instanceof Account);
     }
 
 

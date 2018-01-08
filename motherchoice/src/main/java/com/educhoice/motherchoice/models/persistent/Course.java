@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Course {
 
     @Id
@@ -32,8 +32,6 @@ public class Course {
     private CoursesClassification.SpecifiedCoursesClassification coursesClassification;
 
     private String title;
-
-    private boolean regularCourse;
     private long tuition;
 
     //TODO add business logics for Course modification / courses open time calculation.
@@ -135,7 +133,6 @@ public class Course {
                 ", grades=" + grades +
                 ", coursesClassification=" + coursesClassification +
                 ", title='" + title + '\'' +
-                ", regularCourse=" + regularCourse +
                 ", tuition=" + tuition +
                 '}';
     }
