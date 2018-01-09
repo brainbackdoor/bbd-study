@@ -1,28 +1,29 @@
 package com.educhoice.motherchoice.valueobject.models.academies;
 
-import com.educhoice.motherchoice.models.persistent.Image;
-import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.models.persistent.Academy;
+import com.educhoice.motherchoice.models.persistent.Course;
+import com.educhoice.motherchoice.models.persistent.SpecialCourse;
 import lombok.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 
-public class SpecialCourseDto {
-
-    private long id;
-    private String academyName;
-    private List<Image> images;
-    private AcademyAddress address;
-    private boolean carAvailable;
-    private double inquiryResponseRate;
-    private List<GradeDto> grades;
-    private List<String> subjects;
-    private List<CourseDto> courses;
+public class SpecialCourseDto extends CourseDto{
     private String duration;
+
+    public SpecialCourseDto(SpecialCourse specialCourse) {
+        super(specialCourse);
+        this.duration = specialCourse.getDate();
+    }
+
+    public static List<SpecialCourseDto> generateDto(Academy academy) {
+        return academy.getSpecialCourses().stream().map(s -> new SpecialCourseDto(s)).collect(Collectors.toList());
+    }
+
 }

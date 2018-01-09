@@ -39,7 +39,7 @@ public class Course {
     public enum CoursesClassification {
 
         INTEGRATED("종합", Arrays.asList(SpecifiedCoursesClassification.UNDEF)),
-        KOREAN("국어", null),
+        KOREAN("국어", Arrays.asList(SpecifiedCoursesClassification.KOREAN)),
         FOREIGN_LANGUAGE("외국어", Arrays.asList(SpecifiedCoursesClassification.ENGLISH, SpecifiedCoursesClassification.CHINESE, SpecifiedCoursesClassification.JAPANESE, SpecifiedCoursesClassification.ENGLISH_CERTIFICATE)),
         MATH("수학", Arrays.asList(SpecifiedCoursesClassification.MATH, SpecifiedCoursesClassification.MATH_HUMANITIES, SpecifiedCoursesClassification.MATH_NATURAL, SpecifiedCoursesClassification.MATH_THINKING)),
         SOCIAL_STUDIES("사회", Arrays.asList(SpecifiedCoursesClassification.SOCIAL_STUDIES, SpecifiedCoursesClassification.SOCIAL_STUDIES_CULTURRAL_STUDIES, SpecifiedCoursesClassification.SOCIAL_STUDIES_EAST_ASIAN_STUDIES, SpecifiedCoursesClassification.SOCIAL_STUDIES_ECONOMICS, SpecifiedCoursesClassification.SOCIAL_STUDIES_ETHICS, SpecifiedCoursesClassification.SOCIAL_STUDIES_CULTURRAL_STUDIES, SpecifiedCoursesClassification.SOCIAL_STUDIES_KOREAN_GEOGRAPHY, SpecifiedCoursesClassification.SOCIAL_STUDIES_KOREAN_HISTORY,
@@ -58,8 +58,16 @@ public class Course {
             this.specificCourses = specificCourses;
         }
 
+        public static CoursesClassification findBySpecifiedCourses(SpecifiedCoursesClassification specifiedCoursesClassification) {
+            return Arrays.stream(CoursesClassification.values()).filter(c -> c.isContainingSpecifiedCourse(specifiedCoursesClassification)).findFirst().orElse(INTEGRATED);
+        }
+
         public static CoursesClassification getCoursesClassificationBySymbol(String symbol) {
             return Arrays.stream(CoursesClassification.values()).filter(course -> course.isCorrectSymbol(symbol)).findAny().orElse(CoursesClassification.INTEGRATED);
+        }
+
+        private boolean isContainingSpecifiedCourse(SpecifiedCoursesClassification specifiedCoursesClassification) {
+            return this.specificCourses.stream().filter(s -> s == specifiedCoursesClassification).findAny().isPresent();
         }
 
         @JsonValue
@@ -73,6 +81,7 @@ public class Course {
 
         public enum SpecifiedCoursesClassification {
             UNDEF(""),
+            KOREAN("국어"),
             ENGLISH("영어"),
             ENGLISH_CERTIFICATE("영어인증시험"),
             CHINESE("중국어"),

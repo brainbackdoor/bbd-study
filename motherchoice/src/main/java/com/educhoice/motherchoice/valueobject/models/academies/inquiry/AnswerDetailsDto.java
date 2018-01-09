@@ -4,6 +4,7 @@ import java.util.List;
 
 public class AnswerDetailsDto {
 
+    private long answerId;
     private String academyName;
     private String created;
     private String content;

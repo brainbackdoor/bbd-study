@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.models.persistent;
 
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.models.persistent.qna.Question;
 import com.educhoice.motherchoice.valueobject.models.academies.GradeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
@@ -14,6 +15,7 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -31,6 +33,9 @@ public class Academy {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Course> courses;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<SpecialCourse> specialCourses;
+
     @NotNull
     private String academyName;
 
@@ -45,7 +50,7 @@ public class Academy {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AcademyResource> academyResources;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "events")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -57,6 +62,9 @@ public class Academy {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<HashTag> tags;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Question> questions;
 
     public void addCourse(Course course) {
         if(this.courses == null) {
@@ -102,6 +110,10 @@ public class Academy {
         dtos.add(GradeDto.builder().name(Grades.HIGH.getSymbol()).tuitionAvg(calculateHighAvgTuition()).build());
 
         return dtos;
+    }
+
+    public List<String> getSubjectsSummary() {
+        return this.courses.stream().map(c -> Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol()).collect(Collectors.toList());
     }
 
     @Override

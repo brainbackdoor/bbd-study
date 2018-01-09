@@ -18,7 +18,6 @@ public class Reply {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "replyId")
     private BasicAccount account;
 
     private String content;

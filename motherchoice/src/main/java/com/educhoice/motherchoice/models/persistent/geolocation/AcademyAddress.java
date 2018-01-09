@@ -16,10 +16,12 @@ public class AcademyAddress{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private long addressId;
 
     @ManyToOne
     @JoinColumn(name = "academyId")
+    @JsonIgnore
     private Academy academy;
 
 

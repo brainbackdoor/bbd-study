@@ -1,9 +1,6 @@
 package com.educhoice.motherchoice.valueobject.models.academies;
 
-import com.educhoice.motherchoice.models.persistent.AcademyResource;
-import com.educhoice.motherchoice.models.persistent.Event;
-import com.educhoice.motherchoice.models.persistent.HashTag;
-import com.educhoice.motherchoice.models.persistent.Image;
+import com.educhoice.motherchoice.models.persistent.*;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import lombok.*;
@@ -33,5 +30,23 @@ public class AcademyDto {
     private List<AcademyResource> academyResources;
     private List<HashTag> hashTags;
     private CorporateAccount corporateAccount;
+
+    public static AcademyDto generateAcademyDto(Academy academy) {
+        return AcademyDto.builder()
+                .id(academy.getAcademyId())
+                .academyName(academy.getAcademyName())
+                .address(academy.getAddress().get(0))
+                .carAvailable(academy.isCarAvailable())
+                .grades(academy.getGradeAvgDtos())
+                .subjects(academy.getSubjectsSummary())
+                .introduction(academy.getIntroduction())
+                .courses(CourseDto.generateCourseDtoFromAcademy(academy))
+                .specialCourses(SpecialCourseDto.generateDto(academy))
+                .events(academy.getEvents())
+                .academyResources(academy.getAcademyResources())
+                .hashTags(academy.getTags())
+                .corporateAccount(academy.getCorporateAccount())
+                .build();
+    }
 
 }

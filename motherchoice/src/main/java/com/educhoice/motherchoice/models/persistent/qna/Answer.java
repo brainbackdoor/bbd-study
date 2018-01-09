@@ -3,6 +3,8 @@ package com.educhoice.motherchoice.models.persistent.qna;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Answer extends BaseTimeEntity{
     private String content;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "answerId")
     private List<Reply> replies;
 
