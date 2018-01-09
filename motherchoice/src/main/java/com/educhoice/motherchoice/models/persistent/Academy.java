@@ -1,6 +1,5 @@
 package com.educhoice.motherchoice.models.persistent;
 
-import com.educhoice.motherchoice.models.HashTag;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.valueobject.models.academies.GradeDto;
@@ -11,6 +10,7 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -34,11 +34,22 @@ public class Academy {
     @NotNull
     private String academyName;
 
+    private String introduction;
+    private boolean carAvailable;
+
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "address")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<AcademyAddress> address;
 
-    private boolean carAvailable;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AcademyResource> academyResources;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "events")
+    private List<Event> events;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AcademyResource> resources;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

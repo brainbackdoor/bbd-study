@@ -15,25 +15,25 @@ public enum Grades implements CalculateGradeAvgTuitionAction{
     PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아") {
         @Override
         public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
         }
     },
     ELEMENTARY(Arrays.asList(SpecifiedGrades.ELEMENTARY_ALL, SpecifiedGrades.ELEMENTARY_1, SpecifiedGrades.ELEMENTARY_2, SpecifiedGrades.ELEMENTARY_3, SpecifiedGrades.ELEMENTARY_4, SpecifiedGrades.ELEMENTARY_5, SpecifiedGrades.ELEMENTARY_6), "초등") {
         @Override
         public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
         }
     },
     MIDDLE(Arrays.asList(SpecifiedGrades.MIDDLE_ALL, SpecifiedGrades.MIDDLE_1, SpecifiedGrades.MIDDLE_2, SpecifiedGrades.MIDDLE_3), "중등") {
         @Override
         public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
         }
     },
     HIGH(Arrays.asList(SpecifiedGrades.HIGH_ALL, SpecifiedGrades.HIGH_1, SpecifiedGrades.HIGH_2, SpecifiedGrades.HIGH_3), "고등") {
         @Override
         public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.symbol).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
+            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
         }
     };
 

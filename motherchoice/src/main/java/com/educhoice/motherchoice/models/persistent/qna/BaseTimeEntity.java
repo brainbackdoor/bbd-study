@@ -1,6 +1,9 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
+import com.educhoice.motherchoice.models.persistent.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,6 +14,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTimeEntity {
 
@@ -18,6 +22,7 @@ public class BaseTimeEntity {
     private LocalDateTime createdTime;
 
     @LastModifiedDate
+    @JsonIgnore
     private LocalDateTime updatedTime;
 
 }

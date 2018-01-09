@@ -20,7 +20,7 @@ public class Question extends BaseTimeEntity{
     private String title;
     private String content;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Academy> academies;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)

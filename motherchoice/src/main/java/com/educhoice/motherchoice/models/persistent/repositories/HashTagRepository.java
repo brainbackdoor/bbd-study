@@ -1,6 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.repositories;
 
-import com.educhoice.motherchoice.models.HashTag;
+import com.educhoice.motherchoice.models.persistent.HashTag;
 import org.springframework.data.repository.CrudRepository;
 
 public interface HashTagRepository extends CrudRepository<HashTag, Long> {

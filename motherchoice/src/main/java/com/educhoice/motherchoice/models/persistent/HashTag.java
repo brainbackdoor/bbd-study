@@ -1,4 +1,4 @@
-package com.educhoice.motherchoice.models;
+package com.educhoice.motherchoice.models.persistent;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
