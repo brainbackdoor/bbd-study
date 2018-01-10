@@ -1,7 +1,5 @@
 package com.example.model;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DummyHashTag {
-	long hashTagId;
-	String title;
+public class DummyAcademyResource {
+    private String fileName;
+    private String href;
 }

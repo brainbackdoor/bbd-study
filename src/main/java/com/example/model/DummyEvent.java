@@ -1,17 +1,19 @@
 package com.example.model;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DummyHashTag {
-	long hashTagId;
-	String title;
+public class DummyEvent {
+	long eventId;
+    String title;
+
+    String content;
+    String created;
+    boolean newFlag;
 }

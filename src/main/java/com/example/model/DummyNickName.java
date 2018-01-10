@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DummyHashTag {
-	long hashTagId;
-	String title;
+public class DummyNickName {
+	List<SearchNickName> nickName;
+	boolean isUsed;
 }

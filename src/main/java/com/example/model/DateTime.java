@@ -2,6 +2,8 @@ package com.example.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
+import net.minidev.json.annotate.JsonIgnore;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ public class DateTime {
     private static final SimpleDateFormat format = new SimpleDateFormat("kk:mm");
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long dateTimeId;
 
