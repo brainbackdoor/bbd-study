@@ -162,7 +162,7 @@ public class DummyApiController {
 	@CrossOrigin
 	@GetMapping("/dummy/nickname/{value}")
 	public DummyNickName findByNickName(@PathVariable("value") String value) {
-		return new DummyNickName(searchNickNameRepository.findByValueContaining(value),searchNickNameRepository.findByValueContaining(value).isEmpty());
+		return new DummyNickName(searchNickNameRepository.findByValueContaining(value).isEmpty());
 		
 	}		
 	@CrossOrigin

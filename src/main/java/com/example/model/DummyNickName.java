@@ -12,6 +12,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DummyNickName {
-	List<SearchNickName> nickName;
 	boolean isUsed;
 }
