@@ -15,4 +15,8 @@ public class AnswerDto {
     private String academyName;
     private String created;
     private int answerId;
+    private boolean newFlag;
+
+    //TODO Write model-based constructor.
+
 }
