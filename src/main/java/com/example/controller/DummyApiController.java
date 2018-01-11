@@ -184,16 +184,16 @@ public class DummyApiController {
 	 */
 
 	@CrossOrigin
-	@GetMapping("/dummy/address/all")
+	@GetMapping("/dummy/addressAll")
 	public List<SearchAddress> returnDummyAll() {
 		return searchAddressRepository.findAll();
 	}
 
-	@CrossOrigin
-	@GetMapping("/dummy/address/{key}")
-	public SearchAddress returnDummy(@PathVariable("key") long key) {
-		return searchAddressRepository.findByKey(key);
-	}
+//	@CrossOrigin
+//	@GetMapping("/dummy/address/{key}")
+//	public SearchAddress returnDummy(@PathVariable("key") long key) {
+//		return searchAddressRepository.findByKey(key);
+//	}
 
 	@CrossOrigin
 	@GetMapping("/dummy/address/{value}")

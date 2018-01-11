@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DummyEvent {
 	long eventId;
-    String title;
+    String eventTitle;
 
-    String content;
+    String eventContent;
     String created;
     boolean newFlag;
 }
