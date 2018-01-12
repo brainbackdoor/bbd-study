@@ -1,5 +1,7 @@
 package com.educhoice.motherchoice.valueobject.models.academies.inquiry;
 
+import com.educhoice.motherchoice.models.persistent.qna.Answer;
+
 import java.util.List;
 
 public class AnswerDetailsDto {
@@ -10,6 +12,9 @@ public class AnswerDetailsDto {
     private String content;
     private List<ReplyDto> reply;
 
-    //TODO Write model-based constructor.
+    public AnswerDetailsDto(Answer answer) {
+        this.answerId = answer.getId();
+
+    }
 
 }

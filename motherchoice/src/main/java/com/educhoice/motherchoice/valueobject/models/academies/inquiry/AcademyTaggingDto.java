@@ -21,4 +21,8 @@ public class AcademyTaggingDto {
         this.address = academy.getAddress().get(0);
     }
 
+    public static AcademyTaggingDto getDto(Academy academy) {
+        return new AcademyTaggingDto(academy);
+    }
+
 }

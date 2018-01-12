@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface AcademyRepository extends CrudRepository<Academy, Long> {
 
-    Optional<Academy> findByAcademyNameContaining(String academyName);
+    List<Academy> findByAcademyNameContaining(String academyName);
+    Optional<Academy> findByAcademyId(long id);
     List<Academy> findByTagsContaining(HashTag tag);
 }

@@ -11,8 +11,8 @@ import java.util.List;
 @ToString
 public class QuestionDto {
 
-    private String title;
-    private String content;
+    private String questionTitle;
+    private String questionContent;
     private List<AnswerListDto> answer;
 
     //TODO Write model-based constructor.

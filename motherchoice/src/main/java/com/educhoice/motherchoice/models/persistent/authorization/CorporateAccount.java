@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
+import com.educhoice.motherchoice.models.persistent.qna.Answer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -24,6 +25,9 @@ public class CorporateAccount extends BasicAccount {
 	@OneToOne
 	@JoinColumn(name = "academyId")
 	private Academy academy;
+
+	@OneToMany(fetch = FetchType.LAZY)
+    private List<Answer> answers;
 
     public CorporateAccount(String email, String password) {
         super(email, password);

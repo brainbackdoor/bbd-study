@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.valueobject.models.academies.inquiry;
 
+import com.educhoice.motherchoice.models.persistent.qna.Answer;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.*;
 
@@ -12,11 +13,18 @@ import lombok.*;
 @JsonRootName("answer")
 public class AnswerListDto {
 
+    private int answerId;
     private String academyName;
     private String created;
-    private int answerId;
-    private boolean newFlag;
+    private boolean unRead;
 
     //TODO Write model-based constructor.
+
+    public AnswerListDto(Answer answer) {
+        this.answerId = (int)answer.getId();
+        this.academyName = answer.getAcademyName();
+        this.created = answer.getFormattedCreatedTime();
+        this.unRead = false;
+    }
 
 }

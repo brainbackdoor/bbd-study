@@ -27,7 +27,6 @@ public class AcademyDto {
     private List<CourseDto> courses;
     private List<SpecialCourseDto> specialCourses;
     private List<Event> events;
-    private List<AcademyResource> academyResources;
     private List<HashTag> hashTags;
     private CorporateAccount corporateAccount;
 
@@ -43,7 +42,6 @@ public class AcademyDto {
                 .courses(CourseDto.generateCourseDtoFromAcademy(academy))
                 .specialCourses(SpecialCourseDto.generateDto(academy))
                 .events(academy.getEvents())
-                .academyResources(academy.getAcademyResources())
                 .hashTags(academy.getTags())
                 .corporateAccount(academy.getCorporateAccount())
                 .build();

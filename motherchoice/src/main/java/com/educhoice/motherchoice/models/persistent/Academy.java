@@ -49,6 +49,7 @@ public class Academy {
     private List<AcademyAddress> address;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "academyId")
     private List<Event> events;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -72,7 +73,6 @@ public class Academy {
         if(this.tags == null) {
             this.tags = Lists.newArrayList();
         }
-
         this.tags.add(tag);
     }
 

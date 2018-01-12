@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -33,7 +34,15 @@ public class Answer extends BaseTimeEntity{
 
     @ManyToOne
     @JsonIgnore
-    private BasicAccount writer;
+    private CorporateAccount account;
+
+    public int getRepliesCount() {
+        return this.replies.size();
+    }
+
+    public String getAcademyName() {
+        return this.account.getAcademy().getAcademyName();
+    }
 
 
 }

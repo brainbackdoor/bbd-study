@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @MappedSuperclass
 @Getter
@@ -24,5 +25,14 @@ public class BaseTimeEntity {
     @LastModifiedDate
     @JsonIgnore
     private LocalDateTime updatedTime;
+
+    public String getFormattedCreatedTime() {
+        return formatDateToString(createdTime, "yyyy.MM.dd");
+    }
+
+    private String formatDateToString(LocalDateTime localDateTime, String format) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return localDateTime.format(formatter);
+    }
 
 }
