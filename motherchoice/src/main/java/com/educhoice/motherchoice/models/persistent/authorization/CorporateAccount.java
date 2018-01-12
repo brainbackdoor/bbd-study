@@ -16,6 +16,7 @@ import java.util.List;
 public class CorporateAccount extends BasicAccount {
 
 	private String phoneNo;
+	private boolean paid;
 
 	@JsonIgnore
 	private String ownerName;
@@ -30,5 +31,6 @@ public class CorporateAccount extends BasicAccount {
 
     public CorporateAccount(String email, String password, String ownerName, String phoneNo, String profileUri, AccountRoles roles) {
         super(email, password, profileUri, roles);
+        this.paid = AccountRoles.isPaidTier(roles);
     }
 }

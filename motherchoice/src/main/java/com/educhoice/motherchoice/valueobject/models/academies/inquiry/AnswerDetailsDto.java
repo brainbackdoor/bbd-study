@@ -9,4 +9,7 @@ public class AnswerDetailsDto {
     private String created;
     private String content;
     private List<ReplyDto> reply;
+
+    //TODO Write model-based constructor.
+
 }

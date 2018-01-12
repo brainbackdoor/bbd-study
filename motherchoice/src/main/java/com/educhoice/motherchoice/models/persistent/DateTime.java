@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.models.persistent;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.common.base.Objects;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,5 +99,21 @@ public class DateTime {
         stringObject.append(String.format("  %s ~ %s", format.format(this.startTime), format.format(this.endTime)));
 
         return stringObject.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DateTime dateTime = (DateTime) o;
+        return dateTimeId == dateTime.dateTimeId &&
+                Objects.equal(startTime, dateTime.startTime) &&
+                Objects.equal(endTime, dateTime.endTime) &&
+                day == dateTime.day;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(dateTimeId, startTime, endTime, day);
     }
 }

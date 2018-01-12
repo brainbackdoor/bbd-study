@@ -11,4 +11,7 @@ public class UsernameInUseDto {
 
     private String nickname;
     private boolean isUsed;
+
+    //TODO Write model-based constructor.
+
 }

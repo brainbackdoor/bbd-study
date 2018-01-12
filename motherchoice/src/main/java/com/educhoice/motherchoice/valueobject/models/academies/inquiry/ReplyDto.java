@@ -13,4 +13,7 @@ public class ReplyDto {
     private String role;
     private String accountName;
     private String content;
+
+    //TODO Write model-based constructor.
+
 }

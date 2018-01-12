@@ -15,4 +15,7 @@ public class QuestionListDto {
     private int inquire;
     private int answer;
     private int additionalAnswer;
+
+    //TODO Write model-based constructor.
+
 }

@@ -1,7 +1,6 @@
 package com.educhoice.motherchoice.valueobject.models.academies;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
-import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.SpecialCourse;
 import lombok.*;
 
@@ -19,7 +18,7 @@ public class SpecialCourseDto extends CourseDto{
 
     public SpecialCourseDto(SpecialCourse specialCourse) {
         super(specialCourse);
-        this.duration = specialCourse.getDate();
+        this.duration = specialCourse.getDuration();
     }
 
     public static List<SpecialCourseDto> generateDto(Academy academy) {

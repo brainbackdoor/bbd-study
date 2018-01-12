@@ -18,7 +18,5 @@ import javax.persistence.Id;
 @Entity
 public class SpecialCourse extends Course {
 
-    private String date;
-
-
+    private String duration;
 }

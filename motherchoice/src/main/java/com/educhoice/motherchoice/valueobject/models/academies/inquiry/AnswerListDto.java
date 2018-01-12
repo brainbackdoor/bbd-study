@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 
 @JsonRootName("answer")
-public class AnswerDto {
+public class AnswerListDto {
 
     private String academyName;
     private String created;

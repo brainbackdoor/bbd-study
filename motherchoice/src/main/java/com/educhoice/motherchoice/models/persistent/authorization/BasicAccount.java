@@ -37,6 +37,10 @@ public class BasicAccount {
         public String getSymbol() {
             return this.symbol;
         }
+
+        public static boolean isPaidTier(AccountRoles roles) {
+            return roles == PAID_USER;
+        }
     }
 
     @Id

@@ -9,12 +9,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class QuestionDto {
+public class QuestionPostDto {
 
-    private String title;
-    private String content;
-    private List<AnswerListDto> answer;
+    private List<Long> academies;
+    private String questionTitle;
+    private String questionContent;
 
-    //TODO Write model-based constructor.
-
+    //TODO generate model entity from DTO.
 }

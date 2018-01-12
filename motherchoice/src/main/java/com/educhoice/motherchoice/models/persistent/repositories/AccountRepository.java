@@ -9,4 +9,5 @@ public interface AccountRepository extends CrudRepository<Account, Long>{
 
     Optional<Account> findByLoginId(String loginId);
     Optional<Account> findBySocialId(int id);
+    Optional<Account> findByNicknameContaining(String nickname);
 }

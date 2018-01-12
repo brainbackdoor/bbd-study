@@ -34,6 +34,7 @@ public class Academy {
     private List<Course> courses;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<SpecialCourse> specialCourses;
 
     @NotNull
@@ -48,13 +49,7 @@ public class Academy {
     private List<AcademyAddress> address;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AcademyResource> academyResources;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AcademyResource> resources;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
