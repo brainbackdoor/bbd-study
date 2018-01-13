@@ -48,4 +48,13 @@ public class Image {
     private ImageDisplayTypes imageDisplayTypes;
 
     private String uri;
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "imageId=" + imageId +
+                ", imageDisplayTypes=" + imageDisplayTypes +
+                ", uri='" + uri + '\'' +
+                '}';
+    }
 }

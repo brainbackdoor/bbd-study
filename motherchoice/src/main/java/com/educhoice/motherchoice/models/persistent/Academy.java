@@ -53,7 +53,8 @@ public class Academy {
     @JoinColumn(name = "academyId")
     private List<Event> events;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Image> images;
 
     @ManyToOne(fetch = FetchType.LAZY)

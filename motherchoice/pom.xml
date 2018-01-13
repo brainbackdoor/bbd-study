@@ -56,6 +56,11 @@
             <artifactId>spring-webflux</artifactId>
             <version>5.0.2.RELEASE</version>
         </dependency>
+        <!--Spring Actuator-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!--End of Spring-related Dependencies-->
 
         <dependency>

@@ -3,6 +3,7 @@ package com.educhoice.motherchoice.service;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
+import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AcademyTaggingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class AcademyService {
         return academyRepository.save(academy);
     }
 
+    public Academy getAcademyById(long academyId) {
+        return academyRepository.findByAcademyId(academyId).orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."));
+    }
+
     public List<Academy> findMultipleAcademiesById(List<Long> academyIds) {
         return academyIds.stream().map(i -> academyRepository.findByAcademyId(i)).map(a -> a.orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."))).collect(Collectors.toList());
     }
@@ -28,4 +33,10 @@ public class AcademyService {
         return academyRepository.findByAcademyNameContaining(name).stream().map(AcademyTaggingDto::getDto).collect(Collectors.toList());
     }
 
+    public void saveImages(ImageUploadDto imageDto) {
+        Academy targetAcademy = academyRepository.findByAcademyId(imageDto.getAcademyId()).orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."));
+
+        targetAcademy.setImages(imageDto.getImgs());
+        academyRepository.save(targetAcademy);
+    }
 }
