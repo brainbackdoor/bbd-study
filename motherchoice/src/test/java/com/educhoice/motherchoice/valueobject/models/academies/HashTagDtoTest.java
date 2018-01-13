@@ -39,7 +39,6 @@ public class HashTagDtoTest {
         this.academy = Academy.builder()
                 .academyName("포비학원")
                 .build();
-
     }
 
     @Test

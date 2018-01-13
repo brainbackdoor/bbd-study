@@ -53,6 +53,9 @@ public class Academy {
     @JoinColumn(name = "academyId")
     private List<Event> events;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Image> images;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private CorporateAccount corporateAccount;
