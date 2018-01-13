@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
+import com.educhoice.motherchoice.configuration.security.service.SocialSigninProviders;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,6 +58,10 @@ public class BasicAccount {
 
     @JsonIgnore
     private int socialId;
+
+    @Enumerated(value = EnumType.STRING)
+    @JsonIgnore
+    private SocialSigninProviders socialProvider;
 
     @JsonIgnore
     private String profileUri;
