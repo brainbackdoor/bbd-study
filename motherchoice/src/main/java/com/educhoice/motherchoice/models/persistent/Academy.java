@@ -3,6 +3,7 @@ package com.educhoice.motherchoice.models.persistent;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.qna.Question;
+import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.academies.GradeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
@@ -109,6 +110,13 @@ public class Academy {
 
     public List<String> getSubjectsSummary() {
         return this.courses.stream().map(c -> Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol()).collect(Collectors.toList());
+    }
+
+    public void update(AcademyDto dto) {
+        this.courses = dto.getCourses().stream().map(c -> c.getCourseEntity()).collect(Collectors.toList());
+        this.carAvailable = dto.isCarAvailable();
+        this.introduction = dto.getIntroduction();
+        this.tags = dto.getHashTags();
     }
 
     @Override

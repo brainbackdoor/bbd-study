@@ -1,4 +1,4 @@
-package com.educhoice.motherchoice.utils.exceptions;
+package com.educhoice.motherchoice.utils.exceptions.entity;
 
 public class NoGradeDefException extends RuntimeException {
 

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @ToString
 public class CourseDto {
 
-    private long id;
+    private long courseId;
     private String coursesClassification;
     private String subjectClassification;
     private String courseName;
@@ -26,7 +26,7 @@ public class CourseDto {
     private List<DateTime> dayOfWeek;
 
     public CourseDto(SpecialCourse specialCourse) {
-        this.id = specialCourse.getCourseId();
+        this.courseId = specialCourse.getCourseId();
         this.coursesClassification = Course.CoursesClassification.findBySpecifiedCourses(specialCourse.getCoursesClassification()).getSymbol();
         this.subjectClassification = specialCourse.getCoursesClassification().getSymbol();
         this.courseName = specialCourse.getTitle();
@@ -35,11 +35,21 @@ public class CourseDto {
         this.dayOfWeek = specialCourse.getDateTime();
     }
 
+    public Course getCourseEntity() {
+        return Course.builder()
+                .courseId(this.courseId)
+                .coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.getSpecifiedCoursesClassificationBySymbol(this.subjectClassification))
+                .title(this.courseName)
+                .tuition(this.tuition)
+                .dateTime(this.dayOfWeek)
+                .build();
+    }
+
     public static List<CourseDto> generateCourseDtoFromAcademy(Academy academy) {
         return academy.getCourses().stream().map(c -> {
             return CourseDto.builder()
                     .courseName(c.getTitle())
-                    .id(c.getCourseId())
+                    .courseId(c.getCourseId())
                     .coursesClassification(Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol())
                     .subjectClassification(c.getCoursesClassification().getSymbol())
                     .grade(c.getGrades().getSymbol())

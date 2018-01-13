@@ -18,8 +18,6 @@ public class AnswerListDto {
     private String created;
     private boolean unRead;
 
-    //TODO Write model-based constructor.
-
     public AnswerListDto(Answer answer) {
         this.answerId = (int)answer.getId();
         this.academyName = answer.getAcademyName();

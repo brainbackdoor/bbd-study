@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.valueobject.models.academies.inquiry;
 
+import com.educhoice.motherchoice.models.persistent.qna.Question;
 import lombok.*;
 
 import java.util.List;
@@ -15,5 +16,4 @@ public class QuestionPostDto {
     private String questionTitle;
     private String questionContent;
 
-    //TODO generate model entity from DTO.
 }
