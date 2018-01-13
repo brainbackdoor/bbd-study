@@ -87,6 +87,10 @@ public class BasicAccount {
         return email.equals(this.loginId);
     }
 
+    public boolean isPasswordCorrect(String password) {
+        return password.equals(this.password);
+    }
+
     public void encryptPassword(PasswordEncoder encoder) {
         encoder.encode(this.password);
     }

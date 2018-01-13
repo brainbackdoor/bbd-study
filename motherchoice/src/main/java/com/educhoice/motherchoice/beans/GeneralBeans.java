@@ -4,6 +4,7 @@ import com.educhoice.motherchoice.models.nonpersistent.authorization.MailSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
 
@@ -27,5 +28,10 @@ public class GeneralBeans {
     @Bean
     public MailSource getMailSource() {
         return new MailSource(mailSenderId, mailSenderPassword, mailLinkUrl);
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
     }
 }

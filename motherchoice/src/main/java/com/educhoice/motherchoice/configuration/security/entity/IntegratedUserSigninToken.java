@@ -40,4 +40,8 @@ public class IntegratedUserSigninToken extends UsernamePasswordAuthenticationTok
     public SocialUserinfo getUserinfo() {
         return userinfo;
     }
+
+    public boolean isSocialRequest() {
+        return this.userinfo != null;
+    }
 }
