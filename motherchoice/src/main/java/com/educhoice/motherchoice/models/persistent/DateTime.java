@@ -9,13 +9,15 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Arrays;
 
-@Entity
+@Embeddable
 @Getter
-public class DateTime {
+public class DateTime implements Serializable {
 
     @Transient
     private static final Logger log = LoggerFactory.getLogger(DateTime.class);
@@ -23,18 +25,13 @@ public class DateTime {
     @Transient
     private static final SimpleDateFormat format = new SimpleDateFormat("kk:mm");
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    private long dateTimeId;
+    @NotNull
+    private LocalTime startTime;
 
     @NotNull
-    private Time startTime;
+    private LocalTime endTime;
 
-    @NotNull
-    private Time endTime;
-
-    @Enumerated(value = EnumType.ORDINAL)
+    @Enumerated(value = EnumType.STRING)
     private WeekDays day;
 
     public enum WeekDays {
@@ -76,19 +73,14 @@ public class DateTime {
     }
 
     public DateTime(String startTime, String endTime, String weekdays) {
-        this.startTime = new Time(getTimeFromString(startTime));
-        this.endTime = new Time(getTimeFromString(endTime));
+        this.startTime = getTimeFromString(startTime);
+        this.endTime = getTimeFromString(endTime);
         this.day = WeekDays.getWeekDaysBySymbol(weekdays);
 
     }
 
-    private static long getTimeFromString(String time) {
-        try {
-            return format.parse(time).getTime();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return 1L;
-        }
+    private static LocalTime getTimeFromString(String time) {
+        return LocalTime.parse(time);
     }
 
     @Override
@@ -96,24 +88,9 @@ public class DateTime {
         StringBuilder stringObject = new StringBuilder();
 
         stringObject.append(this.day.toString());
-        stringObject.append(String.format("  %s ~ %s", format.format(this.startTime), format.format(this.endTime)));
+        stringObject.append(this.startTime.toString());
+        stringObject.append(this.endTime.toString());
 
         return stringObject.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DateTime dateTime = (DateTime) o;
-        return dateTimeId == dateTime.dateTimeId &&
-                Objects.equal(startTime, dateTime.startTime) &&
-                Objects.equal(endTime, dateTime.endTime) &&
-                day == dateTime.day;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(dateTimeId, startTime, endTime, day);
     }
 }

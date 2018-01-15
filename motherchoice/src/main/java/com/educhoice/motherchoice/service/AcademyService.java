@@ -3,8 +3,10 @@ package com.educhoice.motherchoice.service;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
+import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AcademyTaggingDto;
+import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,10 @@ public class AcademyService {
 
     public List<AcademyTaggingDto> findMultipleAcademiesByNameContaining(String name) {
         return academyRepository.findByAcademyNameContaining(name).stream().map(AcademyTaggingDto::getDto).collect(Collectors.toList());
+    }
+
+    public List<AcademyDto> findMultipleAcademiesByQuery(AcademyQueryDto dto) {
+        return null;
     }
 
     public void saveImages(ImageUploadDto imageDto) {

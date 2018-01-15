@@ -21,8 +21,8 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long courseId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "courseid")
+    @ElementCollection
+    @CollectionTable(name = "course_datetimes", joinColumns = @JoinColumn(name = "course_id"))
     private List<DateTime> dateTime;
 
     @Enumerated(EnumType.ORDINAL)

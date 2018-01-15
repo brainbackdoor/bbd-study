@@ -21,7 +21,7 @@ public class DateTimeTest {
     @Test
     public void 날짜_잘나오는지() {
         log.info(this.time.toString());
-        assertEquals("21:30:00", this.time.getEndTime().toString());
+        assertEquals("21:30", this.time.getEndTime().toString());
     }
 
 }
