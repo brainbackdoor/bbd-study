@@ -6,7 +6,6 @@ import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AcademyTaggingDto;
-import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +34,9 @@ public class AcademyService {
         return academyRepository.findByAcademyNameContaining(name).stream().map(AcademyTaggingDto::getDto).collect(Collectors.toList());
     }
 
-    public List<AcademyDto> findMultipleAcademiesByQuery(AcademyQueryDto dto) {
-        return null;
-    }
+//    public List<AcademyDto> findMultipleAcademiesByCriteria(long id) {
+//        return academyRepository.findAcademyIdCriteria(id).stream().map(AcademyDto::generateAcademyDto).collect(Collectors.toList());
+//    }
 
     public void saveImages(ImageUploadDto imageDto) {
         Academy targetAcademy = academyRepository.findByAcademyId(imageDto.getAcademyId()).orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."));

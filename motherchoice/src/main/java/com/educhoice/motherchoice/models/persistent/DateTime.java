@@ -69,8 +69,7 @@ public class DateTime implements Serializable {
         }
     }
 
-    private DateTime() {
-    }
+    protected DateTime() {}
 
     public DateTime(String startTime, String endTime, String weekdays) {
         this.startTime = getTimeFromString(startTime);

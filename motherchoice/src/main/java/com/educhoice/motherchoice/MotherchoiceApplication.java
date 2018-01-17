@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.educhoice.motherchoice")
+@EnableJpaRepositories(basePackages = "com.educhoice.motherchoice.models.persistent.repositories")
 @EnableJpaAuditing
 public class MotherchoiceApplication {
 
