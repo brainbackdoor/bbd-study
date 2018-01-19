@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
 import com.educhoice.motherchoice.models.persistent.Event;
+import com.educhoice.motherchoice.utils.converter.LocalTimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Convert;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
@@ -20,9 +22,11 @@ import java.time.format.DateTimeFormatter;
 public class BaseTimeEntity {
 
     @CreatedDate
+    @Convert(converter = LocalTimeConverter.class)
     private LocalDateTime createdTime;
 
     @LastModifiedDate
+    @Convert(converter = LocalTimeConverter.class)
     @JsonIgnore
     private LocalDateTime updatedTime;
 

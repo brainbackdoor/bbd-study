@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent;
 
+import com.educhoice.motherchoice.utils.converter.LocalTimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Objects;
@@ -26,9 +27,11 @@ public class DateTime implements Serializable {
     private static final SimpleDateFormat format = new SimpleDateFormat("kk:mm");
 
     @NotNull
+    @Convert(converter = LocalTimeConverter.class)
     private LocalTime startTime;
 
     @NotNull
+    @Convert(converter = LocalTimeConverter.class)
     private LocalTime endTime;
 
     @Enumerated(value = EnumType.STRING)

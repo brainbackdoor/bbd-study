@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 public class CorporateAccount extends BasicAccount {
 
+    @JsonIgnore
 	private String phoneNo;
 
 	@JsonIgnore
