@@ -40,7 +40,8 @@ public class AcademyDtoTest {
 
         this.academy = Academy.builder()
                 .academyId(1)
-                .courses(Arrays.asList(Course.builder().title("TDD와 Clean Code with Java").coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE).grades(Grades.SpecifiedGrades.ELEMENTARY_3).tuition(100000L).dateTime(Arrays.asList(new DateTime("13:00", "18:00", "토"))).build()))
+                .courses(Arrays.asList(Course.builder().title("TDD와 Clean Code with Java").coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE).grades(Grades.SpecifiedGrades.ELEMENTARY_3).tuition(100000L).dateTime(Arrays.asList(new DateTime("13:00", "18:00", "토"))).build()
+                , Course.builder().title("CS 기초 with Javascript").tuition(200000L).grades(Grades.SpecifiedGrades.ELEMENTARY_6).coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE).dateTime(Arrays.asList(new DateTime("15:00", "17:00", "월"))).build()))
                 .academyName("포비학원")
                 .address(AcademyAddress.builder().address("경기도 수원시 영통구 이의동").roadAddress("경기도 수원시 포은대로 123").sido("경기도").sigungu("수원시 영통구").build())
                 .carAvailable(true)
@@ -65,6 +66,7 @@ public class AcademyDtoTest {
         }
 
         assertEquals("포비학원", dto.getAcademyName());
+        assertEquals(150000L, dto.getGrades().get(0).getTuitionAvg());
     }
 
 }

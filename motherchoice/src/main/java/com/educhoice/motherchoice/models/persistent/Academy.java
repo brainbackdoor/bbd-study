@@ -80,36 +80,15 @@ public class Academy {
         this.tags.add(tag);
     }
 
-    public long calculateAvgTuition() {
-        return (long) this.courses.stream().mapToLong(c -> c.getTuition()).average().orElse(0.0);
-    }
-
-    public long calculateKinderAvgTuition() {
-        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.PRESCHOOL).mapToLong(preschool -> preschool.getTuition()).average().orElse(0.0);
-    }
-
-    public long calculateElementaryAvgTuition() {
-        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.ELEMENTARY).mapToLong(elementary -> elementary.getTuition()).average().orElse(0.0);
-    }
-
-    public long calculateMiddleAvgTuition() {
-        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.MIDDLE).mapToLong(middle -> middle.getTuition()).average().orElse(0.0);
-    }
-
-    public long calculateHighAvgTuition() {
-        return (long) this.courses.stream().filter(c -> Grades.findBySpecifiedGrades(c.getGrades()) == Grades.HIGH).mapToLong(high -> high.getTuition()).average().orElse(0.0);
-    }
-
     public List<GradeDto> getGradeAvgDtos() {
         if(this.courses == null) {
             return Arrays.asList(new GradeDto());
         }
-
-        return this.courses.stream().filter(java.util.Objects::nonNull).map(c -> Grades.findBySpecifiedGrades(c.getGrades()).generateGradeDto(this)).collect(Collectors.toList());
+        return this.courses.stream().filter(java.util.Objects::nonNull).map(c -> Grades.findBySpecifiedGrades(c.getGrades()).generateGradeDto(this)).distinct().collect(Collectors.toList());
     }
 
     public List<String> getSubjectsSummary() {
-        return this.courses.stream().map(c -> Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol()).collect(Collectors.toList());
+        return this.courses.stream().map(c -> Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol()).distinct().collect(Collectors.toList());
     }
 
     public void update(AcademyDto dto) {
