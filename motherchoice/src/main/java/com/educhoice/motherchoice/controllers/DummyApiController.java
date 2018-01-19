@@ -33,7 +33,7 @@ public class DummyApiController {
     @CrossOrigin
     public Academy returnDummyAcacdemy() {
         return Academy.builder()
-                .address(Arrays.asList(AcademyAddress.builder().address("경기도 김포시 유현로 19").jibunAddress("경기도 김포시 풍무동 583").longitude(37.123123).latitude(127.3121321).build()))
+                .address(AcademyAddress.builder().address("경기도 김포시 유현로 19").jibunAddress("경기도 김포시 풍무동 583").longitude(37.123123).latitude(127.3121321).build())
                 .carAvailable(true)
                 .academyName("포비학원")
                 .courses(returnCourses())

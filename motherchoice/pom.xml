@@ -79,6 +79,11 @@
             <version>5.2.12.Final</version>
             <scope>provided</scope>
         </dependency>
+        <!--MongoDB-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
         <!---->
         <dependency>
 			<groupId>org.projectlombok</groupId>

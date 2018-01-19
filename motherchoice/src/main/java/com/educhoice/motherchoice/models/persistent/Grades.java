@@ -10,32 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum Grades implements CalculateGradeAvgTuitionAction{
+public enum Grades {
 
-    PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아") {
-        @Override
-        public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
-        }
-    },
-    ELEMENTARY(Arrays.asList(SpecifiedGrades.ELEMENTARY_ALL, SpecifiedGrades.ELEMENTARY_1, SpecifiedGrades.ELEMENTARY_2, SpecifiedGrades.ELEMENTARY_3, SpecifiedGrades.ELEMENTARY_4, SpecifiedGrades.ELEMENTARY_5, SpecifiedGrades.ELEMENTARY_6), "초등") {
-        @Override
-        public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
-        }
-    },
-    MIDDLE(Arrays.asList(SpecifiedGrades.MIDDLE_ALL, SpecifiedGrades.MIDDLE_1, SpecifiedGrades.MIDDLE_2, SpecifiedGrades.MIDDLE_3), "중등") {
-        @Override
-        public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
-        }
-    },
-    HIGH(Arrays.asList(SpecifiedGrades.HIGH_ALL, SpecifiedGrades.HIGH_1, SpecifiedGrades.HIGH_2, SpecifiedGrades.HIGH_3), "고등") {
-        @Override
-        public GradeDto generateGradeDto(Academy academy) {
-            return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
-        }
-    };
+    PRESCHOOL(Arrays.asList(SpecifiedGrades.PRESCHOOL_ALL), "유아"),
+    ELEMENTARY(Arrays.asList(SpecifiedGrades.ELEMENTARY_ALL, SpecifiedGrades.ELEMENTARY_1, SpecifiedGrades.ELEMENTARY_2, SpecifiedGrades.ELEMENTARY_3, SpecifiedGrades.ELEMENTARY_4, SpecifiedGrades.ELEMENTARY_5, SpecifiedGrades.ELEMENTARY_6), "초등"),
+    MIDDLE(Arrays.asList(SpecifiedGrades.MIDDLE_ALL, SpecifiedGrades.MIDDLE_1, SpecifiedGrades.MIDDLE_2, SpecifiedGrades.MIDDLE_3), "중등"),
+    HIGH(Arrays.asList(SpecifiedGrades.HIGH_ALL, SpecifiedGrades.HIGH_1, SpecifiedGrades.HIGH_2, SpecifiedGrades.HIGH_3), "고등");
 
     private List<SpecifiedGrades> specifiedGrades;
     private String symbol;
@@ -51,6 +31,10 @@ public enum Grades implements CalculateGradeAvgTuitionAction{
 
     public static Grades findBySpecifiedGrades(SpecifiedGrades grade) {
         return Arrays.stream(Grades.values()).filter(grades -> grades.isContainingGrade(grade)).findAny().orElseThrow(() -> new NoGradeDefException("no matching grade found!"));
+    }
+
+    public GradeDto generateGradeDto(Academy academy) {
+        return GradeDto.builder().name(this.getSymbol()).tuitionAvg(this.calculateAvgTuition(academy.getCourses())).build();
     }
 
     public long calculateAvgTuition(List<Course> courses) {

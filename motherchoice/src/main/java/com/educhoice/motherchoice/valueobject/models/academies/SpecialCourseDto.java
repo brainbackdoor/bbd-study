@@ -22,6 +22,10 @@ public class SpecialCourseDto extends CourseDto{
     }
 
     public static List<SpecialCourseDto> generateDto(Academy academy) {
+        if(academy.getSpecialCourses() == null) {
+            return null;
+        }
+
         return academy.getSpecialCourses().stream().map(s -> new SpecialCourseDto(s)).collect(Collectors.toList());
     }
 

@@ -44,5 +44,4 @@ public class Answer extends BaseTimeEntity{
         return this.account.getAcademy().getAcademyName();
     }
 
-
 }

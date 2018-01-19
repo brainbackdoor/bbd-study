@@ -66,7 +66,6 @@ public class BasicAccount {
     @JsonIgnore
     private String profileUri;
 
-    @NotNull
     @Enumerated(value = EnumType.STRING)
     @JsonIgnore
     private AccountRoles roles;

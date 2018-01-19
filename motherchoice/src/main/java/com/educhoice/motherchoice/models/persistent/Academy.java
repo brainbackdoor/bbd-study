@@ -15,6 +15,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class Academy {
     private long academyId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Course> courses;
+    private List<Course> courses = Lists.newArrayList();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -44,10 +45,8 @@ public class Academy {
     private String introduction;
     private boolean carAvailable;
 
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "address")
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<AcademyAddress> address;
+    @Embedded
+    private AcademyAddress address;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "academyId")
@@ -57,7 +56,7 @@ public class Academy {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Image> images;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private CorporateAccount corporateAccount;
 
@@ -102,14 +101,11 @@ public class Academy {
     }
 
     public List<GradeDto> getGradeAvgDtos() {
-        List<GradeDto> dtos = Lists.newArrayList();
+        if(this.courses == null) {
+            return Arrays.asList(new GradeDto());
+        }
 
-        dtos.add(GradeDto.builder().name(Grades.PRESCHOOL.getSymbol()).tuitionAvg(calculateKinderAvgTuition()).build());
-        dtos.add(GradeDto.builder().name(Grades.ELEMENTARY.getSymbol()).tuitionAvg(calculateElementaryAvgTuition()).build());
-        dtos.add(GradeDto.builder().name(Grades.MIDDLE.getSymbol()).tuitionAvg(calculateMiddleAvgTuition()).build());
-        dtos.add(GradeDto.builder().name(Grades.HIGH.getSymbol()).tuitionAvg(calculateHighAvgTuition()).build());
-
-        return dtos;
+        return this.courses.stream().filter(java.util.Objects::nonNull).map(c -> Grades.findBySpecifiedGrades(c.getGrades()).generateGradeDto(this)).collect(Collectors.toList());
     }
 
     public List<String> getSubjectsSummary() {

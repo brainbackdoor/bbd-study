@@ -38,7 +38,7 @@ public class Course {
 
     public enum CoursesClassification {
 
-        INTEGRATED("종합", Arrays.asList(SpecifiedCoursesClassification.UNDEF)),
+        INTEGRATED("종합반", Arrays.asList(SpecifiedCoursesClassification.UNDEF)),
         KOREAN("국어", Arrays.asList(SpecifiedCoursesClassification.KOREAN)),
         FOREIGN_LANGUAGE("외국어", Arrays.asList(SpecifiedCoursesClassification.ENGLISH, SpecifiedCoursesClassification.CHINESE, SpecifiedCoursesClassification.JAPANESE, SpecifiedCoursesClassification.ENGLISH_CERTIFICATE)),
         MATH("수학", Arrays.asList(SpecifiedCoursesClassification.MATH, SpecifiedCoursesClassification.MATH_HUMANITIES, SpecifiedCoursesClassification.MATH_NATURAL, SpecifiedCoursesClassification.MATH_THINKING)),

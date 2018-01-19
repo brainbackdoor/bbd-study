@@ -17,13 +17,15 @@ import java.util.List;
 public class CorporateAccount extends BasicAccount {
 
 	private String phoneNo;
-	private boolean paid;
 
 	@JsonIgnore
+	private boolean paid;
+
 	private String ownerName;
 
 	@OneToOne
 	@JoinColumn(name = "academyId")
+    @JsonIgnore
 	private Academy academy;
 
 	@OneToMany(fetch = FetchType.LAZY)

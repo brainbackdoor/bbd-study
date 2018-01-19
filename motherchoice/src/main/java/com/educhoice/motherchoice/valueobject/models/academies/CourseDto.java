@@ -4,6 +4,7 @@ import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.SpecialCourse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class CourseDto {
         this.dayOfWeek = specialCourse.getDateTime();
     }
 
+    @JsonIgnore
     public Course getCourseEntity() {
         return Course.builder()
                 .courseId(this.courseId)

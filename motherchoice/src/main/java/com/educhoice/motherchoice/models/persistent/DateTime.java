@@ -82,6 +82,14 @@ public class DateTime implements Serializable {
         return LocalTime.parse(time);
     }
 
+    public String getStartTime() {
+        return this.startTime.toString();
+    }
+
+    public String getEndTime() {
+        return this.endTime.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder stringObject = new StringBuilder();

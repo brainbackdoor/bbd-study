@@ -47,4 +47,5 @@ public class Question extends BaseTimeEntity{
     public int getRepliesCount() {
         return this.answers.stream().mapToInt(a -> a.getRepliesCount()).sum();
     }
+
 }

@@ -34,7 +34,7 @@ public class AcademyDto {
         return AcademyDto.builder()
                 .id(academy.getAcademyId())
                 .academyName(academy.getAcademyName())
-                .address(academy.getAddress().get(0))
+                .address(academy.getAddress())
                 .carAvailable(academy.isCarAvailable())
                 .grades(academy.getGradeAvgDtos())
                 .subjects(academy.getSubjectsSummary())

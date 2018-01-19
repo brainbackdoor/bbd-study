@@ -18,7 +18,7 @@ public class AcademyTaggingDto {
     public AcademyTaggingDto(Academy academy) {
         this.academyId = academy.getAcademyId();
         this.academyName = academy.getAcademyName();
-        this.address = academy.getAddress().get(0);
+        this.address = academy.getAddress();
     }
 
     public static AcademyTaggingDto getDto(Academy academy) {

@@ -28,10 +28,4 @@ public class Dong {
     @JsonIgnore
     private String juso;
 
-    @OneToMany
-    @JoinColumn(name = "dongId")
-    @JsonIgnore
-    private List<AcademyAddress> addressList;
-
-
 }
