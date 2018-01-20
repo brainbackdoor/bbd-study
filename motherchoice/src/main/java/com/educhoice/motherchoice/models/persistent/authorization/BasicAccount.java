@@ -91,7 +91,7 @@ public class BasicAccount {
     }
 
     public void encryptPassword(PasswordEncoder encoder) {
-        encoder.encode(this.password);
+        this.password = encoder.encode(this.password);
     }
 
 }

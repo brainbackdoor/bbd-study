@@ -23,7 +23,6 @@ public class CorporateAccount extends BasicAccount {
 	@JsonIgnore
 	private boolean paid;
 
-	@NotNull
 	private String accountName;
 
 	private String ownerName;
@@ -38,6 +37,10 @@ public class CorporateAccount extends BasicAccount {
 
     public CorporateAccount(String email, String password) {
         super(email, password);
+    }
+
+    public CorporateAccount(String email, String password, AccountRoles roles) {
+        super(email, password, null, roles);
     }
 
     public CorporateAccount(String email, String password, String ownerName, String phoneNo, String profileUri, AccountRoles roles) {

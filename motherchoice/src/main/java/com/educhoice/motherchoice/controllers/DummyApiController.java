@@ -51,14 +51,6 @@ public class DummyApiController {
                 .build();
     }
 
-    @PostMapping("/join/oauth")
-    @PreAuthorize("hasRole('ROLE_OAUTH_TEMPORARY')")
-    public IntegratedUserSigninToken socialJoinRequest(IntegratedUserSigninToken token, @RequestBody UserJoinRequest request) {
-        service.joinSocialUser(token.getUserinfo(), request);
-
-        return new IntegratedUserSigninToken((SecurityAccount)accountDetailsService.loadUserBySocialId(token.getUserinfo().getSocialId()));
-    }
-
     private List<Course> returnCourses() {
         List<Course> courses = Lists.newArrayList();
 

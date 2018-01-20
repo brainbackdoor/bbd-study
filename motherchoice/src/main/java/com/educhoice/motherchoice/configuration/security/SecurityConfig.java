@@ -8,6 +8,7 @@ import com.educhoice.motherchoice.configuration.security.service.social.Integrat
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +44,8 @@ import java.util.List;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String signature = "9A59mXiu9oahIwkZB1Q4wSAQONKEbLMmzQ0R89rQAmh4yqutfTqyOeZ6tyhJoN9";
+    @Value("${security.signing-key}")
+    private String signature;
 
     @Autowired
     private AccountDetailsService accountDetailsService;

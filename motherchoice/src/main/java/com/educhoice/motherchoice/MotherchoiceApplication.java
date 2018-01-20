@@ -2,7 +2,10 @@ package com.educhoice.motherchoice;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
+import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
+import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
@@ -21,5 +25,15 @@ public class MotherchoiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MotherchoiceApplication.class, args);
 	}
+
+	@Bean
+    public CommandLineRunner commandLineRunner(CorporateAccountRepository repository, PasswordEncoder passwordEncoder) {
+	    return args -> {
+            CorporateAccount account = new CorporateAccount("wheejuni", "1234", BasicAccount.AccountRoles.UNPAID_USER);
+            account.encryptPassword(passwordEncoder);
+
+            repository.save(account);
+        };
+    }
 
 }
