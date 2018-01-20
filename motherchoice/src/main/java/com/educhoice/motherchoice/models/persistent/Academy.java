@@ -42,7 +42,7 @@ public class Academy {
     @NotNull
     private String academyName;
 
-    @Column(columnDefinition = "TEXT DEFAULT 'EMPTY'")
+    @Column(columnDefinition = "TEXT")
     private String introduction;
 
     private boolean carAvailable;

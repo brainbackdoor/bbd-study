@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
 import com.educhoice.motherchoice.models.persistent.Event;
+import com.educhoice.motherchoice.utils.converter.LocalDateTimeConverter;
 import com.educhoice.motherchoice.utils.converter.LocalTimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -22,11 +23,11 @@ import java.time.format.DateTimeFormatter;
 public class BaseTimeEntity {
 
     @CreatedDate
-    @Convert(converter = LocalTimeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime createdTime;
 
     @LastModifiedDate
-    @Convert(converter = LocalTimeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @JsonIgnore
     private LocalDateTime updatedTime;
 
