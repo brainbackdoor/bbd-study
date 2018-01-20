@@ -26,6 +26,10 @@ public class AcademyService {
         return academyRepository.findByAcademyId(academyId).orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."));
     }
 
+    public Academy getAcademyByName(String name) {
+        return academyRepository.findByAcademyName(name).orElseThrow(() -> new NoAcademyIdException("이름에 맞는 학원이 검색되지 않았습니다."));
+    }
+
     public List<Academy> findMultipleAcademiesById(List<Long> academyIds) {
         return academyIds.stream().map(i -> academyRepository.findByAcademyId(i)).map(a -> a.orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."))).collect(Collectors.toList());
     }

@@ -45,10 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String signature = "9A59mXiu9oahIwkZB1Q4wSAQONKEbLMmzQ0R89rQAmh4yqutfTqyOeZ6tyhJoN9";
 
-    @Qualifier("oauth2ClientContext")
-    @Autowired
-    OAuth2ClientContext clientContext;
-
     @Autowired
     private AccountDetailsService accountDetailsService;
 

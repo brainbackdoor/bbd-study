@@ -16,7 +16,6 @@ import sun.reflect.annotation.ExceptionProxy;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    @Qualifier("jwkTokenServices")
     @Autowired
     private ResourceServerTokenServices tokenService;
 

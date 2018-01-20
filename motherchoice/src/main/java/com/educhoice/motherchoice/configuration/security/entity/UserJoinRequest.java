@@ -4,6 +4,7 @@ import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUser
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
+import com.educhoice.motherchoice.valueobject.models.accounts.AccountJoinDto;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 
@@ -17,10 +18,10 @@ public class UserJoinRequest {
 
     public enum JoinRequestType {
         PARENTS(0, req -> {
-            return new Account(req.getLoginId(), req.getPassword(), req.getNickname(), req.getMemberAddress(), req.getProfileUri(), req.isMarketingAllowed(), BasicAccount.AccountRoles.UNPAID_USER);
+            return new Account(req.getAccountName(), req.getPassword(), req.getNickName(), req.getAddress(), null, req.isMarketingInfo(), BasicAccount.AccountRoles.UNPAID_USER);
         }),
         ACADEMY(1, req -> {
-            return new CorporateAccount(req.getLoginId(), req.getPassword(), req.getOriginalName(), req.getPhoneNo(), null, BasicAccount.AccountRoles.PRE_INSPECTION_USER);
+            return null;
         });
 
         private int code;
@@ -42,26 +43,14 @@ public class UserJoinRequest {
 
     }
 
-    private String loginId;
+    private JoinRequestType requestType;
+    private boolean terms;
+    private boolean privacy;
+    private boolean marketingInfo;
+    private String accountName;
     private String password;
-    private String nickname;
-    private String memberAddress;
-    private String originalName;
-    private String phoneNo;
-    private String profileUri;
-    private boolean marketingAllowed;
-    private JoinRequestType joinType;
+    private String nickName;
+    private String address;
+    private AccountJoinDto accountInfo;
 
-    public BasicAccount generateAccount() {
-        return this.joinType.generateAccount(this);
-    }
-
-    public boolean isCorporateJoinRequest() {
-        return this.joinType == JoinRequestType.ACADEMY;
-    }
-
-    public void setAttributesFromSocialInfo(SocialUserinfo info) {
-        this.loginId = info.getLoginId();
-        this.profileUri = info.getProfileUri();
-    }
 }

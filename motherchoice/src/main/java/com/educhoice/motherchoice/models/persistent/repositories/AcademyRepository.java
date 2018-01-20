@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface AcademyRepository extends CrudRepository<Academy, Long>, AcademyRepositoryCustom {
 
+    Optional<Academy> findByAcademyName(String academyName);
     List<Academy> findByAcademyNameContaining(String academyName);
     Optional<Academy> findByAcademyId(long academyId);
     List<Academy> findByTagsContaining(HashTag tag);
