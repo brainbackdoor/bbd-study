@@ -1,6 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
-import com.educhoice.motherchoice.configuration.security.service.SocialSigninProviders;
+import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;

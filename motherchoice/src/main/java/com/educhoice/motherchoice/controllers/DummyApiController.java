@@ -30,6 +30,7 @@ public class DummyApiController {
     private AccountDetailsService accountDetailsService;
 
     @GetMapping("/academy")
+    @PreAuthorize("hasRole('ROLE_UNPAID_USER')")
     @CrossOrigin
     public Academy returnDummyAcacdemy() {
         return Academy.builder()

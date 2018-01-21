@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.valueobject.models.accounts;
 
+import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SocialAuthinfoDto {
 
+    private SocialSigninProviders provider;
     private String accessToken;
     private String refreshToken;
 

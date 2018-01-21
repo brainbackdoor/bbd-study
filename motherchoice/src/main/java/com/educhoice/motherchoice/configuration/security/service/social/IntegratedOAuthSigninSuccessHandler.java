@@ -1,12 +1,10 @@
 package com.educhoice.motherchoice.configuration.security.service.social;
 
 import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
-import com.educhoice.motherchoice.configuration.security.entity.oauth.AuthenticationSuccessAction;
 import com.educhoice.motherchoice.configuration.security.entity.oauth.OAuthRequestTypes;
 import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 import com.educhoice.motherchoice.configuration.security.entity.UserLoginExceptionEntity;
 import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
-import com.educhoice.motherchoice.configuration.security.service.SocialSigninProviders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
