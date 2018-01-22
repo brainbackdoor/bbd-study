@@ -24,10 +24,11 @@ public class AuthHttpRequestService {
     public BasicSocialUserInfo retrieveSocialUserInfo(SocialSigninProviders providers, SocialAuthinfoDto dto) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.set("Authorization", generateHeaderValue(dto));
 
 
+        log.debug(headers.toString());
         ResponseEntity<? extends BasicSocialUserInfo> result = restTemplate.exchange(providers.getUserinfoUri(), HttpMethod.GET, new HttpEntity<String>(headers), providers.getUserinfoDtoClass());
 
         log.debug("fetched user info from provider {} : {}", providers.getProviderName(), result.getBody().toString());
@@ -41,6 +42,7 @@ public class AuthHttpRequestService {
         builder.append("Bearer ");
         builder.append(dto.getAccessToken());
 
+        log.debug("generated HTTP request header authorization is : {}" , builder.toString());
         return builder.toString();
     }
 

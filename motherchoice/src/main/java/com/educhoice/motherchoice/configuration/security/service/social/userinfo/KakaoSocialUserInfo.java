@@ -45,4 +45,14 @@ public class KakaoSocialUserInfo implements BasicSocialUserInfo {
     public String getProfileUri() {
         return this.properties.get("profile_image");
     }
+
+    @Override
+    public String toString() {
+        return "KakaoSocialUserInfo{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", emailVerified=" + emailVerified +
+                ", properties=" + properties +
+                '}';
+    }
 }
