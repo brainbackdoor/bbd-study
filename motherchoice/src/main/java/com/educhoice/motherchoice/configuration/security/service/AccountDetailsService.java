@@ -18,7 +18,7 @@ public class AccountDetailsService implements UserDetailsService {
 		return new SecurityAccount(integratedUserQueryService.loadByEmail(s));
 	}
 
-	public UserDetails loadUserBySocialId(int socialId) throws UsernameNotFoundException {
+	public UserDetails loadUserBySocialId(long socialId) throws UsernameNotFoundException {
 	    return new SecurityAccount(integratedUserQueryService.loadBySocialId(socialId));
     }
 

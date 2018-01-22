@@ -25,7 +25,7 @@ public class IntegratedUserQueryService {
 		return account.isPresent() ? account.get() : corporateAccountRepository.findByLoginId(email).orElseThrow(() -> new UsernameNotFoundException("user not found!"));
 	}
 
-	public BasicAccount loadBySocialId(int socialId) throws UsernameNotFoundException {
+	public BasicAccount loadBySocialId(long socialId) throws UsernameNotFoundException {
 	    Optional<Account> account = accountRepository.findBySocialId(socialId);
 	    return account.isPresent() ? account.get() : corporateAccountRepository.findBySocialId(socialId).orElseThrow(() -> new UsernameNotFoundException("user not found!"));
     }

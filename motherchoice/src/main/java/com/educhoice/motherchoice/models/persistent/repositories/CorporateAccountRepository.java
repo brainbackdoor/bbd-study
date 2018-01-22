@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface CorporateAccountRepository extends CrudRepository<CorporateAccount, Long> {
 
     Optional<CorporateAccount> findByLoginId(String email);
-    Optional<CorporateAccount> findBySocialId(int socialId);
+    Optional<CorporateAccount> findBySocialId(long socialId);
 
 }

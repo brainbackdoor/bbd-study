@@ -46,6 +46,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .httpBasic()
                 .realmName(securityRealm)
                 .and()
+                .cors()
+                .disable();
+
+        httpSecurity
                 .headers()
                 .frameOptions()
                 .disable()

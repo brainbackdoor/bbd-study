@@ -53,9 +53,6 @@ public class AuthenticationServerConfig extends AuthorizationServerConfigurerAda
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
         configurer
