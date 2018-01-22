@@ -25,8 +25,8 @@ public class NaverSocialUserInfo implements BasicSocialUserInfo {
     }
 
     @Override
-    public String getUniqueId() {
-        return userInfoMap.get("id");
+    public Long getUniqueId() {
+        return Long.valueOf(userInfoMap.get("id"));
     }
 
     @Override

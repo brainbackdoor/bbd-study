@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class KakaoSocialUserInfo implements BasicSocialUserInfo {
 
-    private int id;
+    @JsonProperty("id")
+    private long id;
 
     @JsonProperty("kaccount_email")
     private String email;
@@ -22,14 +22,18 @@ public class KakaoSocialUserInfo implements BasicSocialUserInfo {
 
     private Map<String, String> properties;
 
+    public boolean isEmailVerified() {
+        return this.emailVerified;
+    }
+
     @Override
     public String getAccountName() {
         return this.email;
     }
 
     @Override
-    public String getUniqueId() {
-        return String.valueOf(this.id);
+    public Long getUniqueId() {
+        return Long.valueOf(this.id);
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface BasicSocialUserInfo {
         return "1234";
     }
 
-    String getUniqueId();
+    Long getUniqueId();
     String getNickname();
     String getProfileUri();
 

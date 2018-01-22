@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -57,9 +58,21 @@ public class BasicAccount {
     private String password;
 
     @JsonIgnore
-    private int socialId;
+    @Nullable
+    private long socialId;
+
+    @JsonIgnore
+    @Nullable
+    @Column(name = "OAUTH_ACCESS_TOKEN")
+    private String socialtoken;
+
+    @JsonIgnore
+    @Nullable
+    @Column(name = "OAUTH_REFRESH_TOKEN")
+    private String socialRefreshToken;
 
     @Enumerated(value = EnumType.STRING)
+    @Nullable
     @JsonIgnore
     private SocialSigninProviders socialProvider;
 
@@ -80,6 +93,16 @@ public class BasicAccount {
         this.password = password;
         this.profileUri = profileUri;
         this.roles = roles;
+    }
+
+    public BasicAccount(String loginId, String password, String profileUri, SocialSigninProviders socialProvider, Long socialId, String socialtoken, String socialRefreshToken) {
+        this.loginId = loginId;
+        this.password = password;
+        this.profileUri = profileUri;
+        this.socialProvider = socialProvider;
+        this.socialId = socialId;
+        this.socialtoken = socialtoken;
+        this.socialRefreshToken = socialRefreshToken;
     }
 
     public boolean isSameEmail(String email) {
