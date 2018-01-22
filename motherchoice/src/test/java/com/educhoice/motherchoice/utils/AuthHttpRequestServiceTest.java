@@ -31,14 +31,14 @@ public class AuthHttpRequestServiceTest {
     @Before
     public void setUp() {
         this.dto = new SocialAuthinfoDto();
-        this.dto.setAccessToken("615ckldqdV8rDCUZVyhSrXW3SW5j6NsWBIOLzwopdtYAAAFhHLuveg");
+        this.dto.setAccessToken("jecBueyEzcx86U7yYER5adgcGWZvIWm_V2wb4Qo8BZUAAAFhHVcdpQ");
         this.dto.setProvider(this.providers);
         this.dto.setRefreshToken("pCKu-vhAHKbKwJuff9RiOa1fQUirM4-Y-pJdWgo8BZUAAAFhHKUOxg");
     }
 
     @Test
     public void 유저정보_가져오기_테스트() {
-        BasicSocialUserInfo info = service.retrieveSocialUserInfo(this.providers, this.dto);
+        BasicSocialUserInfo info = service.retrieveSocialUserInfo(this.dto);
 
         assertTrue(info instanceof KakaoSocialUserInfo);
         log.debug(info.toString());

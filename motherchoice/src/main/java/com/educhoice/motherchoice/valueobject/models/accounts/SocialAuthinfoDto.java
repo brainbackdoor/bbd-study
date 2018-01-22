@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.valueobject.models.accounts;
 
 import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
+import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,13 @@ public class SocialAuthinfoDto {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getUserinfoRestResource() {
+        return this.provider.getUserinfoUri();
+    }
+
+    public Class<? extends BasicSocialUserInfo> getUserinfoMetaclass() {
+        return this.provider.getUserinfoDtoClass();
     }
 }

@@ -21,7 +21,7 @@ public class AuthHttpRequestService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public BasicSocialUserInfo retrieveSocialUserInfo(SocialSigninProviders providers, SocialAuthinfoDto dto) {
+    public BasicSocialUserInfo retrieveSocialUserInfo(SocialAuthinfoDto dto) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -29,9 +29,9 @@ public class AuthHttpRequestService {
 
 
         log.debug(headers.toString());
-        ResponseEntity<? extends BasicSocialUserInfo> result = restTemplate.exchange(providers.getUserinfoUri(), HttpMethod.GET, new HttpEntity<String>(headers), providers.getUserinfoDtoClass());
+        ResponseEntity<? extends BasicSocialUserInfo> result = restTemplate.exchange(dto.getUserinfoRestResource(), HttpMethod.GET, new HttpEntity<String>(headers), dto.getUserinfoMetaclass());
 
-        log.debug("fetched user info from provider {} : {}", providers.getProviderName(), result.getBody().toString());
+        log.debug("fetched user info from provider {} : {}", dto.getProvider().getProviderName(), result.getBody().toString());
 
         return result.getBody();
     }
