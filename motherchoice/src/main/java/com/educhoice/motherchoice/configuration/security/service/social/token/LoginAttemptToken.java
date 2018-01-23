@@ -7,10 +7,6 @@ public class LoginAttemptToken extends UsernamePasswordAuthenticationToken {
 
     private SocialAuthinfoDto socialDto;
 
-    public LoginAttemptToken(Object principal, Object credentials) {
-        super(principal, credentials);
-    }
-
     public LoginAttemptToken(SocialAuthinfoDto dto) {
         super(dto, dto.getAccessToken(), null);
         this.socialDto = dto;

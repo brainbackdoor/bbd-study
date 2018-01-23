@@ -2,21 +2,29 @@ package com.educhoice.motherchoice.configuration.security.service.social;
 
 import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
 import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
-import com.educhoice.motherchoice.configuration.security.service.IntegratedUserQueryService;
 import com.educhoice.motherchoice.configuration.security.service.social.token.LoginAttemptToken;
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
-import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.utils.AuthHttpRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class SocialLoginAuthenticationManager implements AuthenticationManager {
 
+    @Value("${security.jwt.client-id}")
+    private String clientId;
+
+    @Value("${security.jwt.resource-ids}")
+    private Set<String> resourceId;
 
     @Autowired
     private AuthHttpRequestService requestService;
@@ -26,10 +34,10 @@ public class SocialLoginAuthenticationManager implements AuthenticationManager {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        LoginAttemptToken token = (LoginAttemptToken)authentication.getPrincipal();
+        LoginAttemptToken token = (LoginAttemptToken)authentication;
 
         BasicSocialUserInfo userInfo = requestService.retrieveSocialUserInfo(token.getSocialDto());
-        return new IntegratedUserSigninToken(getAccountFromUserinfo(userInfo));
+        return new OAuth2Authentication(new OAuth2Request(null, clientId, null, true, null, resourceId, null, null, null), new IntegratedUserSigninToken(getAccountFromUserinfo(userInfo)));
     }
 
     private SecurityAccount getAccountFromUserinfo(BasicSocialUserInfo info) {

@@ -95,10 +95,11 @@ public class BasicAccount {
         this.roles = roles;
     }
 
-    public BasicAccount(String loginId, String password, String profileUri, SocialSigninProviders socialProvider, Long socialId, String socialtoken, String socialRefreshToken) {
+    public BasicAccount(String loginId, String password, String profileUri, AccountRoles roles, SocialSigninProviders socialProvider, Long socialId, String socialtoken, String socialRefreshToken) {
         this.loginId = loginId;
         this.password = password;
         this.profileUri = profileUri;
+        this.roles = roles;
         this.socialProvider = socialProvider;
         this.socialId = socialId;
         this.socialtoken = socialtoken;

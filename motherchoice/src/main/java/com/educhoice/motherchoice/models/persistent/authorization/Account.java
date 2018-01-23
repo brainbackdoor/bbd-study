@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
+import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.educhoice.motherchoice.models.persistent.geolocation.MemberAddress;
 import com.educhoice.motherchoice.models.persistent.qna.Question;
 import com.educhoice.motherchoice.utils.converter.MemberAddrToStringConverter;
@@ -31,6 +32,13 @@ public class Account extends BasicAccount{
 
     public Account(String username, String password, String nickname, String memberAddress, String profileUri, boolean marketingAllowed, AccountRoles roles) {
         super(username, password, profileUri, roles);
+        this.nickname = nickname;
+        this.memberAddress = memberAddress;
+        this.marketingAllowed = marketingAllowed;
+    }
+
+    public Account(String username, String password, String nickname, String memberAddress, String profileUri, boolean marketingAllowed, AccountRoles roles, SocialSigninProviders providers, Long socialId, String socialToken, String socialRefreshToken) {
+        super(username, password, profileUri, roles, providers, socialId, socialToken, socialRefreshToken );
         this.nickname = nickname;
         this.memberAddress = memberAddress;
         this.marketingAllowed = marketingAllowed;

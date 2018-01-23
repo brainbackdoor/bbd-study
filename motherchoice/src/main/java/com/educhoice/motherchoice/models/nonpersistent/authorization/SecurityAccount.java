@@ -48,4 +48,6 @@ public class SecurityAccount extends User {
     private static Collection<? extends GrantedAuthority> makeAuthorities(List<BasicAccount.AccountRoles> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(ROLE_PREFIX + r.getSymbol())).collect(Collectors.toList());
     }
+
+
 }

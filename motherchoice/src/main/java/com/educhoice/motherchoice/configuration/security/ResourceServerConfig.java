@@ -1,5 +1,8 @@
 package com.educhoice.motherchoice.configuration.security;
 
+import com.educhoice.motherchoice.configuration.security.service.filters.JwtAuthenticationFilter;
+import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
+import com.educhoice.motherchoice.service.JwtIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +13,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import sun.reflect.annotation.ExceptionProxy;
 
 @Configuration
@@ -18,6 +23,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private ResourceServerTokenServices tokenService;
+
+    @Autowired
+    private SocialLoginAuthenticationManager socialLoginAuthenticationManager;
+
+    @Qualifier("accessTokenConverter")
+    @Autowired
+    private JwtAccessTokenConverter tokenConverter;
+
+    @Autowired
+    private JwtIdService jwtIdService;
 
     @Value("testjwtresourceid")
     private String resourceIds;
@@ -37,7 +52,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api/v1/**").authenticated();
+                .antMatchers("/api/v1/**").authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter("/kakao", socialLoginAuthenticationManager, tokenConverter, jwtIdService), BasicAuthenticationFilter.class);
 
         httpSecurity
                 .sessionManagement()
