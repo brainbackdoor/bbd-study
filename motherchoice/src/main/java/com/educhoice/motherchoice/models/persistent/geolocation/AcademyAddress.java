@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.models.persistent.geolocation;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.annotation.Nullable;
@@ -18,16 +19,16 @@ public class AcademyAddress{
     private String sido;
     private String sigungu;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String address;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String roadAddress;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jibunAddress;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String zonecode;
 
     private double latitude;

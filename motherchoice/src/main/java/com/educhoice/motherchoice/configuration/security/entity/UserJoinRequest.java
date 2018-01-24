@@ -18,7 +18,7 @@ public class UserJoinRequest {
 
     public enum JoinRequestType {
         PARENTS(0, req -> {
-            return new Account(req.getAccountName(), req.getPassword(), req.getNickName(), req.getAddress(), null, req.isMarketingInfo(), BasicAccount.AccountRoles.UNPAID_USER);
+            return null;
         }),
         ACADEMY(1, req -> {
             return null;
@@ -44,13 +44,6 @@ public class UserJoinRequest {
     }
 
     private JoinRequestType requestType;
-    private boolean terms;
-    private boolean privacy;
-    private boolean marketingInfo;
-    private String accountName;
-    private String password;
-    private String nickName;
-    private String address;
     private AccountJoinDto accountInfo;
 
 }

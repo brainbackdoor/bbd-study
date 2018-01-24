@@ -42,6 +42,9 @@ public class Academy {
     @NotNull
     private String academyName;
 
+    private String ownerName;
+    private String phoneNumber;
+
     @Column(columnDefinition = "TEXT")
     private String introduction;
 

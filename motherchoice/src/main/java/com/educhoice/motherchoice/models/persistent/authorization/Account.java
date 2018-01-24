@@ -19,10 +19,6 @@ import java.util.List;
 public class Account extends BasicAccount{
 
     private String nickname;
-
-//    @Column
-//    @Convert(converter = MemberAddrToStringConverter.class)
-//    private MemberAddress memberAddress;
     private String memberAddress;
 
     private boolean marketingAllowed;

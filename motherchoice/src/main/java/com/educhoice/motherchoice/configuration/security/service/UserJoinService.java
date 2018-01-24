@@ -9,6 +9,7 @@ import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccoun
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 import com.educhoice.motherchoice.service.AcademyService;
 import com.educhoice.motherchoice.utils.exceptions.security.EmailNotCertifiedException;
+import com.educhoice.motherchoice.valueobject.models.accounts.AccountJoinDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,10 @@ public class UserJoinService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public void joinAccount(AccountJoinDto dto) {
+
+    }
 
     private boolean isEmailCertified(String email) {
         return tokenStorageService.isCertified(email);

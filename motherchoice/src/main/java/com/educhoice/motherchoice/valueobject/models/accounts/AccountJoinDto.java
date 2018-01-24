@@ -9,11 +9,10 @@ import lombok.*;
 @Builder
 public class AccountJoinDto {
 
-    private String mobileNo;
-    private String userRealName;
-    private String academyName;
-    private String phoneNo;
-    private String address;
-    private String detailAddress;
+    private String loginId;
+    private String password;
+    private boolean terms;
+    private boolean privacy;
+    private boolean marketingInfo;
 
 }

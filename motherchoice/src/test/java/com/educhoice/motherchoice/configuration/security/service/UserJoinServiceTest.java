@@ -29,32 +29,20 @@ public class UserJoinServiceTest {
     @Autowired
     private IntegratedUserQueryService queryService;
 
-    @Before
-    public void setUp() {
-        this.request = UserJoinRequest.builder()
-                .accountName("wheejuni@github.com")
-                .password("1234")
-                .requestType(UserJoinRequest.JoinRequestType.PARENTS)
-                .marketingInfo(true)
-                .build();
-
-        this.userinfo = SocialUserinfo.builder()
-                .loginId("wheejuni@github.com")
-                .profileUri("/profile/img/1")
-                .socialId(1)
-                .nickname("정휘준")
-                .build();
-    }
+//    @Before
+//    public void setUp() {
+//        this.request = UserJoinRequest.builder()
+//                .accountName("wheejuni@github.com")
+//                .password("1234")
+//                .requestType(UserJoinRequest.JoinRequestType.PARENTS)
+//                .marketingInfo(true)
+//                .build();
 //
-//    @Test
-//    public void 소셜정보삽입_유저정보입력_잘되는지() {
-//        this.request.setAttributesFromSocialInfo(userinfo);
-//        log.debug("prepared user info is : {}" , this.request.toString());
-//        service.joinSocialUser(this.userinfo, this.request);
-//        assertNotNull(queryService.loadByEmail("wheejuni@github.com"));
-//        assertTrue(queryService.loadByEmail("wheejuni@github.com") instanceof Account);
+//        this.userinfo = SocialUserinfo.builder()
+//                .loginId("wheejuni@github.com")
+//                .profileUri("/profile/img/1")
+//                .socialId(1)
+//                .nickname("정휘준")
+//                .build();
 //    }
-
-
-
 }

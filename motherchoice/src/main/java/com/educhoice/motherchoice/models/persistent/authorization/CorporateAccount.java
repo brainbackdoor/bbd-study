@@ -25,8 +25,6 @@ public class CorporateAccount extends BasicAccount {
 
 	private String accountName;
 
-	private String ownerName;
-
 	@OneToOne
 	@JoinColumn(name = "academyId")
     @JsonIgnore
@@ -43,8 +41,9 @@ public class CorporateAccount extends BasicAccount {
         super(email, password, null, roles);
     }
 
-    public CorporateAccount(String email, String password, String ownerName, String phoneNo, String profileUri, AccountRoles roles) {
+    public CorporateAccount(String email, String password, String phoneNo, String accountName, String profileUri, AccountRoles roles) {
         super(email, password, profileUri, roles);
+        this.phoneNo = phoneNo;
         this.paid = AccountRoles.isPaidTier(roles);
     }
 }
