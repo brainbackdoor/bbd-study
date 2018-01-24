@@ -21,6 +21,13 @@ public class CorporateAccountJoinDto extends AccountJoinDto {
     @JsonProperty(value = "academy")
     private NewAcademyDto newAcademyInfo;
 
+    public CorporateAccountJoinDto(String username, String password, String phoneNo, String originalName, NewAcademyDto newAcademyDto) {
+        super(username, password, true, true, true);
+        this.phoneNo = phoneNo;
+        this.originalName = originalName;
+        this.newAcademyInfo = newAcademyDto;
+    }
+
     public CorporateAccount generateNewCorporateAccount() {
         return new CorporateAccount(super.getLoginId(), super.getPassword(), this.phoneNo, this.originalName, null, BasicAccount.AccountRoles.PRE_INSPECTION_USER);
     }

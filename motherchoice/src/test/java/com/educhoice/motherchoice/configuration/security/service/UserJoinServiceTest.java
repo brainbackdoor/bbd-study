@@ -3,6 +3,10 @@ package com.educhoice.motherchoice.configuration.security.service;
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
+import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.valueobject.models.academies.NewAcademyDto;
+import com.educhoice.motherchoice.valueobject.models.accounts.CorporateAccountJoinDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @SpringBootTest
@@ -21,7 +27,6 @@ public class UserJoinServiceTest {
     private static final Logger log = LoggerFactory.getLogger(UserJoinServiceTest.class);
 
     private UserJoinRequest request;
-    private SocialUserinfo userinfo;
 
     @Autowired
     private UserJoinService service;
@@ -29,20 +34,24 @@ public class UserJoinServiceTest {
     @Autowired
     private IntegratedUserQueryService queryService;
 
-//    @Before
-//    public void setUp() {
-//        this.request = UserJoinRequest.builder()
-//                .accountName("wheejuni@github.com")
-//                .password("1234")
-//                .requestType(UserJoinRequest.JoinRequestType.PARENTS)
-//                .marketingInfo(true)
-//                .build();
-//
-//        this.userinfo = SocialUserinfo.builder()
-//                .loginId("wheejuni@github.com")
-//                .profileUri("/profile/img/1")
-//                .socialId(1)
-//                .nickname("정휘준")
-//                .build();
-//    }
+    @Before
+    public void setUp() {
+        this.request = UserJoinRequest.builder()
+                .requestType(UserJoinRequest.JoinRequestType.ACADEMY)
+                .accountInfo(new CorporateAccountJoinDto("pobi@pobiworld.com", "1234", "01012345678", "박재성", new NewAcademyDto("포비학원", "박재성", "07012345678", AcademyAddress.builder().address("경기도 김포시 유현로 19").sido("경기도").sigungu("김포시").zonecode("10120").build())))
+                .build();
+    }
+
+    @Test
+    @Transactional
+    public void DTO기반_회원가입테스트() {
+        this.service.joinAccount(this.request);
+        CorporateAccount account = (CorporateAccount)this.queryService.loadByEmail("pobi@pobiworld.com");
+
+        assertThat(account.getLoginId(), is("pobi@pobiworld.com"));
+        assertThat(account.getAcademy().getAcademyName(), is("포비학원"));
+        assertThat(account.getAcademy().getAddress().getSido(), is("경기도"));
+    }
+
+
 }

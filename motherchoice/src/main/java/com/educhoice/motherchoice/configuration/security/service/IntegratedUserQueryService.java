@@ -2,12 +2,14 @@ package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Basic;
 import java.util.Optional;
 
 @Component
@@ -33,4 +35,15 @@ public class IntegratedUserQueryService {
 	public boolean isExistingEmail(String email) {
 		return accountRepository.findByLoginId(email).isPresent() || corporateAccountRepository.findByLoginId(email).isPresent();
 	}
+
+	public BasicAccount saveAccount(BasicAccount account) {
+	    if(isCorporateAccount(account)) {
+	        return corporateAccountRepository.save((CorporateAccount) account);
+        }
+        return accountRepository.save((Account)account);
+    }
+
+    private boolean isCorporateAccount(BasicAccount account) {
+	    return account instanceof CorporateAccount;
+    }
 }
