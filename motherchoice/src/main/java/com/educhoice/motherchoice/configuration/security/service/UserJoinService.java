@@ -1,26 +1,31 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
-import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
+import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
+import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
-import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 import com.educhoice.motherchoice.service.AcademyService;
+import com.educhoice.motherchoice.utils.AuthHttpRequestService;
 import com.educhoice.motherchoice.utils.exceptions.entity.InvalidAcademyCreationException;
-import com.educhoice.motherchoice.utils.exceptions.security.EmailNotCertifiedException;
-import com.educhoice.motherchoice.valueobject.models.accounts.AccountJoinDto;
+import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class UserJoinService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private AuthHttpRequestService requestService;
 
     @Autowired
     private CorporateAccountRepository corporateAccountRepository;
@@ -35,25 +40,51 @@ public class UserJoinService {
     private PasswordEncoder passwordEncoder;
 
     public void joinAccount(UserJoinRequest request) {
-        BasicAccount account = request.generateAccount();
-        account.encryptPassword(passwordEncoder);
-
-        if (account instanceof CorporateAccount) {
-            CorporateAccount corporateAccount = (CorporateAccount)account;
-            Academy academy = request.generateAcademyInfo().orElseThrow(() -> new InvalidAcademyCreationException("학원정보 생성에 실패하였습니다."));
-            Academy savedAcademy = academyService.saveAcademy(academy);
-
-            corporateAccount.setAcademy(savedAcademy);
-            corporateAccountRepository.save(corporateAccount);
+        if (request.isCorporateAccountRequest()) {
+            corporateAccountRepository.save(this.generateCorporateAccount(request, passwordEncoder));
             return;
         }
 
-        Account parentsAccount = (Account)account;
+        Account parentsAccount = (Account)request.generateAccount();
+        parentsAccount.encryptPassword(passwordEncoder);
         accountRepository.save(parentsAccount);
+    }
+
+    public void joinRequestSocial(UserJoinRequest req, SocialAuthinfoDto dto) {
+        if(req.isCorporateAccountRequest()) {
+            this.corporateAccountRepository.save(generateSocialCorporateAccount(req, dto));
+            return;
+        }
+        Account account = (Account)req.generateAccount();
+        account.encryptPassword(passwordEncoder);
+        this.accountRepository.save((Account)setSocialInfos(account, dto));
     }
 
     private boolean isEmailCertified(String email) {
         return tokenStorageService.isCertified(email);
+    }
+
+    private CorporateAccount generateCorporateAccount(UserJoinRequest request, PasswordEncoder passwordEncoder) {
+        Academy academy = this.academyService.saveAcademy(request.generateAcademyInfo().orElseThrow(() -> new InvalidAcademyCreationException("학원 정보 생성에 실패했습니다.")));
+        CorporateAccount account = (CorporateAccount)request.generateAccount();
+
+        account.encryptPassword(passwordEncoder);
+        account.setAcademy(academy);
+        return account;
+    }
+
+    private CorporateAccount generateSocialCorporateAccount(UserJoinRequest request, SocialAuthinfoDto dto) {
+        return Arrays.asList(request).stream().map(req -> generateCorporateAccount(req, passwordEncoder)).peek(a -> a.setSocialInfos(retrieveInfos(dto), dto)).findFirst().get();
+    }
+
+    private BasicAccount setSocialInfos(BasicAccount account, SocialAuthinfoDto dto) {
+        BasicSocialUserInfo info = requestService.retrieveSocialUserInfo(dto);
+        account.setSocialInfos(info, dto);
+        return account;
+    }
+
+    private BasicSocialUserInfo retrieveInfos(SocialAuthinfoDto dto) {
+        return requestService.retrieveSocialUserInfo(dto);
     }
 
 }

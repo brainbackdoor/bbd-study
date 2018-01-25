@@ -1,13 +1,11 @@
 package com.educhoice.motherchoice.configuration.security.entity;
 
-import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
 import com.educhoice.motherchoice.models.persistent.Academy;
-import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
-import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.valueobject.models.accounts.AccountJoinDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.CorporateAccountJoinDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.ParentsAccountJoinDto;
+import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
@@ -49,6 +47,9 @@ public class UserJoinRequest {
             return this.code;
         }
 
+        public boolean isAcademyRequest() {
+            return this == ACADEMY;
+        }
     }
 
     @JsonProperty(value = "joinType")
@@ -57,12 +58,19 @@ public class UserJoinRequest {
     @JsonProperty(value = "account")
     private AccountJoinDto accountInfo;
 
+    @JsonProperty(value = "accessToken")
+    private SocialAuthinfoDto socialAuthinfoDto;
+
+    public boolean isCorporateAccountRequest() {
+        return this.requestType.isAcademyRequest();
+    }
+
     public BasicAccount generateAccount() {
         return this.requestType.generateAccount(this);
     }
 
     public Optional<Academy> generateAcademyInfo() {
-        if (this.requestType != JoinRequestType.ACADEMY || this.accountInfo instanceof CorporateAccountJoinDto == false) {
+        if (!this.requestType.isAcademyRequest() || !(this.accountInfo instanceof CorporateAccountJoinDto)) {
             return Optional.empty();
         }
         CorporateAccountJoinDto dto = (CorporateAccountJoinDto)this.accountInfo;

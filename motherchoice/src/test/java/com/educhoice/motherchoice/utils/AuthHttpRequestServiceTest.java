@@ -31,7 +31,7 @@ public class AuthHttpRequestServiceTest {
     @Before
     public void setUp() {
         this.dto = new SocialAuthinfoDto();
-        this.dto.setAccessToken("jecBueyEzcx86U7yYER5adgcGWZvIWm_V2wb4Qo8BZUAAAFhHVcdpQ");
+        this.dto.setAccessToken("CBaZuLw3HW67THD9kMeJC25jDyaKvMD8Vm7l5AopdkgAAAFhK1av7A");
         this.dto.setProvider(this.providers);
         this.dto.setRefreshToken("pCKu-vhAHKbKwJuff9RiOa1fQUirM4-Y-pJdWgo8BZUAAAFhHKUOxg");
     }

@@ -7,20 +7,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum SocialSigninProviders {
 
-    KAKAO("kakao", "https://kapi.kakao.com/v1/user/me", new KakaoSocialUserInfo()),
-    NAVER("naver", "https://openapi.naver.com/v1/nid/me", new NaverSocialUserInfo()),
+    KAKAO("kakao", "https://kapi.kakao.com/v1/user/me", KakaoSocialUserInfo.class),
+    NAVER("naver", "https://openapi.naver.com/v1/nid/me", NaverSocialUserInfo.class),
 
     TEST("test", "http://www.naver.com", null);
 
 
     private String symbol;
     private String userinfoUri;
-    private BasicSocialUserInfo userinfoDto;
+    private Class<? extends BasicSocialUserInfo> dtoClass;
 
-    SocialSigninProviders(String symbol, String userinfoUri, BasicSocialUserInfo userinfoDto){
+    SocialSigninProviders(String symbol, String userinfoUri, Class<? extends BasicSocialUserInfo> dtoClass){
         this.symbol = symbol;
         this.userinfoUri = userinfoUri;
-        this.userinfoDto = userinfoDto;
+        this.dtoClass = dtoClass;
     }
 
     @JsonValue
@@ -33,6 +33,6 @@ public enum SocialSigninProviders {
     }
 
     public Class<? extends BasicSocialUserInfo> getUserinfoDtoClass() {
-        return this.userinfoDto.getClass();
+        return this.dtoClass;
     }
 }

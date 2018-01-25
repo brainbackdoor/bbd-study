@@ -1,6 +1,8 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
 import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
+import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
+import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -116,6 +118,14 @@ public class BasicAccount {
 
     public void encryptPassword(PasswordEncoder encoder) {
         this.password = encoder.encode(this.password);
+    }
+
+    public void setSocialInfos(BasicSocialUserInfo infos, SocialAuthinfoDto dto) {
+        this.socialId = infos.getUniqueId();
+        this.socialtoken = dto.getAccessToken();
+        this.socialProvider = dto.getProvider();
+        this.socialRefreshToken = dto.getRefreshToken();
+        this.profileUri = infos.getProfileUri();
     }
 
 }

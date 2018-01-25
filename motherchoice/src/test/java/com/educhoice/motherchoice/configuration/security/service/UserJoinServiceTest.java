@@ -1,8 +1,6 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
-import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
-import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.valueobject.models.academies.NewAcademyDto;
@@ -18,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -47,6 +45,7 @@ public class UserJoinServiceTest {
     public void DTO기반_회원가입테스트() {
         this.service.joinAccount(this.request);
         CorporateAccount account = (CorporateAccount)this.queryService.loadByEmail("pobi@pobiworld.com");
+        log.debug("encrypted password is : {}", account.getPassword());
 
         assertThat(account.getLoginId(), is("pobi@pobiworld.com"));
         assertThat(account.getAcademy().getAcademyName(), is("포비학원"));
