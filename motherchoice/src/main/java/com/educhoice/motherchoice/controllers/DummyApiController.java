@@ -1,16 +1,12 @@
 package com.educhoice.motherchoice.controllers;
 
-import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
 import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
 import com.educhoice.motherchoice.configuration.security.service.UserJoinService;
-import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
-import com.educhoice.motherchoice.models.persistent.geolocation.Dong;
-import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,15 +38,6 @@ public class DummyApiController {
 
     }
 
-    @GetMapping("/dong")
-    @CrossOrigin
-    public Dong returnDong() {
-        return Dong.builder()
-                .dongId(0)
-                .dongName("풍무동")
-                .juso("경기도 김포시")
-                .build();
-    }
 
     private List<Course> returnCourses() {
         List<Course> courses = Lists.newArrayList();
