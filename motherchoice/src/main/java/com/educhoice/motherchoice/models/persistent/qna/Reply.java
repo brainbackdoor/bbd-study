@@ -20,6 +20,7 @@ public class Reply extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private BasicAccount account;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
 }

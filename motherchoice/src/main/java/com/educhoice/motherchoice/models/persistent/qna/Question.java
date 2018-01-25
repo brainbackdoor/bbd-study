@@ -23,6 +23,8 @@ public class Question extends BaseTimeEntity{
     private long questionId;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToMany(fetch = FetchType.EAGER)

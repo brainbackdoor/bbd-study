@@ -21,6 +21,7 @@ public class Answer extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -1,7 +1,5 @@
 package com.educhoice.motherchoice.utils;
 
-import com.educhoice.motherchoice.configuration.security.entity.oauth.SocialUserinfo;
-import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.slf4j.Logger;
@@ -10,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Arrays;
 
 @Service
 public class AuthHttpRequestService {
