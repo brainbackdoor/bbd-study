@@ -59,7 +59,7 @@ public class JwtAuthenticationFilterTest {
     public void setUp() {
         this.filter = new JwtAuthenticationFilter("/hello", this.authenticationManager, this.tokenConverter, this.jwtIdService);
 
-        this.account = new Account("정휘준", "1234", "봄이네집", null, null, true, BasicAccount.AccountRoles.UNPAID_USER, SocialSigninProviders.KAKAO, 705692990L, "nL-jMA6reSagOq23xuheawJRNbF6qgMCAyehZwo8BRIAAAFhIbvBxw", null);
+        this.account = new Account("정휘준", "1234", "봄이네집", null, null, true, BasicAccount.AccountRoles.UNPAID_USER, SocialSigninProviders.KAKAO, 705692990L);
         accountRepository.save(this.account);
 
         this.dto = new SocialAuthinfoDto();

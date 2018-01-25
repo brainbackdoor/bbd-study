@@ -6,6 +6,7 @@ import com.educhoice.motherchoice.configuration.security.service.social.token.Lo
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.utils.AuthHttpRequestService;
+import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,11 +37,12 @@ public class SocialLoginAuthenticationManager implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         LoginAttemptToken token = (LoginAttemptToken)authentication;
 
-        BasicSocialUserInfo userInfo = requestService.retrieveSocialUserInfo(token.getSocialDto());
-        return new OAuth2Authentication(new OAuth2Request(null, clientId, null, true, null, resourceId, null, null, null), new IntegratedUserSigninToken(getAccountFromUserinfo(userInfo)));
+        SocialAuthinfoDto dto = token.getSocialDto();
+        BasicSocialUserInfo userInfo = requestService.retrieveSocialUserInfo(dto);
+        return new OAuth2Authentication(new OAuth2Request(null, clientId, null, true, null, resourceId, null, null, null), new IntegratedUserSigninToken(getAccountFromUserinfo(userInfo, dto)));
     }
 
-    private SecurityAccount getAccountFromUserinfo(BasicSocialUserInfo info) {
-        return (SecurityAccount)accountDetailsService.loadUserBySocialId(info.getUniqueId());
+    private SecurityAccount getAccountFromUserinfo(BasicSocialUserInfo info, SocialAuthinfoDto dto) {
+        return (SecurityAccount)accountDetailsService.loadUserBySocialId(info.getUniqueId(), dto.getProvider());
     }
 }

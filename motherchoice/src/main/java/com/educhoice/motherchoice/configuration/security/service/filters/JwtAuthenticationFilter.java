@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         OAuth2Authentication authentication = auth instanceof OAuth2Authentication ? (OAuth2Authentication)auth : null;
         SecurityAccount userinfo = authentication.getPrincipal() instanceof SecurityAccount ? (SecurityAccount) authentication.getPrincipal() : null;
 
-        res.setStatus(HttpStatus.ACCEPTED.value());
+        res.setStatus(HttpStatus.OK.value());
         res.getWriter().write(generateJwtString(new SocialLoginAccessToken(userinfo, idService.generateJti(userinfo.getUsername())), authentication));
 
     }

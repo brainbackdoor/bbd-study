@@ -63,16 +63,6 @@ public class BasicAccount {
     @Nullable
     private long socialId;
 
-    @JsonIgnore
-    @Nullable
-    @Column(name = "OAUTH_ACCESS_TOKEN")
-    private String socialtoken;
-
-    @JsonIgnore
-    @Nullable
-    @Column(name = "OAUTH_REFRESH_TOKEN")
-    private String socialRefreshToken;
-
     @Enumerated(value = EnumType.STRING)
     @Nullable
     @JsonIgnore
@@ -97,15 +87,14 @@ public class BasicAccount {
         this.roles = roles;
     }
 
-    public BasicAccount(String loginId, String password, String profileUri, AccountRoles roles, SocialSigninProviders socialProvider, Long socialId, String socialtoken, String socialRefreshToken) {
+    public BasicAccount(String loginId, String password, String profileUri, AccountRoles roles, SocialSigninProviders socialProvider, Long socialId) {
         this.loginId = loginId;
         this.password = password;
         this.profileUri = profileUri;
         this.roles = roles;
         this.socialProvider = socialProvider;
         this.socialId = socialId;
-        this.socialtoken = socialtoken;
-        this.socialRefreshToken = socialRefreshToken;
+
     }
 
     public boolean isSameEmail(String email) {
@@ -123,9 +112,7 @@ public class BasicAccount {
     public void setSocialInfos(BasicSocialUserInfo infos, SocialAuthinfoDto dto) {
         this.loginId = infos.getEmail();
         this.socialId = infos.getUniqueId();
-        this.socialtoken = dto.getAccessToken();
         this.socialProvider = dto.getProvider();
-        this.socialRefreshToken = dto.getRefreshToken();
         this.profileUri = infos.getProfileUri();
     }
 

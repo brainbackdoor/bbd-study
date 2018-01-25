@@ -45,7 +45,7 @@ public class UserJoinServiceTest {
                 .build();
 
         this.dto = new SocialAuthinfoDto();
-        this.dto.setAccessToken("GgEqzGWSDSeVWT-9gXE8y-WdxoVitcohX28niAo8BhkAAAFhK8FAGA");
+        this.dto.setAccessToken("9_XRWAKrcDWTZnsKyoqbNRn89rFLR4ZKTRuP-AopdaYAAAFhLQ8fzw");
         this.dto.setProvider(SocialSigninProviders.KAKAO);
 
         this.request.setSocialAuthinfoDto(this.dto);
@@ -71,6 +71,10 @@ public class UserJoinServiceTest {
 
         CorporateAccount account = (CorporateAccount)this.queryService.loadByEmail("wheejuni@gmail.com");
         assertThat(account.getAccountName(), is("박재성"));
+        assertThat(account.getSocialId(), is(705692990L));
+
+        CorporateAccount accountBySocialId = (CorporateAccount)this.queryService.loadBySocialId(705692990L, SocialSigninProviders.KAKAO);
+        assertThat(accountBySocialId.getAccountName(), is("박재성"));
 
     }
 
