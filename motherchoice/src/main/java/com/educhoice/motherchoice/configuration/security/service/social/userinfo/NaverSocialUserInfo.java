@@ -30,6 +30,11 @@ public class NaverSocialUserInfo implements BasicSocialUserInfo {
     }
 
     @Override
+    public String getEmail() {
+        return this.userInfoMap.get("email");
+    }
+
+    @Override
     public String getNickname() {
         return userInfoMap.get("nickname");
     }

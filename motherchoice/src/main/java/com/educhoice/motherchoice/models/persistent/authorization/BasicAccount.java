@@ -121,6 +121,7 @@ public class BasicAccount {
     }
 
     public void setSocialInfos(BasicSocialUserInfo infos, SocialAuthinfoDto dto) {
+        this.loginId = infos.getEmail();
         this.socialId = infos.getUniqueId();
         this.socialtoken = dto.getAccessToken();
         this.socialProvider = dto.getProvider();

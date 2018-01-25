@@ -36,6 +36,11 @@ public class KakaoSocialUserInfo implements BasicSocialUserInfo {
     }
 
     @Override
+    public String getEmail() {
+        return this.email;
+    }
+
+    @Override
     public String getNickname() {
         return this.properties.get("nickname");
     }

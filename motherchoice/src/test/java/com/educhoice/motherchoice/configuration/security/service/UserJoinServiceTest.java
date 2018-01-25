@@ -1,10 +1,13 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
+import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
+import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.valueobject.models.academies.NewAcademyDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.CorporateAccountJoinDto;
+import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +28,7 @@ public class UserJoinServiceTest {
     private static final Logger log = LoggerFactory.getLogger(UserJoinServiceTest.class);
 
     private UserJoinRequest request;
+    private SocialAuthinfoDto dto;
 
     @Autowired
     private UserJoinService service;
@@ -38,6 +42,10 @@ public class UserJoinServiceTest {
                 .requestType(UserJoinRequest.JoinRequestType.ACADEMY)
                 .accountInfo(new CorporateAccountJoinDto("pobi@pobiworld.com", "1234", "01012345678", "박재성", new NewAcademyDto("포비학원", "박재성", "07012345678", AcademyAddress.builder().address("경기도 김포시 유현로 19").sido("경기도").sigungu("김포시").zonecode("10120").build())))
                 .build();
+
+        this.dto = new SocialAuthinfoDto();
+        this.dto.setAccessToken("GgEqzGWSDSeVWT-9gXE8y-WdxoVitcohX28niAo8BhkAAAFhK8FAGA");
+        this.dto.setProvider(SocialSigninProviders.KAKAO);
     }
 
     @Test
@@ -48,8 +56,19 @@ public class UserJoinServiceTest {
         log.debug("encrypted password is : {}", account.getPassword());
 
         assertThat(account.getLoginId(), is("pobi@pobiworld.com"));
+        assertThat(account.getAccountName(), is("박재성"));
         assertThat(account.getAcademy().getAcademyName(), is("포비학원"));
         assertThat(account.getAcademy().getAddress().getSido(), is("경기도"));
+    }
+
+    @Test
+    @Transactional
+    public void 소셜_회원가입테스트() {
+        this.service.joinRequestSocial(this.request, this.dto);
+
+        CorporateAccount account = (CorporateAccount)this.queryService.loadByEmail("wheejuni@gmail.com");
+        assertThat(account.getAccountName(), is("박재성"));
+
     }
 
 

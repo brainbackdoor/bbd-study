@@ -43,6 +43,7 @@ public class CorporateAccount extends BasicAccount {
 
     public CorporateAccount(String email, String password, String phoneNo, String accountName, String profileUri, AccountRoles roles) {
         super(email, password, profileUri, roles);
+        this.accountName = accountName;
         this.phoneNo = phoneNo;
         this.paid = AccountRoles.isPaidTier(roles);
     }

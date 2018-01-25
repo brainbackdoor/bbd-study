@@ -9,6 +9,7 @@ public interface BasicSocialUserInfo {
     }
 
     Long getUniqueId();
+    String getEmail();
     String getNickname();
     String getProfileUri();
 
