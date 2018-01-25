@@ -8,6 +8,7 @@ import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.valueobject.models.academies.NewAcademyDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.CorporateAccountJoinDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,8 @@ public class UserJoinServiceTest {
         this.dto = new SocialAuthinfoDto();
         this.dto.setAccessToken("GgEqzGWSDSeVWT-9gXE8y-WdxoVitcohX28niAo8BhkAAAFhK8FAGA");
         this.dto.setProvider(SocialSigninProviders.KAKAO);
+
+        this.request.setSocialAuthinfoDto(this.dto);
     }
 
     @Test
@@ -64,11 +67,16 @@ public class UserJoinServiceTest {
     @Test
     @Transactional
     public void 소셜_회원가입테스트() {
-        this.service.joinRequestSocial(this.request, this.dto);
+        this.service.joinRequestSocial(this.request);
 
         CorporateAccount account = (CorporateAccount)this.queryService.loadByEmail("wheejuni@gmail.com");
         assertThat(account.getAccountName(), is("박재성"));
 
+    }
+
+    @Test
+    public void DTO_마샬링테스트() throws Exception {
+        log.debug(new ObjectMapper().writeValueAsString(this.request));
     }
 
 

@@ -50,14 +50,14 @@ public class UserJoinService {
         accountRepository.save(parentsAccount);
     }
 
-    public void joinRequestSocial(UserJoinRequest req, SocialAuthinfoDto dto) {
+    public void joinRequestSocial(UserJoinRequest req) {
         if(req.isCorporateAccountRequest()) {
-            this.corporateAccountRepository.save(generateSocialCorporateAccount(req, dto));
+            this.corporateAccountRepository.save(generateSocialCorporateAccount(req));
             return;
         }
         Account account = (Account)req.generateAccount();
         account.encryptPassword(passwordEncoder);
-        this.accountRepository.save((Account)setSocialInfos(account, dto));
+        this.accountRepository.save((Account)setSocialInfos(account, req.getAuthinfoDto()));
     }
 
     private boolean isEmailCertified(String email) {
@@ -73,8 +73,8 @@ public class UserJoinService {
         return account;
     }
 
-    private CorporateAccount generateSocialCorporateAccount(UserJoinRequest request, SocialAuthinfoDto dto) {
-        return Arrays.asList(request).stream().map(req -> generateCorporateAccount(req, passwordEncoder)).peek(a -> a.setSocialInfos(retrieveInfos(dto), dto)).findFirst().get();
+    private CorporateAccount generateSocialCorporateAccount(UserJoinRequest request) {
+        return Arrays.asList(request).stream().map(req -> generateCorporateAccount(req, passwordEncoder)).peek(a -> a.setSocialInfos(retrieveInfos(request.getAuthinfoDto()), request.getAuthinfoDto())).findFirst().get();
     }
 
     private BasicAccount setSocialInfos(BasicAccount account, SocialAuthinfoDto dto) {

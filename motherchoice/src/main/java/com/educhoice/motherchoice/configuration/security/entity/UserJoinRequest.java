@@ -6,6 +6,7 @@ import com.educhoice.motherchoice.valueobject.models.accounts.AccountJoinDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.CorporateAccountJoinDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.ParentsAccountJoinDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
@@ -75,6 +76,15 @@ public class UserJoinRequest {
         }
         CorporateAccountJoinDto dto = (CorporateAccountJoinDto)this.accountInfo;
         return Optional.ofNullable(dto.generateNewAcademy());
+    }
+
+    @JsonIgnore
+    public SocialAuthinfoDto getAuthinfoDto() {
+        return this.socialAuthinfoDto;
+    }
+
+    public void setSocialAuthinfoDto(SocialAuthinfoDto dto) {
+        this.socialAuthinfoDto = dto;
     }
 
 }
