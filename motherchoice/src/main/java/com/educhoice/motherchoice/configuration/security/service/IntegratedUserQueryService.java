@@ -6,10 +6,11 @@ import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
+import com.educhoice.motherchoice.utils.exceptions.security.UsernameNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Basic;

@@ -3,6 +3,7 @@ package com.educhoice.motherchoice.configuration.security;
 import com.educhoice.motherchoice.configuration.security.service.filters.JwtAuthenticationFilter;
 import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
 import com.educhoice.motherchoice.service.JwtIdService;
+import com.educhoice.motherchoice.utils.exceptions.resolvers.security.RestSecurityEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private SocialLoginAuthenticationManager socialLoginAuthenticationManager;
 
+    @Autowired
+    private RestSecurityEntryPoint entryPoint;
+
     @Qualifier("accessTokenConverter")
     @Autowired
     private JwtAccessTokenConverter tokenConverter;
@@ -47,6 +51,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
+
+        httpSecurity
+                .exceptionHandling()
+                .authenticationEntryPoint(entryPoint);
+
         httpSecurity
                 .requestMatchers()
                 .and()

@@ -7,6 +7,7 @@ import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.utils.exceptions.security.UsernameNotFoundException;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +37,18 @@ public class DummyApiController {
                 .courses(returnCourses())
                 .build();
 
+    }
+
+    @GetMapping("/fuck")
+    @CrossOrigin
+    public String invokeException() {
+        throw new RuntimeException("fuck!");
+    }
+
+    @GetMapping("/securityfuck")
+    @CrossOrigin
+    public String invokeSecurityException() {
+        throw new UsernameNotFoundException("security fuck!");
     }
 
 

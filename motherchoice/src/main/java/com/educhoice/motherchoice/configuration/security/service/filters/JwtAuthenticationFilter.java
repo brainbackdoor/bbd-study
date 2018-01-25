@@ -5,6 +5,8 @@ import com.educhoice.motherchoice.configuration.security.service.social.token.Lo
 import com.educhoice.motherchoice.configuration.security.service.social.token.SocialLoginAccessToken;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.service.JwtIdService;
+import com.educhoice.motherchoice.utils.exceptions.security.InvalidAccessTokenException;
+import com.educhoice.motherchoice.utils.exceptions.security.SecurityException;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,13 +45,19 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
 
         SocialAuthinfoDto dto;
+        Authentication authentication;
         try {
             dto = new ObjectMapper().readValue(req.getInputStream(), SocialAuthinfoDto.class);
         } catch (IOException e) {
             log.error(e.getMessage());
             return null;
         }
-        return authenticationManager.authenticate(new LoginAttemptToken(dto));
+        try {
+            authentication = authenticationManager.authenticate(new LoginAttemptToken(dto));
+        } catch (Exception e) {
+            throw new InvalidAccessTokenException("유효한 OAuth 토큰이 아닙니다.");
+        }
+        return authentication;
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.educhoice.motherchoice.beans;
 
 import com.educhoice.motherchoice.models.nonpersistent.authorization.MailSource;
+import com.educhoice.motherchoice.utils.exceptions.resolvers.security.GlobalSecurityExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.Random;
 

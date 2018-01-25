@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ReflectionPlayground {
 
@@ -18,4 +19,6 @@ public class ReflectionPlayground {
     public void 클래스정보_받아오기실험() {
         assertEquals("String", this.obj.getClass().getSimpleName());
     }
+
+
 }
