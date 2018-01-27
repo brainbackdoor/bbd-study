@@ -22,7 +22,7 @@ public class S3ControlServiceTest {
     @Before
     public void setUp() {
         this.corporateAccount = CorporateAccount.builder()
-                .accountName("elly")
+                .accountName("lemon")
                 .paid(true)
                 .build();
     }
@@ -30,7 +30,7 @@ public class S3ControlServiceTest {
     @Test
     public void 버킷생성작업() {
         s3ControlService.init();
-        s3ControlService.generateBucket(this.corporateAccount);
+        s3ControlService.generateFolder(this.corporateAccount);
     }
 
 }
