@@ -51,7 +51,7 @@ public class AcademyServiceTest {
 
         this.course = Course.builder()
                 .coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE)
-                .dateTime(Arrays.asList(new DateTime("13:00", "17:00", "목")))
+                .dateTime(Arrays.asList(new DateTime("13:00", "17:00", "목"), new DateTime("17:00", "18:00", "금")))
                 .grades(Grades.SpecifiedGrades.ELEMENTARY_3)
                 .title("클린코드 with Java")
                 .build();

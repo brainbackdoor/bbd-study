@@ -68,7 +68,6 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
         Join<Academy, Course> courses = academyRoot.join("courses");
         Join<Course, DateTime> datetimes = courses.join("dateTime");
 
-        conditions.add(cb.between(datetimes.get(DateTime_.startTime).as(LocalTime.class), startTime, endTime));
 
         if(dto.isCarAvailable() == true) {
             conditions.add(cb.equal(academyRoot.get(Academy_.carAvailable), dto.isCarAvailable()));
