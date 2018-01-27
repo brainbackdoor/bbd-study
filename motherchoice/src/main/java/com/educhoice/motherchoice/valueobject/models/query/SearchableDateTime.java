@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.Transient;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 
-@JsonRootName("time")
 public class SearchableDateTime {
 
     @JsonIgnore
@@ -43,6 +43,14 @@ public class SearchableDateTime {
             log.error(e.getMessage());
             return 1L;
         }
+    }
+
+    public LocalTime generateStartTime() {
+        return LocalTime.parse(this.startTime);
+    }
+
+    public LocalTime generateEndTime() {
+        return LocalTime.parse(this.endTime);
     }
 
     @Override

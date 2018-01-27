@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 
+@Table
 public class Academy {
 
     @Id

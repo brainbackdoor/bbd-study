@@ -45,7 +45,7 @@ public class UserJoinServiceTest {
                 .build();
 
         this.dto = new SocialAuthinfoDto();
-        this.dto.setAccessToken("9_XRWAKrcDWTZnsKyoqbNRn89rFLR4ZKTRuP-AopdaYAAAFhLQ8fzw");
+        this.dto.setAccessToken("YfuOGHQg77q3A2kfoJ93Wrk97daC78bLJ3Wg5Ao8BJ4AAAFhMKLGvg");
         this.dto.setProvider(SocialSigninProviders.KAKAO);
 
         this.request.setSocialAuthinfoDto(this.dto);

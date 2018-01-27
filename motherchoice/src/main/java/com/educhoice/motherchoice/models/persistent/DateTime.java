@@ -97,8 +97,8 @@ public class DateTime implements Serializable {
     public String toString() {
         StringBuilder stringObject = new StringBuilder();
 
-        stringObject.append(this.day.toString());
-        stringObject.append(this.startTime.toString());
+        stringObject.append(this.day.toString() + " ");
+        stringObject.append(this.startTime.toString() + " ~ ");
         stringObject.append(this.endTime.toString());
 
         return stringObject.toString();

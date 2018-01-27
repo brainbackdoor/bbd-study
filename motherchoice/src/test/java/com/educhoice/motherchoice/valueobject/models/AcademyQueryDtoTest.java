@@ -17,7 +17,7 @@ public class AcademyQueryDtoTest {
             "  \"queryStore\": {\n" +
             "    \"time\": {\n" +
             "      \"day\": [\n" +
-            "        \"월\"\n" +
+            "        \"월\", \"수\", \"금\"\n" +
 
             "      ],\n" +
             "      \"startTime\": \"18:00\",\n" +
@@ -37,10 +37,17 @@ public class AcademyQueryDtoTest {
     private static final Logger log = LoggerFactory.getLogger(AcademyQueryDtoTest.class);
 
     private ObjectMapper mapper;
+    private AcademyQueryDto dto;
 
     @Before
     public void setUp() {
         this.mapper = new ObjectMapper();
+        this.dto = AcademyQueryDto.builder()
+                .carAvailable(false)
+                .grade(Grades.SpecifiedGrades.ELEMENTARY_3)
+                .address("경기도 김포시 풍무동")
+                .subject("영어")
+                .build();
     }
 
     @Test
@@ -59,6 +66,11 @@ public class AcademyQueryDtoTest {
 
         assertTrue(dto.getGrade() == Grades.SpecifiedGrades.MIDDLE_2);
 
+    }
+
+    @Test
+    public void JSON변환() throws Exception{
+        log.debug(this.mapper.writeValueAsString(this.dto));
     }
 
 }

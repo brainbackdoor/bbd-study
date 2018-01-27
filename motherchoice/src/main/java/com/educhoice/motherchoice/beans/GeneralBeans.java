@@ -1,12 +1,11 @@
 package com.educhoice.motherchoice.beans;
 
 import com.educhoice.motherchoice.models.nonpersistent.authorization.MailSource;
-import com.educhoice.motherchoice.utils.exceptions.resolvers.security.GlobalSecurityExceptionHandler;
+import com.educhoice.motherchoice.utils.aws.AWSInstanceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.Random;
 
@@ -35,5 +34,10 @@ public class GeneralBeans {
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public AWSInstanceService profileCredentialsService() {
+        return new AWSInstanceService();
     }
 }
