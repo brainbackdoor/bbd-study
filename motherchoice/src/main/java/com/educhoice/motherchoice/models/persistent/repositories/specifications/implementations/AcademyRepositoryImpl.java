@@ -1,10 +1,10 @@
 package com.educhoice.motherchoice.models.persistent.repositories.specifications.implementations;
 
 import com.educhoice.motherchoice.models.persistent.*;
+import com.educhoice.motherchoice.models.persistent.Course.CoursesClassification.SpecifiedCoursesClassification;
 import com.educhoice.motherchoice.models.persistent.repositories.specifications.AcademyRepositoryCustom;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.google.common.collect.Lists;
-import org.apache.tomcat.jni.Local;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -24,6 +24,7 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
 
     @Override
     @Transactional
+    @Deprecated
     public Optional<Academy> findAcademyIdCriteria(long id) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -39,6 +40,7 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
 
     @Override
     @Transactional
+    @Deprecated
     public Optional<Academy> findByAcademyNameCriteria(String name) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -52,6 +54,8 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
         return Optional.ofNullable(resultQuery.getSingleResult());
     }
 
+    @Override
+    @Transactional
     public Optional<List<Academy>> findAcademiesByQuery(AcademyQueryDto dto) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -59,7 +63,7 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
         ParameterExpression<LocalTime> startTime = cb.parameter(LocalTime.class);
         ParameterExpression<LocalTime> endTime = cb.parameter(LocalTime.class);
         ParameterExpression<Grades.SpecifiedGrades> grade = cb.parameter(Grades.SpecifiedGrades.class);
-        ParameterExpression<DateTime.WeekDays> daysParam = cb.parameter(DateTime.WeekDays.class);
+        ParameterExpression<SpecifiedCoursesClassification> course = cb.parameter(SpecifiedCoursesClassification.class);
 
         CriteriaQuery<Academy> query = cb.createQuery(Academy.class);
         Root<Academy> academyRoot = query.from(Academy.class);
@@ -78,21 +82,39 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
         }
 
         if(StringUtils.hasText(dto.getSubject())) {
-
+            conditions.add(cb.equal(courses.get(Course_.coursesClassification).as(SpecifiedCoursesClassification.class), course));
         }
 
         if(dto.getTime() != null) {
             conditions.add(cb.between(datetimes.get(DateTime_.startTime).as(LocalTime.class), startTime, endTime));
         }
 
+        if(dto.getTime().generateDateTimefromDto() != null) {
+            conditions.add(datetimes.get("day").as(String.class).in(dto.getTime().generateDateTimefromDto().stream().map(d -> d.getDay()).map(day -> day.name()).collect(Collectors.toList())));
+        }
+
         query.where(conditions.toArray(new Predicate[]{}));
         TypedQuery<Academy> academyTypedQuery = entityManager.createQuery(query);
 
-        academyTypedQuery.setParameter(startTime, dto.getTime().generateStartTime());
-        academyTypedQuery.setParameter(endTime, dto.getTime().generateEndTime());
+        if(dto.getTime() != null) {
+            academyTypedQuery.setParameter(startTime, dto.getTime().generateStartTime());
+            academyTypedQuery.setParameter(endTime, dto.getTime().generateEndTime());
+        }
 
+        if(dto.getGrade() != null) {
+            academyTypedQuery.setParameter(grade, dto.getGrade());
+        }
 
-        return Optional.ofNullable(academyTypedQuery.getResultList());
+        if(dto.generateSpecifiedCourse() != null) {
+            academyTypedQuery.setParameter(course, dto.generateSpecifiedCourse());
+        }
+
+        List<Academy> resultList = academyTypedQuery.getResultList();
+
+        if(resultList.size() == 0) {
+            return Optional.empty();
+        }
+
+        return Optional.of(academyTypedQuery.getResultList());
     }
-
 }

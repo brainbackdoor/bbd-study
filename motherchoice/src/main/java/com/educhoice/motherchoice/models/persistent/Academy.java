@@ -34,7 +34,8 @@ public class Academy {
     private long academyId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Course> courses = Lists.newArrayList();
+    @JoinColumn(name = "ACADEMY_ID")
+    private List<Course> courses;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)

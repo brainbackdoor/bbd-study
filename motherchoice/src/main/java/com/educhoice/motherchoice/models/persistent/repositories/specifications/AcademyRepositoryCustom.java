@@ -8,7 +8,11 @@ import java.util.Optional;
 
 public interface AcademyRepositoryCustom {
 
+    @Deprecated
     Optional<Academy> findAcademyIdCriteria(long id);
+
+    @Deprecated
     Optional<Academy> findByAcademyNameCriteria(String name);
+
     Optional<List<Academy>> findAcademiesByQuery(AcademyQueryDto dto);
 }

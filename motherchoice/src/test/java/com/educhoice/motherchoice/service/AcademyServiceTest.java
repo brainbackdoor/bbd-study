@@ -47,7 +47,7 @@ public class AcademyServiceTest {
         SearchableDateTime dateTime = new SearchableDateTime();
         dateTime.setStartTime("12:00");
         dateTime.setEndTime("14:00");
-        dateTime.setDay(Arrays.asList(DateTime.WeekDays.THU));
+        dateTime.setDay(Arrays.asList(DateTime.WeekDays.THU, DateTime.WeekDays.FRI, DateTime.WeekDays.SUN));
 
         this.course = Course.builder()
                 .coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE)
@@ -66,6 +66,8 @@ public class AcademyServiceTest {
         this.dto = AcademyQueryDto.builder()
                 .time(dateTime)
                 .carAvailable(true)
+                .grade(Grades.SpecifiedGrades.ELEMENTARY_3)
+                .subject("과학")
                 .build();
 
         academyRepository.deleteAll();
