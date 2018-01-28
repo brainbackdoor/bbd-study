@@ -4,10 +4,12 @@ import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
+import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.educhoice.motherchoice.valueobject.models.query.SearchableDateTime;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,7 +49,7 @@ public class AcademyServiceTest {
         SearchableDateTime dateTime = new SearchableDateTime();
         dateTime.setStartTime("12:00");
         dateTime.setEndTime("14:00");
-        dateTime.setDay(Arrays.asList(DateTime.WeekDays.THU, DateTime.WeekDays.FRI, DateTime.WeekDays.SUN));
+        dateTime.setDay(Arrays.asList(DateTime.WeekDays.THU, DateTime.WeekDays.FRI, DateTime.WeekDays.SAT));
 
         this.course = Course.builder()
                 .coursesClassification(Course.CoursesClassification.SpecifiedCoursesClassification.SCIENCE)
@@ -60,6 +62,7 @@ public class AcademyServiceTest {
                 .academyName("포비학원")
                 .introduction("당신도 TDD 할 수 있다")
                 .carAvailable(true)
+                .address(AcademyAddress.builder().sido("경기도").sigungu("수원시 영통구").address("경기도 수원시 영통구 이의동").build())
                 .courses(Arrays.asList(this.course))
                 .build();
 
@@ -67,20 +70,12 @@ public class AcademyServiceTest {
                 .time(dateTime)
                 .carAvailable(true)
                 .grade(Grades.SpecifiedGrades.ELEMENTARY_3)
+                .address("영통구 이의동")
                 .subject("과학")
                 .build();
 
         academyRepository.deleteAll();
-    }
-
-    @Test
-    @Transactional
-    public void SearchAcademyByCriteria() {
-        academyService.saveAcademy(this.academy);
-
-        log.debug(academyRepository.findAcademyIdCriteria(2).get().toString());
-        assertTrue(academyRepository.findAcademyIdCriteria(2).isPresent());
-
+        this.academy.setAcademyId(0L);
     }
 
     @Test
@@ -109,6 +104,14 @@ public class AcademyServiceTest {
         List<Academy> academies = academyService.findMultipleAcademiesByQueryDto(this.dto);
         assertNotNull(academies.get(0));
         assertThat(academies.get(0).getAcademyName(), is("포비학원"));
+    }
+
+    @Test
+    @Transactional
+    public void DTO로_검색결과_보여주기() throws Exception{
+        academyService.saveAcademy(this.academy);
+
+        log.debug(new ObjectMapper().writeValueAsString(academyService.getAcademyDtos(this.dto)));
     }
 
 }

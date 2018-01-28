@@ -29,8 +29,18 @@ public class AcademyDto {
     private List<Event> events;
     private List<HashTag> hashTags;
     private CorporateAccount corporateAccount;
+    private String message;
 
     public static AcademyDto generateAcademyDto(Academy academy) {
+
+        if (academy instanceof EmptyAcademy) {
+            EmptyAcademy emptyAcademy = (EmptyAcademy)academy;
+            return AcademyDto.builder()
+                    .id(0L)
+                    .message(emptyAcademy.getMessage())
+                    .build();
+        }
+
         return AcademyDto.builder()
                 .id(academy.getAcademyId())
                 .academyName(academy.getAcademyName())

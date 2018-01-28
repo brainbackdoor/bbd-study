@@ -2,6 +2,8 @@ package com.educhoice.motherchoice.models.persistent.repositories.specifications
 
 import com.educhoice.motherchoice.models.persistent.*;
 import com.educhoice.motherchoice.models.persistent.Course.CoursesClassification.SpecifiedCoursesClassification;
+import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
+import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress_;
 import com.educhoice.motherchoice.models.persistent.repositories.specifications.AcademyRepositoryCustom;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.google.common.collect.Lists;
@@ -70,6 +72,7 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
 
 
         Join<Academy, Course> courses = academyRoot.join("courses");
+        Join<Academy, AcademyAddress> addresses = academyRoot.join("address");
         Join<Course, DateTime> datetimes = courses.join("dateTime");
 
 
@@ -87,6 +90,10 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
 
         if(dto.getTime() != null) {
             conditions.add(cb.between(datetimes.get(DateTime_.startTime).as(LocalTime.class), startTime, endTime));
+        }
+
+        if(StringUtils.hasText(dto.getAddress())) {
+            conditions.add(cb.like(addresses.get(AcademyAddress_.address).as(String.class), "%" + dto.getAddress() + "%"));
         }
 
         if(dto.getTime().generateDateTimefromDto() != null) {

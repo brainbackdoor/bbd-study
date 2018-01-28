@@ -3,17 +3,21 @@ package com.educhoice.motherchoice.service;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
+import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
+import com.educhoice.motherchoice.valueobject.models.academies.EmptyAcademy;
 import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AcademyTaggingDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AcademyService {
 
     @Autowired
@@ -37,6 +41,12 @@ public class AcademyService {
 
     public List<Academy> findMultipleAcademiesByQueryDto(AcademyQueryDto dto) {
         return academyRepository.findAcademiesByQuery(dto).orElse(Arrays.asList(new Academy()));
+    }
+
+    public List<AcademyDto> getAcademyDtos(AcademyQueryDto dto) {
+        List<Academy> academies = academyRepository.findAcademiesByQuery(dto).orElse(Arrays.asList(new EmptyAcademy()));
+
+        return academies.stream().map(a -> AcademyDto.generateAcademyDto(a)).collect(Collectors.toList());
     }
 
     public List<AcademyTaggingDto> findMultipleAcademiesByNameContaining(String name) {
