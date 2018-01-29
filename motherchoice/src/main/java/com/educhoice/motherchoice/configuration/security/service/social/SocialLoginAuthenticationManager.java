@@ -6,6 +6,7 @@ import com.educhoice.motherchoice.configuration.security.service.social.token.Lo
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.utils.AuthHttpRequestService;
+import com.educhoice.motherchoice.valueobject.models.accounts.FormLoginRequestDto;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,12 +38,31 @@ public class SocialLoginAuthenticationManager implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         LoginAttemptToken token = (LoginAttemptToken)authentication;
 
-        SocialAuthinfoDto dto = token.getSocialDto();
-        BasicSocialUserInfo userInfo = requestService.retrieveSocialUserInfo(dto);
-        return new OAuth2Authentication(new OAuth2Request(null, clientId, null, true, null, resourceId, null, null, null), new IntegratedUserSigninToken(getAccountFromUserinfo(userInfo, dto)));
+        SocialAuthinfoDto socialDto = token.getSocialDto();
+        FormLoginRequestDto formDto = null;
+
+        if (socialDto == null) {
+            formDto = token.getFormDto();
+            SecurityAccount account = getAccountFromFormSignin(formDto);
+            return new OAuth2Authentication(generateOAuthRequest(), new IntegratedUserSigninToken(account));
+        }
+
+        BasicSocialUserInfo userInfo = requestService.retrieveSocialUserInfo(socialDto);
+
+        SecurityAccount account = getAccountFromUserinfo(userInfo, socialDto);
+
+        return new OAuth2Authentication(new OAuth2Request(null, clientId, null, true, null, resourceId, null, null, null), new IntegratedUserSigninToken(account, socialDto.getProvider()));
     }
 
     private SecurityAccount getAccountFromUserinfo(BasicSocialUserInfo info, SocialAuthinfoDto dto) {
         return (SecurityAccount)accountDetailsService.loadUserBySocialId(info.getUniqueId(), dto.getProvider());
+    }
+
+    private SecurityAccount getAccountFromFormSignin(FormLoginRequestDto dto) {
+        return accountDetailsService.loginByForm(dto);
+    }
+
+    private OAuth2Request generateOAuthRequest() {
+        return new OAuth2Request(null, clientId, null, true, null, resourceId, null, null, null);
     }
 }

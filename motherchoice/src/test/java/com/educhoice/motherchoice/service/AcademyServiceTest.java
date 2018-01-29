@@ -97,7 +97,6 @@ public class AcademyServiceTest {
     }
 
     @Test
-    @Transactional
     public void 동적쿼리_학원찾기1() {
         academyService.saveAcademy(this.academy);
 

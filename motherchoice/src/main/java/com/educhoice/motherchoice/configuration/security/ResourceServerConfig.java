@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.configuration.security;
 
+import com.educhoice.motherchoice.configuration.security.service.filters.FormLoginJwtAutheticationFilter;
 import com.educhoice.motherchoice.configuration.security.service.filters.JwtAuthenticationFilter;
 import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
 import com.educhoice.motherchoice.service.JwtIdService;
@@ -63,7 +64,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/api/v1/**").authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter("/kakao", socialLoginAuthenticationManager, tokenConverter, jwtIdService), BasicAuthenticationFilter.class);
+                .addFilterBefore(new FormLoginJwtAutheticationFilter("/formlogin", socialLoginAuthenticationManager, tokenConverter, jwtIdService), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter("/kakao", socialLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
 
         httpSecurity
                 .sessionManagement()

@@ -48,10 +48,16 @@ public class SocialLoginAccessToken implements OAuth2AccessToken {
         this.tokenType = "bearer";
         this.ttl = 43200000;  //expiry time in milliseconds(ms) e.g. 43200000L = 43200 sec = 720 min = 12 hrs.
         this.scopes = scopes;
-        this.value = account.getUsername();
+        this.value = account.getBasicAccount().getLoginId();
         this.issuedDate = System.currentTimeMillis();
         this.additionalInformation = Maps.newLinkedHashMap();
         this.additionalInformation.put("jti", id.getJti());
+        this.additionalInformation.put("USER_UID", account.getBasicAccount().getAccountId());
+
+        if(account.getBasicAccount().getSocialProvider() != null) {
+            this.additionalInformation.put("SOCIAL_PROVIDER", account.getBasicAccount().getSocialProvider().getProviderName());
+        }
+
         this.refreshToken = null;
 
     }

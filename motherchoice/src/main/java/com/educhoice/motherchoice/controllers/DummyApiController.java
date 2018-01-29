@@ -1,16 +1,22 @@
 package com.educhoice.motherchoice.controllers;
 
+import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
 import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
 import com.educhoice.motherchoice.configuration.security.service.UserJoinService;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
+import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.utils.exceptions.security.UsernameNotFoundException;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -37,6 +43,15 @@ public class DummyApiController {
                 .courses(returnCourses())
                 .build();
 
+    }
+
+    @GetMapping("/myinfo")
+    @PreAuthorize("hasRole('ROLE_UNPAID_USER')")
+    @CrossOrigin
+    public String hasAuthentication(Authentication authentication) {
+        OAuth2Authentication oauth = (OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication();
+
+        return oauth.getPrincipal().getClass().getName();
     }
 
     @GetMapping("/fuck")
