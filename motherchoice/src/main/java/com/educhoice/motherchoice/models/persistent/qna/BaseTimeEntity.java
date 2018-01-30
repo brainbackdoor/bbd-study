@@ -1,8 +1,6 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
-import com.educhoice.motherchoice.models.persistent.Event;
 import com.educhoice.motherchoice.utils.converter.LocalDateTimeConverter;
-import com.educhoice.motherchoice.utils.converter.LocalTimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;

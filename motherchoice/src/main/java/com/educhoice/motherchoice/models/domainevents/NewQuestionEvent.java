@@ -14,10 +14,15 @@ public class NewQuestionEvent extends ApplicationEvent{
 
     private List<CorporateAccount> destinations;
     private long questionId;
+    private long parentsId;
 
     public NewQuestionEvent(Question question) {
         super(question);
-        this.destinations = question.getAcademies().stream().map(a -> a.getCorporateAccount()).collect(Collectors.toList());
+
+        if (question.getAcademies() != null) {
+            this.destinations = question.getAcademies().stream().map(a -> a.getCorporateAccount()).collect(Collectors.toList());
+        }
         this.questionId = question.getQuestionId();
+        this.parentsId = question.getWriter().getAccountId();
     }
 }

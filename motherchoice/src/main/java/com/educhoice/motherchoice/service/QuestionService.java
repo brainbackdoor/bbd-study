@@ -7,11 +7,13 @@ import com.educhoice.motherchoice.valueobject.models.academies.inquiry.QuestionL
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.QuestionPostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class QuestionService {
 
     @Autowired
@@ -25,8 +27,11 @@ public class QuestionService {
         Question question = Question.builder()
                 .title(questionRequest.getQuestionTitle())
                 .content(questionRequest.getQuestionContent())
-                .academies(academyService.findMultipleAcademiesById(questionRequest.getAcademies()))
                 .build();
+
+        if(questionRequest.getAcademies() != null) {
+            question.setAcademies(academyService.findMultipleAcademiesById(questionRequest.getAcademies()));
+        }
 
        return questionRepository.save(question);
     }

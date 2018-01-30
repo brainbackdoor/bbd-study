@@ -1,11 +1,17 @@
 package com.educhoice.motherchoice.models.persistent.qna;
 
+import com.educhoice.motherchoice.models.domainevents.NewQuestionEvent;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.AfterDomainEventPublication;
+import org.springframework.data.domain.DomainEvents;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,6 +23,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Question extends BaseTimeEntity{
+
+    @Transient
+    private static final Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
 
     @Id
     @GeneratedValue
@@ -37,6 +46,16 @@ public class Question extends BaseTimeEntity{
 
     @ManyToOne
     private Account writer;
+
+    @DomainEvents
+    NewQuestionEvent newQuestionEvent() {
+        return new NewQuestionEvent(this);
+    }
+
+    @AfterDomainEventPublication
+    public void onSuccessfulPublication() {
+        log.info("new question just registered.");
+    }
 
     public int getQuestionedAcademyCount() {
         return this.academies.size();
