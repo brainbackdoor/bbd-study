@@ -14,7 +14,7 @@ public class SampleEventPublisher {
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
-    @Scheduled(fixedRate = 1000L)
+    @Scheduled(fixedRate = 5000L)
     public void sendFakeEvent() {
         NewQuestionEvent event = new NewQuestionEvent(Question.builder().content("fuck you!").writer(Account.builder().build()).build());
 
