@@ -4,6 +4,7 @@ import com.educhoice.motherchoice.configuration.security.service.social.SocialSi
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.Objects;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -116,4 +117,17 @@ public class BasicAccount {
         this.profileUri = infos.getProfileUri();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BasicAccount account = (BasicAccount) o;
+        return accountId == account.accountId &&
+                Objects.equal(loginId, account.loginId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(accountId, loginId);
+    }
 }

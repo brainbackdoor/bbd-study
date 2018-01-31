@@ -26,6 +26,10 @@ public class NewQuestionStore {
         this.questions.put(event.getQuestionId(), new NewQuestion(event));
     }
 
+    public NewQuestionStore(long corporateAccountId) {
+        this.corporateAccountId = corporateAccountId;
+    }
+
     public boolean hasNewQuestion() {
         return questions.values().stream().anyMatch(nq -> !nq.isRead());
     }

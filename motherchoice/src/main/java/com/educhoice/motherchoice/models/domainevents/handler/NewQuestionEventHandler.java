@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,12 +28,13 @@ public class NewQuestionEventHandler implements ApplicationListener<NewQuestionE
 
         List<NewQuestionStore> stores = corporateAccountIds.stream()
                 .filter(id -> repository.findByCorporateAccountId(id).isPresent())
+                .peek(id -> corporateAccountIds.remove(id))
                 .map(id -> repository.findByCorporateAccountId(id).get()).collect(Collectors.toList());
 
         stores.stream().peek(s -> s.addNewQuestion(new NewQuestion(event))).forEach(s -> repository.save(s));
 
         corporateAccountIds.stream()
-                .filter(id -> !repository.findByCorporateAccountId(id).isPresent())
                 .forEach(id -> repository.save(new NewQuestionStore(id, event)));
+
     }
 }
