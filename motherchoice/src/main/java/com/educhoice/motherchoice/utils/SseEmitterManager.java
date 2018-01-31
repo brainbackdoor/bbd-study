@@ -6,6 +6,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.hash.Jackson2HashMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -35,4 +36,5 @@ public class SseEmitterManager {
     public void sendEvent(BasicAccount account, ApplicationEvent event) throws IOException{
         emitterStorage.getUnchecked(account).send(event);
     }
+
 }
