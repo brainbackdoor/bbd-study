@@ -45,7 +45,7 @@ public class AcademyDtoTest {
                 .academyName("포비학원")
                 .address(AcademyAddress.builder().address("경기도 수원시 영통구 이의동").roadAddress("경기도 수원시 포은대로 123").sido("경기도").sigungu("수원시 영통구").build())
                 .carAvailable(true)
-                .introduction("당신도 포비처럼 코딩할 수 있다")
+//                .introduction("당신도 포비처럼 코딩할 수 있다")
                 .corporateAccount(this.account)
                 .build();
 

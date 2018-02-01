@@ -89,7 +89,7 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
         }
 
         if(dto.getTime() != null) {
-            conditions.add(cb.between(datetimes.get(DateTime_.startTime).as(LocalTime.class), startTime, endTime));
+            conditions.add(cb.or(cb.lessThan(datetimes.get(DateTime_.startTime).as(LocalTime.class), endTime), cb.greaterThan(datetimes.get(DateTime_.endTime).as(LocalTime.class), startTime)));
         }
 
         if(StringUtils.hasText(dto.getAddress())) {
