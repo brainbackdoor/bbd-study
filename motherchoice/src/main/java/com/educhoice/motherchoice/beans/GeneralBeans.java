@@ -40,4 +40,5 @@ public class GeneralBeans {
     public AWSInstanceService profileCredentialsService() {
         return new AWSInstanceService();
     }
+
 }
