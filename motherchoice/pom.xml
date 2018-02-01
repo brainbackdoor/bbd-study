@@ -73,11 +73,11 @@
         </dependency>
         <!--End of Spring-related Dependencies-->
 
-		<!--JWT Issuer-->
+		<!--Sentry Monitoring-->
 		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.0</version>
+			<groupId>io.sentry</groupId>
+			<artifactId>sentry</artifactId>
+			<version>1.6.6</version>
 		</dependency>
 
 
