@@ -1,9 +1,11 @@
 package com.educhoice.motherchoice.models.persistent.authorization;
 
+import com.educhoice.motherchoice.models.domainevents.NewCorporateAccountEvent;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.qna.Answer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.domain.DomainEvents;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,6 +35,11 @@ public class CorporateAccount extends BasicAccount {
 	@OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private List<Answer> answers;
+
+	@DomainEvents
+    NewCorporateAccountEvent accountEvent() {
+	    return new NewCorporateAccountEvent(this);
+    }
 
     public CorporateAccount(String email, String password) {
         super(email, password);
