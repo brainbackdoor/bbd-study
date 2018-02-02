@@ -31,30 +31,43 @@ public class AcademyDto {
     private CorporateAccount corporateAccount;
     private String message;
 
-    public static AcademyDto generateAcademyDto(Academy academy) {
-
+    private AcademyDto(Academy academy, double inquiryResponseRate) {
         if (academy instanceof EmptyAcademy) {
-            EmptyAcademy emptyAcademy = (EmptyAcademy)academy;
-            return AcademyDto.builder()
-                    .id(0L)
-                    .message(emptyAcademy.getMessage())
-                    .build();
+            this.message = ((EmptyAcademy) academy).getMessage();
+            return;
         }
 
-        return AcademyDto.builder()
-                .id(academy.getAcademyId())
-                .academyName(academy.getAcademyName())
-                .address(academy.getAddress())
-                .carAvailable(academy.isCarAvailable())
-                .grades(academy.getGradeAvgDtos())
-                .subjects(academy.getSubjectsSummary())
-                .introduction(academy.getIntroduction())
-                .courses(CourseDto.generateCourseDtoFromAcademy(academy))
-                .specialCourses(SpecialCourseDto.generateDto(academy))
-                .events(academy.getEvents())
-                .hashTags(academy.getTags())
-                .corporateAccount(academy.getCorporateAccount())
-                .build();
+        this.id = academy.getAcademyId();
+        this.academyName = academy.getAcademyName();
+        if (academy.getImages() != null) {
+            this.images = academy.getImages();
+        }
+        this.address = academy.getAddress();
+        this.carAvailable = academy.isCarAvailable();
+        this.inquiryResponseRate = inquiryResponseRate;
+        if (academy.getGradeAvgDtos() != null) {
+            this.grades = academy.getGradeAvgDtos();
+        }
+        this.subjects = academy.getSubjectsSummary();
+        this.introduction = academy.getIntroduction();
+        if (academy.getCourses() != null) {
+            this.courses = CourseDto.generateCourseDtoFromAcademy(academy);
+        }
+        if (academy.getSpecialCourses() != null) {
+            this.specialCourses = SpecialCourseDto.generateDto(academy);
+        }
+        if (academy.getEvents() != null) {
+            this.events = academy.getEvents();
+        }
+        if (academy.getTags() != null) {
+            this.hashTags = academy.getTags();
+        }
+        this.corporateAccount = academy.getCorporateAccount();
+
+    }
+
+    public static AcademyDto generateAcademyDto(Academy academy, double inquiryResponseRate) {
+        return new AcademyDto(academy, inquiryResponseRate);
     }
 
 }

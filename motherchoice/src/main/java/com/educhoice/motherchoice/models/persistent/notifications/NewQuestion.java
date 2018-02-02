@@ -12,6 +12,7 @@ public class NewQuestion {
 
     private long questionId;
     private boolean read;
+    private boolean answered;
 
     public NewQuestion(NewQuestionEvent event) {
         this.questionId = event.getQuestionId();

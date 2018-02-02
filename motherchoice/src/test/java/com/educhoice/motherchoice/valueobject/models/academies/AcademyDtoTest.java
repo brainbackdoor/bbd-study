@@ -1,9 +1,6 @@
 package com.educhoice.motherchoice.valueobject.models.academies;
 
-import com.educhoice.motherchoice.models.persistent.Academy;
-import com.educhoice.motherchoice.models.persistent.Course;
-import com.educhoice.motherchoice.models.persistent.DateTime;
-import com.educhoice.motherchoice.models.persistent.Grades;
+import com.educhoice.motherchoice.models.persistent.*;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.service.AcademyService;
@@ -36,6 +33,9 @@ public class AcademyDtoTest {
 
     @Before
     public void setUp() {
+        Event event = new Event();
+        event.setTitle("asdf");
+
         this.account = new CorporateAccount("dasolhannah@gmail.com", "1234");
 
         this.academy = Academy.builder()
@@ -45,7 +45,8 @@ public class AcademyDtoTest {
                 .academyName("포비학원")
                 .address(AcademyAddress.builder().address("경기도 수원시 영통구 이의동").roadAddress("경기도 수원시 포은대로 123").sido("경기도").sigungu("수원시 영통구").build())
                 .carAvailable(true)
-//                .introduction("당신도 포비처럼 코딩할 수 있다")
+                .introduction("당신도 포비처럼 코딩할 수 있다")
+                .events(Arrays.asList(event))
                 .corporateAccount(this.account)
                 .build();
 
@@ -57,7 +58,7 @@ public class AcademyDtoTest {
     public void DTO객체_잘만들어지는지() {
         Academy academy = academyService.getAcademyById(1);
 
-        AcademyDto dto = AcademyDto.generateAcademyDto(academy);
+        AcademyDto dto = AcademyDto.generateAcademyDto(academy, 0.0);
 
         try {
             log.debug(new ObjectMapper().writeValueAsString(dto));

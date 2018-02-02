@@ -60,10 +60,11 @@ public class Academy {
     private List<Event> events;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "ACADEMY_ID")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Image> images;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "academy")
     @JsonIgnore
     private CorporateAccount corporateAccount;
 

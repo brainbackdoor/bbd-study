@@ -2,6 +2,8 @@ package com.educhoice.motherchoice.models.persistent.qna;
 
 import com.educhoice.motherchoice.utils.converter.LocalDateTimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,6 +24,7 @@ public class BaseTimeEntity {
 
     @CreatedDate
     @Convert(converter = LocalDateTimeConverter.class)
+    @JsonIgnore
     private LocalDateTime createdTime;
 
     @LastModifiedDate
@@ -29,8 +32,15 @@ public class BaseTimeEntity {
     @JsonIgnore
     private LocalDateTime updatedTime;
 
+    @JsonIgnore
     public String getFormattedCreatedTime() {
         return formatDateToString(createdTime, "yyyy.MM.dd");
+    }
+
+    @JsonProperty(value = "createdTime")
+    public String getCreatedTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        return this.createdTime.format(formatter);
     }
 
     private String formatDateToString(LocalDateTime localDateTime, String format) {

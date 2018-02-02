@@ -23,6 +23,9 @@ public class AcademyService {
     @Autowired
     private AcademyRepository academyRepository;
 
+    @Autowired
+    private NewQuestionStoreService questionService;
+
     public Academy saveAcademy(Academy academy) {
         return academyRepository.save(academy);
     }
@@ -46,7 +49,7 @@ public class AcademyService {
     public List<AcademyDto> getAcademyDtos(AcademyQueryDto dto) {
         List<Academy> academies = academyRepository.findAcademiesByQuery(dto).orElse(Arrays.asList(new EmptyAcademy()));
 
-        return academies.stream().map(a -> AcademyDto.generateAcademyDto(a)).collect(Collectors.toList());
+        return academies.stream().map(a -> AcademyDto.generateAcademyDto(a, questionService.getAverageInquiryResponseRate(a))).collect(Collectors.toList());
     }
 
     public List<AcademyTaggingDto> findMultipleAcademiesByNameContaining(String name) {

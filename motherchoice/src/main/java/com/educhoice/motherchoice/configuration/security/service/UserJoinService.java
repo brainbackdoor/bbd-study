@@ -74,7 +74,9 @@ public class UserJoinService {
     }
 
     private CorporateAccount generateSocialCorporateAccount(UserJoinRequest request) {
-        return Arrays.asList(request).stream().map(req -> generateCorporateAccount(req, passwordEncoder)).peek(a -> a.setSocialInfos(retrieveInfos(request.getAuthinfoDto()), request.getAuthinfoDto())).findFirst().get();
+        return Arrays.asList(request).stream().map(req -> generateCorporateAccount(req, passwordEncoder))
+                .peek(a -> a.setSocialInfos(retrieveInfos(request.getAuthinfoDto()), request.getAuthinfoDto()))
+                .findFirst().get();
     }
 
     private BasicAccount setSocialInfos(BasicAccount account, SocialAuthinfoDto dto) {

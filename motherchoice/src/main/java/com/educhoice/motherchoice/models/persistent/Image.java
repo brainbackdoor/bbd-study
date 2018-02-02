@@ -40,7 +40,8 @@ public class Image {
     @JsonIgnore
     private long imageId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ACADEMY_ID")
     @JsonIgnore
     private Academy academy;
 

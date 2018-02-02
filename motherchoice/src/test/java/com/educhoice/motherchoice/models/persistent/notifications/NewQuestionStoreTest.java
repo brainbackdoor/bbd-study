@@ -1,6 +1,9 @@
 package com.educhoice.motherchoice.models.persistent.notifications;
 
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
+import com.educhoice.motherchoice.models.persistent.qna.Question;
 import com.educhoice.motherchoice.models.persistent.repositories.notifications.NewQuestionStoreRepository;
+import com.educhoice.motherchoice.service.NewQuestionStoreService;
 import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +24,14 @@ public class NewQuestionStoreTest {
     @Autowired
     private NewQuestionStoreRepository repository;
 
+    @Autowired
+    private NewQuestionStoreService service;
+
     private NewQuestionStore store;
     private Map<Long, NewQuestion> newQuestions = Maps.newHashMap();
+
+    private Question question;
+    private CorporateAccount account;
 
     @Before
     public void setUp() {
@@ -35,6 +44,15 @@ public class NewQuestionStoreTest {
 
         this.newQuestions.put(1L, newQuestion);
         this.store.setQuestions(this.newQuestions);
+
+        this.question = Question.builder()
+                .content("asdf")
+                .title("asdf")
+                .questionId(1L)
+                .build();
+
+        this.account = new CorporateAccount();
+        this.account.setAccountId(1L);
     }
 
     @Test
@@ -45,5 +63,14 @@ public class NewQuestionStoreTest {
 
         assertThat(savedStore.getQuestions().get(1L).isRead(), is(false));
         assertThat(savedStore.hasNewQuestion(), is(true));
+    }
+
+    @Test
+    public void 읽음표시() {
+        this.repository.save(this.store);
+
+        service.readQuestion(this.account, this.question);
+        assertThat(this.service.hasNewQuestions(this.account), is(false));
+
     }
 }

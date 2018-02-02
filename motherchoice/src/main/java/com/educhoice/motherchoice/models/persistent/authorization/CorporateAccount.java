@@ -31,6 +31,7 @@ public class CorporateAccount extends BasicAccount {
 	private Academy academy;
 
 	@OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
     private List<Answer> answers;
 
     public CorporateAccount(String email, String password) {

@@ -34,6 +34,7 @@ public class Answer extends BaseTimeEntity{
     private Question question;
 
     @ManyToOne
+    @JoinColumn(name = "account_id")
     @JsonIgnore
     private CorporateAccount account;
 
