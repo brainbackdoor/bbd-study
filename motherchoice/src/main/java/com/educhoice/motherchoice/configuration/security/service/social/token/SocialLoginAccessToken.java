@@ -53,6 +53,7 @@ public class SocialLoginAccessToken implements OAuth2AccessToken {
         this.additionalInformation = Maps.newLinkedHashMap();
         this.additionalInformation.put("jti", id.getJti());
         this.additionalInformation.put("USER_UID", account.getBasicAccount().getAccountId());
+        this.additionalInformation.put("PARSED_AUTHORITIES", account.getBasicAccount().getRoles().getSymbol());
 
         if(account.getBasicAccount().getSocialProvider() != null) {
             this.additionalInformation.put("SOCIAL_PROVIDER", account.getBasicAccount().getSocialProvider().getProviderName());

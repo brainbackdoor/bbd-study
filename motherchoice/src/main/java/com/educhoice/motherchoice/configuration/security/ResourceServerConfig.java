@@ -65,7 +65,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/api/v1/**").authenticated()
                 .and()
                 .addFilterBefore(new FormLoginJwtAutheticationFilter("/formlogin", socialLoginAuthenticationManager, tokenConverter, jwtIdService), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter("/kakao", socialLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter("/tokenauth", socialLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
 
         httpSecurity
                 .sessionManagement()
