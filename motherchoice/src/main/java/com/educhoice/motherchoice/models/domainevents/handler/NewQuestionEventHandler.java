@@ -23,18 +23,18 @@ public class NewQuestionEventHandler implements ApplicationListener<NewQuestionE
 
     @Override
     public void onApplicationEvent(NewQuestionEvent event) {
-//        log.info("new question has registered! event handler now registering new question");
-//        List<Long> corporateAccountIds = event.getDestinations().stream().map(c -> c.getAccountId()).collect(Collectors.toList());
-//
-//        List<NewQuestionStore> stores = corporateAccountIds.stream()
-//                .filter(id -> repository.findByCorporateAccountId(id).isPresent())
-//                .peek(id -> corporateAccountIds.remove(id))
-//                .map(id -> repository.findByCorporateAccountId(id).get()).collect(Collectors.toList());
-//
-//        stores.stream().peek(s -> s.addNewQuestion(new NewQuestion(event))).forEach(s -> repository.save(s));
-//
-//        corporateAccountIds.stream()
-//                .forEach(id -> repository.save(new NewQuestionStore(id, event)));
+        log.info("new question has registered! event handler now registering new question");
+        List<Long> corporateAccountIds = event.getDestinations().stream().map(c -> c.getAccountId()).collect(Collectors.toList());
+
+        List<NewQuestionStore> stores = corporateAccountIds.stream()
+                .filter(id -> repository.findByCorporateAccountId(id).isPresent())
+                .peek(id -> corporateAccountIds.remove(id))
+                .map(id -> repository.findByCorporateAccountId(id).get()).collect(Collectors.toList());
+
+        stores.stream().peek(s -> s.addNewQuestion(new NewQuestion(event))).forEach(s -> repository.save(s));
+
+        corporateAccountIds.stream()
+                .forEach(id -> repository.save(new NewQuestionStore(id, event)));
 
     }
 }

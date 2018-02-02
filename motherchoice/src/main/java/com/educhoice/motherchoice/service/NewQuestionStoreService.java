@@ -16,6 +16,13 @@ public class NewQuestionStoreService {
     @Autowired
     private NewQuestionStoreRepository repository;
 
+    public void saveNewQuestionStore(long accountId) {
+        NewQuestionStore store = new NewQuestionStore();
+        store.setCorporateAccountId(accountId);
+
+        repository.save(store);
+    }
+
     public double getAverageInquiryResponseRate(Academy academy) {
         return findQuestionStore(academy.getCorporateAccount()).averageInquiryResponseRate();
     }

@@ -18,6 +18,6 @@ public class SampleEventPublisher {
     public void sendFakeEvent() {
         NewQuestionEvent event = new NewQuestionEvent(Question.builder().content("fuck you!").writer(Account.builder().build()).build());
 
-        this.eventPublisher.publishEvent(event);
+//        this.eventPublisher.publishEvent(event);
     }
 }
