@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 import sun.reflect.annotation.ExceptionProxy;
 
 @Configuration
@@ -53,6 +54,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
 
+
+
         httpSecurity
                 .exceptionHandling()
                 .authenticationEntryPoint(entryPoint);
@@ -64,18 +67,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/api/v1/**").authenticated()
                 .and()
-                .addFilterBefore(new FormLoginJwtAutheticationFilter("/formlogin", socialLoginAuthenticationManager, tokenConverter, jwtIdService), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter("/tokenauth", socialLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
+                .addFilterAfter(new FormLoginJwtAutheticationFilter("/formlogin", socialLoginAuthenticationManager, tokenConverter, jwtIdService), CorsFilter.class)
+                .addFilterAfter(new JwtAuthenticationFilter("/tokenauth", socialLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
 
         httpSecurity
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .httpBasic()
-                .realmName(securityRealm)
-                .and()
-                .cors()
-                .disable();
+                .realmName(securityRealm);
 
         httpSecurity
                 .headers()
