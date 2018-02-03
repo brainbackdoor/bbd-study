@@ -1,6 +1,7 @@
 package com.educhoice.motherchoice.configuration.security;
 
 import com.educhoice.motherchoice.configuration.security.service.AccountDetailsService;
+import com.educhoice.motherchoice.configuration.security.service.filters.AuthenticationExceptionHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -73,6 +74,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
 
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean securityExceptionFilter() {
+        FilterRegistrationBean bean = new FilterRegistrationBean(new AuthenticationExceptionHandlerFilter());
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 
         return bean;
