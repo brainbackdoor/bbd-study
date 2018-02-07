@@ -62,6 +62,7 @@ public class UserJoinRequest {
     @JsonProperty(value = "accessToken")
     private SocialAuthinfoDto socialAuthinfoDto;
 
+    @JsonIgnore
     public boolean isCorporateAccountRequest() {
         return this.requestType.isAcademyRequest();
     }

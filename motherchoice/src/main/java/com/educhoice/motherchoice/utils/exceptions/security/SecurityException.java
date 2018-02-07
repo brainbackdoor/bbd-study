@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class SecurityException extends RuntimeException {
 
-    private final HttpStatus status = HttpStatus.BAD_REQUEST;
+    private final HttpStatus status = HttpStatus.FORBIDDEN;
 
     public SecurityException(String msg) {
         super(msg);
