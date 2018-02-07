@@ -38,6 +38,9 @@ public class UserJoinRequestTest {
         String json = "{\"joinType\":1,\"account\":{\"requestType\" : \"corporate\",\"phoneNo\":\"01012345678\",\"originalName\":\"봄이네집\",\"academy\":{\"academyName\":null,\"ownerName\":null,\"academyPhoneNumber\":null,\"address\":null},\"loginId\":null,\"password\":null,\"terms\":false,\"privacy\":false,\"marketingInfo\":false},\"accessToken\":null}";
         UserJoinRequest testRequest = new ObjectMapper().readValue(json, UserJoinRequest.class);
 
+        log.debug(new ObjectMapper().writeValueAsString(testRequest));
+
         assertThat(testRequest.isCorporateAccountRequest(), is(true));
+        assertThat(testRequest.getAccountInfo() instanceof CorporateAccountJoinDto , is(true));
     }
 }
