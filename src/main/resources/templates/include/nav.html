@@ -1,3 +1,6 @@
+{{> include/popup}}
+
+
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,11 +21,29 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="/users/{userId}/form"><i class="fa fa-user fa-fw"></i>User Profile</a>
-                        </li>                       
+             			{{^sessionedUser}}{{^academyUser}}
+                        <li><a href="/pages/joinSelectCase"><i class="fa fa-user fa-fw"></i> 회원가입</a>
+                        </li> 		             			
                         <li class="divider"></li>
-                        <li><a href="/users/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/pages/login"><i class="fa fa-sign-in fa-fw"></i> 학부모 로그인</a>
+                        <li><a href="/pages/loginAcademy"><i class="fa fa-sign-in fa-fw"></i> 학원 로그인</a>
+                        <!-- <li><a href="#" onclick="Popup('login','dialog2')"><i class="fa fa-sign-in fa-fw"></i> 로그인</a> -->
                         </li>
+						{{/academyUser}}{{/sessionedUser}}
+						{{#sessionedUser}}
+                        <li><a href="/parent/{{sessionedUser.emailId}}/form"><i class="fa fa-user fa-fw"></i> 나의 페이지</a>
+                        </li> 		
+                        <li class="divider"></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> 로그아웃</a>
+                        </li>
+						{{/sessionedUser}}
+						{{#academyUser}}
+                        <li><a href="/academy/{{academyUser.emailId}}/form"><i class="fa fa-user fa-fw"></i> 나의 페이지</a>
+                        </li> 		
+                        <li class="divider"></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> 로그아웃</a>
+                        </li>
+						{{/academyUser}}						
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

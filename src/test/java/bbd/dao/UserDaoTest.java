@@ -39,7 +39,8 @@ public class UserDaoTest {
     
     @Test
 	public void 유저삭제테스트() throws Exception {
-    	User expected =new User("musicoverybook@gmail.com", "password2", "pobi2", "busan");
+//    	User expected =new User("musicoverybook@gmail.com", "password2", "pobi2", "busan");
+    	User expected =new User("musicoverybook@gmail.com", "password", "aaa", "seoul");
     	UserDao userDao = new UserDao();
     	userDao.deleteUser(expected);
     	assertNull(userDao.findUserByUserId(expected.getEmailId()));
@@ -49,7 +50,7 @@ public class UserDaoTest {
     public void findAll() throws Exception {
         UserDao userDao = new UserDao();
         List<User> users = userDao.findAll();
-        assertEquals(3, users.size());
+        assertEquals(4, users.size());
     }
     
     @Test
@@ -80,7 +81,7 @@ public class UserDaoTest {
     @Test
 	public void 토큰삭제_테스트() throws Exception {
     	UserDao userDao = new UserDao();
-    	Token token = userDao.findByToken(902888590);
+    	Token token = userDao.findByToken(107327474);
 //    	Token token = userDao.findByToken(expected.getToken());
     	userDao.deleteToken(token);
     	assertNull(userDao.findByToken(token.getToken()));

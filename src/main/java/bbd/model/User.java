@@ -5,7 +5,11 @@ public class User {
 	private String password;
 	private String alias;
 	private String area;
-
+	public User(String emailId, String password, String alias) {
+		this.emailId = emailId;
+		this.password = password;
+		this.alias = alias;
+	}
 	public User(String emailId, String password, String alias, String area) {
 		this.emailId = emailId;
 		this.password = password;
