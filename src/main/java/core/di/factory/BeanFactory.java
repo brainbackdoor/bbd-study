@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import core.annotation.Controller;
+
 public class BeanFactory {
 
 	private Set<Class<?>> preInstanticateBeans;
@@ -23,6 +25,16 @@ public class BeanFactory {
 	@SuppressWarnings("unchecked")
 	public <T> T getBean(Class<T> requiredType) {
 		return (T) beans.get(requiredType);
+	}
+
+	public Map<Class<?>, Object> getControllers() {
+		Map<Class<?>, Object> controllers = Maps.newHashMap();
+		for (Class<?> clazz : preInstanticateBeans) {
+			if (clazz.isAnnotationPresent(Controller.class)) {
+				controllers.put(clazz, beans.get(clazz));
+			}
+		}
+		return controllers;
 	}
 
 	public void initialize() {

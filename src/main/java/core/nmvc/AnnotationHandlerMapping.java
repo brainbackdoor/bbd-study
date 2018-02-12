@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 
 import core.annotation.RequestMapping;
 import core.annotation.RequestMethod;
+import core.di.factory.BeanScanner;
 
 public class AnnotationHandlerMapping implements HandlerMapping {
 
@@ -24,7 +25,7 @@ public class AnnotationHandlerMapping implements HandlerMapping {
 
 	public void initialize() {
 		for (Object base : basePackage) {
-			ControllerScanner cs = new ControllerScanner(base);
+			BeanScanner cs = new BeanScanner(base);
 			Map<Class<?>, Object> mapper = cs.getController();
 			mapper.keySet().stream().forEach(clazz -> Arrays.stream(clazz.getDeclaredMethods()).forEach(m -> {
 				ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withAnnotation(RequestMapping.class));

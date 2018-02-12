@@ -8,9 +8,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import core.di.factory.BeanScanner;
+
 public class ControllerScannerTest {
 	private static final Logger logger = LoggerFactory.getLogger(ControllerScannerTest.class);
-	ControllerScanner sc = new ControllerScanner();
+	BeanScanner sc = new BeanScanner();
 	@Test
 	public void 컨트롤러_찾기_테스트() {
 		Map<Class<?>, Object> mapper = sc.getController();

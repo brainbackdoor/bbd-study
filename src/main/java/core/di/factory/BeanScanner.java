@@ -1,4 +1,4 @@
-package core.nmvc;
+package core.di.factory;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,16 +7,18 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
+import com.google.common.util.concurrent.Service;
+
 import core.annotation.Controller;
 
-public class ControllerScanner {
+public class BeanScanner {
 	private Reflections reflections = new Reflections("next.controller");
 
-	ControllerScanner() {
+	public BeanScanner() {
 
 	}
 
-	ControllerScanner(Object packages) {
+	public BeanScanner(Object packages) {
 		this.reflections = new Reflections(packages);
 	}
 
