@@ -16,10 +16,5 @@ public class UserListController implements Controller {
 		this.db = request.getDb();
 
 	}
-	@Override
-	public void inputParameter(HttpRequest request, BufferedReader br) throws IOException {
-	}
-	public DataBase syncDataBase() {
-		return db;
-	}
+
 }

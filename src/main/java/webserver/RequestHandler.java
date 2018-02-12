@@ -31,11 +31,13 @@ public class RequestHandler extends Thread {
 	String postValue;
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 	DataBase db = new DataBase();
-	
+
+	RequestMapping mapping;
 	private Socket connection;
 	
-	public RequestHandler(Socket connectionSocket) {
+	public RequestHandler(Socket connectionSocket, RequestMapping mapping) {
 		this.connection = connectionSocket;
+		this.mapping = mapping;
 	}
 
 	public void run() {
@@ -47,13 +49,12 @@ public class RequestHandler extends Thread {
 			
 			HttpRequest request = new HttpRequest(br,db);
 			
-			RequestMapping mapping = new RequestMapping();
 			Controller controller = mapping.getController(request.getUrl());
-			controller.inputParameter(request, br);
+//			controller.inputParameter(request, br);
 			
 			HttpResponse response = new HttpResponse(request, out);
 			controller.execute(request,response);
-			db = controller.syncDataBase();
+//			db = controller.syncDataBase();
 
 		} catch (IOException e) {
 			log.error(e.getMessage());

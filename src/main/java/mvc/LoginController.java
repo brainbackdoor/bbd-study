@@ -16,11 +16,5 @@ public class LoginController implements Controller {
 		response.responseBody();
 		this.db = request.getDb();
 	}
-	@Override
-	public void inputParameter(HttpRequest request, BufferedReader br) throws IOException {
-		request.getParameter(br);
-	}
-	public DataBase syncDataBase() {
-		return db;
-	}
+
 }

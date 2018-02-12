@@ -12,17 +12,10 @@ public class UserCreateController implements Controller {
 	DataBase db ;
 	@Override
 	public void execute(HttpRequest request, HttpResponse response) throws IOException {
-		request.createUser();
+//		request.createUser();
 		response.generateCreateUserHeader();
 		response.responseBody();
 		this.db = request.getDb();
 	}
 
-	@Override
-	public void inputParameter(HttpRequest request, BufferedReader br) throws IOException {
-		request.getParameter(br);
-	}
-	public DataBase syncDataBase() {
-		return db;
-	}
 }
