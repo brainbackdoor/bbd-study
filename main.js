@@ -1,12 +1,19 @@
-var fs = require("fs");
+var events = require('events');
 
-var data = fs.readFileSync('input.txt');
+var eventEmitter = new events.EventEmitter();
 
-console.log(data.toString());
+var connectHandler = function connected(){
+    console.log("Connection Successful");
+
+    eventEmitter.emit("data_received");
+}
+
+eventEmitter.on('connection',connectHandler);
+
+eventEmitter.on('data_received', function(){
+    console.log("Data Received");
+});
+
+eventEmitter.emit('connection');
+
 console.log("Program has ended");
-
-fs.readFile('input.txt', function(err,data){
-    if (err) return console.error(err);
-    console.log(data.toString());
-})
-console.log("non block Program has ended");
