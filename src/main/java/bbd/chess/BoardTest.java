@@ -8,6 +8,16 @@ import bbd.chess.Piece.Color;
 import bbd.chess.Piece.Type;
 
 public class BoardTest {
+	
+	@Test
+	public void findLine() {
+		Board board = new Board();
+		board.initialze();
+		board.setPositionOfPiece(new Piece(Color.BLACK, Type.ROOK, new Position("c5")));
+		board.setPositionOfPiece(new Piece(Color.BLACK, Type.ROOK, new Position("c3")));
+		board.setPositionOfPiece("c3", "a3");
+		Show.print(board);	
+	}
 
 	@Test
 	public void moveKing() throws Exception{

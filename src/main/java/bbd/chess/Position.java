@@ -4,7 +4,7 @@ public class Position {
 	private static int row = 8;
 	int xPos;
 	int yPos;
-
+	String pos ;
 	int oneSquareRight = xPos + 1;
 	int oneSquareLeft = xPos - 1;
 	int oneSqaureUp = yPos - 1;
@@ -19,7 +19,9 @@ public class Position {
 
 		char y = pos.charAt(1);
 		this.yPos = Character.getNumericValue(y) - 1;
+		this.pos = pos;
 	}
+	
 
 	public int arrayNumPosition() {
 		return xPos + yPos * row;
@@ -28,12 +30,12 @@ public class Position {
 	public static boolean checkMovement(Piece piece, String position) {
 		Position pos = new Position(position);
 		switch (Character.toUpperCase(piece.getRepresentation())) {
-		case 'K':if (King.checkMovement(piece, pos))return true;
-		case 'Q':if (Queen.checkMovement(piece, pos))return true;
-		case 'R':if (Rook.checkMovement(piece, pos))return true;
-		case 'B':if (Bishop.checkMovement(piece, pos))return true;
-		case 'N':if (Knight.checkMovement(piece, pos))return true;
-		case 'P':if (Pawn.checkMovement(piece, pos))return true;
+		case 'K':if (King.checkMovement(piece, pos))return true;break;
+		case 'Q':if (Queen.checkMovement(piece, pos))return true;break;
+		case 'R':if (Rook.checkMovement(piece, pos))return true;break;
+		case 'B':if (Bishop.checkMovement(piece, pos))return true;break;
+		case 'N':if (Knight.checkMovement(piece, pos))return true;break;
+		case 'P':if (Pawn.checkMovement(piece, pos))return true;break;
 		}
 		return false;
 	}
@@ -133,6 +135,10 @@ public class Position {
 
 	public int getyPos() {
 		return yPos;
+	}
+
+	public String getPos() {
+		return pos;
 	}
 	
 	

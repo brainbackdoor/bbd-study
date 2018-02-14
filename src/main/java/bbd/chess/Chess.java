@@ -11,11 +11,15 @@ public class Chess {
 		board.initialze();
 		Show.print(board);
 		while (true) {
+			System.out.println("현재 턴 : " +board.getTurn());
 			System.out.println("움직일 말");
 			String piece = scanner.nextLine();
 			System.out.println("움직일 위치");
 			String position = scanner.nextLine();
-			board.setPositionOfPiece(piece, position);
+			if(!board.setPositionOfPiece(piece, position)) {
+				continue;
+			}
+			board.changeTurn();
 			double blackPoint = board.caculcatePoint(Color.BLACK);
 			double whitePoint = board.caculcatePoint(Color.WHITE);
 			System.out.println("BLACK : " + blackPoint + "\nWHITE : " + whitePoint);
