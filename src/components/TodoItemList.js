@@ -11,7 +11,7 @@ class TodoItemList extends Component {
                     {...todo}
                     onToggle = {onToggle}
                     onRemove = {onRemove}
-                    key = {id}
+                    key = {todo.id}
                 />
             )
         );
