@@ -1,9 +1,10 @@
 package bowling;
 
 public class Player {
-	String name;
-	Score score;
-	Result result;
+	private String name;
+	private Score score;
+	private Result result;
+	private Turn playerTurn;
 	int lastScore = 0;
 
 	Player(String name) throws Exception {
@@ -16,6 +17,7 @@ public class Player {
 		this.name = name;
 		this.score = new Score();
 		this.result = new Result();
+		this.playerTurn =  new Turn(0);
 	}
 
 	private boolean isLetter(String str) {
@@ -25,7 +27,6 @@ public class Player {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
@@ -39,8 +40,8 @@ public class Player {
 		lastScore = score.getFrameScore(turn.getSecond());
 	}
 
-	public void calculateResultScore() {
-		result.calculateResult(score);
+	public void calculateResultScore(Player player) {
+		result.calculateResult(score, player);
 	}
 
 	public boolean confirmPlayerName(String playerName) {
@@ -71,6 +72,14 @@ public class Player {
 
 	public Score getScore() {
 		return score;
+	}
+
+	public Turn getPlayerTurn() {
+		return playerTurn;
+	}
+	
+	public void nextTurn() {
+		this.playerTurn = new Turn(playerTurn.getFirst()+1);
 	}
 
 }

@@ -20,7 +20,7 @@ import bowling.Turn;
 public class BowlingController {
 	Game game;
 	List<Player> players = new ArrayList<>();
-	
+	Turn frame;
 	@PostMapping("/input/number")
 	public ModelAndView number(int inputNumber) {
 		ModelAndView mav = new ModelAndView("/bowling/init");
@@ -38,29 +38,28 @@ public class BowlingController {
 		Score score = players.get(0).getScore();
 		mav.addObject("inputNumber", inputNumber);
 		mav.addObject("inputName", inputName);
-		mav.addObject("frame", 0);
+		frame = new Turn(0);
 		return mav;
 	}
 	
 	@PostMapping("/bowling/game")
-	public ModelAndView game(int frame, String inputName, String inputNumber) {
+	public ModelAndView game(String inputName, String inputNumber) {
 		List<Player> playersFrame = new ArrayList<>();
 		List<Map<String,String>> playersBoard = new ArrayList<>();
 		ModelAndView mav = new ModelAndView("/bowling/init");
+		
 		for (Player player : players) {
-			playersFrame.add(game.playGame(player, new Turn(frame * 2)));
+			playersFrame.add(game.playGame(player, new Turn(frame.getFirst() * 2)));
 			playersBoard.add(new Board().showBoard(player));
 		}
+		frame = new Turn(frame.getSecond());
 		mav.addObject("inputNumber", inputNumber);
 		mav.addObject("inputName", inputName);
 		mav.addObject("playersFrame", playersFrame);
 		mav.addObject("playersBoard", playersBoard);
-		mav.addObject("frame", frame+1);
-		if(frame+1 == 10) {
+		if(frame.getFirst()+1 == 10) {
 			mav.addObject("finish", 1);
-		} else if(frame != 0) {
-			mav.addObject("game", 1);
-		}
+		} 
 		return mav;
 	}
 	

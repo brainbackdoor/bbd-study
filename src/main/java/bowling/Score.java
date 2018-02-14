@@ -39,14 +39,15 @@ public class Score {
 		return frameScore.get(pos);
 	}
 
-	public int calculate(Turn frame) {
+	public Turn calculate(Turn frame) {
 		if (checkStrike(frame)) {
-			return calculateStrike(frame.getFirst());
+			return calculateStrike(frame);
 		}
 		if (checkSpare(getFrameScore(frame.getFirst()), getFrameScore(frame.getSecond()))) {
-			return calculateSpare(frame.getFirst());
+			return calculateSpare(frame);
 		}
-		return getFrameScore(frame.getFirst()) + getFrameScore(frame.getSecond());
+		frame.setFrameScore(getFrameScore(frame.getFirst()) + getFrameScore(frame.getSecond()));
+		return frame;
 	}
 
 	public boolean checkStrike(Turn frame) {
@@ -56,16 +57,13 @@ public class Score {
 		return false;
 	}
 
-	private int calculateStrike(int turn) {
-		Turn nextTurn = generateNextTurn(turn);
+	private Turn calculateStrike(Turn turn) {
+		Turn nextTurn = generateNextTurn(turn.getFirst());
 		int firstSumScore = getFrameScore(nextTurn.getFirst());
-//		if(checkStrike(nextTurn)) {
-//			Turn nextnextTurn = generateNextTurn(nextTurn.getFirst());
-//			return 10 + firstSumScore + nextnextTurn.getFirst();
-//		}
-		
 		int secondSumScore = getFrameScore(nextTurn.getSecond());
-		return 10 + firstSumScore + secondSumScore;
+		turn.setFrameScore(10 + firstSumScore + secondSumScore);
+		turn.onStrike();
+		return turn;
 	}
 
 	private Turn generateNextTurn(int turn) {
@@ -79,10 +77,11 @@ public class Score {
 		return false;
 	}
 
-	private int calculateSpare(int turn) {
-		Turn nextTurn = generateNextTurn(turn);
+	private Turn calculateSpare(Turn turn) {
+		Turn nextTurn = generateNextTurn(turn.getFirst());
 		int firstSumScore = getFrameScore(nextTurn.getFirst());
-		return 10 + firstSumScore;
+		turn.setFrameScore(10 + firstSumScore);
+		return turn;
 	}
 /*
  * 

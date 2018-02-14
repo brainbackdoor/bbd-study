@@ -6,9 +6,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-	List<Player> players;
-	int playerNum;
-	Board board;
+	private List<Player> players;
+	private int playerNum;
+	private Board board;
 
 	public void init(int number, String name) {
 		String playerName;
@@ -23,9 +23,11 @@ public class Game {
 
 		if (player.isOneMoreRollingBall(frame)) {
 			player.rollingRestBall(frame);
-			player.calculateResultScore();
+			player.calculateResultScore(player);
+			player.nextTurn();
 			return player;
 		}
+		player.nextTurn();
 		return player;
 	}
 
