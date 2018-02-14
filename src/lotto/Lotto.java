@@ -69,7 +69,7 @@ public class Lotto implements Comparator<Integer> {
 
 	public void manualCreateLotto(String buyerManualLottoTicket) {
 		String[] buyerManualLottoNumbers = buyerManualLottoTicket.split(", ");
-		for (int j = 0; j < buyerManualLottoNumbers.length; j++) {
+		for (int j = 0; j < lottoSize; j++) {
 			appendLottoNumber(j, Integer.parseInt(buyerManualLottoNumbers[j]));
 		}
 		ascendingOrderLottoNumbers();

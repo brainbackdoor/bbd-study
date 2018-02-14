@@ -35,6 +35,7 @@ public class LottoMain {
 		if (means == automatic) {
 			return buyer.buyingLottoTickets(money.paymentOfLotto());
 		}
+		System.out.println("수동입력");
 		return  buyer.buyingLottoTickets(money.paymentOfLotto(), input.getManualLottoTickets(money.paymentOfLotto()));
 	}
 
