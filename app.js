@@ -10,7 +10,7 @@ const port          = process.env.PORT || 3000
 
 // Express Configuration
 const app           = express()
-console.log(config.mongodbUri)
+
 // parse JSON and url-encoded query
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -26,6 +26,9 @@ app.set('jwt-secret', config.secret)
 app.get('/', (req, res)=>{
     res.send('Hello JWT')
 })
+
+// configure api router
+app.use('/api', require('./routes/api'))
 
 // open the server
 app.listen(port, () => {
