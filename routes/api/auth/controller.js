@@ -85,7 +85,7 @@ exports.login = (req, res) => {
                         username: user.username,
                         admin: user.admin
                     },
-                    'SeCrEtKeYfOrHaShInG',
+                    secret,
                     {
                         expiresIn: '7d',
                         issuer: 'brainbackdoor.com',
