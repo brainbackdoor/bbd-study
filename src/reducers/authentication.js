@@ -85,6 +85,15 @@ export default function authentication(state, action) {
             }
         });
 
+        case types.AUTH_LOGOUT:
+        return update(state, {
+            status: {
+                isLoggedIn: { $set: false },
+                currentUser: { $set: '' }
+
+            }
+        });
+
         default: 
             return state;
     }

@@ -25647,13 +25647,30 @@
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
 
-	    function App() {
+	    function App(props) {
 	        _classCallCheck(this, App);
 
-	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	        _this.handleLogout = _this.handleLogout.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(App, [{
+	        key: 'handleLogout',
+	        value: function handleLogout() {
+	            this.props.logoutRequest().then(function () {
+	                Materialize.toast('Good Bye!', 2000);
+
+	                // Empties the Session
+	                var loginData = {
+	                    isLoggedIn: false,
+	                    username: ''
+	                };
+	                document.cookie = 'key=' + btoa(JSON.stringify(loginData));
+	            });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this2 = this;
@@ -25705,7 +25722,8 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                isAuth ? undefined : _react2.default.createElement(_components.Header, { isLoggedIn: this.props.status.isLoggedIn }),
+	                isAuth ? undefined : _react2.default.createElement(_components.Header, { isLoggedIn: this.props.status.isLoggedIn,
+	                    onLogout: this.handleLogout }),
 	                this.props.children
 	            );
 	        }
@@ -25724,9 +25742,13 @@
 	    return {
 	        getStatusRequest: function getStatusRequest() {
 	            return dispatch((0, _authentication.getStatusRequest)());
+	        },
+	        logoutRequest: function logoutRequest() {
+	            return dispatch((0, _authentication.logoutRequest)());
 	        }
 	    };
 	};
+
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ }),
@@ -25811,7 +25833,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'a',
-	                    null,
+	                    { onClick: this.props.onLogout },
 	                    _react2.default.createElement(
 	                        'i',
 	                        { className: 'material-icons' },
@@ -28301,6 +28323,8 @@
 	exports.getStatus = getStatus;
 	exports.getStatusSuccess = getStatusSuccess;
 	exports.getStatusFailure = getStatusFailure;
+	exports.logoutRequest = logoutRequest;
+	exports.logout = logout;
 
 	var _ActionTypes = __webpack_require__(266);
 
@@ -28418,6 +28442,21 @@
 	    };
 	}
 
+	/* LOGOUT */
+	function logoutRequest() {
+	    return function (dispatch) {
+	        return _axios2.default.post('/api/account/logout').then(function (response) {
+	            dispatch(logout());
+	        });
+	    };
+	}
+
+	function logout() {
+	    return {
+	        type: _ActionTypes.AUTH_LOGOUT
+	    };
+	}
+
 /***/ }),
 /* 266 */
 /***/ (function(module, exports) {
@@ -28440,6 +28479,8 @@
 	var AUTH_GET_STATUS = exports.AUTH_GET_STATUS = "AUTH_GET_STATUS";
 	var AUTH_GET_STATUS_SUCCESS = exports.AUTH_GET_STATUS_SUCCESS = "AUTH_GET_STATUS_SUCCESS";
 	var AUTH_GET_STATUS_FAILURE = exports.AUTH_GET_STATUS_FAILURE = "AUTH_GET_STATUS_FAILURE";
+
+	var AUTH_LOGOUT = exports.AUTH_LOGOUT = "AUTH_LOGOUT";
 
 /***/ }),
 /* 267 */
@@ -30413,6 +30454,15 @@
 	                status: {
 	                    valid: { $set: false },
 	                    isLoggedIn: { $set: false }
+	                }
+	            });
+
+	        case types.AUTH_LOGOUT:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                status: {
+	                    isLoggedIn: { $set: false },
+	                    currentUser: { $set: '' }
+
 	                }
 	            });
 
