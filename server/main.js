@@ -67,3 +67,9 @@ app.use(session({
 
 /* setup routers & static directory */
 app.use('/api', api);
+
+/* handle error */
+app.use(function(err, req, res, next){
+    console.error(err.stack);
+    res.status(500).send('Something broke !');
+});
