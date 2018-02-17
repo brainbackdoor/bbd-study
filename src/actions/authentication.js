@@ -2,7 +2,7 @@ import {
     AUTH_LOGIN,
     AUTH_LOGIN_SUCCESS,
     AUTH_LOGIN_FAILURE
-} from './AcationTypes';
+} from './ActionTypes';
 
 import axios from 'axios';
 /*============================================================================
@@ -11,6 +11,7 @@ import axios from 'axios';
 
 // Login
 export function loginRequest(username, password) {
+    
     return (dispatch) => {
         // Inform Login API is starting
         dispatch(login());

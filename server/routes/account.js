@@ -64,6 +64,7 @@ router.post('/signup', (req, res) => {
         1: LOGIN FAILED
 */
 router.post('/signin',(req, res) => {
+    console.log(req.body);
     if(typeof req.body.password !== "string"){
         return res.status(401).json({
             error: "LOGIN FAILED",

@@ -18,7 +18,7 @@ export default function authentication(state, action) {
         case types.AUTH_LOGIN:
         return update(state, {
             login: {
-                status: { $set: 'WATING' }
+                status: { $set: 'WAITING' }
             }
         });
         case types.AUTH_LOGIN_SUCCESS:
@@ -30,7 +30,7 @@ export default function authentication(state, action) {
                 currentUser: { $set: action.username }
             }
         });
-        case types.AUTH_LOGIN__FAILURE:
+        case types.AUTH_LOGIN_FAILURE:
         return update(state, {
             login: {
                 status: { $set: 'FAILURE' }
