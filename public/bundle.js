@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(232);
+	module.exports = __webpack_require__(233);
 
 
 /***/ }),
@@ -71,14 +71,14 @@
 	var rootElement = document.getElementById('root');
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouterDom.BrowserRouter,
-	    { history: _reactRouterDom.browserHistory },
+	    null,
 	    _react2.default.createElement(
-	        _reactRouterDom.Route,
-	        { path: '/', component: _containers.App },
-	        _react2.default.createElement(_reactRouterDom.IndexRoute, { component: _containers.Home }),
-	        _react2.default.createElement(_reactRouterDom.Route, { path: 'home', component: _containers.Home }),
-	        _react2.default.createElement(_reactRouterDom.Route, { path: 'login', component: _containers.Login }),
-	        _react2.default.createElement(_reactRouterDom.Route, { path: 'register', component: _containers.Register })
+	        'div',
+	        null,
+	        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _containers.App }),
+	        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _containers.Home }),
+	        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login', component: _containers.Login }),
+	        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/register', component: _containers.Register })
 	    )
 	), rootElement);
 
@@ -25570,15 +25570,15 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Home = __webpack_require__(229);
+	var _Home = __webpack_require__(230);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(230);
+	var _Login = __webpack_require__(231);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Register = __webpack_require__(231);
+	var _Register = __webpack_require__(232);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
@@ -25627,10 +25627,13 @@
 	    _createClass(App, [{
 	        key: 'render',
 	        value: function render() {
+	            var re = /(login|register)/;
+	            var isAuth = re.test(this.props.location.pathname);
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_components.Header, null),
+	                isAuth ? undefined : _react2.default.createElement(_components.Header, null),
 	                this.props.children
 	            );
 	        }
@@ -25650,15 +25653,20 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Header = undefined;
+	exports.Authentication = exports.Header = undefined;
 
 	var _Header = __webpack_require__(228);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
+	var _Authentication = __webpack_require__(229);
+
+	var _Authentication2 = _interopRequireDefault(_Authentication);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.Header = _Header2.default;
+	exports.Authentication = _Authentication2.default;
 
 /***/ }),
 /* 228 */
@@ -25703,8 +25711,8 @@
 	                'li',
 	                null,
 	                _react2.default.createElement(
-	                    'a',
-	                    null,
+	                    _reactRouterDom.Link,
+	                    { to: '/login' },
 	                    _react2.default.createElement(
 	                        'i',
 	                        { className: 'material-icons' },
@@ -25802,6 +25810,103 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouterDom = __webpack_require__(185);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Authentication = function (_React$Component) {
+	    _inherits(Authentication, _React$Component);
+
+	    function Authentication() {
+	        _classCallCheck(this, Authentication);
+
+	        return _possibleConstructorReturn(this, (Authentication.__proto__ || Object.getPrototypeOf(Authentication)).apply(this, arguments));
+	    }
+
+	    _createClass(Authentication, [{
+	        key: 'render',
+	        value: function render() {
+	            var loginView = _react2.default.createElement(
+	                'div',
+	                null,
+	                'loginView'
+	            );
+
+	            var registerView = _react2.default.createElement(
+	                'div',
+	                null,
+	                'registerView'
+	            );
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container auth' },
+	                _react2.default.createElement(
+	                    _reactRouterDom.Link,
+	                    { className: 'logo', to: '/' },
+	                    'MEMOPAD'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'card' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'header blue white-text center' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'card-content' },
+	                            this.props.mode ? "LOGIN" : "REGISTER"
+	                        )
+	                    ),
+	                    this.props.mode ? loginView : registerView
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Authentication;
+	}(_react2.default.Component);
+
+	Authentication.propTypes = {
+	    mode: _react2.default.PropTypes.bool,
+	    onLogin: _react2.default.PropTypes.func,
+	    onRegister: _react2.default.PropTypes.func
+	};
+
+	Authentication.defaultProps = {
+	    mode: true,
+	    onLogin: function onLogin(id, pw) {
+	        console.error("login function not defined");
+	    },
+	    onRegister: function onRegister(id, pw) {
+	        console.error("register function not defined");
+	    }
+	};
+
+	exports.default = Authentication;
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25836,7 +25941,7 @@
 	exports.default = Home;
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25850,6 +25955,8 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _components = __webpack_require__(227);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25874,7 +25981,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Login'
+	                _react2.default.createElement(_components.Authentication, null)
 	            );
 	        }
 	    }]);
@@ -25885,7 +25992,7 @@
 	exports.default = Login;
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25899,6 +26006,8 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _components = __webpack_require__(227);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25923,7 +26032,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Register'
+	                _react2.default.createElement(_components.Authentication, null)
 	            );
 	        }
 	    }]);
@@ -25934,11 +26043,11 @@
 	exports.default = Register;
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(233);
+	var content = __webpack_require__(234);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -25952,7 +26061,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(235)(content, options);
+	var update = __webpack_require__(236)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -25984,21 +26093,21 @@
 	}
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(234)(false);
+	exports = module.exports = __webpack_require__(235)(false);
 	// imports
 
 
 	// module
-	exports.push([module.id, "body {\r\n    background-color: #ECEFF1;\r\n}", ""]);
+	exports.push([module.id, "body {\r\n    background-color: #ECEFF1;\r\n}\r\n\r\n.auth {\r\n    margin-top: 50px;\r\n    text-align: center;\r\n}\r\n\r\n.logo {\r\n    text-align: center;\r\n    font-weight: 100;\r\n    font-size: 80px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n}\r\n\r\na.logo {\r\n    color: #5B5B5B;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}\r\n\r\n.auth .card {\r\n    width: 400px;\r\n    margin: 0 auto;\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n    .auth .card {\r\n        width: 100%;\r\n    }\r\n\r\n    .logo {\r\n        font-size: 60px;\r\n    }\r\n}\r\n\r\n.auth .header {\r\n    font-size: 18px;\r\n}\r\n\r\n.auth .row {\r\n    margin-bottom: 0px;\r\n}\r\n\r\n.auth .username  {\r\n    margin-top: 0px;\r\n}\r\n\r\n.auth .btn {\r\n    width: 90%;\r\n}\r\n\r\n.auth .footer {\r\n    border-top: 1px solid #E9E9E9;\r\n    padding-bottom: 21px;\r\n}", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, exports) {
 
 	/*
@@ -26080,7 +26189,7 @@
 
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -26146,7 +26255,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(236);
+	var	fixUrls = __webpack_require__(237);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -26462,7 +26571,7 @@
 
 
 /***/ }),
-/* 236 */
+/* 237 */
 /***/ (function(module, exports) {
 
 	

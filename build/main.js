@@ -102,8 +102,13 @@ app.use((0, _expressSession2.default)({
 /* setup routers & static directory */
 app.use('/api', _routes2.default);
 
-app.get('*', function (req, res) {
-    res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
+app.get('*', function (req, res, next) {
+    var regExp = /bundle.js$/;
+    if (!regExp.test(req.url)) {
+        res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
+    } else {
+        next();
+    }
 });
 
 /* handle error */

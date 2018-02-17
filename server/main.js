@@ -70,8 +70,13 @@ app.use(session({
 /* setup routers & static directory */
 app.use('/api', api);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './../public/index.html'));
+app.get('*', (req, res, next) => {
+    const regExp = /bundle.js$/;
+    if(!regExp.test(req.url)) {
+        res.sendFile(path.resolve(__dirname, './../public/index.html'));
+    } else {
+        next();
+    }
 });
 
 /* handle error */
