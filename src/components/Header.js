@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
     render() {
+
         const loginButton = (
             <li>
                 <a>
@@ -16,11 +18,13 @@ class Header extends React.Component {
                     <i className="material-icons">lock_open</i>
                 </a>
             </li>
-        );        
+        );
+
+
         return (
             <nav>
                 <div className="nav-wrapper blue darken-1">
-                    <a className="brand-logo center">MEMOPAD</a>
+                <Link to="/" className="brand-logo center">MEMOPAD</Link>
 
                     <ul>
                         <li><a><i className="material-icons">search</i></a></li>
@@ -36,6 +40,7 @@ class Header extends React.Component {
         );
     }
 }
+
 Header.propTypes = {
     isLoggedIn: React.PropTypes.bool,
     onLogout: React.PropTypes.func
