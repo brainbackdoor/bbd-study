@@ -25,11 +25,13 @@ app.get('/hello', (req,res) => {
     return res.send('Hello BBD');
 });
 
-app.listen(port, () => {
-    console.log('Express is listening on port',port);
-});
 
+/* Middleware */
+const devPort = 4000;
 
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+console.log(process.env.NODE_ENV);
 /* development */
 if (process.env.NODE_ENV == 'development'){
     console.log('Server is running on development mode');
@@ -41,13 +43,13 @@ if (process.env.NODE_ENV == 'development'){
             console.log('webpack-dev-server is listening on port', devPort);
         }
     );
+} else {
+    app.listen(port, () => {
+        console.log('Express is listening on port',port);
+    });
 }
 
-/* Middleware */
-const devPort = 4000;
 
-app.use(morgan('dev'));
-app.use(bodyParser.json());
 
 /* Middleware - mongodb */
 /* mongodb connection */
@@ -68,8 +70,13 @@ app.use(session({
 /* setup routers & static directory */
 app.use('/api', api);
 
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/index.html'));
+})
+
 /* handle error */
 app.use(function(err, req, res, next){
     console.error(err.stack);
     res.status(500).send('Something broke !');
 });
+

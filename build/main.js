@@ -60,10 +60,12 @@ app.get('/hello', function (req, res) {
     return res.send('Hello BBD');
 });
 
-app.listen(port, function () {
-    console.log('Express is listening on port', port);
-});
+/* Middleware */
+var devPort = 4000;
 
+app.use((0, _morgan2.default)('dev'));
+app.use(_bodyParser2.default.json());
+console.log(process.env.NODE_ENV);
 /* development */
 if (process.env.NODE_ENV == 'development') {
     console.log('Server is running on development mode');
@@ -73,13 +75,11 @@ if (process.env.NODE_ENV == 'development') {
     devServer.listen(devPort, function () {
         console.log('webpack-dev-server is listening on port', devPort);
     });
+} else {
+    app.listen(port, function () {
+        console.log('Express is listening on port', port);
+    });
 }
-
-/* Middleware */
-var devPort = 4000;
-
-app.use((0, _morgan2.default)('dev'));
-app.use(_bodyParser2.default.json());
 
 /* Middleware - mongodb */
 /* mongodb connection */
@@ -101,6 +101,10 @@ app.use((0, _expressSession2.default)({
 
 /* setup routers & static directory */
 app.use('/api', _routes2.default);
+
+app.get('*', function (req, res) {
+    res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
+});
 
 /* handle error */
 app.use(function (err, req, res, next) {

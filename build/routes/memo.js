@@ -92,7 +92,7 @@ router.delete('/:id', function (req, res) {
     }
 
     // check login status
-    if (typeof req.session.loginInfo !== 'undefined') {
+    if (typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
             code: 2
@@ -119,7 +119,7 @@ router.delete('/:id', function (req, res) {
         // REMOVE THE MEMO
         _memo2.default.remove({ _id: req.params.id }, function (err) {
             if (err) throw err;
-            re.json({ success: true });
+            res.json({ success: true });
         });
     });
 });
@@ -145,7 +145,7 @@ router.put('/:id', function (req, res) {
     }
 
     // check contents valid
-    if (typeof req.body.contents !== 'string ') {
+    if (typeof req.body.contents !== 'string') {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 2
@@ -179,7 +179,7 @@ router.put('/:id', function (req, res) {
         }
 
         // if exists, check writer
-        if (memo.wirter != req.params.loginInfo.username) {
+        if (memo.writer != req.session.loginInfo.username) {
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5
