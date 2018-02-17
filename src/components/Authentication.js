@@ -2,6 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Authentication extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: "",
+            password: ""
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        this.setState(nextState);
+    }
+
     render() {
         const inputBoxes = (
             <div>
