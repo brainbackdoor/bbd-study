@@ -4,7 +4,12 @@ import Account from '../models/account';
 const router = express.Router();
 
 /*
-    POST /api/account/signup
+    ACCOUNT SIGNUP: POST /api/account/signup
+    BODY SAMPLE: { "username": "test", "password": "test" }
+    ERROR CODES:
+        1: BAD USERNAME
+        2: BAD PASSWORD
+        3: USERNAM EXISTS
 */
 
 router.post('/signup', (req, res) => {
@@ -52,8 +57,52 @@ router.post('/signup', (req, res) => {
     });
 });
 
+/*
+    ACCOUNT SIGNIN: POST /api/account/signin
+    BODY SAMPLE: { "username": "test", "password": "test" }
+    ERROR CODES:
+        1: LOGIN FAILED
+*/
 router.post('/signin',(req, res) => {
-    res.json({ success: true });
+    if(typeof req.body.password !== "string"){
+        return res.status(401).json({
+            error: "LOGIN FAILED",
+            code: 1
+        });
+    }
+
+    // find the user by username
+    Account.findOne({ username: req.body.username }, (err, account) => {
+        if(err) throw err;
+
+        // check account existancy
+        if(!account){
+            return res.status(401).json({
+                error: "LOGIN FAILED",
+                code: 1
+            });
+        }
+
+        // check whether the password is valid
+        if(!account.validateHash(req.body.password)) {
+            return res.status(401).json({
+                error: "LOGIN FAILED",
+                code: 1
+            });
+        }
+
+        // alter session
+        let session = req.session;
+        session.loginInfo = {
+            _id: account._id,
+            username: account.username
+        };
+
+        // return success
+        return res.json({
+            success: true
+        });
+    });
 });
 
 router.get('/getinfo', (req,res) => {
