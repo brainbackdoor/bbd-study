@@ -25860,6 +25860,7 @@
 	        _this.handleChange = _this.handleChange.bind(_this);
 	        _this.handleLogin = _this.handleLogin.bind(_this);
 	        _this.handleRegister = _this.handleRegister.bind(_this);
+	        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
 	        return _this;
 	    }
 
@@ -25904,6 +25905,17 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(e) {
+	            if (e.charCode == 13) {
+	                if (this.props.mode) {
+	                    this.handleLogin();
+	                } else {
+	                    this.handleRegister();
+	                }
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var inputBoxes = _react2.default.createElement(
@@ -25937,7 +25949,8 @@
 	                        type: 'password',
 	                        className: 'validate',
 	                        onChange: this.handleChange,
-	                        value: this.state.password })
+	                        value: this.state.password,
+	                        onKeyPress: this.handleKeyPress })
 	                )
 	            );
 	            var loginView = _react2.default.createElement(
