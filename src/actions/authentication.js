@@ -4,13 +4,27 @@ import {
     AUTH_LOGIN_FAILURE
 } from './AcationTypes';
 
+import axios from 'axios';
 /*============================================================================
     authentication
 ==============================================================================*/
 
 // Login
 export function loginRequest(username, password) {
+    return (dispatch) => {
+        // Inform Login API is starting
+        dispatch(login());
 
+        // API Request
+        return axios.post('/api/account/signin', { username, password })
+        .then((response) => {
+            // succeed
+            dispatch(loginSuccess(username))
+        }).catch((error) => {
+            // failed
+            dispatch(loginFailure());
+        });
+    };
 }
 
 export function login(){
