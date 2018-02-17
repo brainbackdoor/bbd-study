@@ -60,11 +60,6 @@ router.post('/', (req, res) => {
     })
 });
 
-// MODIFY MEMO
-router.put('/:id', (req, res) => {
-
-});
-
 /*
     DELETE MEMO: DELETE /api/memo/:id
     ERROR CODES
@@ -84,7 +79,7 @@ router.delete('/:id', (req, res) => {
     }
 
     // check login status
-    if(typeof req.session.loginInfo !== "undefined") {
+    if(typeof req.session.loginInfo !== 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
             code: 2
@@ -116,5 +111,82 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+/*
+    MODIFY MEMO: PUT /api/memo/:id
+    BODY SAMPLE: { contents: "sample" }
+    ERROR CODES
+        1: INVALID ID,
+        2: EMPTY CONTENTS,
+        3: NOT LOGGED IN
+        4: NO RESOURCE
+        5: PERMISSION FAILURE
+*/
+router.put('/:id', (req, res) => {
+
+    // check memo id validity
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 1
+        });
+    }
+
+    // check contents valid
+    if(typeof req.body.contents !== 'string '){
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 2
+        });
+    }
+    if(req.body.contents === "") {
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 2
+        });
+    }
+
+    //check login status
+    if(typeof req.session.loginInfo === 'undefined') {
+        return res.status(403).json ({
+            error: "NOT LOGGED IN",
+            code: 3
+        });
+    }
+
+    // find memo
+    Memo.findById(req.params.id, (err, memo) => {
+        if(err) throw err;
+
+        // if memo does not exist
+        if(!memo) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 4
+            });
+        }
+
+        // if exists, check writer
+        if(memo.wirter != req.params.loginInfo.username){
+            return res.status(403).json({
+                error: "PERMISSION FAILURE",
+                code: 5
+            });
+        }
+
+        // MODIFY AND SAVE IN DB
+        memo.contents = req.body.contents;
+        memo.date.edited = new Date();
+        memo.is_edited = true;
+
+        memo.save((err, memo) => {
+            if(err) throw err;
+
+            return res.json({
+                success: true,
+                memo
+            });
+        });
+    });
+});
 
 export default router;
