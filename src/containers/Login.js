@@ -5,7 +5,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <Authentication />
+                <Authentication mode={true}/>
             </div>
         );
     }
