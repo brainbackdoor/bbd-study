@@ -13,6 +13,7 @@ const router = express.Router();
 */
 
 router.post('/signup', (req, res) => {
+    
     // check username format
     let usernameRegex = /^[a-z0-9]+$/;
 

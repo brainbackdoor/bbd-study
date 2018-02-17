@@ -26,6 +26,7 @@ var router = _express2.default.Router();
 */
 
 router.post('/signup', function (req, res) {
+
     // check username format
     var usernameRegex = /^[a-z0-9]+$/;
 
