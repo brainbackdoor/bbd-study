@@ -7,7 +7,7 @@ class Home extends React.Component {
         
         const write = ( <Write/> );
         return (
-            <div>
+            <div className="wrapper">
                 { this.props.isLoggedIn ? write : undefined }
             </div>
         );

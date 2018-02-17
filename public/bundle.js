@@ -30138,11 +30138,11 @@
 	    _createClass(Home, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log(this.props.IsLoggedIn);
+
 	            var write = _react2.default.createElement(_components.Write, null);
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'wrapper' },
 	                this.props.isLoggedIn ? write : undefined
 	            );
 	        }
@@ -30811,7 +30811,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\r\n    background-color: #ECEFF1;\r\n}\r\n\r\n.auth {\r\n    margin-top: 50px;\r\n    text-align: center;\r\n}\r\n\r\n.logo {\r\n    text-align: center;\r\n    font-weight: 100;\r\n    font-size: 80px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n}\r\n\r\na.logo {\r\n    color: #5B5B5B;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}\r\n\r\n.auth .card {\r\n    width: 400px;\r\n    margin: 0 auto;\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n    .auth .card {\r\n        width: 100%;\r\n    }\r\n\r\n    .logo {\r\n        font-size: 60px;\r\n    }\r\n}\r\n\r\n.auth .header {\r\n    font-size: 18px;\r\n}\r\n\r\n.auth .row {\r\n    margin-bottom: 0px;\r\n}\r\n\r\n.auth .username  {\r\n    margin-top: 0px;\r\n}\r\n\r\n.auth .btn {\r\n    width: 90%;\r\n}\r\n\r\n.auth .footer {\r\n    border-top: 1px solid #E9E9E9;\r\n    padding-bottom: 21px;\r\n}\r\n\r\n/* WRITE */\r\n.write .materialize-textarea {\r\n    padding: 0px;\r\n    padding-bottom: 36px;\r\n    margin-bottom: 0px;\r\n    font-size: 18px;\r\n}\r\n\r\n.write .card-content {\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.write .card-action {\r\n    text-align: right;\r\n}", ""]);
+	exports.push([module.id, "body {\r\n    background-color: #ECEFF1;\r\n}\r\n\r\n.auth {\r\n    margin-top: 50px;\r\n    text-align: center;\r\n}\r\n\r\n.logo {\r\n    text-align: center;\r\n    font-weight: 100;\r\n    font-size: 80px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n}\r\n\r\na.logo {\r\n    color: #5B5B5B;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}\r\n\r\n.auth .card {\r\n    width: 400px;\r\n    margin: 0 auto;\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n    .auth .card {\r\n        width: 100%;\r\n    }\r\n\r\n    .logo {\r\n        font-size: 60px;\r\n    }\r\n}\r\n\r\n.auth .header {\r\n    font-size: 18px;\r\n}\r\n\r\n.auth .row {\r\n    margin-bottom: 0px;\r\n}\r\n\r\n.auth .username  {\r\n    margin-top: 0px;\r\n}\r\n\r\n.auth .btn {\r\n    width: 90%;\r\n}\r\n\r\n.auth .footer {\r\n    border-top: 1px solid #E9E9E9;\r\n    padding-bottom: 21px;\r\n}\r\n\r\n/* WRITE */\r\n.write .materialize-textarea {\r\n    padding: 0px;\r\n    padding-bottom: 36px;\r\n    margin-bottom: 0px;\r\n    font-size: 18px;\r\n}\r\n\r\n.write .card-content {\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.write .card-action {\r\n    text-align: right;\r\n}\r\n\r\n.wrapper {\r\n    margin-top: 20px;\r\n}", ""]);
 
 	// exports
 

@@ -76,3 +76,7 @@ a {
 .write .card-action {
     text-align: right;
 }
+
+.wrapper {
+    margin-top: 20px;
+}
