@@ -3,6 +3,18 @@ import Memo from '../models/memo';
 import mongoose from 'mongoose';
 
 const router = express.Router();
+/*
+    READ MEMO: GET /api/memo
+*/
+router.get('/', (req, res) => {
+    Memo.find()
+    .sort({"_id": -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    })
+});
 
 /*
     WRITE MEMO: POST /api/memo
@@ -58,9 +70,5 @@ router.delete('/:id', (req, res) => {
 
 });
 
-// GET MEMO LIST
-router.get('/', (req, res) => {
-
-});
 
 export default router;
