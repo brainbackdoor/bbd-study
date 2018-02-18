@@ -26300,23 +26300,23 @@
 	                data = _props.data,
 	                ownership = _props.ownership;
 
-	            var dropDownMemu = _react2.default.createElement(
+	            var dropDownMenu = _react2.default.createElement(
 	                'div',
 	                { className: 'option-button' },
 	                _react2.default.createElement(
 	                    'a',
 	                    { className: 'dropdown-button',
-	                        id: '`dropdown-button-${data._id}`',
-	                        'data-activates': '`dropdown-${data._id}`' },
+	                        id: 'dropdown-button-' + data._id,
+	                        'data-activates': 'dropdown-' + data._id },
 	                    _react2.default.createElement(
 	                        'i',
 	                        { className: 'material-icons icon-button' },
-	                        'more'
+	                        'more_vert'
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'ul',
-	                    { id: '`dropdown-${data._id}`', className: 'dropdown-content' },
+	                    { id: 'dropdown-' + data._id, className: 'dropdown-content' },
 	                    _react2.default.createElement(
 	                        'li',
 	                        null,
@@ -26346,11 +26346,11 @@
 	                    _react2.default.createElement(
 	                        'a',
 	                        { className: 'username' },
-	                        data.writer
+	                        this.props.data.writer
 	                    ),
 	                    ' wrote a log \xB7 ',
-	                    _react2.default.createElement(_reactTimeago2.default, { date: data.date.created }),
-	                    ownership ? dropDownMemu : undefined
+	                    _react2.default.createElement(_reactTimeago2.default, { date: this.props.data.date.created }),
+	                    ownership ? dropDownMenu : undefined
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -26382,8 +26382,8 @@
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
-	            // When component updates, initialize dropdown
-	            // (triggered when logged in)
+	            // WHEN COMPONENT UPDATES, INITIALIZE DROPDOWN
+	            // (TRIGGERED WHEN LOGGED IN)
 	            $('#dropdown-button-' + this.props.data._id).dropdown({
 	                belowOrigin: true // Displays dropdown below the button
 	            });
@@ -26391,10 +26391,10 @@
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            // When component mounts, initialize dropdown
-	            // (triggered when refreshed)
+	            // WHEN COMPONENT MOUNTS, INITIALIZE DROPDOWN
+	            // (TRIGGERED WHEN REFRESHED)
 	            $('#dropdown-button-' + this.props.data._id).dropdown({
-	                belowOrigin: true // displays dropdown below the button
+	                belowOrigin: true // Displays dropdown below the button
 	            });
 	        }
 	    }]);
@@ -26697,6 +26697,9 @@
 
 	            var mapToComponents = function mapToComponents(data) {
 	                return data.map(function (memo, i) {
+	                    console.log(memo.writer);
+	                    console.log(_this2.props);
+	                    console.log(memo.writer === _this2.props.currentUser);
 	                    return _react2.default.createElement(_components.Memo, {
 	                        data: memo,
 	                        ownership: memo.writer === _this2.props.currentUser,
@@ -30723,79 +30726,12 @@
 	        value: function render() {
 
 	            var write = _react2.default.createElement(_components.Write, { onPost: this.handlePost });
-	            var mockData = [{
-	                "_id": "578b958ec1da760909c263f4",
-	                "writer": "velopert",
-	                "contents": "Testing",
-	                "__v": 0,
-	                "is_edited": false,
-	                "date": {
-	                    "edited": "2016-07-17T14:26:22.428Z",
-	                    "created": "2016-07-17T14:26:22.428Z"
-	                },
-	                "starred": []
-	            }, {
-	                "_id": "578b957ec1da760909c263f3",
-	                "writer": "velopert",
-	                "contents": "Data",
-	                "__v": 0,
-	                "is_edited": false,
-	                "date": {
-	                    "edited": "2016-07-17T14:26:06.999Z",
-	                    "created": "2016-07-17T14:26:06.999Z"
-	                },
-	                "starred": []
-	            }, {
-	                "_id": "578b957cc1da760909c263f2",
-	                "writer": "velopert",
-	                "contents": "Mock",
-	                "__v": 0,
-	                "is_edited": false,
-	                "date": {
-	                    "edited": "2016-07-17T14:26:04.195Z",
-	                    "created": "2016-07-17T14:26:04.195Z"
-	                },
-	                "starred": []
-	            }, {
-	                "_id": "578b9579c1da760909c263f1",
-	                "writer": "velopert",
-	                "contents": "Some",
-	                "__v": 0,
-	                "is_edited": false,
-	                "date": {
-	                    "edited": "2016-07-17T14:26:01.062Z",
-	                    "created": "2016-07-17T14:26:01.062Z"
-	                },
-	                "starred": []
-	            }, {
-	                "_id": "578b9576c1da760909c263f0",
-	                "writer": "velopert",
-	                "contents": "Create",
-	                "__v": 0,
-	                "is_edited": false,
-	                "date": {
-	                    "edited": "2016-07-17T14:25:58.619Z",
-	                    "created": "2016-07-17T14:25:58.619Z"
-	                },
-	                "starred": []
-	            }, {
-	                "_id": "578b8c82c1da760909c263ef",
-	                "writer": "velopert",
-	                "contents": "blablablal",
-	                "__v": 0,
-	                "is_edited": false,
-	                "date": {
-	                    "edited": "2016-07-17T13:47:46.611Z",
-	                    "created": "2016-07-17T13:47:46.611Z"
-	                },
-	                "starred": []
-	            }];
 
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'wrapper' },
 	                this.props.isLoggedIn ? write : undefined,
-	                _react2.default.createElement(_components.MemoList, { data: mockData, currentUser: 'velopert' })
+	                _react2.default.createElement(_components.MemoList, { data: this.props.memoData, currentUser: this.props.currentUser })
 	            );
 	        }
 	    }]);

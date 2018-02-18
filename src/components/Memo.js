@@ -3,25 +3,24 @@ import TimeAgo from 'react-timeago';
 class Memo extends React.Component {
     render() {
         const { data, ownership } = this.props;
-        const dropDownMemu = (
+        const dropDownMenu = (
             <div className="option-button">
-                            <a className='dropdown-button' 
-                            id='`dropdown-button-${data._id}`' 
-                            data-activates='`dropdown-${data._id}`'>
-                                <i className="material-icons icon-button">more</i>
-                            </a>
-                            <ul id='`dropdown-${data._id}`' className='dropdown-content'>
-                                <li><a>Edit</a></li>
-                                <li><a>Remove</a></li>
-                            </ul>
+                <a className='dropdown-button'
+                     id={`dropdown-button-${data._id}`}
+                     data-activates={`dropdown-${data._id}`}>
+                    <i className="material-icons icon-button">more_vert</i>
+                </a>
+                <ul id={`dropdown-${data._id}`} className='dropdown-content'>
+                    <li><a>Edit</a></li>
+                    <li><a>Remove</a></li>
+                </ul>
             </div>
-
         );
         const memoView = (
             <div className="card">
-                    <div className="info">
-                        <a className="username">{data.writer}</a> wrote a log · <TimeAgo date={data.date.created}/>
-                        { ownership ?  dropDownMemu : undefined }
+                <div className="info">
+                    <a className="username">{this.props.data.writer}</a> wrote a log · <TimeAgo date={this.props.data.date.created}/> 
+                    { ownership ? dropDownMenu : undefined }
                     </div>
                 <div className="card-content">
                     {data.contents}
@@ -40,17 +39,18 @@ class Memo extends React.Component {
         );
     }
     componentDidUpdate() {
-        // When component updates, initialize dropdown
-        // (triggered when logged in)
+        // WHEN COMPONENT UPDATES, INITIALIZE DROPDOWN
+        // (TRIGGERED WHEN LOGGED IN)
         $('#dropdown-button-'+this.props.data._id).dropdown({
             belowOrigin: true // Displays dropdown below the button
         });
     }
+
     componentDidMount() {
-        // When component mounts, initialize dropdown
-        // (triggered when refreshed)
+        // WHEN COMPONENT MOUNTS, INITIALIZE DROPDOWN
+        // (TRIGGERED WHEN REFRESHED)
         $('#dropdown-button-'+this.props.data._id).dropdown({
-            belowOrigin: true // displays dropdown below the button
+            belowOrigin: true // Displays dropdown below the button
         });
     }
 }

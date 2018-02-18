@@ -5,6 +5,9 @@ class MemoList extends React.Component {
     render() {
         const mapToComponents = data => {
             return data.map((memo, i) => {
+                console.log(memo.writer);
+                console.log(this.props);
+                console.log(memo.writer === this.props.currentUser);
                 return (<Memo
                             data={memo}
                             ownership={ (memo.writer === this.props.currentUser) }
