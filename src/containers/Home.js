@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Write, MemoList } from 'components';
-import { memoPostRequest } from 'actions/memo';
+import { memoPostRequest, memoListRequest } from 'actions/memo';
 import Memo from '../components/Memo';
 
 
@@ -43,7 +43,13 @@ class Home extends React.Component {
             }
         );
     }
-
+    componentDidMount() {
+        this.props.memoListRequest(true).then(
+            () => {
+                console.log(this.props.memoData);
+            }
+        );
+    }
     render() {
         
         const write = ( 
@@ -124,6 +130,7 @@ class Home extends React.Component {
             }
         ];
 
+
         return (
             <div className="wrapper">
                 { this.props.isLoggedIn ? write : undefined }
@@ -136,7 +143,9 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.authentication.status.isLoggedIn,
-        postStatus: state.memo.post
+        postStatus: state.memo.post,
+        currentUser: state.authentication.status.currentUser,
+        memoData: state.memo.list.data
     };
 };
 
@@ -144,6 +153,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         memoPostRequest: (contents) => {
             return dispatch(memoPostRequest(contents));
+        },
+        memoListRequest: (isInitial, listType, id, username) => {
+            return dispatch(memoListRequest(isInitial, listType, id, username));
         }
     };
 };

@@ -29078,6 +29078,10 @@
 	var MEMO_POST_SUCCESS = exports.MEMO_POST_SUCCESS = "MEMO_POST_SUCCESS";
 	var MEMO_POST_FAILURE = exports.MEMO_POST_FAILURE = "MEMO_POST_FAILURE";
 
+	var MEMO_LIST = exports.MEMO_LIST = "MEMO_LIST";
+	var MEMO_LIST_SUCCESS = exports.MEMO_LIST_SUCCESS = "MEMO_LIST_SUCCESS";
+	var MEMO_LIST_FAILURE = exports.MEMO_LIST_FAILURE = "MEMO_LIST_FAILURE";
+
 /***/ }),
 /* 273 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -30706,6 +30710,15 @@
 	            });
 	        }
 	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+
+	            this.props.memoListRequest(true).then(function () {
+	                console.log(_this3.props.memoData);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 
@@ -30793,7 +30806,9 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        isLoggedIn: state.authentication.status.isLoggedIn,
-	        postStatus: state.memo.post
+	        postStatus: state.memo.post,
+	        currentUser: state.authentication.status.currentUser,
+	        memoData: state.memo.list.data
 	    };
 	};
 
@@ -30801,6 +30816,9 @@
 	    return {
 	        memoPostRequest: function memoPostRequest(contents) {
 	            return dispatch((0, _memo.memoPostRequest)(contents));
+	        },
+	        memoListRequest: function memoListRequest(isInitial, listType, id, username) {
+	            return dispatch((0, _memo.memoListRequest)(isInitial, listType, id, username));
 	        }
 	    };
 	};
@@ -30820,6 +30838,10 @@
 	exports.memoPost = memoPost;
 	exports.memoPostSuccess = memoPostSuccess;
 	exports.memoPostFailure = memoPostFailure;
+	exports.memoListRequest = memoListRequest;
+	exports.memoList = memoList;
+	exports.memoListSuccess = memoListSuccess;
+	exports.memoListFailure = memoListFailure;
 
 	var _ActionTypes = __webpack_require__(272);
 
@@ -30859,6 +30881,50 @@
 	    return {
 	        type: _ActionTypes.MEMO_POST_FAILURE,
 	        error: error
+	    };
+	}
+
+	/*
+	    Parameter:
+	        - isInitial: wheter it is for initial loading
+	        - listType: OPTIONAL; loading 'old' memo or 'new' memo
+	        - id:       OPTIONAL; memo id (one at the bottom or one at the top)'
+	        - username: OPTIONAL; find memos of following user
+	*/
+
+	function memoListRequest(isInitial, listType, id, username) {
+	    return function (dispatch) {
+	        // Inform memo list API is starting
+	        dispatch(memoList());
+
+	        var url = '/api/memo';
+
+	        return _axios2.default.get(url).then(function (response) {
+	            dispatch(memoListSuccess(response.data, isInitial, listType));
+	        }).catch(function (error) {
+	            dispatch(memoListFailure());
+	        });
+	    };
+	}
+
+	function memoList() {
+	    return {
+	        type: _ActionTypes.MEMO_LIST
+	    };
+	}
+
+	function memoListSuccess(data, isInitial, listType) {
+	    return {
+	        type: _ActionTypes.MEMO_LIST_SUCCESS,
+	        data: data,
+	        isInitial: isInitial,
+	        listType: listType
+	    };
+	}
+
+	function memoListFailure() {
+	    return {
+	        type: _ActionTypes.MEMO_LIST_FAILURE
 	    };
 	}
 
@@ -31459,6 +31525,11 @@
 	    post: {
 	        status: 'INIT',
 	        error: -1
+	    },
+	    list: {
+	        status: 'INIT',
+	        data: [],
+	        isLast: false
 	    }
 	};
 
@@ -31488,6 +31559,32 @@
 	                post: {
 	                    status: { $set: 'FAILURE' },
 	                    error: { $set: action.error }
+	                }
+	            });
+
+	        case types.MEMO_LIST:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                list: {
+	                    status: { $set: 'WATING' }
+	                }
+	            });
+
+	        case types.MEMO_LIST_SUCCESS:
+	            if (action.isInitial) {
+	                return (0, _reactAddonsUpdate2.default)(state, {
+	                    list: {
+	                        status: { $set: 'SUCCESS' },
+	                        data: { $set: action.data },
+	                        isLast: { $set: action.data.length < 6 }
+	                    }
+	                });
+	            }
+	            return state;
+
+	        case types.MEMO_LIST_FAILURE:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                list: {
+	                    status: { $set: 'FAILURE' }
 	                }
 	            });
 
