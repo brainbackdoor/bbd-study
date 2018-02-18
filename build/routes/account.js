@@ -143,4 +143,20 @@ router.post('/logout', function (req, res) {
     return res.json({ success: true });
 });
 
+/* 
+    SEARCH USER: GET /api/account/search/:username
+*/
+router.get('/search/:username', function (req, res) {
+    // SEARCH USERNAMES THAT STARTS WITH GIVEN KEYWORD USING REGEX
+    var re = new RegExp('^' + req.params.username);
+    _account2.default.find({ username: { $regex: re } }, { _id: false, username: true }).limit(5).sort({ username: 1 }).exec(function (err, accounts) {
+        if (err) throw err;
+        res.json(accounts);
+    });
+});
+
+// EMPTY SEARCH REQUEST: GET /api/account/search
+router.get('/search', function (req, res) {
+    res.json([]);
+});
 exports.default = router;
