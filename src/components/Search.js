@@ -12,7 +12,7 @@ class Search extends React.Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
-        this.handlekeyDown = this.handleKeyDown.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
 
         // LISTEN ESC KEY, CLOSE IF PRESSED
         const listenEscKey = (evt) => {
@@ -40,7 +40,7 @@ class Search extends React.Component {
     }
 
     handleSearch(keyword) {
-        // TO BE IMPLEMENTED
+        this.props.onSearch(keyword);
     }
 
     handleKeyDown(e) {
@@ -56,8 +56,13 @@ class Search extends React.Component {
     render() {
 
         const mapDataToLinks = (data) => {
-            // IMPLEMENT: map data array to array of Link components
-            // create Links to '/wall/:username'
+            return data.map((user, i) => {
+                return (
+                    <Link onClick={this.handleClose} to={`/wall/${user.username}`} key={i}>
+                        {user.username}
+                    </Link>
+                );
+            });
         };
 
         return (

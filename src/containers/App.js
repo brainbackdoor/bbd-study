@@ -2,11 +2,13 @@ import React from 'react';
 import { Header } from 'components';
 import { connect } from 'react-redux';
 import { getStatusRequest, logoutRequest } from 'actions/authentication';
+import { searchRequest } from 'actions/search';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     handleLogout() {
@@ -23,7 +25,9 @@ class App extends React.Component {
             }
         )
     }
-
+    handleSearch(keyword) {
+        this.props.searchRequest(keyword);
+    }
     componentDidMount() {
         // get cookie by name
         function getCookie(name) {
@@ -74,7 +78,9 @@ class App extends React.Component {
         return (
             <div>
                 {isAuth ? undefined : <Header isLoggedIn={this.props.status.isLoggedIn}
-                                                onLogout={this.handleLogout}/>}
+                                                onLogout={this.handleLogout}
+                                                onSearch={this.handleSearch}
+                                                usernames={this.props.searchResults}/>}
                 { this.props.children }
             </div>
         );
@@ -83,7 +89,8 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        status: state.authentication.status
+        status: state.authentication.status,
+        searchResults: state.search.usernames
     };
 };
 
@@ -94,6 +101,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         logoutRequest: () => {
             return dispatch(logoutRequest());
+        },
+        searchRequest: (keyword) => {
+            return dispatch(searchRequest(keyword));
         }
     };
 };

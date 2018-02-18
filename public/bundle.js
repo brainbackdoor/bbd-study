@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(325);
+	module.exports = __webpack_require__(326);
 
 
 /***/ }),
@@ -70,11 +70,11 @@
 
 	var _redux = __webpack_require__(259);
 
-	var _reducers = __webpack_require__(319);
+	var _reducers = __webpack_require__(320);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _reduxThunk = __webpack_require__(324);
+	var _reduxThunk = __webpack_require__(325);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -25596,19 +25596,19 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Home = __webpack_require__(313);
+	var _Home = __webpack_require__(314);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(315);
+	var _Login = __webpack_require__(316);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Register = __webpack_require__(317);
+	var _Register = __webpack_require__(318);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _Wall = __webpack_require__(318);
+	var _Wall = __webpack_require__(319);
 
 	var _Wall2 = _interopRequireDefault(_Wall);
 
@@ -25642,6 +25642,8 @@
 
 	var _authentication = __webpack_require__(285);
 
+	var _search = __webpack_require__(313);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25659,6 +25661,7 @@
 	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
 	        _this.handleLogout = _this.handleLogout.bind(_this);
+	        _this.handleSearch = _this.handleSearch.bind(_this);
 	        return _this;
 	    }
 
@@ -25675,6 +25678,11 @@
 	                };
 	                document.cookie = 'key=' + btoa(JSON.stringify(loginData));
 	            });
+	        }
+	    }, {
+	        key: 'handleSearch',
+	        value: function handleSearch(keyword) {
+	            this.props.searchRequest(keyword);
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -25729,7 +25737,9 @@
 	                'div',
 	                null,
 	                isAuth ? undefined : _react2.default.createElement(_components.Header, { isLoggedIn: this.props.status.isLoggedIn,
-	                    onLogout: this.handleLogout }),
+	                    onLogout: this.handleLogout,
+	                    onSearch: this.handleSearch,
+	                    usernames: this.props.searchResults }),
 	                this.props.children
 	            );
 	        }
@@ -25740,7 +25750,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
-	        status: state.authentication.status
+	        status: state.authentication.status,
+	        searchResults: state.search.usernames
 	    };
 	};
 
@@ -25751,6 +25762,9 @@
 	        },
 	        logoutRequest: function logoutRequest() {
 	            return dispatch((0, _authentication.logoutRequest)());
+	        },
+	        searchRequest: function searchRequest(keyword) {
+	            return dispatch((0, _search.searchRequest)(keyword));
 	        }
 	    };
 	};
@@ -28012,7 +28026,7 @@
 	        _this.handleClose = _this.handleClose.bind(_this);
 	        _this.handleChange = _this.handleChange.bind(_this);
 	        _this.handleSearch = _this.handleSearch.bind(_this);
-	        _this.handlekeyDown = _this.handleKeyDown.bind(_this);
+	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
 
 	        // LISTEN ESC KEY, CLOSE IF PRESSED
 	        var listenEscKey = function listenEscKey(evt) {
@@ -28045,7 +28059,7 @@
 	    }, {
 	        key: 'handleSearch',
 	        value: function handleSearch(keyword) {
-	            // TO BE IMPLEMENTED
+	            this.props.onSearch(keyword);
 	        }
 	    }, {
 	        key: 'handleKeyDown',
@@ -28061,10 +28075,16 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
 
 	            var mapDataToLinks = function mapDataToLinks(data) {
-	                // IMPLEMENT: map data array to array of Link components
-	                // create Links to '/wall/:username'
+	                return data.map(function (user, i) {
+	                    return _react2.default.createElement(
+	                        _reactRouterDom.Link,
+	                        { onClick: _this2.handleClose, to: '/wall/' + user.username, key: i },
+	                        user.username
+	                    );
+	                });
 	            };
 
 	            return _react2.default.createElement(
@@ -32043,6 +32063,61 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.searchRequest = searchRequest;
+	exports.search = search;
+	exports.searchSuccess = searchSuccess;
+	exports.searchFailure = searchFailure;
+
+	var _ActionTypes = __webpack_require__(286);
+
+	var _axios = __webpack_require__(287);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function searchRequest(keyword) {
+	    return function (dispatch) {
+
+	        dispatch(search());
+
+	        return _axios2.default.get('/api/account/search/' + keyword).then(function (response) {
+	            dispatch(searchSuccess(response.data));
+	        }).catch(function (error) {
+	            dispatch(searchFailure());
+	        });
+	    };
+	}
+
+	function search() {
+	    return {
+	        type: _ActionTypes.SEARCH
+	    };
+	}
+
+	function searchSuccess(usernames) {
+	    console.log(usernames);
+	    return {
+	        type: _ActionTypes.SEARCH_SUCCESS,
+	        usernames: usernames
+	    };
+	}
+
+	function searchFailure() {
+	    return {
+	        type: _ActionTypes.SEARCH_FAILURE
+	    };
+	}
+
+/***/ }),
+/* 314 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -32054,7 +32129,7 @@
 
 	var _components = __webpack_require__(227);
 
-	var _memo = __webpack_require__(314);
+	var _memo = __webpack_require__(315);
 
 	var _Memo = __webpack_require__(244);
 
@@ -32440,7 +32515,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32664,7 +32739,7 @@
 	}
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32685,7 +32760,7 @@
 
 	var _authentication = __webpack_require__(285);
 
-	var _reactRouter = __webpack_require__(316);
+	var _reactRouter = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32764,7 +32839,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Login);
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32821,7 +32896,7 @@
 	exports.withRouter = _withRouter3.default;
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32842,7 +32917,7 @@
 
 	var _authentication = __webpack_require__(285);
 
-	var _reactRouter = __webpack_require__(316);
+	var _reactRouter = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32917,7 +32992,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Register);
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32964,7 +33039,7 @@
 	exports.default = Wall;
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32973,15 +33048,15 @@
 	    value: true
 	});
 
-	var _authentication = __webpack_require__(320);
+	var _authentication = __webpack_require__(321);
 
 	var _authentication2 = _interopRequireDefault(_authentication);
 
-	var _memo = __webpack_require__(322);
+	var _memo = __webpack_require__(323);
 
 	var _memo2 = _interopRequireDefault(_memo);
 
-	var _search = __webpack_require__(323);
+	var _search = __webpack_require__(324);
 
 	var _search2 = _interopRequireDefault(_search);
 
@@ -32994,7 +33069,7 @@
 	});
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33008,7 +33083,7 @@
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
-	var _reactAddonsUpdate = __webpack_require__(321);
+	var _reactAddonsUpdate = __webpack_require__(322);
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -33114,7 +33189,7 @@
 	}
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -33284,7 +33359,7 @@
 
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33298,7 +33373,7 @@
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
-	var _reactAddonsUpdate = __webpack_require__(321);
+	var _reactAddonsUpdate = __webpack_require__(322);
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -33480,7 +33555,7 @@
 	}
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33494,7 +33569,7 @@
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
-	var _reactAddonsUpdate = __webpack_require__(321);
+	var _reactAddonsUpdate = __webpack_require__(322);
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -33531,7 +33606,7 @@
 	}
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -33559,11 +33634,11 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(326);
+	var content = __webpack_require__(327);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -33577,7 +33652,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(328)(content, options);
+	var update = __webpack_require__(329)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -33609,10 +33684,10 @@
 	}
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(327)(false);
+	exports = module.exports = __webpack_require__(328)(false);
 	// imports
 
 
@@ -33623,7 +33698,7 @@
 
 
 /***/ }),
-/* 327 */
+/* 328 */
 /***/ (function(module, exports) {
 
 	/*
@@ -33705,7 +33780,7 @@
 
 
 /***/ }),
-/* 328 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -33771,7 +33846,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(329);
+	var	fixUrls = __webpack_require__(330);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -34087,7 +34162,7 @@
 
 
 /***/ }),
-/* 329 */
+/* 330 */
 /***/ (function(module, exports) {
 
 	
