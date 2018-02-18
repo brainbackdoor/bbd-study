@@ -26287,13 +26287,49 @@
 	var Memo = function (_React$Component) {
 	    _inherits(Memo, _React$Component);
 
-	    function Memo() {
+	    function Memo(props) {
 	        _classCallCheck(this, Memo);
 
-	        return _possibleConstructorReturn(this, (Memo.__proto__ || Object.getPrototypeOf(Memo)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Memo.__proto__ || Object.getPrototypeOf(Memo)).call(this, props));
+
+	        _this.state = {
+	            editMode: false,
+	            value: props.data.contents
+	        };
+	        _this.toggleEdit = _this.toggleEdit.bind(_this);
+	        _this.handleChange = _this.handleChange.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(Memo, [{
+	        key: 'toggleEdit',
+	        value: function toggleEdit() {
+	            var _this2 = this;
+
+	            if (this.state.editMode) {
+	                var id = this.props.data._id;
+	                var index = this.props.index;
+	                var contents = this.state.value;
+
+	                this.props.onEdit(id, index, contents).then(function () {
+	                    _this2.setState({
+	                        editMode: !_this2.state.editMode
+	                    });
+	                });
+	            } else {
+	                this.setState({
+	                    editMode: !this.state.editMode
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleChange',
+	        value: function handleChange(e) {
+	            this.setState({
+	                value: e.target.value
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _props = this.props,
@@ -26316,13 +26352,13 @@
 	                ),
 	                _react2.default.createElement(
 	                    'ul',
-	                    { id: 'dropdown-' + data._id, className: 'dropdown-content' },
+	                    { id: 'dropdown-' + this.props.data._id, className: 'dropdown-content' },
 	                    _react2.default.createElement(
 	                        'li',
 	                        null,
 	                        _react2.default.createElement(
 	                            'a',
-	                            null,
+	                            { onClick: this.toggleEdit },
 	                            'Edit'
 	                        )
 	                    ),
@@ -26337,6 +26373,12 @@
 	                    )
 	                )
 	            );
+	            var editedInfo = _react2.default.createElement(
+	                'span',
+	                { style: { color: '#AAB5BC' } },
+	                ' \xB7 Edited ',
+	                _react2.default.createElement(_reactTimeago2.default, { date: this.props.data.date.edited, live: true })
+	            );
 	            var memoView = _react2.default.createElement(
 	                'div',
 	                { className: 'card' },
@@ -26350,7 +26392,8 @@
 	                    ),
 	                    ' wrote a log \xB7 ',
 	                    _react2.default.createElement(_reactTimeago2.default, { date: this.props.data.date.created }),
-	                    ownership ? dropDownMenu : undefined
+	                    this.props.data.is_edited ? editedInfo : undefined,
+	                    this.props.ownership ? dropDownMenu : undefined
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -26373,10 +26416,36 @@
 	                )
 	            );
 
+	            var editView = _react2.default.createElement(
+	                'div',
+	                { className: 'write' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'card' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'card-content' },
+	                        _react2.default.createElement('textarea', {
+	                            className: 'materialize-textarea',
+	                            value: this.state.value,
+	                            onChange: this.handleChange })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'card-action' },
+	                        _react2.default.createElement(
+	                            'a',
+	                            { onClick: this.toggleEdit },
+	                            'OK'
+	                        )
+	                    )
+	                )
+	            );
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'container memo' },
-	                memoView
+	                this.state.editMode ? editView : memoView
 	            );
 	        }
 	    }, {
@@ -26404,7 +26473,9 @@
 
 	Memo.propTypes = {
 	    data: _react2.default.PropTypes.object,
-	    ownership: _react2.default.PropTypes.bool
+	    ownership: _react2.default.PropTypes.bool,
+	    onEdit: _react2.default.PropTypes.func,
+	    index: _react2.default.PropTypes.number
 	};
 
 	Memo.defaultProps = {
@@ -26419,7 +26490,11 @@
 	        },
 	        starred: []
 	    },
-	    ownership: true
+	    ownership: true,
+	    onEdit: function onEdit(id, index, contents) {
+	        console.error('onEdit function not defined');
+	    },
+	    index: -1
 	};
 	exports.default = Memo;
 
@@ -26700,7 +26775,9 @@
 	                    return _react2.default.createElement(_components.Memo, {
 	                        data: memo,
 	                        ownership: memo.writer === _this2.props.currentUser,
-	                        key: memo._id
+	                        key: memo._id,
+	                        index: i,
+	                        onEdit: _this2.props.onEdit
 	                    });
 	                });
 	            };
@@ -26717,12 +26794,16 @@
 
 	MemoList.propTypes = {
 	    data: _react2.default.PropTypes.array,
-	    currentUser: _react2.default.PropTypes.string
+	    currentUser: _react2.default.PropTypes.string,
+	    onEdit: _react2.default.PropTypes.func
 	};
 
 	MemoList.defaultProps = {
 	    data: [],
-	    currentUser: ''
+	    currentUser: '',
+	    onEdit: function onEdit(id, index, contents) {
+	        console.error('edit function not defined');
+	    }
 	};
 
 	exports.default = MemoList;
@@ -29082,6 +29163,10 @@
 	var MEMO_LIST_SUCCESS = exports.MEMO_LIST_SUCCESS = "MEMO_LIST_SUCCESS";
 	var MEMO_LIST_FAILURE = exports.MEMO_LIST_FAILURE = "MEMO_LIST_FAILURE";
 
+	var MEMO_EDIT = exports.MEMO_EDIT = "MEMO_EDIT";
+	var MEMO_EDIT_SUCCESS = exports.MEMO_EDIT_SUCCESS = "MEMO_EDIT_SUCCESS";
+	var MEMO_EDIT_FAILURE = exports.MEMO_EDIT_FAILURE = "MEMO_EDIT_FAILURE";
+
 /***/ }),
 /* 273 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -30672,6 +30757,7 @@
 	        _this.handlePost = _this.handlePost.bind(_this);
 	        _this.loadNewMemo = _this.loadNewMemo.bind(_this);
 	        _this.loadOldMemo = _this.loadOldMemo.bind(_this);
+	        _this.handleEdit = _this.handleEdit.bind(_this);
 	        _this.state = {
 	            loadingState: false
 	        };
@@ -30718,14 +30804,48 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleEdit',
+	        value: function handleEdit(id, index, contents) {
+	            var _this3 = this;
+
+	            return this.props.memoEditRequest(id, index, contents).then(function () {
+	                if (_this3.props.editStatus.status === "SUCCESS") {
+	                    Materialize.toast('Success!', 2000);
+	                } else {
+	                    /*
+	                        ERROR CODES
+	                            1: INVALID ID,
+	                            2: EMPTY CONTENTS
+	                            3: NOT LOGGED IN
+	                            4: NO RESOURCE
+	                            5: PERMISSION FAILURE
+	                    */
+	                    var errorMessage = ['Something broke', 'Please write soemthing', 'You are not logged in', 'That memo does not exist anymore', 'You do not have permission'];
+
+	                    var error = _this3.props.editStatus.error;
+
+	                    // NOTIFY ERROR
+	                    var $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[error - 1] + '</span>');
+	                    Materialize.toast($toastContent, 2000);
+
+	                    // IF NOT LOGGED IN, REFRESH THE PAGE AFTER 2 SECONDS
+	                    if (error === 3) {
+	                        setTimeout(function () {
+	                            location.reload(false);
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            // Load Ne Memo Every 5 seconds
 	            var loadMemoLoop = function loadMemoLoop() {
-	                _this3.loadNewMemo().then(function () {
-	                    _this3.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
+	                _this4.loadNewMemo().then(function () {
+	                    _this4.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
 	                });
 	            };
 	            this.props.memoListRequest(true).then(function () {
@@ -30734,9 +30854,9 @@
 	            var loadUntilScrollable = function loadUntilScrollable() {
 	                // IF THE SCROLLBAR DOES NOT EXIST,
 	                if ($("body").height() < $(window).height()) {
-	                    _this3.loadOldMemo().then(function () {
+	                    _this4.loadOldMemo().then(function () {
 	                        // DO THIS RECURSIVELY UNLESS IT'S LAST PAGE
-	                        if (!_this3.props.isLast) {
+	                        if (!_this4.props.isLast) {
 	                            loadUntilScrollable();
 	                        }
 	                    });
@@ -30751,14 +30871,14 @@
 	            $(window).scroll(function () {
 	                // WHEN HEIGHT UNDER SCROLLBOTTOM IS LESS THEN 250
 	                if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
-	                    if (!_this3.state.loadingState) {
-	                        _this3.loadOldMemo();
-	                        _this3.setState({
+	                    if (!_this4.state.loadingState) {
+	                        _this4.loadOldMemo();
+	                        _this4.setState({
 	                            loadingState: true
 	                        });
 	                    } else {
-	                        if (_this3.state.loadingState) {
-	                            _this3.setState({
+	                        if (_this4.state.loadingState) {
+	                            _this4.setState({
 	                                loadingState: false
 	                            });
 	                        }
@@ -30790,7 +30910,7 @@
 	    }, {
 	        key: 'loadOldMemo',
 	        value: function loadOldMemo() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            // Cancel if user is reading the last page
 	            if (this.props.isLast) {
@@ -30805,7 +30925,7 @@
 	            // Start request
 	            return this.props.memoListRequest(false, 'old', lastId).then(function () {
 	                // If it is last page, notify
-	                if (_this4.props.isLast) {
+	                if (_this5.props.isLast) {
 	                    Materialize.toast('You are reading the last page', 2000);
 	                }
 	            });
@@ -30820,7 +30940,9 @@
 	                'div',
 	                { className: 'wrapper' },
 	                this.props.isLoggedIn ? write : undefined,
-	                _react2.default.createElement(_components.MemoList, { data: this.props.memoData, currentUser: this.props.currentUser })
+	                _react2.default.createElement(_components.MemoList, { data: this.props.memoData,
+	                    currentUser: this.props.currentUser,
+	                    onEdit: this.handleEdit })
 	            );
 	        }
 	    }]);
@@ -30835,7 +30957,8 @@
 	        currentUser: state.authentication.status.currentUser,
 	        memoData: state.memo.list.data,
 	        listStatus: state.memo.list.status,
-	        isLast: state.memo.list.isLast
+	        isLast: state.memo.list.isLast,
+	        editStatus: state.memo.edit
 	    };
 	};
 
@@ -30846,6 +30969,9 @@
 	        },
 	        memoListRequest: function memoListRequest(isInitial, listType, id, username) {
 	            return dispatch((0, _memo.memoListRequest)(isInitial, listType, id, username));
+	        },
+	        memoEditRequest: function memoEditRequest(id, index, contents) {
+	            return dispatch((0, _memo.memoEditRequest)(id, index, contents));
 	        }
 	    };
 	};
@@ -30869,6 +30995,10 @@
 	exports.memoList = memoList;
 	exports.memoListSuccess = memoListSuccess;
 	exports.memoListFailure = memoListFailure;
+	exports.memoEditRequest = memoEditRequest;
+	exports.memoEdit = memoEdit;
+	exports.memoEditSuccess = memoEditSuccess;
+	exports.memoEditFailure = memoEditFailure;
 
 	var _ActionTypes = __webpack_require__(272);
 
@@ -30961,6 +31091,40 @@
 	function memoListFailure() {
 	    return {
 	        type: _ActionTypes.MEMO_LIST_FAILURE
+	    };
+	}
+
+	/* MEMO EDIT */
+	function memoEditRequest(id, index, contents) {
+	    return function (dispatch) {
+	        dispatch(memoEdit());
+
+	        return _axios2.default.put('/api/memo/' + id, { contents: contents }).then(function (response) {
+	            dispatch(memoEditSuccess(index, response.data.memo));
+	        }).catch(function (error) {
+	            dispatch(memoEditFailure(error.response.data.code));
+	        });
+	    };
+	}
+
+	function memoEdit() {
+	    return {
+	        type: _ActionTypes.MEMO_EDIT
+	    };
+	}
+
+	function memoEditSuccess(index, memo) {
+	    return {
+	        type: _ActionTypes.MEMO_EDIT_SUCCESS,
+	        index: index,
+	        memo: memo
+	    };
+	}
+
+	function memoEditFailure(error) {
+	    return {
+	        type: MEMO_EDIT_FAILIURE,
+	        error: error
 	    };
 	}
 
@@ -31557,6 +31721,8 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var initialState = {
 	    post: {
 	        status: 'INIT',
@@ -31566,6 +31732,10 @@
 	        status: 'INIT',
 	        data: [],
 	        isLast: false
+	    },
+	    edit: {
+	        status: 'INIT',
+	        error: -1
 	    }
 	};
 
@@ -31640,6 +31810,30 @@
 	                }
 	            });
 
+	        case types.MEMO_EDIT:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                edit: {
+	                    status: { $set: 'WAITING' },
+	                    error: { $set: -1 },
+	                    memo: { $set: undefined }
+	                }
+	            });
+	        case types.MEMO_EDIT_SUCCESS:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                edit: {
+	                    status: { $set: 'SUCCESS' }
+	                },
+	                list: {
+	                    data: _defineProperty({}, action.index, { $set: action.memo })
+	                }
+	            });
+	        case types.MEMO_EDIT_FAILURE:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                edit: {
+	                    status: { $set: 'FAILURE' },
+	                    error: { $set: action.error }
+	                }
+	            });
 	        default:
 	            return state;
 	    }
