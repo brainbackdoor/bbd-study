@@ -26298,6 +26298,7 @@
 	        };
 	        _this.toggleEdit = _this.toggleEdit.bind(_this);
 	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.handleRemove = _this.handleRemove.bind(_this);
 	        return _this;
 	    }
 
@@ -26328,6 +26329,13 @@
 	            this.setState({
 	                value: e.target.value
 	            });
+	        }
+	    }, {
+	        key: 'handleRemove',
+	        value: function handleRemove() {
+	            var id = this.props.data._id;
+	            var index = this.props.index;
+	            this.props.onRemove(id, index);
 	        }
 	    }, {
 	        key: 'render',
@@ -26367,7 +26375,7 @@
 	                        null,
 	                        _react2.default.createElement(
 	                            'a',
-	                            null,
+	                            { onClick: this.handleRemove },
 	                            'Remove'
 	                        )
 	                    )
@@ -26475,7 +26483,8 @@
 	    data: _react2.default.PropTypes.object,
 	    ownership: _react2.default.PropTypes.bool,
 	    onEdit: _react2.default.PropTypes.func,
-	    index: _react2.default.PropTypes.number
+	    index: _react2.default.PropTypes.number,
+	    onRemove: _react2.default.PropTypes.func
 	};
 
 	Memo.defaultProps = {
@@ -26494,7 +26503,10 @@
 	    onEdit: function onEdit(id, index, contents) {
 	        console.error('onEdit function not defined');
 	    },
-	    index: -1
+	    index: -1,
+	    onRemove: function onRemove(id, index) {
+	        console.error('remove function not defined');
+	    }
 	};
 	exports.default = Memo;
 
@@ -26777,7 +26789,8 @@
 	                        ownership: memo.writer === _this2.props.currentUser,
 	                        key: memo._id,
 	                        index: i,
-	                        onEdit: _this2.props.onEdit
+	                        onEdit: _this2.props.onEdit,
+	                        onRemove: _this2.props.onRemove
 	                    });
 	                });
 	            };
@@ -26795,7 +26808,8 @@
 	MemoList.propTypes = {
 	    data: _react2.default.PropTypes.array,
 	    currentUser: _react2.default.PropTypes.string,
-	    onEdit: _react2.default.PropTypes.func
+	    onEdit: _react2.default.PropTypes.func,
+	    onRemove: _react2.default.PropTypes.func
 	};
 
 	MemoList.defaultProps = {
@@ -26803,6 +26817,9 @@
 	    currentUser: '',
 	    onEdit: function onEdit(id, index, contents) {
 	        console.error('edit function not defined');
+	    },
+	    onRemove: function onRemove(id, index) {
+	        console.error('remove function not defined');
 	    }
 	};
 
@@ -29167,6 +29184,10 @@
 	var MEMO_EDIT_SUCCESS = exports.MEMO_EDIT_SUCCESS = "MEMO_EDIT_SUCCESS";
 	var MEMO_EDIT_FAILURE = exports.MEMO_EDIT_FAILURE = "MEMO_EDIT_FAILURE";
 
+	var MEMO_REMOVE = exports.MEMO_REMOVE = "MEMO_REMOVE";
+	var MEMO_REMOVE_SUCCESS = exports.MEMO_REMOVE_SUCCESS = "MEMO_REMOVE_SUCCESS";
+	var MEMO_REMOVE_FAILURE = exports.MEMO_REMOVE_FAILURE = "MEMO_REMOVE_FAILURE";
+
 /***/ }),
 /* 273 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -30758,6 +30779,7 @@
 	        _this.loadNewMemo = _this.loadNewMemo.bind(_this);
 	        _this.loadOldMemo = _this.loadOldMemo.bind(_this);
 	        _this.handleEdit = _this.handleEdit.bind(_this);
+	        _this.handleRemove = _this.handleRemove.bind(_this);
 	        _this.state = {
 	            loadingState: false
 	        };
@@ -30838,14 +30860,53 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleRemove',
+	        value: function handleRemove(id, index) {
+	            var _this4 = this;
+
+	            this.props.memoRemoveRequest(id, index).then(function () {
+	                if (_this4.props.removeStatus.status === "SUCCESS") {
+	                    // LOAD MORE MEMO IF THERE IS NO SCROLLBAR
+	                    // 1 SECOND LATER. (ANIMATION TAKES 1SEC)
+	                    setTimeout(function () {
+	                        if ($("body").height() < $(window).height()) {
+	                            _this4.loadOldMemo();
+	                        }
+	                    }, 1000);
+	                } else {
+	                    // ERROR
+	                    /*
+	                        DELETE MEMO: DELETE /api/memo/:id
+	                        ERROR CODES
+	                            1: INVALID ID
+	                            2: NOT LOGGED IN
+	                            3: NO RESOURCE
+	                            4: PERMISSION FAILURE
+	                    */
+	                    var errorMessage = ['Something broke', 'You are not logged in', 'That memo does not exist', 'You do not have permission'];
+
+	                    // NOTIFY ERROR
+	                    var $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[_this4.props.removeStatus.error - 1] + '</span>');
+	                    Materialize.toast($toastContent, 2000);
+
+	                    // IF NOT LOGGED IN, REFRESH THE PAGE
+	                    if (_this4.props.removeStatus.error === 2) {
+	                        setTimeout(function () {
+	                            location.reload(false);
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            // Load Ne Memo Every 5 seconds
 	            var loadMemoLoop = function loadMemoLoop() {
-	                _this4.loadNewMemo().then(function () {
-	                    _this4.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
+	                _this5.loadNewMemo().then(function () {
+	                    _this5.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
 	                });
 	            };
 	            this.props.memoListRequest(true).then(function () {
@@ -30854,9 +30915,9 @@
 	            var loadUntilScrollable = function loadUntilScrollable() {
 	                // IF THE SCROLLBAR DOES NOT EXIST,
 	                if ($("body").height() < $(window).height()) {
-	                    _this4.loadOldMemo().then(function () {
+	                    _this5.loadOldMemo().then(function () {
 	                        // DO THIS RECURSIVELY UNLESS IT'S LAST PAGE
-	                        if (!_this4.props.isLast) {
+	                        if (!_this5.props.isLast) {
 	                            loadUntilScrollable();
 	                        }
 	                    });
@@ -30871,14 +30932,14 @@
 	            $(window).scroll(function () {
 	                // WHEN HEIGHT UNDER SCROLLBOTTOM IS LESS THEN 250
 	                if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
-	                    if (!_this4.state.loadingState) {
-	                        _this4.loadOldMemo();
-	                        _this4.setState({
+	                    if (!_this5.state.loadingState) {
+	                        _this5.loadOldMemo();
+	                        _this5.setState({
 	                            loadingState: true
 	                        });
 	                    } else {
-	                        if (_this4.state.loadingState) {
-	                            _this4.setState({
+	                        if (_this5.state.loadingState) {
+	                            _this5.setState({
 	                                loadingState: false
 	                            });
 	                        }
@@ -30910,7 +30971,7 @@
 	    }, {
 	        key: 'loadOldMemo',
 	        value: function loadOldMemo() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            // Cancel if user is reading the last page
 	            if (this.props.isLast) {
@@ -30925,7 +30986,7 @@
 	            // Start request
 	            return this.props.memoListRequest(false, 'old', lastId).then(function () {
 	                // If it is last page, notify
-	                if (_this5.props.isLast) {
+	                if (_this6.props.isLast) {
 	                    Materialize.toast('You are reading the last page', 2000);
 	                }
 	            });
@@ -30942,7 +31003,8 @@
 	                this.props.isLoggedIn ? write : undefined,
 	                _react2.default.createElement(_components.MemoList, { data: this.props.memoData,
 	                    currentUser: this.props.currentUser,
-	                    onEdit: this.handleEdit })
+	                    onEdit: this.handleEdit,
+	                    onRemove: this.handleRemove })
 	            );
 	        }
 	    }]);
@@ -30958,7 +31020,8 @@
 	        memoData: state.memo.list.data,
 	        listStatus: state.memo.list.status,
 	        isLast: state.memo.list.isLast,
-	        editStatus: state.memo.edit
+	        editStatus: state.memo.edit,
+	        removeStatus: state.memo.remove
 	    };
 	};
 
@@ -30972,6 +31035,9 @@
 	        },
 	        memoEditRequest: function memoEditRequest(id, index, contents) {
 	            return dispatch((0, _memo.memoEditRequest)(id, index, contents));
+	        },
+	        memoRemoveRequest: function memoRemoveRequest(id, index) {
+	            return dispatch((0, _memo.memoRemoveRequest)(id, index));
 	        }
 	    };
 	};
@@ -30999,6 +31065,10 @@
 	exports.memoEdit = memoEdit;
 	exports.memoEditSuccess = memoEditSuccess;
 	exports.memoEditFailure = memoEditFailure;
+	exports.memoRemoveRequest = memoRemoveRequest;
+	exports.memoRemove = memoRemove;
+	exports.memoRemoveSuccess = memoRemoveSuccess;
+	exports.memoRemoveFailure = memoRemoveFailure;
 
 	var _ActionTypes = __webpack_require__(272);
 
@@ -31124,6 +31194,39 @@
 	function memoEditFailure(error) {
 	    return {
 	        type: MEMO_EDIT_FAILIURE,
+	        error: error
+	    };
+	}
+
+	/* MEMO REMOVE */
+	function memoRemoveRequest(id, index) {
+	    return function (dispatch) {
+	        dispatch(memoRemove());
+
+	        return _axios2.default.delete('/api/memo/' + id).then(function (response) {
+	            dispatch(memoRemoveSuccess(index));
+	        }).catch(function (error) {
+	            dispatch(memoRemoveFailure(error.response.data.code));
+	        });
+	    };
+	}
+
+	function memoRemove() {
+	    return {
+	        type: _ActionTypes.MEMO_REMOVE
+	    };
+	}
+
+	function memoRemoveSuccess(index) {
+	    return {
+	        type: _ActionTypes.MEMO_REMOVE_SUCCESS,
+	        index: index
+	    };
+	}
+
+	function memoRemoveFailure(error) {
+	    return {
+	        type: _ActionTypes.MEMO_REMOVE_FAILURE,
 	        error: error
 	    };
 	}
@@ -31736,6 +31839,10 @@
 	    edit: {
 	        status: 'INIT',
 	        error: -1
+	    },
+	    remove: {
+	        status: 'INIT',
+	        error: -1
 	    }
 	};
 
@@ -31830,6 +31937,29 @@
 	        case types.MEMO_EDIT_FAILURE:
 	            return (0, _reactAddonsUpdate2.default)(state, {
 	                edit: {
+	                    status: { $set: 'FAILURE' },
+	                    error: { $set: action.error }
+	                }
+	            });
+	        case types.MEMO_REMOVE:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                remove: {
+	                    status: { $set: 'WAITING' },
+	                    error: { $set: -1 }
+	                }
+	            });
+	        case types.MEMO_REMOVE_SUCCESS:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                remove: {
+	                    status: { $set: 'SUCCESS' }
+	                },
+	                list: {
+	                    data: { $splice: [[action.index, 1]] }
+	                }
+	            });
+	        case types.MEMO_REMOVE_FAILURE:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                remove: {
 	                    status: { $set: 'FAILURE' },
 	                    error: { $set: action.error }
 	                }
