@@ -26300,7 +26300,43 @@
 	                data = _props.data,
 	                ownership = _props.ownership;
 
-
+	            var dropDownMemu = _react2.default.createElement(
+	                'div',
+	                { className: 'option-button' },
+	                _react2.default.createElement(
+	                    'a',
+	                    { className: 'dropdown-button',
+	                        id: '`dropdown-button-${data._id}`',
+	                        'data-activates': '`dropdown-${data._id}`' },
+	                    _react2.default.createElement(
+	                        'i',
+	                        { className: 'material-icons icon-button' },
+	                        'more'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { id: '`dropdown-${data._id}`', className: 'dropdown-content' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            null,
+	                            'Edit'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            null,
+	                            'Remove'
+	                        )
+	                    )
+	                )
+	            );
 	            var memoView = _react2.default.createElement(
 	                'div',
 	                { className: 'card' },
@@ -26314,43 +26350,7 @@
 	                    ),
 	                    ' wrote a log \xB7 ',
 	                    _react2.default.createElement(_reactTimeago2.default, { date: data.date.created }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'option-button' },
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'dropdown-button',
-	                                id: '`dropdown-button-${data._id}`',
-	                                'data-activates': '`dropdown-${data._id}`' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons icon-button' },
-	                                'more'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { id: '`dropdown-${data._id}`', className: 'dropdown-content' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    null,
-	                                    'Edit'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    null,
-	                                    'Remove'
-	                                )
-	                            )
-	                        )
-	                    )
+	                    ownership ? dropDownMemu : undefined
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -26378,6 +26378,24 @@
 	                { className: 'container memo' },
 	                memoView
 	            );
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            // When component updates, initialize dropdown
+	            // (triggered when logged in)
+	            $('#dropdown-button-' + this.props.data._id).dropdown({
+	                belowOrigin: true // Displays dropdown below the button
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // When component mounts, initialize dropdown
+	            // (triggered when refreshed)
+	            $('#dropdown-button-' + this.props.data._id).dropdown({
+	                belowOrigin: true // displays dropdown below the button
+	            });
 	        }
 	    }]);
 
@@ -26675,16 +26693,37 @@
 	    _createClass(MemoList, [{
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
+	            var mapToComponents = function mapToComponents(data) {
+	                return data.map(function (memo, i) {
+	                    return _react2.default.createElement(_components.Memo, {
+	                        data: memo,
+	                        ownership: memo.writer === _this2.props.currentUser,
+	                        key: memo._id
+	                    });
+	                });
+	            };
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_components.Memo, null)
+	                mapToComponents(this.props.data)
 	            );
 	        }
 	    }]);
 
 	    return MemoList;
 	}(_react2.default.Component);
+
+	MemoList.propTypes = {
+	    data: _react2.default.PropTypes.array,
+	    currentUser: _react2.default.PropTypes.string
+	};
+
+	MemoList.defaultProps = {
+	    data: [],
+	    currentUser: ''
+	};
 
 	exports.default = MemoList;
 
@@ -30606,6 +30645,10 @@
 
 	var _memo = __webpack_require__(300);
 
+	var _Memo = __webpack_require__(231);
+
+	var _Memo2 = _interopRequireDefault(_Memo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30667,11 +30710,79 @@
 	        value: function render() {
 
 	            var write = _react2.default.createElement(_components.Write, { onPost: this.handlePost });
+	            var mockData = [{
+	                "_id": "578b958ec1da760909c263f4",
+	                "writer": "velopert",
+	                "contents": "Testing",
+	                "__v": 0,
+	                "is_edited": false,
+	                "date": {
+	                    "edited": "2016-07-17T14:26:22.428Z",
+	                    "created": "2016-07-17T14:26:22.428Z"
+	                },
+	                "starred": []
+	            }, {
+	                "_id": "578b957ec1da760909c263f3",
+	                "writer": "velopert",
+	                "contents": "Data",
+	                "__v": 0,
+	                "is_edited": false,
+	                "date": {
+	                    "edited": "2016-07-17T14:26:06.999Z",
+	                    "created": "2016-07-17T14:26:06.999Z"
+	                },
+	                "starred": []
+	            }, {
+	                "_id": "578b957cc1da760909c263f2",
+	                "writer": "velopert",
+	                "contents": "Mock",
+	                "__v": 0,
+	                "is_edited": false,
+	                "date": {
+	                    "edited": "2016-07-17T14:26:04.195Z",
+	                    "created": "2016-07-17T14:26:04.195Z"
+	                },
+	                "starred": []
+	            }, {
+	                "_id": "578b9579c1da760909c263f1",
+	                "writer": "velopert",
+	                "contents": "Some",
+	                "__v": 0,
+	                "is_edited": false,
+	                "date": {
+	                    "edited": "2016-07-17T14:26:01.062Z",
+	                    "created": "2016-07-17T14:26:01.062Z"
+	                },
+	                "starred": []
+	            }, {
+	                "_id": "578b9576c1da760909c263f0",
+	                "writer": "velopert",
+	                "contents": "Create",
+	                "__v": 0,
+	                "is_edited": false,
+	                "date": {
+	                    "edited": "2016-07-17T14:25:58.619Z",
+	                    "created": "2016-07-17T14:25:58.619Z"
+	                },
+	                "starred": []
+	            }, {
+	                "_id": "578b8c82c1da760909c263ef",
+	                "writer": "velopert",
+	                "contents": "blablablal",
+	                "__v": 0,
+	                "is_edited": false,
+	                "date": {
+	                    "edited": "2016-07-17T13:47:46.611Z",
+	                    "created": "2016-07-17T13:47:46.611Z"
+	                },
+	                "starred": []
+	            }];
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'wrapper' },
 	                this.props.isLoggedIn ? write : undefined,
-	                _react2.default.createElement(_components.MemoList, null)
+	                _react2.default.createElement(_components.MemoList, { data: mockData, currentUser: 'velopert' })
 	            );
 	        }
 	    }]);

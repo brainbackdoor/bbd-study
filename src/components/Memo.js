@@ -3,12 +3,8 @@ import TimeAgo from 'react-timeago';
 class Memo extends React.Component {
     render() {
         const { data, ownership } = this.props;
-
-        const memoView = (
-            <div className="card">
-                    <div className="info">
-                        <a className="username">{data.writer}</a> wrote a log · <TimeAgo date={data.date.created}/>
-                        <div className="option-button">
+        const dropDownMemu = (
+            <div className="option-button">
                             <a className='dropdown-button' 
                             id='`dropdown-button-${data._id}`' 
                             data-activates='`dropdown-${data._id}`'>
@@ -18,7 +14,14 @@ class Memo extends React.Component {
                                 <li><a>Edit</a></li>
                                 <li><a>Remove</a></li>
                             </ul>
-                        </div>
+            </div>
+
+        );
+        const memoView = (
+            <div className="card">
+                    <div className="info">
+                        <a className="username">{data.writer}</a> wrote a log · <TimeAgo date={data.date.created}/>
+                        { ownership ?  dropDownMemu : undefined }
                     </div>
                 <div className="card-content">
                     {data.contents}
@@ -36,7 +39,22 @@ class Memo extends React.Component {
              </div>
         );
     }
+    componentDidUpdate() {
+        // When component updates, initialize dropdown
+        // (triggered when logged in)
+        $('#dropdown-button-'+this.props.data._id).dropdown({
+            belowOrigin: true // Displays dropdown below the button
+        });
+    }
+    componentDidMount() {
+        // When component mounts, initialize dropdown
+        // (triggered when refreshed)
+        $('#dropdown-button-'+this.props.data._id).dropdown({
+            belowOrigin: true // displays dropdown below the button
+        });
+    }
 }
+
 
 Memo.propTypes = {
     data: React.PropTypes.object,
