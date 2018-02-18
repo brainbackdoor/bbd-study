@@ -5,7 +5,8 @@ import { memoPostRequest,
          memoListRequest, 
          memoEditRequest, 
          memoRemoveRequest,   
-         memoRemoveFromData  
+         memoRemoveFromData,
+         memoStarRequest           
 } from 'actions/memo';
 import Memo from '../components/Memo';
 
@@ -18,6 +19,7 @@ class Home extends React.Component {
         this.loadOldMemo = this.loadOldMemo.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
+        this.handleStar = this.handleStar.bind(this);
         this.state = {
             loadingState: false
         };
@@ -136,7 +138,37 @@ class Home extends React.Component {
             }
         });
     }
+    handleStar(id, index) {
+        this.props.memoStarRequest(id, index).then(
+            () => {
+                if(this.props.starStatus.status !== 'SUCCESS') {
+                    /*
+                        TOGGLES STAR OF MEMO: POST /api/memo/star/:id
+                        ERROR CODES
+                            1: INVALID ID
+                            2: NOT LOGGED IN
+                            3: NO RESOURCE
+                    */
+                    let errorMessage= [
+                        'Something broke',
+                        'You are not logged in',
+                        'That memo does not exist'
+                    ];
+                    
+                    
+                    // NOTIFY ERROR
+                    let $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[this.props.starStatus.error - 1] + '</span>');
+                    Materialize.toast($toastContent, 2000);
     
+    
+                    // IF NOT LOGGED IN, REFRESH THE PAGE
+                    if(this.props.starStatus.error === 2) {
+                        setTimeout(()=> {location.reload(false)}, 2000);
+                    }
+                }
+            }
+        );
+    }    
 
     componentDidMount() {
         // Load Ne Memo Every 5 seconds
@@ -244,7 +276,8 @@ class Home extends React.Component {
                 <MemoList data={this.props.memoData} 
                 currentUser={this.props.currentUser}
                 onEdit={this.handleEdit}
-                onRemove={this.handleRemove}/>
+                onRemove={this.handleRemove}
+                onStar={this.handleStar}/>
             </div>
         );
     }
@@ -259,7 +292,8 @@ const mapStateToProps = (state) => {
         listStatus: state.memo.list.status,
         isLast: state.memo.list.isLast, 
         editStatus: state.memo.edit,
-        removeStatus: state.memo.remove
+        removeStatus: state.memo.remove,
+        starStatus: state.memo.star
     };
 };
 
@@ -276,7 +310,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         memoRemoveRequest: (id, index) => {
             return dispatch(memoRemoveRequest(id, index));
-        }                
+        },
+        memoStarRequest: (id, index) => {
+            return dispatch(memoStarRequest(id, index));
+        }                        
     };
 };
 

@@ -26299,6 +26299,7 @@
 	        _this.toggleEdit = _this.toggleEdit.bind(_this);
 	        _this.handleChange = _this.handleChange.bind(_this);
 	        _this.handleRemove = _this.handleRemove.bind(_this);
+	        _this.handleStar = _this.handleStar.bind(_this);
 	        return _this;
 	    }
 
@@ -26336,6 +26337,13 @@
 	            var id = this.props.data._id;
 	            var index = this.props.index;
 	            this.props.onRemove(id, index);
+	        }
+	    }, {
+	        key: 'handleStar',
+	        value: function handleStar() {
+	            var id = this.props.data._id;
+	            var index = this.props.index;
+	            this.props.onStar(id, index);
 	        }
 	    }, {
 	        key: 'render',
@@ -26387,6 +26395,10 @@
 	                ' \xB7 Edited ',
 	                _react2.default.createElement(_reactTimeago2.default, { date: this.props.data.date.edited, live: true })
 	            );
+	            // IF IT IS STARRED ( CHECKS WHETHER THE NICKNAME EXISTS IN THE ARRAY )
+	            // RETURN STYLE THAT HAS A YELLOW COLOR
+	            var starStyle = this.props.data.starred.indexOf(this.props.currentUser) > -1 ? { color: '#ff9980' } : {};
+
 	            var memoView = _react2.default.createElement(
 	                'div',
 	                { className: 'card' },
@@ -26413,13 +26425,15 @@
 	                    { className: 'footer' },
 	                    _react2.default.createElement(
 	                        'i',
-	                        { className: 'material-icons log-footer-icon star icon-button' },
+	                        { className: 'material-icons log-footer-icon star icon-button',
+	                            style: starStyle,
+	                            onClick: this.handleStar },
 	                        'star'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'star-count' },
-	                        data.starred.length
+	                        this.props.data.starred.length
 	                    )
 	                )
 	            );
@@ -26484,7 +26498,10 @@
 	    ownership: _react2.default.PropTypes.bool,
 	    onEdit: _react2.default.PropTypes.func,
 	    index: _react2.default.PropTypes.number,
-	    onRemove: _react2.default.PropTypes.func
+	    onRemove: _react2.default.PropTypes.func,
+	    onStar: _react2.default.PropTypes.func,
+	    starStatus: _react2.default.PropTypes.object,
+	    currentUser: _react2.default.PropTypes.string
 	};
 
 	Memo.defaultProps = {
@@ -26506,7 +26523,12 @@
 	    index: -1,
 	    onRemove: function onRemove(id, index) {
 	        console.error('remove function not defined');
-	    }
+	    },
+	    onStar: function onStar(id, index) {
+	        console.error('star function not defined');
+	    },
+	    starStatus: {},
+	    currentUser: ''
 	};
 	exports.default = Memo;
 
@@ -26821,7 +26843,8 @@
 	    data: _react2.default.PropTypes.array,
 	    currentUser: _react2.default.PropTypes.string,
 	    onEdit: _react2.default.PropTypes.func,
-	    onRemove: _react2.default.PropTypes.func
+	    onRemove: _react2.default.PropTypes.func,
+	    onStar: _react2.default.PropTypes.func
 	};
 
 	MemoList.defaultProps = {
@@ -26832,6 +26855,9 @@
 	    },
 	    onRemove: function onRemove(id, index) {
 	        console.error('remove function not defined');
+	    },
+	    onStar: function onStar(id, index) {
+	        console.error('star function not defined');
 	    }
 	};
 
@@ -30238,6 +30264,10 @@
 	var MEMO_REMOVE_SUCCESS = exports.MEMO_REMOVE_SUCCESS = "MEMO_REMOVE_SUCCESS";
 	var MEMO_REMOVE_FAILURE = exports.MEMO_REMOVE_FAILURE = "MEMO_REMOVE_FAILURE";
 
+	var MEMO_STAR = exports.MEMO_STAR = "MEMO_STAR";
+	var MEMO_STAR_SUCCESS = exports.MEMO_STAR_SUCCESS = "MEMO_STAR_SUCCESS";
+	var MEMO_STAR_FAILURE = exports.MEMO_STAR_FAILURE = "MEMO_STAR_FAILURE";
+
 /***/ }),
 /* 286 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -31830,6 +31860,7 @@
 	        _this.loadOldMemo = _this.loadOldMemo.bind(_this);
 	        _this.handleEdit = _this.handleEdit.bind(_this);
 	        _this.handleRemove = _this.handleRemove.bind(_this);
+	        _this.handleStar = _this.handleStar.bind(_this);
 	        _this.state = {
 	            loadingState: false
 	        };
@@ -31949,14 +31980,43 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleStar',
+	        value: function handleStar(id, index) {
+	            var _this5 = this;
+
+	            this.props.memoStarRequest(id, index).then(function () {
+	                if (_this5.props.starStatus.status !== 'SUCCESS') {
+	                    /*
+	                        TOGGLES STAR OF MEMO: POST /api/memo/star/:id
+	                        ERROR CODES
+	                            1: INVALID ID
+	                            2: NOT LOGGED IN
+	                            3: NO RESOURCE
+	                    */
+	                    var errorMessage = ['Something broke', 'You are not logged in', 'That memo does not exist'];
+
+	                    // NOTIFY ERROR
+	                    var $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[_this5.props.starStatus.error - 1] + '</span>');
+	                    Materialize.toast($toastContent, 2000);
+
+	                    // IF NOT LOGGED IN, REFRESH THE PAGE
+	                    if (_this5.props.starStatus.error === 2) {
+	                        setTimeout(function () {
+	                            location.reload(false);
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            // Load Ne Memo Every 5 seconds
 	            var loadMemoLoop = function loadMemoLoop() {
-	                _this5.loadNewMemo().then(function () {
-	                    _this5.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
+	                _this6.loadNewMemo().then(function () {
+	                    _this6.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
 	                });
 	            };
 	            this.props.memoListRequest(true).then(function () {
@@ -31965,9 +32025,9 @@
 	            var loadUntilScrollable = function loadUntilScrollable() {
 	                // IF THE SCROLLBAR DOES NOT EXIST,
 	                if ($("body").height() < $(window).height()) {
-	                    _this5.loadOldMemo().then(function () {
+	                    _this6.loadOldMemo().then(function () {
 	                        // DO THIS RECURSIVELY UNLESS IT'S LAST PAGE
-	                        if (!_this5.props.isLast) {
+	                        if (!_this6.props.isLast) {
 	                            loadUntilScrollable();
 	                        }
 	                    });
@@ -31982,14 +32042,14 @@
 	            $(window).scroll(function () {
 	                // WHEN HEIGHT UNDER SCROLLBOTTOM IS LESS THEN 250
 	                if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
-	                    if (!_this5.state.loadingState) {
-	                        _this5.loadOldMemo();
-	                        _this5.setState({
+	                    if (!_this6.state.loadingState) {
+	                        _this6.loadOldMemo();
+	                        _this6.setState({
 	                            loadingState: true
 	                        });
 	                    } else {
-	                        if (_this5.state.loadingState) {
-	                            _this5.setState({
+	                        if (_this6.state.loadingState) {
+	                            _this6.setState({
 	                                loadingState: false
 	                            });
 	                        }
@@ -32021,7 +32081,7 @@
 	    }, {
 	        key: 'loadOldMemo',
 	        value: function loadOldMemo() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            // Cancel if user is reading the last page
 	            if (this.props.isLast) {
@@ -32036,7 +32096,7 @@
 	            // Start request
 	            return this.props.memoListRequest(false, 'old', lastId).then(function () {
 	                // If it is last page, notify
-	                if (_this6.props.isLast) {
+	                if (_this7.props.isLast) {
 	                    Materialize.toast('You are reading the last page', 2000);
 	                }
 	            });
@@ -32054,7 +32114,8 @@
 	                _react2.default.createElement(_components.MemoList, { data: this.props.memoData,
 	                    currentUser: this.props.currentUser,
 	                    onEdit: this.handleEdit,
-	                    onRemove: this.handleRemove })
+	                    onRemove: this.handleRemove,
+	                    onStar: this.handleStar })
 	            );
 	        }
 	    }]);
@@ -32071,7 +32132,8 @@
 	        listStatus: state.memo.list.status,
 	        isLast: state.memo.list.isLast,
 	        editStatus: state.memo.edit,
-	        removeStatus: state.memo.remove
+	        removeStatus: state.memo.remove,
+	        starStatus: state.memo.star
 	    };
 	};
 
@@ -32088,6 +32150,9 @@
 	        },
 	        memoRemoveRequest: function memoRemoveRequest(id, index) {
 	            return dispatch((0, _memo.memoRemoveRequest)(id, index));
+	        },
+	        memoStarRequest: function memoStarRequest(id, index) {
+	            return dispatch((0, _memo.memoStarRequest)(id, index));
 	        }
 	    };
 	};
@@ -32119,6 +32184,10 @@
 	exports.memoRemove = memoRemove;
 	exports.memoRemoveSuccess = memoRemoveSuccess;
 	exports.memoRemoveFailure = memoRemoveFailure;
+	exports.memoStarRequest = memoStarRequest;
+	exports.memoStar = memoStar;
+	exports.memoStarSuccess = memoStarSuccess;
+	exports.memoStarFailure = memoStarFailure;
 
 	var _ActionTypes = __webpack_require__(285);
 
@@ -32277,6 +32346,39 @@
 	function memoRemoveFailure(error) {
 	    return {
 	        type: _ActionTypes.MEMO_REMOVE_FAILURE,
+	        error: error
+	    };
+	}
+
+	/* MEMO TOGGLE STAR */
+	function memoStarRequest(id, index) {
+	    return function (dispatch) {
+	        // TO BE IMPLEMENTED
+	        return _axios2.default.post('/api/memo/star/' + id).then(function (response) {
+	            dispatch(memoStarSuccess(index, response.data.memo));
+	        }).catch(function (error) {
+	            dispatch(memoStarFailure(error.response.data.code));
+	        });
+	    };
+	}
+
+	function memoStar() {
+	    return {
+	        type: _ActionTypes.MEMO_STAR
+	    };
+	}
+
+	function memoStarSuccess(index, memo) {
+	    return {
+	        type: _ActionTypes.MEMO_STAR_SUCCESS,
+	        index: index,
+	        memo: memo
+	    };
+	}
+
+	function memoStarFailure(error) {
+	    return {
+	        type: _ActionTypes.MEMO_STAR_FAILURE,
 	        error: error
 	    };
 	}
@@ -32893,6 +32995,10 @@
 	    remove: {
 	        status: 'INIT',
 	        error: -1
+	    },
+	    star: {
+	        status: 'INIT',
+	        error: -1
 	    }
 	};
 
@@ -33014,6 +33120,30 @@
 	                    error: { $set: action.error }
 	                }
 	            });
+	        case types.MEMO_STAR:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                star: {
+	                    status: { $set: 'WAITING' },
+	                    error: { $set: -1 }
+	                }
+	            });
+	        case types.MEMO_STAR_SUCCESS:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                star: {
+	                    status: { $set: 'SUCCESS' }
+	                },
+	                list: {
+	                    data: _defineProperty({}, action.index, { $set: action.memo })
+	                }
+	            });
+	        case types.MEMO_STAR_FAILURE:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                star: {
+	                    status: { $set: 'FAILURE' },
+	                    error: { $set: action.error }
+	                }
+	            });
+
 	        default:
 	            return state;
 	    }

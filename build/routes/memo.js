@@ -242,4 +242,65 @@ router.get('/:listType/:id', function (req, res) {
     }
 });
 
+/*
+    TOGGLES STAR OF MEMO: POST /api/memo/star/:id
+    ERROR CODES
+        1: INVALID ID
+        2: NOT LOGGED IN
+        3: NO RESOURCE
+*/
+router.post('/star/:id', function (req, res) {
+    // CHECK MEMO ID VALIDITY
+    if (!_mongoose2.default.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 1
+        });
+    }
+
+    // CHECK LOGIN STATUS
+    if (typeof req.session.loginInfo === 'undefined') {
+        return res.status(403).json({
+            error: "NOT LOGGED IN",
+            code: 2
+        });
+    }
+
+    // FIND MEMO
+    _memo2.default.findById(req.params.id, function (err, memo) {
+        if (err) throw err;
+
+        // MEMO DOES NOT EXIST
+        if (!memo) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 3
+            });
+        }
+
+        // GET INDEX OF USERNAME IN THE ARRAY
+        var index = memo.starred.indexOf(req.session.loginInfo.username);
+
+        // CHECK WHETHER THE USER ALREADY HAS GIVEN A STAR
+        var hasStarred = index === -1 ? false : true;
+
+        if (!hasStarred) {
+            // IF IT DOES NOT EXIST
+            memo.starred.push(req.session.loginInfo.username);
+        } else {
+            // ALREADY starred
+            memo.starred.splice(index, 1);
+        }
+
+        // SAVE THE MEMO
+        memo.save(function (err, memo) {
+            if (err) throw err;
+            res.json({
+                success: true,
+                'has_starred': !hasStarred,
+                memo: memo
+            });
+        });
+    });
+});
 exports.default = router;
