@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(302);
+	module.exports = __webpack_require__(304);
 
 
 /***/ }),
@@ -70,11 +70,11 @@
 
 	var _redux = __webpack_require__(240);
 
-	var _reducers = __webpack_require__(298);
+	var _reducers = __webpack_require__(299);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _reduxThunk = __webpack_require__(301);
+	var _reduxThunk = __webpack_require__(303);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -25599,11 +25599,11 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(295);
+	var _Login = __webpack_require__(296);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Register = __webpack_require__(297);
+	var _Register = __webpack_require__(298);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
@@ -26144,7 +26144,7 @@
 /* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -26167,33 +26167,63 @@
 	var Write = function (_React$Component) {
 	    _inherits(Write, _React$Component);
 
-	    function Write() {
+	    function Write(props) {
 	        _classCallCheck(this, Write);
 
-	        return _possibleConstructorReturn(this, (Write.__proto__ || Object.getPrototypeOf(Write)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Write.__proto__ || Object.getPrototypeOf(Write)).call(this, props));
+
+	        _this.state = {
+	            contents: ''
+	        };
+	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.handlePost = _this.handlePost.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(Write, [{
-	        key: "render",
+	        key: 'handleChange',
+	        value: function handleChange(e) {
+	            this.setState({
+	                contents: e.target.value
+	            });
+	        }
+	    }, {
+	        key: 'handlePost',
+	        value: function handlePost() {
+	            var _this2 = this;
+
+	            var contents = this.state.contents;
+
+	            this.props.onPost(contents).then(function () {
+	                _this2.setState({
+	                    contents: ""
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "container writer" },
+	                'div',
+	                { className: 'container writer' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "card" },
+	                    'div',
+	                    { className: 'card' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "card-content" },
-	                        _react2.default.createElement("textarea", { className: "materialize-textarea", placeholder: "Write down your memo" })
+	                        'div',
+	                        { className: 'card-content' },
+	                        _react2.default.createElement('textarea', { className: 'materialize-textarea',
+	                            placeholder: 'Write down your memo',
+	                            value: this.state.contents,
+	                            onChange: this.handleChange })
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "card-action" },
+	                        'div',
+	                        { className: 'card-action' },
 	                        _react2.default.createElement(
-	                            "a",
-	                            null,
-	                            "POST"
+	                            'a',
+	                            { onClick: this.handlePost },
+	                            'POST'
 	                        )
 	                    )
 	                )
@@ -26203,6 +26233,16 @@
 
 	    return Write;
 	}(_react2.default.Component);
+
+	Write.propTypes = {
+	    onPost: _react2.default.PropTypes.func
+	};
+
+	Write.defaultProps = {
+	    onPost: function onPost(contents) {
+	        console.error('post function not defined');
+	    }
+	};
 
 	exports.default = Write;
 
@@ -28553,6 +28593,10 @@
 
 	var AUTH_LOGOUT = exports.AUTH_LOGOUT = "AUTH_LOGOUT";
 
+	var MEMO_POST = exports.MEMO_POST = "MEMO_POST";
+	var MEMO_POST_SUCCESS = exports.MEMO_POST_SUCCESS = "MEMO_POST_SUCCESS";
+	var MEMO_POST_FAILURE = exports.MEMO_POST_FAILURE = "MEMO_POST_FAILURE";
+
 /***/ }),
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -30118,6 +30162,8 @@
 
 	var _components = __webpack_require__(227);
 
+	var _memo = __webpack_require__(295);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30129,17 +30175,56 @@
 	var Home = function (_React$Component) {
 	    _inherits(Home, _React$Component);
 
-	    function Home() {
+	    function Home(props) {
 	        _classCallCheck(this, Home);
 
-	        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+	        _this.handlePost = _this.handlePost.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(Home, [{
+	        key: 'handlePost',
+	        value: function handlePost(contents) {
+	            var _this2 = this;
+
+	            return this.props.memoPostRequest(contents).then(function () {
+	                if (_this2.props.postStatus.status === "SUCCESS") {
+	                    Materialize.toast('Success!', 2000);
+	                } else {
+	                    /*
+	                        ERROR CODES
+	                            1: NOT LOGGED IN
+	                            2: EMPTY CONTENTS
+	                    */
+	                    var $toastContent = void 0;
+	                    switch (_this2.props.postStatus.error) {
+	                        case 1:
+	                            // if not logged in, notify and refresh after
+	                            $toastContent = $('<span style="color: #FEB4BA">You are not logged in</span>');
+	                            Materialize.toast($toastContent, 2000);
+	                            setTimeout(function () {
+	                                location.reload(false);
+	                            }, 2000);
+	                            break;
+	                        case 2:
+	                            $toastContent = $('<span style="color: #FFB4BA">Please write something</span>');
+	                            Materialize.toast($toastContent, 2000);
+	                            break;
+	                        default:
+	                            $toastContent = $('<span style="color: #FFB4BA">Something Broke</span>');
+	                            Materialize.toast($toastContent, 2000);
+	                            break;
+	                    }
+	                }
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 
-	            var write = _react2.default.createElement(_components.Write, null);
+	            var write = _react2.default.createElement(_components.Write, { onPost: this.handlePost });
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'wrapper' },
@@ -30153,14 +30238,78 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
-	        isLoggedIn: state.authentication.status.isLoggedIn
+	        isLoggedIn: state.authentication.status.isLoggedIn,
+	        postStatus: state.memo.post
 	    };
 	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Home);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        memoPostRequest: function memoPostRequest(contents) {
+	            return dispatch((0, _memo.memoPostRequest)(contents));
+	        }
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
 
 /***/ }),
 /* 295 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.memoPostRequest = memoPostRequest;
+	exports.memoPost = memoPost;
+	exports.memoPostSuccess = memoPostSuccess;
+	exports.memoPostFailure = memoPostFailure;
+
+	var _ActionTypes = __webpack_require__(267);
+
+	var _axios = __webpack_require__(268);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/* MEMO POST */
+	function memoPostRequest(contents) {
+	    return function (dispatch) {
+	        // Inform Memo post API is starting
+	        dispatch(memoPost());
+
+	        return _axios2.default.post('/api/memo/', { contents: contents }).then(function (response) {
+	            dispatch(memoPostSuccess());
+	        }).catch(function (error) {
+	            dispatch(memoPostFailure(error.response.data.code));
+	        });
+	    };
+	}
+
+	function memoPost() {
+	    return {
+	        type: _ActionTypes.MEMO_POST
+	    };
+	}
+
+	function memoPostSuccess() {
+	    return {
+	        type: _ActionTypes.MEMO_POST_SUCCESS
+	    };
+	}
+
+	function memoPostFailure(error) {
+	    return {
+	        type: _ActionTypes.MEMO_POST_FAILURE,
+	        error: error
+	    };
+	}
+
+/***/ }),
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30181,7 +30330,7 @@
 
 	var _authentication = __webpack_require__(266);
 
-	var _reactRouter = __webpack_require__(296);
+	var _reactRouter = __webpack_require__(297);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30260,7 +30409,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Login);
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30317,7 +30466,7 @@
 	exports.withRouter = _withRouter3.default;
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30338,7 +30487,7 @@
 
 	var _authentication = __webpack_require__(266);
 
-	var _reactRouter = __webpack_require__(296);
+	var _reactRouter = __webpack_require__(297);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30413,7 +30562,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Register);
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30422,20 +30571,25 @@
 	    value: true
 	});
 
-	var _authentication = __webpack_require__(299);
+	var _authentication = __webpack_require__(300);
 
 	var _authentication2 = _interopRequireDefault(_authentication);
+
+	var _memo = __webpack_require__(302);
+
+	var _memo2 = _interopRequireDefault(_memo);
 
 	var _redux = __webpack_require__(240);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = (0, _redux.combineReducers)({
-	    authentication: _authentication2.default
+	    authentication: _authentication2.default,
+	    memo: _memo2.default
 	});
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30449,7 +30603,7 @@
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
-	var _reactAddonsUpdate = __webpack_require__(300);
+	var _reactAddonsUpdate = __webpack_require__(301);
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -30555,7 +30709,7 @@
 	}
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -30725,7 +30879,71 @@
 
 
 /***/ }),
-/* 301 */
+/* 302 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = memo;
+
+	var _ActionTypes = __webpack_require__(267);
+
+	var types = _interopRequireWildcard(_ActionTypes);
+
+	var _reactAddonsUpdate = __webpack_require__(301);
+
+	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var initialState = {
+	    post: {
+	        status: 'INIT',
+	        error: -1
+	    }
+	};
+
+	function memo(state, action) {
+	    if (typeof state === "undefined") {
+	        state = initialState;
+	    }
+
+	    switch (action.type) {
+	        case types.MEMO_POST:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                post: {
+	                    status: { $set: 'WAITING' },
+	                    error: { $set: -1 }
+	                }
+	            });
+
+	        case types.MEMO_POST_SUCCESS:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                post: {
+	                    status: { $set: 'SUCCESS' }
+	                }
+	            });
+
+	        case types.MEMO_POST_FAILURE:
+	            return (0, _reactAddonsUpdate2.default)(state, {
+	                post: {
+	                    status: { $set: 'FAILURE' },
+	                    error: { $set: action.error }
+	                }
+	            });
+
+	        default:
+	            return state;
+	    }
+	}
+
+/***/ }),
+/* 303 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -30753,11 +30971,11 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 302 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(303);
+	var content = __webpack_require__(305);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -30771,7 +30989,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(305)(content, options);
+	var update = __webpack_require__(307)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -30803,10 +31021,10 @@
 	}
 
 /***/ }),
-/* 303 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(304)(false);
+	exports = module.exports = __webpack_require__(306)(false);
 	// imports
 
 
@@ -30817,7 +31035,7 @@
 
 
 /***/ }),
-/* 304 */
+/* 306 */
 /***/ (function(module, exports) {
 
 	/*
@@ -30899,7 +31117,7 @@
 
 
 /***/ }),
-/* 305 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -30965,7 +31183,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(306);
+	var	fixUrls = __webpack_require__(308);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -31281,7 +31499,7 @@
 
 
 /***/ }),
-/* 306 */
+/* 308 */
 /***/ (function(module, exports) {
 
 	
