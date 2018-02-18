@@ -26697,9 +26697,6 @@
 
 	            var mapToComponents = function mapToComponents(data) {
 	                return data.map(function (memo, i) {
-	                    console.log(memo.writer);
-	                    console.log(_this2.props);
-	                    console.log(memo.writer === _this2.props.currentUser);
 	                    return _react2.default.createElement(_components.Memo, {
 	                        data: memo,
 	                        ownership: memo.writer === _this2.props.currentUser,
@@ -30674,6 +30671,10 @@
 
 	        _this.handlePost = _this.handlePost.bind(_this);
 	        _this.loadNewMemo = _this.loadNewMemo.bind(_this);
+	        _this.loadOldMemo = _this.loadOldMemo.bind(_this);
+	        _this.state = {
+	            loadingState: false
+	        };
 	        return _this;
 	    }
 
@@ -30730,12 +30731,49 @@
 	            this.props.memoListRequest(true).then(function () {
 	                loadMemoLoop();
 	            });
+	            var loadUntilScrollable = function loadUntilScrollable() {
+	                // IF THE SCROLLBAR DOES NOT EXIST,
+	                if ($("body").height() < $(window).height()) {
+	                    _this3.loadOldMemo().then(function () {
+	                        // DO THIS RECURSIVELY UNLESS IT'S LAST PAGE
+	                        if (!_this3.props.isLast) {
+	                            loadUntilScrollable();
+	                        }
+	                    });
+	                }
+	            };
+
+	            this.props.memoListRequest(true).then(function () {
+	                // BEGIN NEW MEMO LOADING LOOP
+	                loadUntilScrollable();
+	                loadMemoLoop();
+	            });
+	            $(window).scroll(function () {
+	                // WHEN HEIGHT UNDER SCROLLBOTTOM IS LESS THEN 250
+	                if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
+	                    if (!_this3.state.loadingState) {
+	                        _this3.loadOldMemo();
+	                        _this3.setState({
+	                            loadingState: true
+	                        });
+	                    } else {
+	                        if (_this3.state.loadingState) {
+	                            _this3.setState({
+	                                loadingState: false
+	                            });
+	                        }
+	                    }
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            // Stops the loadMemoLoop
 	            clearTimeout(this.memoLoaderTimeoutId);
+
+	            // Remove windows scroll listener
+	            $(window).unbind();
 	        }
 	    }, {
 	        key: 'loadNewMemo',
@@ -30748,6 +30786,29 @@
 	            if (this.props.memoData.length === 0) return this.props.memoListRequest(true);
 
 	            return this.props.memoListRequest(false, 'new', this.props.memoData[0]._id);
+	        }
+	    }, {
+	        key: 'loadOldMemo',
+	        value: function loadOldMemo() {
+	            var _this4 = this;
+
+	            // Cancel if user is reading the last page
+	            if (this.props.isLast) {
+	                return new Promise(function (resolve, reject) {
+	                    resolve();
+	                });
+	            }
+
+	            // Get id of the memo at the bottom
+	            var lastId = this.props.memoData[this.props.memoData.length - 1]._id;
+
+	            // Start request
+	            return this.props.memoListRequest(false, 'old', lastId).then(function () {
+	                // If it is last page, notify
+	                if (_this4.props.isLast) {
+	                    Materialize.toast('You are reading the last page', 2000);
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -30773,7 +30834,8 @@
 	        postStatus: state.memo.post,
 	        currentUser: state.authentication.status.currentUser,
 	        memoData: state.memo.list.data,
-	        listStatus: state.memo.list.status
+	        listStatus: state.memo.list.status,
+	        isLast: state.memo.list.isLast
 	    };
 	};
 

@@ -10,6 +10,10 @@ class Home extends React.Component {
         super(props);
         this.handlePost = this.handlePost.bind(this);
         this.loadNewMemo = this.loadNewMemo.bind(this);
+        this.loadOldMemo = this.loadOldMemo.bind(this);
+        this.state = {
+            loadingState: false
+        };
     }
 
     handlePost(contents) {
@@ -63,10 +67,51 @@ class Home extends React.Component {
                 loadMemoLoop();
             }
         );
+        const loadUntilScrollable = () => {
+            // IF THE SCROLLBAR DOES NOT EXIST,
+            if($("body").height() < $(window).height()) {
+                this.loadOldMemo().then(
+                    () => {
+                        // DO THIS RECURSIVELY UNLESS IT'S LAST PAGE
+                        if(!this.props.isLast) {
+                            loadUntilScrollable();
+                        }
+                    }
+                );
+            }
+        };
+        
+        this.props.memoListRequest(true).then(
+            () => {
+                // BEGIN NEW MEMO LOADING LOOP
+                loadUntilScrollable();
+                loadMemoLoop();
+            }
+        );
+        $(window).scroll(() => {
+            // WHEN HEIGHT UNDER SCROLLBOTTOM IS LESS THEN 250
+            if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
+                if(!this.state.loadingState){
+                    this.loadOldMemo();
+                    this.setState({
+                        loadingState: true
+                    });
+                } else {
+                    if(this.state.loadingState) {
+                        this.setState({
+                            loadingState: false
+                        });
+                    }
+                }
+            }
+        });
     }
     componentWillUnmount() {
         // Stops the loadMemoLoop
         clearTimeout(this.memoLoaderTimeoutId);
+
+        // Remove windows scroll listener
+        $(window).unbind();
     }
     loadNewMemo() {
         // Cancel if there is a pending request
@@ -79,6 +124,27 @@ class Home extends React.Component {
             return this.props.memoListRequest(true);
 
         return this.props.memoListRequest(false, 'new', this.props.memoData[0]._id);
+    }
+    loadOldMemo() {
+        // Cancel if user is reading the last page
+        if(this.props.isLast){
+            return new Promise(
+                (resolve, reject) => {
+                    resolve();
+                }
+            );
+        }
+
+        // Get id of the memo at the bottom
+        let lastId = this.props.memoData[this.props.memoData.length - 1]._id;
+
+        // Start request
+        return this.props.memoListRequest(false, 'old', lastId).then(() => {
+            // If it is last page, notify
+            if(this.props.isLast) {
+                Materialize.toast('You are reading the last page', 2000);
+            }
+        });
     }
     render() {
         
@@ -102,7 +168,8 @@ const mapStateToProps = (state) => {
         postStatus: state.memo.post,
         currentUser: state.authentication.status.currentUser,
         memoData: state.memo.list.data,
-        listStatus: state.memo.list.status
+        listStatus: state.memo.list.status,
+        isLast: state.memo.list.isLast
     };
 };
 
