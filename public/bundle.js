@@ -30673,6 +30673,7 @@
 	        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
 	        _this.handlePost = _this.handlePost.bind(_this);
+	        _this.loadNewMemo = _this.loadNewMemo.bind(_this);
 	        return _this;
 	    }
 
@@ -30683,7 +30684,10 @@
 
 	            return this.props.memoPostRequest(contents).then(function () {
 	                if (_this2.props.postStatus.status === "SUCCESS") {
-	                    Materialize.toast('Success!', 2000);
+	                    // Trigger load new memo
+	                    _this2.loadNewMemo().then(function () {
+	                        Materialize.toast('Success!', 2000);
+	                    });
 	                } else {
 	                    /*
 	                        ERROR CODES
@@ -30717,9 +30721,33 @@
 	        value: function componentDidMount() {
 	            var _this3 = this;
 
+	            // Load Ne Memo Every 5 seconds
+	            var loadMemoLoop = function loadMemoLoop() {
+	                _this3.loadNewMemo().then(function () {
+	                    _this3.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
+	                });
+	            };
 	            this.props.memoListRequest(true).then(function () {
-	                console.log(_this3.props.memoData);
+	                loadMemoLoop();
 	            });
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            // Stops the loadMemoLoop
+	            clearTimeout(this.memoLoaderTimeoutId);
+	        }
+	    }, {
+	        key: 'loadNewMemo',
+	        value: function loadNewMemo() {
+	            // Cancel if there is a pending request
+	            if (this.props.listStatus === 'WAITING') return new Promise(function (resolve, reject) {
+	                resolve();
+	            });
+	            // If page is empty, do the initial loading
+	            if (this.props.memoData.length === 0) return this.props.memoListRequest(true);
+
+	            return this.props.memoListRequest(false, 'new', this.props.memoData[0]._id);
 	        }
 	    }, {
 	        key: 'render',
@@ -30744,7 +30772,8 @@
 	        isLoggedIn: state.authentication.status.isLoggedIn,
 	        postStatus: state.memo.post,
 	        currentUser: state.authentication.status.currentUser,
-	        memoData: state.memo.list.data
+	        memoData: state.memo.list.data,
+	        listStatus: state.memo.list.status
 	    };
 	};
 
@@ -30834,6 +30863,15 @@
 	        dispatch(memoList());
 
 	        var url = '/api/memo';
+
+	        if (typeof username === "undefined") {
+	            // username not given, load public memo
+	            url = isInitial ? url : url + '/' + listType + '/' + id;
+	            // or url + '/' + listType + '/' + id
+	        } else {
+	                // load memos of specific user
+
+	            }
 
 	        return _axios2.default.get(url).then(function (response) {
 	            dispatch(memoListSuccess(response.data, isInitial, listType));
@@ -31514,8 +31552,24 @@
 	                        isLast: { $set: action.data.length < 6 }
 	                    }
 	                });
+	            } else {
+	                if (action.listType === 'new') {
+	                    return (0, _reactAddonsUpdate2.default)(state, {
+	                        list: {
+	                            status: { $set: 'SUCCESS' },
+	                            data: { $unshift: action.data }
+	                        }
+	                    });
+	                } else {
+	                    return (0, _reactAddonsUpdate2.default)(state, {
+	                        list: {
+	                            status: { $set: 'SUCCESS' },
+	                            data: { $push: action.data },
+	                            isLast: { $set: action.data.length < 6 }
+	                        }
+	                    });
+	                }
 	            }
-	            return state;
 
 	        case types.MEMO_LIST_FAILURE:
 	            return (0, _reactAddonsUpdate2.default)(state, {
