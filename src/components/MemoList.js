@@ -28,6 +28,10 @@ class MemoList extends React.Component {
             </div>
         );
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        let update = JSON.stringify(this.props) !== JSON.stringify(nextProps);
+        return update;
+    }
 }
 MemoList.propTypes = {
     data: React.PropTypes.array,
