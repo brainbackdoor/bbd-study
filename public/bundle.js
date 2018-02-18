@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(322);
+	module.exports = __webpack_require__(323);
 
 
 /***/ }),
@@ -70,11 +70,11 @@
 
 	var _redux = __webpack_require__(258);
 
-	var _reducers = __webpack_require__(317);
+	var _reducers = __webpack_require__(318);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _reduxThunk = __webpack_require__(321);
+	var _reduxThunk = __webpack_require__(322);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -102,7 +102,8 @@
 	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _containers.App }),
 	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _containers.Home }),
 	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login', component: _containers.Login }),
-	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/register', component: _containers.Register })
+	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/register', component: _containers.Register }),
+	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/wall/:username', component: _containers.Wall })
 	        )
 	    )
 	), rootElement);
@@ -25589,7 +25590,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Register = exports.Login = exports.Home = exports.App = undefined;
+	exports.Wall = exports.Register = exports.Login = exports.Home = exports.App = undefined;
 
 	var _App = __webpack_require__(226);
 
@@ -25607,12 +25608,17 @@
 
 	var _Register2 = _interopRequireDefault(_Register);
 
+	var _Wall = __webpack_require__(317);
+
+	var _Wall2 = _interopRequireDefault(_Wall);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.App = _App2.default;
 	exports.Home = _Home2.default;
 	exports.Login = _Login2.default;
 	exports.Register = _Register2.default;
+	exports.Wall = _Wall2.default;
 
 /***/ }),
 /* 226 */
@@ -26276,6 +26282,8 @@
 
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
+	var _reactRouterDom = __webpack_require__(185);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26406,8 +26414,8 @@
 	                    'div',
 	                    { className: 'info' },
 	                    _react2.default.createElement(
-	                        'a',
-	                        { className: 'username' },
+	                        _reactRouterDom.Link,
+	                        { to: '/wall/' + this.props.data.writer, className: 'username' },
 	                        this.props.data.writer
 	                    ),
 	                    ' wrote a log \xB7 ',
@@ -26487,6 +26495,22 @@
 	            $('#dropdown-button-' + this.props.data._id).dropdown({
 	                belowOrigin: true // Displays dropdown below the button
 	            });
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            var current = {
+	                props: this.props,
+	                state: this.state
+	            };
+
+	            var next = {
+	                props: nextProps,
+	                state: nextState
+	            };
+
+	            var update = JSON.stringify(current) !== JSON.stringify(next);
+	            return update;
 	        }
 	    }]);
 
@@ -26833,6 +26857,12 @@
 	                    mapToComponents(this.props.data)
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            var update = JSON.stringify(this.props) !== JSON.stringify(nextProps);
+	            return update;
 	        }
 	    }]);
 
@@ -31862,7 +31892,8 @@
 	        _this.handleRemove = _this.handleRemove.bind(_this);
 	        _this.handleStar = _this.handleStar.bind(_this);
 	        _this.state = {
-	            loadingState: false
+	            loadingState: false,
+	            initiallyLoaded: false
 	        };
 	        return _this;
 	    }
@@ -32019,8 +32050,14 @@
 	                    _this6.memoLoaderTimeoutId = setTimeout(loadMemoLoop, 5000);
 	                });
 	            };
-	            this.props.memoListRequest(true).then(function () {
+	            this.props.memoListRequest(true, undefined, undefined, this.props.username).then(function () {
+	                // LOAD MEMO UNTIL SCROLLABLE
+	                setTimeout(loadUntilScrollable, 1000);
+	                // BEGIN NEW MEMO LOADING LOOP
 	                loadMemoLoop();
+	                _this6.setState({
+	                    initiallyLoaded: true
+	                });
 	            });
 	            var loadUntilScrollable = function loadUntilScrollable() {
 	                // IF THE SCROLLBAR DOES NOT EXIST,
@@ -32065,6 +32102,17 @@
 
 	            // Remove windows scroll listener
 	            $(window).unbind();
+	            this.setState({
+	                initiallyLoaded: false
+	            });
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate(prevProps, prevState) {
+	            if (this.props.username !== prevProps.username) {
+	                this.componentWillUnmount();
+	                this.componentDidMount();
+	            }
 	        }
 	    }, {
 	        key: 'loadNewMemo',
@@ -32074,9 +32122,9 @@
 	                resolve();
 	            });
 	            // If page is empty, do the initial loading
-	            if (this.props.memoData.length === 0) return this.props.memoListRequest(true);
+	            if (this.props.memoData.length === 0) return this.props.memoListRequest(true, undefined, undefined, this.props.username);
 
-	            return this.props.memoListRequest(false, 'new', this.props.memoData[0]._id);
+	            return this.props.memoListRequest(false, 'new', this.props.memoData[0]._id, this.props.username);
 	        }
 	    }, {
 	        key: 'loadOldMemo',
@@ -32093,9 +32141,9 @@
 	            // Get id of the memo at the bottom
 	            var lastId = this.props.memoData[this.props.memoData.length - 1]._id;
 
-	            // Start request
-	            return this.props.memoListRequest(false, 'old', lastId).then(function () {
-	                // If it is last page, notify
+	            // START REQUEST
+	            return this.props.memoListRequest(false, 'old', lastId, this.props.username).then(function () {
+	                // IF IT IS LAST PAGE, NOTIFY
 	                if (_this7.props.isLast) {
 	                    Materialize.toast('You are reading the last page', 2000);
 	                }
@@ -32106,11 +32154,45 @@
 	        value: function render() {
 
 	            var write = _react2.default.createElement(_components.Write, { onPost: this.handlePost });
+	            var emptyView = _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'empty-page' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        this.props.username
+	                    ),
+	                    ' isn\'t registered or hasn\'t written any memo'
+	                )
+	            );
+
+	            var wallHeader = _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container wall-info' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'card wall-info blue lighten-2 white-text' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'card-content' },
+	                            this.props.username
+	                        )
+	                    )
+	                ),
+	                this.props.memoData.length === 0 && this.state.initiallyLoaded ? emptyView : undefined
+	            );
 
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'wrapper' },
-	                this.props.isLoggedIn ? write : undefined,
+	                typeof this.props.username !== "undefined" ? wallHeader : undefined,
+	                this.props.isLoggedIn && typeof this.props.username === "undefined" ? write : undefined,
 	                _react2.default.createElement(_components.MemoList, { data: this.props.memoData,
 	                    currentUser: this.props.currentUser,
 	                    onEdit: this.handleEdit,
@@ -32123,6 +32205,13 @@
 	    return Home;
 	}(_react2.default.Component);
 
+	Home.PropTypes = {
+	    username: _react2.default.PropTypes.string
+	};
+
+	Home.defaultProps = {
+	    username: undefined
+	};
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        isLoggedIn: state.authentication.status.isLoggedIn,
@@ -32250,9 +32339,9 @@
 	            url = isInitial ? url : url + '/' + listType + '/' + id;
 	            // or url + '/' + listType + '/' + id
 	        } else {
-	                // load memos of specific user
-
-	            }
+	            // load memos of specific user
+	            url = isInitial ? url + '/' + username : url + '/' + username + '/' + listType + '/' + id;
+	        }
 
 	        return _axios2.default.get(url).then(function (response) {
 	            dispatch(memoListSuccess(response.data, isInitial, listType));
@@ -32646,11 +32735,58 @@
 	    value: true
 	});
 
-	var _authentication = __webpack_require__(318);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _containers = __webpack_require__(225);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Wall = function (_React$Component) {
+	    _inherits(Wall, _React$Component);
+
+	    function Wall() {
+	        _classCallCheck(this, Wall);
+
+	        return _possibleConstructorReturn(this, (Wall.__proto__ || Object.getPrototypeOf(Wall)).apply(this, arguments));
+	    }
+
+	    _createClass(Wall, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_containers.Home, { username: this.props.match.params.username });
+	        }
+	    }]);
+
+	    return Wall;
+	}(_react2.default.Component);
+
+	exports.default = Wall;
+
+/***/ }),
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _authentication = __webpack_require__(319);
 
 	var _authentication2 = _interopRequireDefault(_authentication);
 
-	var _memo = __webpack_require__(320);
+	var _memo = __webpack_require__(321);
 
 	var _memo2 = _interopRequireDefault(_memo);
 
@@ -32664,7 +32800,7 @@
 	});
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32678,7 +32814,7 @@
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
-	var _reactAddonsUpdate = __webpack_require__(319);
+	var _reactAddonsUpdate = __webpack_require__(320);
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -32784,7 +32920,7 @@
 	}
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -32954,7 +33090,7 @@
 
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32968,7 +33104,7 @@
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
-	var _reactAddonsUpdate = __webpack_require__(319);
+	var _reactAddonsUpdate = __webpack_require__(320);
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -33150,7 +33286,7 @@
 	}
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -33178,11 +33314,11 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(323);
+	var content = __webpack_require__(324);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -33196,7 +33332,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(325)(content, options);
+	var update = __webpack_require__(326)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -33228,21 +33364,21 @@
 	}
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(324)(false);
+	exports = module.exports = __webpack_require__(325)(false);
 	// imports
 
 
 	// module
-	exports.push([module.id, "body {\r\n    background-color: #ECEFF1;\r\n    overflow-x: hidden; \r\n}\r\n\r\n\r\n.auth {\r\n    margin-top: 50px;\r\n    text-align: center;\r\n}\r\n\r\n.logo {\r\n    text-align: center;\r\n    font-weight: 100;\r\n    font-size: 80px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n}\r\n\r\na.logo {\r\n    color: #5B5B5B;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}\r\n\r\n.auth .card {\r\n    width: 400px;\r\n    margin: 0 auto;\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n    .auth .card {\r\n        width: 100%;\r\n    }\r\n\r\n    .logo {\r\n        font-size: 60px;\r\n    }\r\n}\r\n\r\n.auth .header {\r\n    font-size: 18px;\r\n}\r\n\r\n.auth .row {\r\n    margin-bottom: 0px;\r\n}\r\n\r\n.auth .username  {\r\n    margin-top: 0px;\r\n}\r\n\r\n.auth .btn {\r\n    width: 90%;\r\n}\r\n\r\n.auth .footer {\r\n    border-top: 1px solid #E9E9E9;\r\n    padding-bottom: 21px;\r\n}\r\n\r\n/* WRITE */\r\n.write .materialize-textarea {\r\n    padding: 0px;\r\n    padding-bottom: 36px;\r\n    margin-bottom: 0px;\r\n    font-size: 18px;\r\n}\r\n\r\n.write .card-content {\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.write .card-action {\r\n    text-align: right;\r\n}\r\n\r\n.wrapper {\r\n    margin-top: 20px;\r\n}\r\n\r\n/* Memo */\r\n\r\n.memo .info {\r\n    font-size: 18px;\r\n    padding: 20px 20px 0px 20px;\r\n    color: #90A4AE;\r\n}\r\n\r\n.memo .ionfo .username {\r\n    color: #263238;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n}\r\n\r\n.memo .card-content {\r\n    word-wrap: break-word;\r\n    white-space: pre-wrap;\r\n}\r\n\r\n.icon-button {\r\n    color: #9E9E9E;\r\n    cursor: pointer;\r\n}\r\n\r\n.icon-button:hover {\r\n    color: #C5C5C5;\r\n}\r\n\r\n.icon-button:active {\r\n    color: #FF9800;\r\n}\r\n\r\n.memo .option-button {\r\n    position: absolute;\r\n    right: 20px;\r\n    top: 20px;\r\n}\r\n\r\n.memo .card-content {\r\n    font-size: 18px;\r\n}\r\n\r\n.memo .footer {\r\n    border-top: 1px solid #ECECEC;\r\n    height: 45px;\r\n}\r\n\r\n.star {\r\n    position: relative;\r\n    left: 15px;\r\n    top: 11px;\r\n}\r\n\r\n.star-count {\r\n    position: relative;\r\n    left: 20px;\r\n    top: 4px;\r\n    font-size: 13px;\r\n    font-weight: bold;\r\n    color: #777;\r\n}\r\n\r\n/* ANIMATION */\r\n@-webkit-keyframes memo-leave {\r\n    0% {\r\n      opacity: 1;\r\n      max-height: 1080px;\r\n    }\r\n    50% {\r\n      opacity: 0;\r\n       -webkit-transform: translateX(100px);\r\n    }\r\n    100% {\r\n        max-height: 0px;\r\n    }\r\n}\r\n\r\n@keyframes memo-leave {\r\n    0% {\r\n      opacity: 1;\r\n      max-height: 1080px;\r\n    }\r\n    50% {\r\n      opacity: 0;\r\n      transform: translateX(100px);\r\n    }\r\n    100% {\r\n        max-height: 0px;\r\n    }\r\n}\r\n\r\n.memo-leave {\r\n    max-height: 0px;\r\n    opacity: 0;\r\n    -webkit-animation-duration: 1s;\r\n    animation-duration: 1s;\r\n    -webkit-animation-name: memo-leave;\r\n    animation-name: memo-leave;\r\n}", ""]);
+	exports.push([module.id, "body {\r\n    background-color: #ECEFF1;\r\n    overflow-x: hidden; \r\n}\r\n\r\n\r\n.auth {\r\n    margin-top: 50px;\r\n    text-align: center;\r\n}\r\n\r\n.logo {\r\n    text-align: center;\r\n    font-weight: 100;\r\n    font-size: 80px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n}\r\n\r\na.logo {\r\n    color: #5B5B5B;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}\r\n\r\n.auth .card {\r\n    width: 400px;\r\n    margin: 0 auto;\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n    .auth .card {\r\n        width: 100%;\r\n    }\r\n\r\n    .logo {\r\n        font-size: 60px;\r\n    }\r\n}\r\n\r\n.auth .header {\r\n    font-size: 18px;\r\n}\r\n\r\n.auth .row {\r\n    margin-bottom: 0px;\r\n}\r\n\r\n.auth .username  {\r\n    margin-top: 0px;\r\n}\r\n\r\n.auth .btn {\r\n    width: 90%;\r\n}\r\n\r\n.auth .footer {\r\n    border-top: 1px solid #E9E9E9;\r\n    padding-bottom: 21px;\r\n}\r\n\r\n/* WRITE */\r\n.write .materialize-textarea {\r\n    padding: 0px;\r\n    padding-bottom: 36px;\r\n    margin-bottom: 0px;\r\n    font-size: 18px;\r\n}\r\n\r\n.write .card-content {\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.write .card-action {\r\n    text-align: right;\r\n}\r\n\r\n.wrapper {\r\n    margin-top: 20px;\r\n}\r\n\r\n/* Memo */\r\n\r\n.memo .info {\r\n    font-size: 18px;\r\n    padding: 20px 20px 0px 20px;\r\n    color: #90A4AE;\r\n}\r\n\r\n.memo .ionfo .username {\r\n    color: #263238;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n}\r\n\r\n.memo .card-content {\r\n    word-wrap: break-word;\r\n    white-space: pre-wrap;\r\n}\r\n\r\n.icon-button {\r\n    color: #9E9E9E;\r\n    cursor: pointer;\r\n}\r\n\r\n.icon-button:hover {\r\n    color: #C5C5C5;\r\n}\r\n\r\n.icon-button:active {\r\n    color: #FF9800;\r\n}\r\n\r\n.memo .option-button {\r\n    position: absolute;\r\n    right: 20px;\r\n    top: 20px;\r\n}\r\n\r\n.memo .card-content {\r\n    font-size: 18px;\r\n}\r\n\r\n.memo .footer {\r\n    border-top: 1px solid #ECECEC;\r\n    height: 45px;\r\n}\r\n\r\n.star {\r\n    position: relative;\r\n    left: 15px;\r\n    top: 11px;\r\n}\r\n\r\n.star-count {\r\n    position: relative;\r\n    left: 20px;\r\n    top: 4px;\r\n    font-size: 13px;\r\n    font-weight: bold;\r\n    color: #777;\r\n}\r\n\r\n/* ANIMATION */\r\n@-webkit-keyframes memo-leave {\r\n    0% {\r\n      opacity: 1;\r\n      max-height: 1080px;\r\n    }\r\n    50% {\r\n      opacity: 0;\r\n       -webkit-transform: translateX(100px);\r\n    }\r\n    100% {\r\n        max-height: 0px;\r\n    }\r\n}\r\n\r\n@keyframes memo-leave {\r\n    0% {\r\n      opacity: 1;\r\n      max-height: 1080px;\r\n    }\r\n    50% {\r\n      opacity: 0;\r\n      transform: translateX(100px);\r\n    }\r\n    100% {\r\n        max-height: 0px;\r\n    }\r\n}\r\n\r\n.memo-leave {\r\n    max-height: 0px;\r\n    opacity: 0;\r\n    -webkit-animation-duration: 1s;\r\n    animation-duration: 1s;\r\n    -webkit-animation-name: memo-leave;\r\n    animation-name: memo-leave;\r\n}\r\n\r\n.empty-page {\r\n    font-size: 30px;\r\n    text-align: center;\r\n    color: #4D4D4D;\r\n}\r\n\r\n.wall-info {\r\n    font-size: 30px;\r\n    text-align: center;\r\n}", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports) {
 
 	/*
@@ -33324,7 +33460,7 @@
 
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -33390,7 +33526,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(326);
+	var	fixUrls = __webpack_require__(327);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -33706,7 +33842,7 @@
 
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports) {
 
 	

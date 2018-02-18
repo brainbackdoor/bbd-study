@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 // Container Components
-import { App, Home, Login, Register } from 'containers';
+import { App, Home, Login, Register, Wall } from 'containers';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -24,6 +24,7 @@ ReactDOM.render(
             <Route exact path="/" component={Home}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
+            <Route exact path="/wall/:username" component={Wall}/>
         </div>
         </BrowserRouter>
     </Provider>, rootElement

@@ -303,4 +303,54 @@ router.post('/star/:id', function (req, res) {
         });
     });
 });
+
+/*
+    READ MEMO OF A USER: GET /api/memo/:username
+*/
+router.get('/:username', function (req, res) {
+    _memo2.default.find({ writer: req.params.username }).sort({ "_id": -1 }).limit(6).exec(function (err, memos) {
+        if (err) throw err;
+        res.json(memos);
+    });
+});
+
+/*
+    READ ADDITIONAL (OLD/NEW) MEMO OF A USER: GET /api/memo/:username/:listType/:id
+*/
+router.get('/:username/:listType/:id', function (req, res) {
+    var listType = req.params.listType;
+    var id = req.params.id;
+
+    // CHECK LIST TYPE VALIDITY
+    if (listType !== 'old' && listType !== 'new') {
+        return res.status(400).json({
+            error: "INVALID LISTTYPE",
+            code: 1
+        });
+    }
+
+    // CHECK MEMO ID VALIDITY
+    if (!_mongoose2.default.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 2
+        });
+    }
+
+    var objId = new _mongoose2.default.Types.ObjectId(req.params.id);
+
+    if (listType === 'new') {
+        // GET NEWER MEMO
+        _memo2.default.find({ writer: req.params.username, _id: { $gt: objId } }).sort({ _id: -1 }).limit(6).exec(function (err, memos) {
+            if (err) throw err;
+            return res.json(memos);
+        });
+    } else {
+        // GET OLDER MEMO
+        _memo2.default.find({ writer: req.params.username, _id: { $lt: objId } }).sort({ _id: -1 }).limit(6).exec(function (err, memos) {
+            if (err) throw err;
+            return res.json(memos);
+        });
+    }
+});
 exports.default = router;

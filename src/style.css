@@ -182,3 +182,14 @@ a {
     -webkit-animation-name: memo-leave;
     animation-name: memo-leave;
 }
+
+.empty-page {
+    font-size: 30px;
+    text-align: center;
+    color: #4D4D4D;
+}
+
+.wall-info {
+    font-size: 30px;
+    text-align: center;
+}

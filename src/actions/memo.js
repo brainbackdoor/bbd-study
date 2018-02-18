@@ -73,7 +73,7 @@ export function memoListRequest(isInitial, listType, id, username) {
             // or url + '/' + listType + '/' + id
         } else {
             // load memos of specific user
-            
+            url = isInitial ? `${url}/${username}` : `${url}/${username}/${listType}/${id}`;
         }
 
         return axios.get(url)
