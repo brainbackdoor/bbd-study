@@ -14,10 +14,7 @@ script:
   - "npm install -g babel-cli"
   - "npm run build"
 
-notifications:
-  email:
-    recipients:
-      - brainbackdoor@gmail.com
+
 before_deploy:
   - zip -r bbd-devops-study *
   - mkdir -p deploy
@@ -31,7 +28,14 @@ deploy:
   region: ap-northeast-2
   skip_clenup: true
   acl: public_read
+  local_dir: deploy
   wait-until-deployed: true
   on:
     repo: brainbackdoor/bbd-devops-study
     branch: master
+    
+notifications:
+  email:
+    recipients:
+      - brainbackdoor@gmail.com
+    
