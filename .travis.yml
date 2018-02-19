@@ -11,6 +11,7 @@ cache:
     - "node_modules"
 
 script:
+  - "npm install -g babel-cli"
   - "npm run build"
 
 notifications:
