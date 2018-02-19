@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class AcademyService {
 
     @Autowired
@@ -30,11 +29,12 @@ public class AcademyService {
         return academyRepository.save(academy);
     }
 
+    @Transactional
     public Academy updateAcademy(AcademyDto dto) {
         Academy originalAcademy = academyRepository.findOne(dto.getId());
 
         originalAcademy.update(dto);
-        return academyRepository.save(originalAcademy);
+        return originalAcademy;
     }
 
     public Academy getAcademyById(long academyId) {

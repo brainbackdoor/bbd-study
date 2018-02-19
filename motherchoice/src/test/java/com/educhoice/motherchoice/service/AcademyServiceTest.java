@@ -7,11 +7,13 @@ import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
+import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.educhoice.motherchoice.valueobject.models.query.SearchableDateTime;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -123,7 +125,7 @@ public class AcademyServiceTest {
         log.debug(new ObjectMapper().writeValueAsString(academyService.getAcademyDtos(this.dto)));
     }
 
-    @Test
+    @Test(expected = NoAcademyIdException.class)
     public void 학원정보_업데이트() {
         academyService.saveAcademy(this.academy);
 
@@ -133,7 +135,7 @@ public class AcademyServiceTest {
 
         academyService.updateAcademy(academyDto);
         assertNotNull(academyService.getAcademyByName("호눅스학원"));
+        assertNull(academyService.getAcademyByName("포비학원"));
 
     }
-
 }
