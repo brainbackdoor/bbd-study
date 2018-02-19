@@ -30,12 +30,19 @@ public class AcademyService {
         return academyRepository.save(academy);
     }
 
+    public Academy updateAcademy(AcademyDto dto) {
+        Academy originalAcademy = academyRepository.findOne(dto.getId());
+
+        originalAcademy.update(dto);
+        return academyRepository.save(originalAcademy);
+    }
+
     public Academy getAcademyById(long academyId) {
         return academyRepository.findByAcademyId(academyId).orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다."));
     }
 
     public Academy getAcademyByName(String name) {
-        return academyRepository.findByAcademyNameCriteria(name).orElseThrow(() -> new NoAcademyIdException("이름에 맞는 학원이 검색되지 않았습니다."));
+        return academyRepository.findByAcademyName(name).orElseThrow(() -> new NoAcademyIdException("이름에 맞는 학원이 검색되지 않았습니다."));
     }
 
     public List<Academy> findMultipleAcademiesById(List<Long> academyIds) {

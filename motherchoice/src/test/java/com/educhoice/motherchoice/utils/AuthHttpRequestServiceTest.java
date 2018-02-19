@@ -3,6 +3,7 @@ package com.educhoice.motherchoice.utils;
 import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.KakaoSocialUserInfo;
+import com.educhoice.motherchoice.configuration.security.service.social.userinfo.NaverSocialUserInfo;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,13 +26,13 @@ public class AuthHttpRequestServiceTest {
     @Autowired
     private AuthHttpRequestService service;
 
-    private SocialSigninProviders providers = SocialSigninProviders.KAKAO;
+    private SocialSigninProviders providers = SocialSigninProviders.NAVER;
     private SocialAuthinfoDto dto;
 
     @Before
     public void setUp() {
         this.dto = new SocialAuthinfoDto();
-        this.dto.setAccessToken("CBaZuLw3HW67THD9kMeJC25jDyaKvMD8Vm7l5AopdkgAAAFhK1av7A");
+        this.dto.setAccessToken("AAAAN/58Pggq70jLgMhaWcClzAZ8WHR5sZrHYmWwtZ6QydEMTBlSqUfKYWn9FA+JTGfIF3yBWxxAIog6k5y8uJS7SD4=");
         this.dto.setProvider(this.providers);
         this.dto.setRefreshToken("pCKu-vhAHKbKwJuff9RiOa1fQUirM4-Y-pJdWgo8BZUAAAFhHKUOxg");
     }
@@ -40,9 +41,9 @@ public class AuthHttpRequestServiceTest {
     public void 유저정보_가져오기_테스트() {
         BasicSocialUserInfo info = service.retrieveSocialUserInfo(this.dto);
 
-        assertTrue(info instanceof KakaoSocialUserInfo);
+        assertTrue(info instanceof NaverSocialUserInfo);
         log.debug(info.toString());
-        assertEquals("정휘준", info.getNickname());
+        assertEquals("류지환", info.getNickname());
 
     }
 

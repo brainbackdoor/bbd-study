@@ -43,4 +43,13 @@ public class NaverSocialUserInfo implements BasicSocialUserInfo {
     public String getProfileUri() {
         return userInfoMap.get("profile_image");
     }
+
+    @Override
+    public String toString() {
+        return "NaverSocialUserInfo{" +
+                "resultcode='" + resultcode + '\'' +
+                ", message='" + message + '\'' +
+                ", userInfoMap=" + userInfoMap +
+                '}';
+    }
 }

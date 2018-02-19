@@ -100,35 +100,31 @@ public class Academy {
     }
 
     public void update(AcademyDto dto) {
-        this.courses = dto.getCourses().stream().map(c -> c.getCourseEntity()).collect(Collectors.toList());
+//        this.courses = dto.getCourses().stream().map(c -> c.getCourseEntity()).collect(Collectors.toList());
+        this.academyName = dto.getAcademyName();
         this.carAvailable = dto.isCarAvailable();
         this.introduction = dto.getIntroduction();
-        this.tags = dto.getHashTags();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Academy academy = (Academy) o;
-        return carAvailable == academy.carAvailable &&
-                Objects.equal(courses, academy.courses) &&
-                Objects.equal(academyName, academy.academyName) &&
-                Objects.equal(address, academy.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(courses, academyName, address, carAvailable);
+//        this.tags = dto.getHashTags();
+//        this.events = dto.getEvents();
     }
 
     @Override
     public String toString() {
         return "Academy{" +
-                "  courses=" + courses +
+                "academyId=" + academyId +
+                ", courses=" + courses +
+                ", specialCourses=" + specialCourses +
                 ", academyName='" + academyName + '\'' +
-                ", address=" + address +
+                ", ownerName='" + ownerName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", introduction='" + introduction + '\'' +
                 ", carAvailable=" + carAvailable +
+                ", address=" + address +
+                ", events=" + events +
+                ", images=" + images +
+                ", corporateAccount=" + corporateAccount +
+                ", tags=" + tags +
+                ", questions=" + questions +
                 '}';
     }
 }

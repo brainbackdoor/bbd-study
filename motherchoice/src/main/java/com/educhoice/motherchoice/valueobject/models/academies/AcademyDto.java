@@ -70,4 +70,6 @@ public class AcademyDto {
         return new AcademyDto(academy, inquiryResponseRate);
     }
 
+
+
 }

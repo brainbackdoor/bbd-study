@@ -31,6 +31,9 @@ public class AcademyAddress{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String zonecode;
 
+    private String fullAddress;
+    private String detailAddress;
+
     @Column(columnDefinition = "DECIMAL NULL")
     private double latitude;
 

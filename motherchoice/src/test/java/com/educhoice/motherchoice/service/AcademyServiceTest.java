@@ -4,6 +4,7 @@ import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
+import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -40,10 +42,13 @@ public class AcademyServiceTest {
     private AcademyRepository academyRepository;
 
     private Academy academy;
+    private Academy testableAcademy;
     private Course course;
     private AcademyQueryDto dto;
+    private AcademyDto academyDto;
 
     @Before
+    @Transactional
     public void setUp() {
 
         SearchableDateTime dateTime = new SearchableDateTime();
@@ -74,8 +79,13 @@ public class AcademyServiceTest {
                 .subject("과학")
                 .build();
 
+        this.academyDto = AcademyDto.builder()
+                .academyName("호눅스학원")
+                .introduction("당신도 리눅스 잘 할 수 있다.")
+                .build();
+
+
         academyRepository.deleteAll();
-        this.academy.setAcademyId(0L);
     }
 
     @Test
@@ -111,6 +121,19 @@ public class AcademyServiceTest {
         academyService.saveAcademy(this.academy);
 
         log.debug(new ObjectMapper().writeValueAsString(academyService.getAcademyDtos(this.dto)));
+    }
+
+    @Test
+    public void 학원정보_업데이트() {
+        academyService.saveAcademy(this.academy);
+
+        Academy academy = academyService.getAcademyByName("포비학원");
+
+        this.academyDto.setId(academy.getAcademyId());
+
+        academyService.updateAcademy(academyDto);
+        assertNotNull(academyService.getAcademyByName("호눅스학원"));
+
     }
 
 }
