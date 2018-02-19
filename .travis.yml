@@ -33,7 +33,18 @@ deploy:
     on:
       repo: brainbackdoor/bbd-devops-study
       branch: master
-
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: bbd-devops-study
+    key: bbd-devops-study.zip
+    application: bbd-devops-study
+    deployment_gtoup: bbd-devops-study-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      repo: brainbackdoor/bbd-devops-study
+      branch: master
 notifications:
   email:
     recipients:
