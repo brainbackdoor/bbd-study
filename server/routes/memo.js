@@ -1,32 +1,19 @@
-'use strict';
+import express from 'express';
+import Memo from '../models/memo';
+import mongoose from 'mongoose';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _express = require('express');
-
-var _express2 = _interopRequireDefault(_express);
-
-var _memo = require('../models/memo');
-
-var _memo2 = _interopRequireDefault(_memo);
-
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var router = _express2.default.Router();
+const router = express.Router();
 /*
     READ MEMO: GET /api/memo
 */
-router.get('/', function (req, res) {
-    _memo2.default.find().sort({ "_id": -1 }).limit(6).exec(function (err, memos) {
-        if (err) throw err;
+router.get('/', (req, res) => {
+    Memo.find()
+    .sort({"_id": -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
         res.json(memos);
-    });
+    })
 });
 
 /*
@@ -36,9 +23,9 @@ router.get('/', function (req, res) {
         1: NOT LOGGED IN
         2: EMPTY CONTENTS
 */
-router.post('/', function (req, res) {
+router.post('/', (req, res) => {
     // check login status
-    if (typeof req.session.loginInfo === 'undefined') {
+    if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
             code: 1
@@ -46,14 +33,14 @@ router.post('/', function (req, res) {
     }
 
     // check contents valid
-    if (typeof req.body.contents !== 'string') {
+    if(typeof req.body.contents !== 'string') {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 2
         });
     }
 
-    if (req.body.contents === "") {
+    if(req.body.contents === "") {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 2
@@ -61,16 +48,16 @@ router.post('/', function (req, res) {
     }
 
     // CREATE NEW MEMO
-    var memo = new _memo2.default({
+    let memo = new Memo({
         writer: req.session.loginInfo.username,
         contents: req.body.contents
     });
 
     // save in db
-    memo.save(function (err) {
-        if (err) throw err;
+    memo.save( err => {
+        if(err) throw err;
         return res.json({ success: true });
-    });
+    })
 });
 
 /*
@@ -81,10 +68,10 @@ router.post('/', function (req, res) {
         3: NO RESOURCE
         4: PERMISSION FAILURE
 */
-router.delete('/:id', function (req, res) {
+router.delete('/:id', (req, res) => {
 
     // check memo in validity
-    if (!_mongoose2.default.Types.ObjectId.isValid(req.params.id)) {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
         return res.status(400).json({
             error: "INVALID ID",
             code: 1
@@ -92,7 +79,7 @@ router.delete('/:id', function (req, res) {
     }
 
     // check login status
-    if (typeof req.session.loginInfo === 'undefined') {
+    if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
             code: 2
@@ -100,16 +87,16 @@ router.delete('/:id', function (req, res) {
     }
 
     // find memo and check for writer
-    _memo2.default.findById(req.params.id, function (err, memo) {
-        if (err) throw err;
+    Memo.findById(req.params.id, (err, memo) => {
+        if(err) throw err;
 
-        if (!memo) {
+        if(!memo) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 3
             });
         }
-        if (memo.writer != req.session.loginInfo.username) {
+        if(memo.writer != req.session.loginInfo.username){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
@@ -117,8 +104,8 @@ router.delete('/:id', function (req, res) {
         }
 
         // REMOVE THE MEMO
-        _memo2.default.remove({ _id: req.params.id }, function (err) {
-            if (err) throw err;
+        Memo.remove({ _id: req.params.id }, err => {
+            if(err) throw err;
             res.json({ success: true });
         });
     });
@@ -134,10 +121,10 @@ router.delete('/:id', function (req, res) {
         4: NO RESOURCE
         5: PERMISSION FAILURE
 */
-router.put('/:id', function (req, res) {
+router.put('/:id', (req, res) => {
 
     // check memo id validity
-    if (!_mongoose2.default.Types.ObjectId.isValid(req.params.id)) {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
             error: "INVALID ID",
             code: 1
@@ -145,13 +132,13 @@ router.put('/:id', function (req, res) {
     }
 
     // check contents valid
-    if (typeof req.body.contents !== 'string') {
+    if(typeof req.body.contents !== 'string'){
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 2
         });
     }
-    if (req.body.contents === "") {
+    if(req.body.contents === "") {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 2
@@ -159,19 +146,19 @@ router.put('/:id', function (req, res) {
     }
 
     //check login status
-    if (typeof req.session.loginInfo === 'undefined') {
-        return res.status(403).json({
+    if(typeof req.session.loginInfo === 'undefined') {
+        return res.status(403).json ({
             error: "NOT LOGGED IN",
             code: 3
         });
     }
 
     // find memo
-    _memo2.default.findById(req.params.id, function (err, memo) {
-        if (err) throw err;
+    Memo.findById(req.params.id, (err, memo) => {
+        if(err) throw err;
 
         // if memo does not exist
-        if (!memo) {
+        if(!memo) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 4
@@ -179,7 +166,7 @@ router.put('/:id', function (req, res) {
         }
 
         // if exists, check writer
-        if (memo.writer != req.session.loginInfo.username) {
+        if(memo.writer != req.session.loginInfo.username){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5
@@ -191,166 +178,15 @@ router.put('/:id', function (req, res) {
         memo.date.edited = new Date();
         memo.is_edited = true;
 
-        memo.save(function (err, memo) {
-            if (err) throw err;
+        memo.save((err, memo) => {
+            if(err) throw err;
 
             return res.json({
                 success: true,
-                memo: memo
+                memo
             });
         });
     });
 });
 
-/*
-    READ ADDITIONAL (Old/New) MEMO: GET /api/memo/:listType/:id
-*/
-router.get('/:listType/:id', function (req, res) {
-    var listType = req.params.listType;
-    var id = req.params.id;
-
-    // CHECK LIST TYPE VALIDITY
-    if (listType !== 'old' && listType !== 'new') {
-        return res.status(400).json({
-            error: "INVALID LISTTYPE",
-            code: 1
-        });
-    }
-
-    // CHECK MEMO ID VALIDITY
-    if (!_mongoose2.default.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            error: "INVALID ID",
-            code: 2
-        });
-    }
-
-    var objId = new _mongoose2.default.Types.ObjectId(req.params.id);
-
-    if (listType === 'new') {
-        // GET NEWER MEMO
-        _memo2.default.find({ _id: { $gt: objId } }).sort({ _id: -1 }).limit(6).exec(function (err, memos) {
-            if (err) throw err;
-            return res.json(memos);
-        });
-    } else {
-        // GET OLDER MEMO
-        _memo2.default.find({ _id: { $lt: objId } }).sort({ _id: -1 }).limit(6).exec(function (err, memos) {
-            if (err) throw err;
-            return res.json(memos);
-        });
-    }
-});
-
-/*
-    TOGGLES STAR OF MEMO: POST /api/memo/star/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-*/
-router.post('/star/:id', function (req, res) {
-    // CHECK MEMO ID VALIDITY
-    if (!_mongoose2.default.Types.ObjectId.isValid(req.params.id)) {
-        return res.status(400).json({
-            error: "INVALID ID",
-            code: 1
-        });
-    }
-
-    // CHECK LOGIN STATUS
-    if (typeof req.session.loginInfo === 'undefined') {
-        return res.status(403).json({
-            error: "NOT LOGGED IN",
-            code: 2
-        });
-    }
-
-    // FIND MEMO
-    _memo2.default.findById(req.params.id, function (err, memo) {
-        if (err) throw err;
-
-        // MEMO DOES NOT EXIST
-        if (!memo) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 3
-            });
-        }
-
-        // GET INDEX OF USERNAME IN THE ARRAY
-        var index = memo.starred.indexOf(req.session.loginInfo.username);
-
-        // CHECK WHETHER THE USER ALREADY HAS GIVEN A STAR
-        var hasStarred = index === -1 ? false : true;
-
-        if (!hasStarred) {
-            // IF IT DOES NOT EXIST
-            memo.starred.push(req.session.loginInfo.username);
-        } else {
-            // ALREADY starred
-            memo.starred.splice(index, 1);
-        }
-
-        // SAVE THE MEMO
-        memo.save(function (err, memo) {
-            if (err) throw err;
-            res.json({
-                success: true,
-                'has_starred': !hasStarred,
-                memo: memo
-            });
-        });
-    });
-});
-
-/*
-    READ MEMO OF A USER: GET /api/memo/:username
-*/
-router.get('/:username', function (req, res) {
-    _memo2.default.find({ writer: req.params.username }).sort({ "_id": -1 }).limit(6).exec(function (err, memos) {
-        if (err) throw err;
-        res.json(memos);
-    });
-});
-
-/*
-    READ ADDITIONAL (OLD/NEW) MEMO OF A USER: GET /api/memo/:username/:listType/:id
-*/
-router.get('/:username/:listType/:id', function (req, res) {
-    var listType = req.params.listType;
-    var id = req.params.id;
-
-    // CHECK LIST TYPE VALIDITY
-    if (listType !== 'old' && listType !== 'new') {
-        return res.status(400).json({
-            error: "INVALID LISTTYPE",
-            code: 1
-        });
-    }
-
-    // CHECK MEMO ID VALIDITY
-    if (!_mongoose2.default.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            error: "INVALID ID",
-            code: 2
-        });
-    }
-
-    var objId = new _mongoose2.default.Types.ObjectId(req.params.id);
-
-    if (listType === 'new') {
-        // GET NEWER MEMO
-        _memo2.default.find({ writer: req.params.username, _id: { $gt: objId } }).sort({ _id: -1 }).limit(6).exec(function (err, memos) {
-            if (err) throw err;
-            return res.json(memos);
-        });
-    } else {
-        // GET OLDER MEMO
-        _memo2.default.find({ writer: req.params.username, _id: { $lt: objId } }).sort({ _id: -1 }).limit(6).exec(function (err, memos) {
-            if (err) throw err;
-            return res.json(memos);
-        });
-    }
-});
-exports.default = router;
+export default router;

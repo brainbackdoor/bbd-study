@@ -1,9 +1,11 @@
 {
-  "name": "devops-example-be",
+  "name": "codelab",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "win_start": "node ./server/main.js"
+    "clean": "rm -rf build public/bundle.js",
+    "build": "babel server --out-dir build --presets=es2015 && webpack",
+    "win_start": "cross-env NODE_ENV=production node ./build/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,8 +18,16 @@
     "mongoose": "^5.0.6",
     "morgan": "^1.9.0",
     "path": "^0.12.7",
-    "webpack": "^3.11.0"
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1"
   },
   "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }

@@ -1,87 +1,55 @@
-'use strict';
+import express from 'express';
+import path from 'path';
 
-var _express = require('express');
+/* Development */
+import webpack from 'webpack';
 
-var _express2 = _interopRequireDefault(_express);
+/* Middleware - log */
+import morgan from 'morgan'; // HTTP Request Logger
+import bodyParser from 'body-parser'; // Parse HTML Body
 
-var _path = require('path');
+/* Middleware - mongodb */
+import mongoose from 'mongoose';
+import session from 'express-session';
 
-var _path2 = _interopRequireDefault(_path);
+/* setup routers & static directory */
+import api from './routes';
 
-var _webpack = require('webpack');
+const app = express();
+const port = 3000;
 
-var _webpack2 = _interopRequireDefault(_webpack);
+app.use('/', express.static(path.join(__dirname, './../public')));
 
-var _morgan = require('morgan');
-
-var _morgan2 = _interopRequireDefault(_morgan);
-
-var _bodyParser = require('body-parser');
-
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
-
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
-var _expressSession = require('express-session');
-
-var _expressSession2 = _interopRequireDefault(_expressSession);
-
-var _routes = require('./routes');
-
-var _routes2 = _interopRequireDefault(_routes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// HTTP Request Logger
-var app = (0, _express2.default)();
-
-var port = 3000;
+app.listen(port, () => {
+    console.log('Express is listening on port',port);
+});
 
 /* Middleware */
 
-app.use((0, _morgan2.default)('dev'));
-app.use(_bodyParser2.default.json());
-console.log(process.env.NODE_ENV);
-
-app.listen(port, function () {
-    console.log('Express is listening on port', port);
-});
-
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 
 /* Middleware - mongodb */
 /* mongodb connection */
-var db = _mongoose2.default.connection;
+const db = mongoose.connection;
 db.on('error', console.error);
-db.once('open', function () {
-    console.log('Connected to mongodb server');
-});
+db.once('open', () => { console.log('Connected to mongodb server'); });
 
 // mongoose.connect('mongodb://username:password@host:port/database=');
-_mongoose2.default.connect('mongodb://bbd:bbd@ds241578.mlab.com:41578/devops-example-be');
+mongoose.connect('mongodb://bbd:codesquad@ds239648.mlab.com:39648/react-codelab-project');
 
 /* use session */
-app.use((0, _expressSession2.default)({
+app.use(session({
     secret: 'bbd$1$234',
     resave: false,
     saveUnintialized: true
-}));
+}))
 
 /* setup routers & static directory */
-app.use('/api', _routes2.default);
-
-app.get('*', function (req, res, next) {
-    var regExp = /bundle.js$/;
-    if (!regExp.test(req.url)) {
-        res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
-    } else {
-        next();
-    }
-});
+app.use('/api', api);
 
 /* handle error */
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next){
     console.error(err.stack);
     res.status(500).send('Something broke !');
 });
