@@ -37,16 +37,15 @@ docker rmi $(docker images -q)
 
 ##### Image build
 ```
-cd step02
+cd step03
 docker build -t bbd/node-web-app .
 ```
 
 ##### Image execution
 ```
-docker run -p 49160:8080 -d bbd/node-web-app
+docker run -e "MESSAGE=First instance" --name instance-1 -p 8081:8080 -d bbd/node-web-app 
+docker run -e "MESSAGE=Second instance" --name instance-2 -p 8082:8080 -d bbd/node-web-app 
 ```
->-d로 이미지를 실행하면 분리 모드로 컨테이너를 실행해서 백그라운드에서 컨테이너가 돌아가도록 한다.  
--p 플래그는 공개 포트를 컨테이너 내의 비밀 포트로 리다이렉트한다.
 
 ##### Docker Machine IP check
 ```
@@ -54,5 +53,24 @@ docker-machine ip
 ```
 ##### Test
 ```
- curl -i <docker-machine ip>:49160
+curl -i <docker-machine ip>:8081
+curl -i <docker-machine ip>:8082
+```
+---
+
+### Build a Docker to Use as a Load Balancer(Nginx / reverse-proxy)
+
+##### Image build
+```
+docker build -t bbd/load-balance-nginx nginx/.
+```
+##### Image execution
+```
+docker run -p 4000:80 --name lb -d bbd/load-balance-nginx
+```
+##### Test
+```
+curl -i 192.168.99.100:4000
+curl -i 192.168.99.100:4000
+...
 ```
