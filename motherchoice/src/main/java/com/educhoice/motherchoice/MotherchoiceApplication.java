@@ -43,4 +43,10 @@ public class MotherchoiceApplication {
         };
     }
 
+    @Bean
+    public CommandLineRunner academyInfoBootstrapper(AcademyRepository repository) {
+	    //TODO write dummy academy info bootstrapping logic.
+	    return null;
+    }
+
 }

@@ -54,7 +54,7 @@ public class AcademyService {
     }
 
     public List<AcademyDto> getAcademyDtos(AcademyQueryDto dto) {
-        List<Academy> academies = academyRepository.findAcademiesByQuery(dto).orElse(Arrays.asList(new EmptyAcademy()));
+        List<Academy> academies = academyRepository.findAcademiesByQuery(dto).orElseThrow(() -> new NoAcademyIdException("조건에 맞는 학원이 검색되지 않았습니다."));
 
         return academies.stream().map(a -> AcademyDto.generateAcademyDto(a, questionService.getAverageInquiryResponseRate(a))).collect(Collectors.toList());
     }

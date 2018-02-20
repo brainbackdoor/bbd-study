@@ -12,8 +12,11 @@ import com.educhoice.motherchoice.models.persistent.Grades;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.notifications.Notification;
+import com.educhoice.motherchoice.service.AcademyService;
 import com.educhoice.motherchoice.utils.SseEmitterManager;
 import com.educhoice.motherchoice.utils.exceptions.security.UsernameNotFoundException;
+import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
+import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -28,6 +31,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/exp")
 @RestController
@@ -45,7 +49,16 @@ public class DummyApiController {
     @Autowired
     private SseEmitterManager emitterManager;
 
+    @Autowired
+    private AcademyService academyService;
+
     private List<SseEmitter> emitters = Lists.newArrayList();
+
+    @PostMapping("/academy/search")
+    @CrossOrigin
+    public List<AcademyDto> getAcademyInfo(@RequestBody AcademyQueryDto dto) {
+        return academyService.getAcademyDtos(dto);
+    }
 
     @GetMapping("/academy")
     @PreAuthorize("hasRole('ROLE_UNPAID_USER')")
