@@ -8,6 +8,7 @@ import com.educhoice.motherchoice.valueobject.models.academies.EmptyAcademy;
 import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AcademyTaggingDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,10 +54,11 @@ public class AcademyService {
         return academyRepository.findAcademiesByQuery(dto).orElse(Arrays.asList(new Academy()));
     }
 
+    @Transactional
     public List<AcademyDto> getAcademyDtos(AcademyQueryDto dto) {
         List<Academy> academies = academyRepository.findAcademiesByQuery(dto).orElseThrow(() -> new NoAcademyIdException("조건에 맞는 학원이 검색되지 않았습니다."));
 
-        return academies.stream().map(a -> AcademyDto.generateAcademyDto(a, questionService.getAverageInquiryResponseRate(a))).collect(Collectors.toList());
+        return academies.stream().map(a -> AcademyDto.generateAcademyDto(a, 0.0)).collect(Collectors.toList());
     }
 
     public List<AcademyTaggingDto> findMultipleAcademiesByNameContaining(String name) {

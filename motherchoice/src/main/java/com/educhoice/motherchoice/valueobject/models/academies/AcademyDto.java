@@ -4,8 +4,11 @@ import com.educhoice.motherchoice.models.persistent.*;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import lombok.*;
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -32,10 +35,6 @@ public class AcademyDto {
     private String message;
 
     private AcademyDto(Academy academy, double inquiryResponseRate) {
-        if (academy instanceof EmptyAcademy) {
-            this.message = ((EmptyAcademy) academy).getMessage();
-            return;
-        }
 
         this.id = academy.getAcademyId();
         this.academyName = academy.getAcademyName();
@@ -50,16 +49,17 @@ public class AcademyDto {
         }
         this.subjects = academy.getSubjectsSummary();
         this.introduction = academy.getIntroduction();
-        if (academy.getCourses() != null) {
+        if (academy.getCourses() != null && academy.getCourses().size() > 0) {
+            academy.getCourses().stream().forEach(c -> Hibernate.initialize(c.getDateTime()));
             this.courses = CourseDto.generateCourseDtoFromAcademy(academy);
         }
         if (academy.getSpecialCourses() != null) {
             this.specialCourses = SpecialCourseDto.generateDto(academy);
         }
-        if (academy.getEvents() != null) {
+        if (academy.getEvents() != null && academy.getEvents().size() > 0) {
             this.events = academy.getEvents();
         }
-        if (academy.getTags() != null) {
+        if (academy.getTags() != null && academy.getTags().size() > 0) {
             this.hashTags = academy.getTags();
         }
         this.corporateAccount = academy.getCorporateAccount();

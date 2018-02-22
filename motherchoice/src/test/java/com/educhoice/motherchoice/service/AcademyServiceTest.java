@@ -11,6 +11,8 @@ import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.educhoice.motherchoice.valueobject.models.query.SearchableDateTime;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -118,11 +120,17 @@ public class AcademyServiceTest {
     }
 
     @Test
-    @Transactional
     public void DTO로_검색결과_보여주기() throws Exception{
         academyService.saveAcademy(this.academy);
+        List<AcademyDto> dtos = academyService.getAcademyDtos(this.dto);
 
-        log.debug(new ObjectMapper().writeValueAsString(academyService.getAcademyDtos(this.dto)));
+        dtos.stream().forEach(d -> {
+            try {
+                log.debug(new ObjectMapper().writeValueAsString(d));
+            } catch (JsonProcessingException e) {
+                log.error(e.getMessage());
+            }
+        });
     }
 
     @Test(expected = NoAcademyIdException.class)
