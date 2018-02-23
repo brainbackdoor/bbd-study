@@ -49,16 +49,14 @@ public class CourseDto {
     }
 
     public static List<CourseDto> generateCourseDtoFromAcademy(Academy academy) {
-        return academy.getCourses().stream().map(c -> {
-            return CourseDto.builder()
-                    .courseName(c.getTitle())
-                    .courseId(c.getCourseId())
-                    .coursesClassification(Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol())
-                    .subjectClassification(c.getCoursesClassification().getSymbol())
-                    .grade(c.getGrades().getSymbol())
-                    .tuition(c.getTuition())
-                    .dayOfWeek(c.getDateTime())
-                    .build();
-        }).collect(Collectors.toList());
+        return academy.getCourses().stream().map(c -> CourseDto.builder()
+                .courseName(c.getTitle())
+                .courseId(c.getCourseId())
+                .coursesClassification(Course.CoursesClassification.findBySpecifiedCourses(c.getCoursesClassification()).getSymbol())
+                .subjectClassification(c.getCoursesClassification().getSymbol())
+                .grade(c.getGrades().getSymbol())
+                .tuition(c.getTuition())
+                .dayOfWeek(c.getDateTime())
+                .build()).collect(Collectors.toList());
     }
 }

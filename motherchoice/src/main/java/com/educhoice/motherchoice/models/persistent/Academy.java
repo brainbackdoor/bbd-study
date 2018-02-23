@@ -100,12 +100,12 @@ public class Academy {
     }
 
     public void update(AcademyDto dto) {
-//        this.courses = dto.getCourses().stream().map(c -> c.getCourseEntity()).collect(Collectors.toList());
+        this.courses = dto.getCourses().stream().map(c -> c.getCourseEntity()).collect(Collectors.toList());
         this.academyName = dto.getAcademyName();
         this.carAvailable = dto.isCarAvailable();
         this.introduction = dto.getIntroduction();
-//        this.tags = dto.getHashTags();
-//        this.events = dto.getEvents();
+        this.tags = dto.getHashTags();
+        this.events = dto.getEvents();
     }
 
     @Override
