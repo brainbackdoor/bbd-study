@@ -1,15 +1,12 @@
 package com.educhoice.motherchoice.configuration.security.service.filters;
 
-import com.educhoice.motherchoice.configuration.security.entity.IntegratedUserSigninToken;
-import com.educhoice.motherchoice.configuration.security.service.IntegratedUserQueryService;
-import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
+import com.educhoice.motherchoice.configuration.security.service.social.IntegratedLoginAuthenticationManager;
 import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.educhoice.motherchoice.configuration.security.service.social.token.SocialLoginAccessToken;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.models.persistent.repositories.AccountRepository;
-import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
 import com.educhoice.motherchoice.service.JwtIdService;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.junit.Before;
@@ -20,14 +17,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.servlet.http.HttpServletRequest;
-
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -38,7 +32,7 @@ public class JwtAuthenticationFilterTest {
     private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilterTest.class);
 
     @Autowired
-    private SocialLoginAuthenticationManager authenticationManager;
+    private IntegratedLoginAuthenticationManager authenticationManager;
 
     @Qualifier("accessTokenConverter")
     @Autowired

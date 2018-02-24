@@ -2,7 +2,7 @@ package com.educhoice.motherchoice.configuration.security;
 
 import com.educhoice.motherchoice.configuration.security.service.filters.FormLoginJwtAutheticationFilter;
 import com.educhoice.motherchoice.configuration.security.service.filters.JwtAuthenticationFilter;
-import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
+import com.educhoice.motherchoice.configuration.security.service.social.IntegratedLoginAuthenticationManager;
 import com.educhoice.motherchoice.service.JwtIdService;
 import com.educhoice.motherchoice.utils.exceptions.resolvers.security.RestSecurityEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
-import sun.reflect.annotation.ExceptionProxy;
 
 @Configuration
 @EnableResourceServer
@@ -28,7 +26,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private ResourceServerTokenServices tokenService;
 
     @Autowired
-    private SocialLoginAuthenticationManager socialLoginAuthenticationManager;
+    private IntegratedLoginAuthenticationManager integratedLoginAuthenticationManager;
 
     @Autowired
     private RestSecurityEntryPoint entryPoint;
@@ -67,8 +65,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/api/v1/**").authenticated()
                 .and()
-                .addFilterAfter(new FormLoginJwtAutheticationFilter("/formlogin", socialLoginAuthenticationManager, tokenConverter, jwtIdService), CorsFilter.class)
-                .addFilterAfter(new JwtAuthenticationFilter("/tokenauth", socialLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
+                .addFilterAfter(new FormLoginJwtAutheticationFilter("/formlogin", integratedLoginAuthenticationManager, tokenConverter, jwtIdService), CorsFilter.class)
+                .addFilterAfter(new JwtAuthenticationFilter("/tokenauth", integratedLoginAuthenticationManager, tokenConverter, jwtIdService), FormLoginJwtAutheticationFilter.class);
 
         httpSecurity
                 .sessionManagement()

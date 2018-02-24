@@ -1,12 +1,11 @@
 package com.educhoice.motherchoice.configuration.security.service.filters;
 
-import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
+import com.educhoice.motherchoice.configuration.security.service.social.IntegratedLoginAuthenticationManager;
 import com.educhoice.motherchoice.configuration.security.service.social.token.LoginAttemptToken;
 import com.educhoice.motherchoice.configuration.security.service.social.token.SocialLoginAccessToken;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
 import com.educhoice.motherchoice.service.JwtIdService;
 import com.educhoice.motherchoice.utils.exceptions.security.InvalidAccessTokenException;
-import com.educhoice.motherchoice.utils.exceptions.security.SecurityException;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,11 +31,11 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
-    private SocialLoginAuthenticationManager authenticationManager;
+    private IntegratedLoginAuthenticationManager authenticationManager;
     private JwtAccessTokenConverter tokenConverter;
     private JwtIdService idService;
 
-    public JwtAuthenticationFilter(String defaultFilterProcessesUrl, SocialLoginAuthenticationManager authenticationManager, JwtAccessTokenConverter tokenConverter, JwtIdService idService) {
+    public JwtAuthenticationFilter(String defaultFilterProcessesUrl, IntegratedLoginAuthenticationManager authenticationManager, JwtAccessTokenConverter tokenConverter, JwtIdService idService) {
         super(defaultFilterProcessesUrl);
         this.authenticationManager = authenticationManager;
         this.tokenConverter = tokenConverter;

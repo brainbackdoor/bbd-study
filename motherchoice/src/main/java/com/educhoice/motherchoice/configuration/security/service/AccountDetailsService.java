@@ -27,20 +27,13 @@ public class AccountDetailsService implements UserDetailsService {
 		return new SecurityAccount(integratedUserQueryService.loadByEmail(s));
 	}
 
-	public UserDetails loadUserBySocialId(long socialId) throws UsernameNotFoundException {
-	    return new SecurityAccount(integratedUserQueryService.loadBySocialId(socialId));
-    }
-
     public UserDetails loadUserBySocialId(long socialId, SocialSigninProviders providers) {
 	    return new SecurityAccount(integratedUserQueryService.loadBySocialId(socialId, providers));
     }
 
-    public SecurityAccount loginByForm(FormLoginRequestDto dto) {
+    public SecurityAccount loadByFormLoginRequest(FormLoginRequestDto dto) {
         BasicAccount account = integratedUserQueryService.loadByEmail(dto.getLoginId());
 
-        if (!passwordEncoder.matches(dto.getPassword(), account.getPassword())) {
-            throw new SecurityException("비밀번호가 틀렸습니다.");
-        }
         return new SecurityAccount(account);
     }
 

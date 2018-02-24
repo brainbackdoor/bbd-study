@@ -16,6 +16,4 @@ public class BaseDomainExceptionsDto {
         this.message = e.getMessage();
         this.status = e.getDefaultStatus().value();
     }
-
-
 }

@@ -38,7 +38,7 @@ public class MotherchoiceApplication {
 
             Account parentAccount = new Account("정휘준", "1234", "봄이네집", null, null, true, BasicAccount.AccountRoles.UNPAID_USER, SocialSigninProviders.KAKAO, 705692990L);
 
-            accountRepository.save(parentAccount);
+//            accountRepository.save(parentAccount);
             repository.save(account);
         };
     }

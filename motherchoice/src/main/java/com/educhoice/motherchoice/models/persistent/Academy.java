@@ -51,6 +51,7 @@ public class Academy {
     private String introduction;
 
     private boolean carAvailable;
+    private boolean certified;
 
     @Embedded
     private AcademyAddress address;

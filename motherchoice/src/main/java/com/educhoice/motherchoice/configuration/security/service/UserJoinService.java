@@ -56,8 +56,9 @@ public class UserJoinService {
             return;
         }
         Account account = (Account)req.generateAccount();
+        setSocialInfos(account, req.getAuthinfoDto());
         account.encryptPassword(passwordEncoder);
-        this.accountRepository.save((Account)setSocialInfos(account, req.getAuthinfoDto()));
+        accountRepository.save((Account)setSocialInfos(account, req.getAuthinfoDto()));
     }
 
     private boolean isEmailCertified(String email) {
@@ -80,7 +81,7 @@ public class UserJoinService {
     }
 
     private BasicAccount setSocialInfos(BasicAccount account, SocialAuthinfoDto dto) {
-        BasicSocialUserInfo info = requestService.retrieveSocialUserInfo(dto);
+        BasicSocialUserInfo info = retrieveInfos(dto);
         account.setSocialInfos(info, dto);
         return account;
     }

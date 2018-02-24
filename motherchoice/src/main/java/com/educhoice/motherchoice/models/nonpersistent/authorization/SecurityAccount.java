@@ -4,6 +4,7 @@ import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,6 +33,10 @@ public class SecurityAccount extends User {
 
     public BasicAccount getBasicAccount() {
         return basicAccount;
+    }
+
+    public boolean isPasswordCorrect(PasswordEncoder encoder, String password) {
+        return encoder.matches(password, this.basicAccount.getPassword());
     }
 
 

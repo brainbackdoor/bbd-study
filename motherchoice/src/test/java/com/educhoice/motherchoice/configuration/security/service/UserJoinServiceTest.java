@@ -1,7 +1,6 @@
 package com.educhoice.motherchoice.configuration.security.service;
 
 import com.educhoice.motherchoice.configuration.security.entity.UserJoinRequest;
-import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
 import com.educhoice.motherchoice.configuration.security.service.social.SocialSigninProviders;
 import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
@@ -45,7 +44,7 @@ public class UserJoinServiceTest {
                 .build();
 
         this.dto = new SocialAuthinfoDto();
-        this.dto.setAccessToken("YfuOGHQg77q3A2kfoJ93Wrk97daC78bLJ3Wg5Ao8BJ4AAAFhMKLGvg");
+        this.dto.setAccessToken("olDrJe1bqrFs5CKq1WSWt2jOUg-jiJk0O5NAGgoqAq8AAAFhx5b30A");
         this.dto.setProvider(SocialSigninProviders.KAKAO);
 
         this.request.setSocialAuthinfoDto(this.dto);
@@ -75,6 +74,7 @@ public class UserJoinServiceTest {
 
         CorporateAccount accountBySocialId = (CorporateAccount)this.queryService.loadBySocialId(705692990L, SocialSigninProviders.KAKAO);
         assertThat(accountBySocialId.getAccountName(), is("박재성"));
+        assertThat(accountBySocialId.getLoginId(), is("wheejuni@gmail.com"));
 
     }
 

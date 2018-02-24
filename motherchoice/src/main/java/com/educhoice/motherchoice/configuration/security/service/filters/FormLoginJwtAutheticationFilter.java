@@ -1,6 +1,6 @@
 package com.educhoice.motherchoice.configuration.security.service.filters;
 
-import com.educhoice.motherchoice.configuration.security.service.social.SocialLoginAuthenticationManager;
+import com.educhoice.motherchoice.configuration.security.service.social.IntegratedLoginAuthenticationManager;
 import com.educhoice.motherchoice.configuration.security.service.social.token.LoginAttemptToken;
 import com.educhoice.motherchoice.configuration.security.service.social.token.SocialLoginAccessToken;
 import com.educhoice.motherchoice.models.nonpersistent.authorization.SecurityAccount;
@@ -11,7 +11,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +18,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,11 +27,11 @@ import java.io.IOException;
 
 public class FormLoginJwtAutheticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private SocialLoginAuthenticationManager authenticationManager;
+    private IntegratedLoginAuthenticationManager authenticationManager;
     private JwtAccessTokenConverter tokenConverter;
     private JwtIdService idService;
 
-    public FormLoginJwtAutheticationFilter(String defaultFilterProcessesUrl, SocialLoginAuthenticationManager authenticationManager, JwtAccessTokenConverter tokenConverter, JwtIdService idService) {
+    public FormLoginJwtAutheticationFilter(String defaultFilterProcessesUrl, IntegratedLoginAuthenticationManager authenticationManager, JwtAccessTokenConverter tokenConverter, JwtIdService idService) {
         super(defaultFilterProcessesUrl);
         this.authenticationManager = authenticationManager;
         this.tokenConverter = tokenConverter;
