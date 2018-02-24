@@ -20,7 +20,7 @@ public class AuthenticationExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(req, res);
         } catch (SecurityException e) {
-            res.setStatus(HttpStatus.SC_FORBIDDEN);
+            res.setStatus(e.getStatus().value());
             res.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             res.getWriter().write(new ObjectMapper().writeValueAsString(new StandardSecurityExceptionResolverDto(e)));
         }

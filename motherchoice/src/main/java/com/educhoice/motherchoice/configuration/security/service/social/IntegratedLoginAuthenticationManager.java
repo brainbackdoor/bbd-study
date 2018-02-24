@@ -41,7 +41,7 @@ public class IntegratedLoginAuthenticationManager implements AuthenticationManag
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException, SecurityException {
         LoginAttemptToken token = (LoginAttemptToken)authentication;
 
         SocialAuthinfoDto socialDto = token.getSocialDto();
@@ -60,11 +60,11 @@ public class IntegratedLoginAuthenticationManager implements AuthenticationManag
         return new OAuth2Authentication(generateOAuthRequest(), new IntegratedUserSigninToken(account, socialDto.getProvider()));
     }
 
-    private SecurityAccount getAccountFromUserinfo(BasicSocialUserInfo info, SocialAuthinfoDto dto) {
+    private SecurityAccount getAccountFromUserinfo(BasicSocialUserInfo info, SocialAuthinfoDto dto) throws SecurityException {
         return (SecurityAccount)accountDetailsService.loadUserBySocialId(info.getUniqueId(), dto.getProvider());
     }
 
-    private SecurityAccount getAccountFromFormSignin(FormLoginRequestDto dto) {
+    private SecurityAccount getAccountFromFormSignin(FormLoginRequestDto dto) throws SecurityException {
         SecurityAccount account = accountDetailsService.loadByFormLoginRequest(dto);
         if (account.isPasswordCorrect(passwordEncoder, dto.getPassword())) {
             return account;

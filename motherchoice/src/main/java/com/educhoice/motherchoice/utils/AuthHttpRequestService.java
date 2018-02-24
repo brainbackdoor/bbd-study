@@ -1,7 +1,7 @@
 package com.educhoice.motherchoice.utils;
 
 import com.educhoice.motherchoice.configuration.security.service.social.userinfo.BasicSocialUserInfo;
-import com.educhoice.motherchoice.utils.exceptions.security.SecurityException;
+import com.educhoice.motherchoice.utils.exceptions.security.InvalidAccessTokenException;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class AuthHttpRequestService {
         try {
             result = restTemplate.exchange(dto.getUserinfoRestResource(), HttpMethod.GET, new HttpEntity<String>(headers), dto.getUserinfoMetaclass());
         } catch (Exception e) {
-            throw new SecurityException("제공된 토큰으로 유저 정보를 가져오지 못했습니다.", e.getCause());
+            throw new InvalidAccessTokenException("제공된 토큰으로 유저 정보를 가져오지 못했습니다.", e.getCause());
         }
 
         log.debug("fetched user info from provider {} : {}", dto.getProvider().getProviderName(), result.getBody().toString());
