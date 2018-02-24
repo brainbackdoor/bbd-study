@@ -1,7 +1,6 @@
 package com.educhoice.motherchoice.models.persistent;
 
-import com.educhoice.motherchoice.utils.actions.CalculateGradeAvgTuitionAction;
-import com.educhoice.motherchoice.utils.exceptions.entity.NoGradeDefException;
+import com.educhoice.motherchoice.utils.exceptions.domain.NoGradeDefException;
 import com.educhoice.motherchoice.valueobject.models.academies.GradeDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;

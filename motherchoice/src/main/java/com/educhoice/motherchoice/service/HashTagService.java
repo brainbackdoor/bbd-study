@@ -4,7 +4,7 @@ import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.HashTag;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.HashTagRepository;
-import com.educhoice.motherchoice.utils.exceptions.entity.NoEntityFoundException;
+import com.educhoice.motherchoice.utils.exceptions.domain.NoEntityFoundException;
 import com.educhoice.motherchoice.valueobject.models.academies.HashTagDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

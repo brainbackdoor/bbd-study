@@ -16,11 +16,7 @@ public class JwtIdService {
     private RandomStringUtils randomStringUtils;
 
     public JwtId generateJti(String bearerName) {
-        //TODO write JTI generation logic.
         String jti = randomStringUtils.generateRandomString(16);
-//        while(!jwtIdRepository.findByJti(jti).isPresent()) {
-//            jti = randomStringUtils.generateRandomString(16);
-//        }
 
         return JwtId.builder()
                 .bearerName(bearerName)

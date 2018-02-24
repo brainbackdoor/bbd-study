@@ -1,7 +1,8 @@
 package com.educhoice.motherchoice.utils.exceptions.resolvers.domain;
 
-import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
-import com.educhoice.motherchoice.valueobject.models.exceptions.ModelRelatedExceptionsDto;
+import com.educhoice.motherchoice.utils.exceptions.domain.BaseDomainException;
+import com.educhoice.motherchoice.utils.exceptions.domain.NoAcademyFoundException;
+import com.educhoice.motherchoice.valueobject.models.exceptions.BaseDomainExceptionsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +27,13 @@ public class NoAcademyExceptionResolver implements HandlerExceptionResolver, Ord
 
     @Override
     public ModelAndView resolveException(HttpServletRequest req, HttpServletResponse res, Object o, Exception originalException) {
-        if (originalException instanceof NoAcademyIdException) {
+        if (originalException instanceof BaseDomainException) {
             log.info("Model-related exception has caught.");
-            NoAcademyIdException exception = (NoAcademyIdException)originalException;
-            ModelRelatedExceptionsDto dto = new ModelRelatedExceptionsDto(exception);
+            BaseDomainException exception = (BaseDomainException) originalException;
+            BaseDomainExceptionsDto dto = new BaseDomainExceptionsDto(exception);
             try {
                 res.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+                res.setStatus(exception.getHttpStatusCode());
                 res.getWriter().write(new ObjectMapper().writeValueAsString(dto));
             } catch(Exception e) {
                 log.error(originalException.getMessage());

@@ -10,7 +10,7 @@ import com.educhoice.motherchoice.models.persistent.repositories.AccountReposito
 import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccountRepository;
 import com.educhoice.motherchoice.service.AcademyService;
 import com.educhoice.motherchoice.utils.AuthHttpRequestService;
-import com.educhoice.motherchoice.utils.exceptions.entity.InvalidAcademyCreationException;
+import com.educhoice.motherchoice.utils.exceptions.domain.InvalidAcademyCreationException;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

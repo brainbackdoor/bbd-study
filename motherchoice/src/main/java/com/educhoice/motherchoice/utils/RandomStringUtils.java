@@ -20,7 +20,6 @@ public class RandomStringUtils {
 
         StringBuilder sb = new StringBuilder();
 
-
         IntStream.range(0, length).forEach(i -> {
             sb.append((char)(random.nextInt(UPPERCASE_ALPHABET_INT_RANGE) + UPPERCASE_ALPHABET_STARTING_POINT));
         });

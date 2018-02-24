@@ -5,7 +5,6 @@ import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccou
 import com.educhoice.motherchoice.models.persistent.notifications.NewQuestionStore;
 import com.educhoice.motherchoice.models.persistent.qna.Question;
 import com.educhoice.motherchoice.models.persistent.repositories.notifications.NewQuestionStoreRepository;
-import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
 import com.educhoice.motherchoice.utils.exceptions.security.UsernameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

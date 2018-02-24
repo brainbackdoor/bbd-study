@@ -4,18 +4,15 @@ import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.Course;
 import com.educhoice.motherchoice.models.persistent.DateTime;
 import com.educhoice.motherchoice.models.persistent.Grades;
-import com.educhoice.motherchoice.models.persistent.authorization.CorporateAccount;
 import com.educhoice.motherchoice.models.persistent.geolocation.AcademyAddress;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
-import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
+import com.educhoice.motherchoice.utils.exceptions.domain.NoAcademyFoundException;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
 import com.educhoice.motherchoice.valueobject.models.query.SearchableDateTime;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -28,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -133,7 +129,7 @@ public class AcademyServiceTest {
         });
     }
 
-    @Test(expected = NoAcademyIdException.class)
+    @Test(expected = NoAcademyFoundException.class)
     public void 학원정보_업데이트() {
         academyService.saveAcademy(this.academy);
 
