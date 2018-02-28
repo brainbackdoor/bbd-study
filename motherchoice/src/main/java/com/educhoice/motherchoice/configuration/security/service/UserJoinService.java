@@ -67,6 +67,7 @@ public class UserJoinService {
 
     private CorporateAccount generateCorporateAccount(UserJoinRequest request, PasswordEncoder passwordEncoder) {
         Academy academy = this.academyService.saveAcademy(request.generateAcademyInfo().orElseThrow(() -> new InvalidAcademyCreationException("학원 정보 생성에 실패했습니다.")));
+        academy.setCertified(false);
         CorporateAccount account = (CorporateAccount)request.generateAccount();
 
         account.encryptPassword(passwordEncoder);

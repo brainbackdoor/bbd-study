@@ -67,6 +67,11 @@ public class UserJoinRequest {
         return this.requestType.isAcademyRequest();
     }
 
+    @JsonIgnore
+    public boolean isSocialRequest() {
+        return this.socialAuthinfoDto != null;
+    }
+
     public BasicAccount generateAccount() {
         return this.requestType.generateAccount(this);
     }

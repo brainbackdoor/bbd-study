@@ -3,7 +3,6 @@ package com.educhoice.motherchoice.models.persistent.qna;
 import com.educhoice.motherchoice.utils.converter.LocalDateTimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
