@@ -1,13 +1,12 @@
 package com.educhoice.motherchoice.models.persistent;
 
 import com.educhoice.motherchoice.models.persistent.qna.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -28,7 +27,12 @@ public class Event extends BaseTimeEntity{
     @NotNull
     private String title;
 
+    @Column(columnDefinition = "TEXT NOT NULL")
     private String content;
-    private boolean newFlag;
+
+    @JsonProperty(value = "createdTime")
+    public String getCreatedTime() {
+        return super.getCreatedTime();
+    }
 
 }
