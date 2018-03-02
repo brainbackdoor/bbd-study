@@ -38,6 +38,7 @@ public class Academy {
     private List<Course> courses;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "ACADEMY_ID")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<SpecialCourse> specialCourses;
 
@@ -66,8 +67,8 @@ public class Academy {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Image> images;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "academy")
-    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "ACCOUNT_ID")
     private CorporateAccount corporateAccount;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

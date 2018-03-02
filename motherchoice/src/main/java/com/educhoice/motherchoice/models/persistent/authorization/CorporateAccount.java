@@ -27,8 +27,7 @@ public class CorporateAccount extends BasicAccount {
 
 	private String accountName;
 
-	@OneToOne
-	@JoinColumn(name = "academyId")
+	@OneToOne(mappedBy = "corporateAccount")
     @JsonIgnore
 	private Academy academy;
 
