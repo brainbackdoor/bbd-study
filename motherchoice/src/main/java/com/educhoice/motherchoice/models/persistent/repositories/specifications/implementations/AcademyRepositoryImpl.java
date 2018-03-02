@@ -75,6 +75,8 @@ public class AcademyRepositoryImpl implements AcademyRepositoryCustom {
         Join<Academy, AcademyAddress> addresses = academyRoot.join("address");
         Join<Course, DateTime> datetimes = courses.join("dateTime");
 
+        //Display 가능한 학원만 검색하도록 구현한다.
+        conditions.add(cb.equal(academyRoot.get(Academy_.displayed), true));
 
         if(dto.isCarAvailable() == true) {
             conditions.add(cb.equal(academyRoot.get(Academy_.carAvailable), dto.isCarAvailable()));

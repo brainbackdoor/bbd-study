@@ -2,6 +2,7 @@ package com.educhoice.motherchoice.models.domainevents.handler;
 
 import com.educhoice.motherchoice.models.domainevents.NewCorporateAccountEvent;
 import com.educhoice.motherchoice.service.NewQuestionStoreService;
+import com.educhoice.motherchoice.utils.aws.S3ControlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class NewCorporateAccountEventHandler implements ApplicationListener<NewC
 
     @Autowired
     private NewQuestionStoreService service;
+
+    @Autowired
+    private S3ControlService s3ControlService;
 
     @Override
     public void onApplicationEvent(NewCorporateAccountEvent event) {

@@ -54,6 +54,8 @@ public class SocialLoginAccessToken implements OAuth2AccessToken {
         this.additionalInformation.put("jti", id.getJti());
         this.additionalInformation.put("USER_UID", account.getBasicAccount().getAccountId());
         this.additionalInformation.put("PARSED_AUTHORITIES", account.getBasicAccount().getRoles().getSymbol());
+        this.additionalInformation.put("USER_LOGINID", account.getBasicAccount().getLoginId());
+
 
         if(account.getBasicAccount().getSocialProvider() != null) {
             this.additionalInformation.put("SOCIAL_PROVIDER", account.getBasicAccount().getSocialProvider().getProviderName());

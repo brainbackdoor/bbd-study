@@ -50,18 +50,18 @@ public class HashTagDtoTest {
         }
     }
 
-    @Test
-    public void 학원태그_추가_검사() {
-        hashTagService.saveHashTag(this.tag);
-        academyService.saveAcademy(this.academy);
-
-        HashTagDto dto = new HashTagDto(1, 1, "클린코드");
-        this.hashTagService.updateHashtag(dto);
-
-        log.debug(this.hashTagService.findExistingHashTags("클린코").toString());
-        assertNotNull(this.hashTagService.findExistingHashTags("클린코드"));
-        assertEquals(this.hashTagService.findExistingHashTags("클린코드").get(0).getAcademies().get(0).getAcademyName(), "포비학원");
-    }
+//    @Test
+//    public void 학원태그_추가_검사() {
+//        hashTagService.saveHashTag(this.tag);
+//        academyService.saveAcademy(this.academy);
+//
+//        HashTagDto dto = new HashTagDto(1, 1, "클린코드");
+//        this.hashTagService.updateHashtag(dto);
+//
+//        log.debug(this.hashTagService.findExistingHashTags("클린코").toString());
+//        assertNotNull(this.hashTagService.findExistingHashTags("클린코드"));
+//        assertEquals(this.hashTagService.findExistingHashTags("클린코드").get(0).getAcademies().get(0).getAcademyName(), "포비학원");
+//    }
 
 
 }

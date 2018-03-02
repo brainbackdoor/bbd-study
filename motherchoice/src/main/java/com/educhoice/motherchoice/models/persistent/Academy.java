@@ -52,12 +52,13 @@ public class Academy {
 
     private boolean carAvailable;
     private boolean certified;
+    private boolean displayed;
 
     @Embedded
     private AcademyAddress address;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "academyId")
+    @JoinColumn(name = "ACADEMY_ID")
     private List<Event> events;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

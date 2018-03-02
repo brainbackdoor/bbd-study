@@ -79,7 +79,7 @@ public class DummyApiController {
     public String hasAuthentication(Authentication authentication) {
         OAuth2Authentication oauth = (OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication();
 
-        return oauth.getPrincipal().getClass().getName();
+        return (String)oauth.getPrincipal();
     }
 
     @GetMapping("/events")

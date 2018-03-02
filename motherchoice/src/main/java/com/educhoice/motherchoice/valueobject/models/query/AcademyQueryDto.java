@@ -31,5 +31,4 @@ public class AcademyQueryDto {
         return Course.CoursesClassification.getCoursesClassificationBySymbol(this.subject);
     }
 
-
 }

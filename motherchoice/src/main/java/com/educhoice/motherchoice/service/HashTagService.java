@@ -28,15 +28,15 @@ public class HashTagService {
         return hashTagRepository.findByTitleContaining(tagTitle);
     }
 
-    public HashTagDto updateHashtag(HashTagDto dto) {
-        if(dto.getHashTagId() == 0) {
-            return new HashTagDto(hashTagRepository.save(dto.generateTagEntity()));
-        }
-
-        HashTag tag = hashTagRepository.findById(dto.getHashTagId()).orElseThrow(() -> new NoEntityFoundException("검색한 해시태그가 존재하지 않습니다."));
-        updateHashTagInfo(dto, tag);
-        return new HashTagDto(hashTagRepository.save(tag));
-    }
+//    public HashTagDto updateHashtag(HashTagDto dto) {
+//        if(dto.getHashTagId() == 0) {
+//            return new HashTagDto(hashTagRepository.save(dto.generateTagEntity()));
+//        }
+//
+//        HashTag tag = hashTagRepository.findById(dto.getHashTagId()).orElseThrow(() -> new NoEntityFoundException("검색한 해시태그가 존재하지 않습니다."));
+//        updateHashTagInfo(dto, tag);
+//        return new HashTagDto(hashTagRepository.save(tag));
+//    }
 
     private void updateHashTagInfo(HashTagDto dto, HashTag tag) {
         Academy targetAcademy = academyRepository.findOne(dto.getAcademyId());
