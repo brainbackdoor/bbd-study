@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -34,14 +35,19 @@ public class TokenStorageServiceTest {
     @Test
     public void 키밸류값_잘들어가는지() {
         this.tokenStorageService.putToken(this.token);
-        assertTrue(tokenStorageService.verifyToken(this.token));
+        assertTrue(tokenStorageService.verifyEmail(this.token));
     }
 
     @Test
     public void 토큰인증_잘되는지() {
         this.tokenStorageService.putToken(this.token);
-        this.tokenStorageService.verifyToken(this.token);
+        this.tokenStorageService.verifyEmail(this.token);
         assertTrue(this.tokenStorageService.isCertified("pobi@codesquad.kr"));
+    }
+
+    @Test
+    public void 토큰생성_잘되는지() {
+        assertThat(this.tokenStorageService.generateToken("test@test.com").getTokenValue().length(), is(32));
     }
 
 

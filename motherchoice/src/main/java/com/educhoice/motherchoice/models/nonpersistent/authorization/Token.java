@@ -22,7 +22,7 @@ public class Token {
     }
 
     public boolean isCorrectToken(String tokenValue) {
-        return tokenValue.equals(this.tokenValue);
+        return tokenValue.equalsIgnoreCase(this.tokenValue);
     }
 
     @Override

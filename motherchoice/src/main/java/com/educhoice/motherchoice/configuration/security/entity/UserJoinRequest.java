@@ -1,5 +1,6 @@
 package com.educhoice.motherchoice.configuration.security.entity;
 
+import com.educhoice.motherchoice.configuration.security.service.TokenStorageService;
 import com.educhoice.motherchoice.models.persistent.Academy;
 import com.educhoice.motherchoice.models.persistent.authorization.BasicAccount;
 import com.educhoice.motherchoice.valueobject.models.accounts.AccountJoinDto;
@@ -70,6 +71,11 @@ public class UserJoinRequest {
     @JsonIgnore
     public boolean isSocialRequest() {
         return this.socialAuthinfoDto != null;
+    }
+
+    @JsonIgnore
+    public String getJoinEmail() {
+        return this.accountInfo.getLoginId();
     }
 
     public BasicAccount generateAccount() {

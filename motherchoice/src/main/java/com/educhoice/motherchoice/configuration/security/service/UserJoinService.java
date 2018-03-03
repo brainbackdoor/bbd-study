@@ -11,6 +11,7 @@ import com.educhoice.motherchoice.models.persistent.repositories.CorporateAccoun
 import com.educhoice.motherchoice.service.AcademyService;
 import com.educhoice.motherchoice.utils.AuthHttpRequestService;
 import com.educhoice.motherchoice.utils.exceptions.domain.InvalidAcademyCreationException;
+import com.educhoice.motherchoice.utils.exceptions.security.EmailNotCertifiedException;
 import com.educhoice.motherchoice.valueobject.models.accounts.SocialAuthinfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +41,11 @@ public class UserJoinService {
     private PasswordEncoder passwordEncoder;
 
     public void joinAccount(UserJoinRequest request) {
+
+        if(!isEmailCertified(request.getJoinEmail())) {
+            throw new EmailNotCertifiedException("인증되지 않은 이메일입니다.");
+        }
+
         if (request.isCorporateAccountRequest()) {
             corporateAccountRepository.save(this.generateCorporateAccount(request, passwordEncoder));
             return;

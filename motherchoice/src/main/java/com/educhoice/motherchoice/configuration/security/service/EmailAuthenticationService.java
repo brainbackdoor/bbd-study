@@ -29,7 +29,7 @@ public class EmailAuthenticationService {
     }
 
     public void certifyEmail(Token token) {
-        tokenStorageService.verifyToken(token);
+        tokenStorageService.verifyEmail(token);
     }
 
     public boolean isGoodEmail(String email) {
