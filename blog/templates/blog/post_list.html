@@ -6,11 +6,14 @@
         <div>
             <h1>Hello World Django Girls</h1>
         </div>
-        <div>
-            <p>Hi There!</p>
-        </div>
-        <div>
-            <p>It Works!</p>
-        </div>
+        <hr />
+        {% for post in post_list %}
+            <div>
+                <p>published: {{ post.published_date }}</p>
+                <h2><a href="">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaks}}</p> 
+            </div>
+
+        {% endfor %}
     </body>
 </html>
