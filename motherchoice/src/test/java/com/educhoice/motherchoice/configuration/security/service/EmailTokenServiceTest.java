@@ -14,12 +14,12 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TokenStorageServiceTest {
+public class EmailTokenServiceTest {
 
     private Token token;
 
     @Autowired
-    TokenStorageService tokenStorageService;
+    EmailTokenService emailTokenService;
 
     @Autowired
     RandomStringUtils randomStringUtils;
@@ -27,27 +27,34 @@ public class TokenStorageServiceTest {
     @Before
     public void setUp() {
         Token setupToken = new Token();
-        setupToken.setEmail("pobi@codesquad.kr");
+        setupToken.setEmail("pobi@codesqd.kr");
         setupToken.setTokenValue(randomStringUtils.generateRandomString(20));
         this.token = setupToken;
     }
 
     @Test
     public void 키밸류값_잘들어가는지() {
-        this.tokenStorageService.putToken(this.token);
-        assertTrue(tokenStorageService.verifyEmail(this.token));
+        this.emailTokenService.putToken(this.token);
+        assertTrue(emailTokenService.verifyEmail(this.token));
     }
 
     @Test
     public void 토큰인증_잘되는지() {
-        this.tokenStorageService.putToken(this.token);
-        this.tokenStorageService.verifyEmail(this.token);
-        assertTrue(this.tokenStorageService.isCertified("pobi@codesquad.kr"));
+        this.emailTokenService.putToken(this.token);
+        this.emailTokenService.verifyEmail(this.token);
+        assertTrue(this.emailTokenService.isCertified("pobi@codesqd.kr"));
     }
 
     @Test
     public void 토큰생성_잘되는지() {
-        assertThat(this.tokenStorageService.generateToken("test@test.com").getTokenValue().length(), is(32));
+        assertThat(this.emailTokenService.generateToken("test@test.com").getTokenValue().length(), is(32));
+    }
+
+    @Test
+    public void SAVE_TOKEN_AFTER_GENERATE() {
+        emailTokenService.generateToken("test@test.com");
+
+        assertThat(this.emailTokenService.isCertified("test@test.com"), is(false));
     }
 
 

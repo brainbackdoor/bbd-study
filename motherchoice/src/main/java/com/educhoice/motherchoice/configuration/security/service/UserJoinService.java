@@ -35,7 +35,7 @@ public class UserJoinService {
     private AcademyService academyService;
 
     @Autowired
-    private TokenStorageService tokenStorageService;
+    private EmailTokenService emailTokenService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -68,7 +68,7 @@ public class UserJoinService {
     }
 
     private boolean isEmailCertified(String email) {
-        return tokenStorageService.isCertified(email);
+        return emailTokenService.isCertified(email);
     }
 
     private CorporateAccount generateCorporateAccount(UserJoinRequest request, PasswordEncoder passwordEncoder) {

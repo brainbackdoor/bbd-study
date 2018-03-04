@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class TokenStorageService {
+public class EmailTokenService {
 
+    private final int RANDOM_STRING_LENGTH = 32;
 	private final int EXPIRY_HOURS = 1;
-	private static final Logger log = LoggerFactory.getLogger(TokenStorageService.class);
+	private static final Logger log = LoggerFactory.getLogger(EmailTokenService.class);
 
 	@Autowired
     private RandomStringUtils randomStringUtils;
@@ -28,7 +29,7 @@ public class TokenStorageService {
 
 	public LoadingCache<String, Token> cache;
 
-	public TokenStorageService() {
+	public EmailTokenService() {
 		super();
 		this.cache = CacheBuilder.newBuilder().expireAfterWrite((long) EXPIRY_HOURS, TimeUnit.HOURS)
 				.build(new CacheLoader<String, Token>() {
@@ -40,12 +41,19 @@ public class TokenStorageService {
 	}
 
 	public Token generateToken(String email) {
-	    return new Token(email, randomStringUtils.generateRandomString(32));
+	    return putToken(email);
     }
 
 	public void putToken(Token token) {
 		this.cache.put(token.getEmail(), token);
 	}
+
+	private Token putToken(String email) {
+	    Token token = new Token(email, randomStringUtils.generateRandomString(RANDOM_STRING_LENGTH));
+	    this.cache.put(email, token);
+
+	    return token;
+    }
 
     public boolean verifyEmail(Token token) {
         return this.isValidToken(token.getEmail(), token.getTokenValue());

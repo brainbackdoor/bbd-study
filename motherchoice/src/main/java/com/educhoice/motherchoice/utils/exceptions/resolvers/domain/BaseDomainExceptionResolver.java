@@ -1,7 +1,6 @@
 package com.educhoice.motherchoice.utils.exceptions.resolvers.domain;
 
 import com.educhoice.motherchoice.utils.exceptions.domain.BaseDomainException;
-import com.educhoice.motherchoice.utils.exceptions.domain.NoAcademyFoundException;
 import com.educhoice.motherchoice.valueobject.models.exceptions.BaseDomainExceptionsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -16,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class NoAcademyExceptionResolver implements HandlerExceptionResolver, Ordered{
+public class BaseDomainExceptionResolver implements HandlerExceptionResolver, Ordered{
 
-    private static final Logger log = LoggerFactory.getLogger(NoAcademyExceptionResolver.class);
+    private static final Logger log = LoggerFactory.getLogger(BaseDomainExceptionResolver.class);
 
     @Override
     public int getOrder() {
