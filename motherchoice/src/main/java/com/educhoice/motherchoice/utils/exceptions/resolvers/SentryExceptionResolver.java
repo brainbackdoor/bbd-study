@@ -22,7 +22,7 @@ public class SentryExceptionResolver implements HandlerExceptionResolver, Ordere
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
         log.error("sentry captured an exception : []" , e.getMessage());
-        Sentry.init("https://9258b113675e430a9fd6d642164e12db:24ccba5f92b94b759cbe3744b851e5ee@sentry.io/281085");
+        Sentry.init("https://fd86bd5c10d146438fceb598f9154470:268093d8693b468280046799ea1d5093@sentry.io/247591");
         Sentry.capture(e);
 
         return null;
