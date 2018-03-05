@@ -1,0 +1,10 @@
+version: 0.0 
+os: linux 
+files: 
+  - source: / 
+    destination: /data/app/travis/build/
+
+hooks:
+  AfterInstall:
+    - location: excute-deploy.sh
+      timeout: 180  

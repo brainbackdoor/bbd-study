@@ -1,12 +1,61 @@
-language: java
-before_install:
-- chmod +x motherchoice/mvnw
+language: java 
 
-notifications:
+jdk:
+  - openjdk8
+
+services: 
+  - mongodb
+
+branches:
+  only:
+    - master 
+
+cache: 
+  directories: 
+    - '$HOME/.m2/repository' 
+
+script: 
+  - chmod +x motherchoice/mvnw
+  - cd motherchoice
+  - mvnw clean package
+
+before_deploy: 
+  - zip -r educhoice-be * 
+  - mkdir -p deploy 
+  - mv educhoice-be.zip deploy/educhoice-be.zip 
+
+deploy: 
+  - provider: s3 
+    access_key_id: $AWS_ACCESS_KEY 
+    secret_access_key: $AWS_SECRET_KEY 
+    bucket: educhoice-app-be
+    region: ap-northeast-2 
+    skip_cleanup: true 
+    acl: public_read 
+    local_dir: deploy 
+    wait-until-deployed: true 
+    on: 
+      repo: brainbackdoor/educhoice-temp-be
+      branch: master
+
+  - provider: codedeploy 
+    access_key_id: $AWS_ACCESS_KEY 
+    secret_access_key: $AWS_SECRET_KEY 
+    bucket: educhoice-app-be 
+    key: educhoice-be.zip
+    bundle_type: zip 
+    application: educhoice-app-be 
+    deployment_group: educhoice-app-be-group 
+    region: ap-northeast-2 
+    wait-until-deployed: true 
+    on: 
+      repo: brainbackdoor/educhoice-temp-be
+      branch: master
+
+notifications: 
+  email: 
+    recipients: 
+      - brainbackdoor@gmail.com 
  slack:
    rooms:
      - edu-connect:Rurv5WxxeDgRZ8oi9JWHogQQ#be_github
-script:
-- if [[ "$TRAVIS_BRANCH" == "develop" ]] && [[ "$TRAVIS_PULL_REQUEST" == false ]]; then curl -X GET http://ec2-13-125-21-21.ap-northeast-2.compute.amazonaws.com:9999/deploy/BE_develop ; 
-  elif [[ "$TRAVIS_BRANCH" == "master" ]]  && [[ "$TRAVIS_PULL_REQUEST" == false ]]; then  curl -X GET http://ec2-13-125-21-21.ap-northeast-2.compute.amazonaws.com:9999/deploy/BE_master  ; 
-  fi
