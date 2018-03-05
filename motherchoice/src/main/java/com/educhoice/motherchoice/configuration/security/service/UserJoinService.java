@@ -42,9 +42,9 @@ public class UserJoinService {
 
     public void joinAccount(UserJoinRequest request) {
 
-        if(!isEmailCertified(request.getJoinEmail())) {
-            throw new EmailNotCertifiedException("인증되지 않은 이메일입니다.");
-        }
+//        if(!isEmailCertified(request.getJoinEmail())) {
+//            throw new EmailNotCertifiedException("인증되지 않은 이메일입니다.");
+//        }
 
         if (request.isCorporateAccountRequest()) {
             corporateAccountRepository.save(this.generateCorporateAccount(request, passwordEncoder));
