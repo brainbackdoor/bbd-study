@@ -3,6 +3,9 @@ package com.educhoice.motherchoice.service;
 import com.educhoice.motherchoice.models.persistent.authorization.Account;
 import com.educhoice.motherchoice.models.persistent.qna.Question;
 import com.educhoice.motherchoice.models.persistent.repositories.QuestionRepository;
+import com.educhoice.motherchoice.models.persistent.repositories.AnswerRepository;
+import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AnswerDetailsDto;
+import com.educhoice.motherchoice.valueobject.models.academies.inquiry.QuestionDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.QuestionListDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.QuestionPostDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
+    
+    @Autowired
+    private AnswerRepository answerRepository;
 
     @Autowired
     private AcademyService academyService;
@@ -39,4 +45,12 @@ public class QuestionService {
     public List<QuestionListDto> retrieveQuestionList(Account account) {
         return account.getQuestions().stream().map(q -> QuestionListDto.getDto(q)).collect(Collectors.toList());
     }
+
+    public QuestionDto retrieveQuestion(long questionId) {
+        return new QuestionDto(questionRepository.findOne(questionId));
+    }
+
+    public AnswerDetailsDto retrieveAnswer(long answerId) {
+        return new AnswerDetailsDto(answerRepository.findOne(answerId));
+    } 
 }

@@ -12,4 +12,5 @@ public interface AccountRepository extends CrudRepository<Account, Long>{
     Optional<Account> findBySocialId(long id);
     Optional<Account> findBySocialIdAndSocialProvider(long id, SocialSigninProviders provider);
     Optional<Account> findByNicknameContaining(String nickname);
+    Optional<Account> findByAccountId(long accountId);
 }
