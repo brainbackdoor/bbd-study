@@ -1,7 +1,9 @@
 package com.educhoice.motherchoice.service;
 
 import com.educhoice.motherchoice.models.persistent.Academy;
+import com.educhoice.motherchoice.models.persistent.geolocation.SearchAddress;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
+import com.educhoice.motherchoice.models.persistent.repositories.SearchAddressRepository;
 import com.educhoice.motherchoice.utils.exceptions.domain.NoAcademyFoundException;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
 import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
@@ -23,6 +25,9 @@ public class AcademyService {
 
     @Autowired
     private NewQuestionStoreService questionService;
+    
+	@Autowired
+	private SearchAddressRepository searchAddressRepository;    
 
     public Academy saveAcademy(Academy academy) {
         return academyRepository.save(academy);
@@ -69,4 +74,8 @@ public class AcademyService {
         targetAcademy.setImages(imageDto.getImgs());
         academyRepository.save(targetAcademy);
     }
+
+	public List<SearchAddress> retrieveAddressList(String value) {
+		return searchAddressRepository.findByValueContaining(value);
+	}  
 }
