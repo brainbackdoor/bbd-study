@@ -5,7 +5,9 @@ import com.educhoice.motherchoice.models.persistent.geolocation.SearchAddress;
 import com.educhoice.motherchoice.models.persistent.repositories.AcademyRepository;
 import com.educhoice.motherchoice.models.persistent.repositories.SearchAddressRepository;
 import com.educhoice.motherchoice.utils.exceptions.domain.NoAcademyFoundException;
+import com.educhoice.motherchoice.utils.exceptions.entity.NoAcademyIdException;
 import com.educhoice.motherchoice.valueobject.models.academies.AcademyDto;
+import com.educhoice.motherchoice.valueobject.models.academies.ImageListDto;
 import com.educhoice.motherchoice.valueobject.models.academies.ImageUploadDto;
 import com.educhoice.motherchoice.valueobject.models.academies.inquiry.AcademyTaggingDto;
 import com.educhoice.motherchoice.valueobject.models.query.AcademyQueryDto;
@@ -77,5 +79,10 @@ public class AcademyService {
 
 	public List<SearchAddress> retrieveAddressList(String value) {
 		return searchAddressRepository.findByValueContaining(value);
-	}  
+	}
+
+    public List<ImageListDto> findMulitpleImageList(long academyId) {
+        return ImageListDto.generateImageList(academyRepository.findByAcademyId(academyId)
+                        .orElseThrow(() -> new NoAcademyIdException("ID에 맞는 학원이 검색되지 않았습니다.")));
+    }
 }
