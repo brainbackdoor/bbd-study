@@ -16,7 +16,34 @@ router.get('/', (req, res) => {
     })
 });
 
+/*
+    READ ACADEMY: GET /api/academy/:id
+    ERROR CODES
+        1: INVALID ID
+        2: NO RESOURCE  
+*/
+router.get('/:id', (req, res) => {
+    // check academy in validity
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 1
+        });
+    }
 
+    // find academy and check for writer
+    Academy.findById(req.params.id, (err, academy) => {
+        if(err) throw err;
+
+        if(!academy) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 2
+            });
+        }
+        res.json(academy);
+    });
+});
 
 /*
     DELETE ACADEMY: DELETE /api/academy/:id

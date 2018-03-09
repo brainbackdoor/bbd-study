@@ -2,8 +2,6 @@ import express from 'express';
 import Account from '../models/account';
 import Academy from '../models/academy';
 const router = express.Router();
-
-
 /*
     ACCOUNT SIGNUP: POST /api/account/signup
     BODY SAMPLE: 
@@ -172,7 +170,6 @@ router.post('/signup', (req, res) => {
         }
     });  
 });
-
 
 /*
     ACCOUNT SIGNIN: POST /api/account/signin
