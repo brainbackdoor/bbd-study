@@ -1,5 +1,5 @@
 import express from 'express';
-import Account from '../models/account';
+// import Account from '../models/account';
 import Question from '../models/question';
 import mongoose from 'mongoose';
 
@@ -16,7 +16,59 @@ router.get('/', (req, res) => {
         res.json(questions);
     })
 });
-
+/*
+    READ QUESTION: GET /api/question/list
+    ERROR CODES
+        1: NO RESOURCE  
+*/
+router.get('/list', (req, res) => {
+    // find question and check for writer    
+    Question.find({"accountId":req.session.loginInfo.loginId}, (err, question) => {
+        if(err) throw err;
+        if(!question) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 1
+            });
+        }
+    }).sort({"_id": -1})
+    .exec((err, questions) => {
+        if(err) throw err;
+        res.json(questions);
+    });
+});
+/*
+    READ QUESTION: GET /api/question/:id
+    ERROR CODES
+        1: INVALID ID
+        2: NO RESOURCE  
+*/
+router.get('/:id', (req, res) => {
+    // check question in validity
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 1
+        });
+    }
+    // find question and check for writer    
+    Question.findById(req.params.id, (err, question) => {
+        if(err) throw err;
+        if(!question) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 2
+            });
+        }
+        if(question.accountId !== req.session.loginInfo.loginId){
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 2
+            }); 
+        }
+        res.json(question);
+    });
+});
 /*
     WRITE QUESTION: POST /api/question
     BODY SAMPLE: 

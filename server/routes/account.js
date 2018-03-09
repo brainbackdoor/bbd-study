@@ -91,22 +91,23 @@ router.post('/signup', (req, res) => {
                             error: "NICKNAME EXISTS",
                             code: 5
                         });
-                    }
+                    } else {
+                        // CREATE ACCOUNT
+                        let account = new Account({
+                            requestType: req.body.requestType,
+                            marketingInfo: req.body.marketingInfo,
+                            loginId: req.body.loginId,
+                            password: req.body.password,
+                            memberAddress: req.body.memberAddress,
+                            nickname: req.body.nickname,          
+                        });
+                        account.password = account.generateHash(account.password);
+                        account.save( err => {
+                            if(err) throw err;
+                            return res.json({ success: true });
+                        })                          
+                    }                    
                 });
-                // CREATE ACCOUNT
-                let account = new Account({
-                    requestType: req.body.requestType,
-                    marketingInfo: req.body.marketingInfo,
-                    loginId: req.body.loginId,
-                    password: req.body.password,
-                    memberAddress: req.body.memberAddress,
-                    nickname: req.body.nickname,          
-                });
-                account.password = account.generateHash(account.password);
-                account.save( err => {
-                    if(err) throw err;
-                    return res.json({ success: true });
-                })  
             }
         
             if (req.body.requestType.match('corporate')) {
@@ -139,35 +140,36 @@ router.post('/signup', (req, res) => {
                             error: "ACADEMY EXISTS",
                             code: 7
                         });
+                    } else {
+                        // CREATE ACCOUNT
+                        let account = new Account({
+                            requestType: req.body.requestType,
+                            marketingInfo: req.body.marketingInfo,
+                            loginId: req.body.loginId,
+                            password: req.body.password,
+                            originalName: req.body.originalName,
+                            phoneNo: req.body.phoneNo            
+                        });
+                        account.password = account.generateHash(account.password);
+                
+                        // CREATE NEW ACADEMY
+                        let academy = new Academy({
+                            accountId: req.body.loginId,
+                            academyName: req.body.academy.academyName,
+                            address: req.body.academy.address,
+                            ownerName: req.body.academy.ownerName,
+                            academyPhoneNumber: req.body.academy.academyPhoneNumber
+                        });        
+                        // save in the db
+                        account.save( err => {
+                            if(err) throw err;
+                            // save in db
+                            academy.save( err => {
+                                if(err) throw err;
+                                return res.json({ success: true });
+                            })        
+                        });                        
                     }
-                });
-                // CREATE ACCOUNT
-                let account = new Account({
-                    requestType: req.body.requestType,
-                    marketingInfo: req.body.marketingInfo,
-                    loginId: req.body.loginId,
-                    password: req.body.password,
-                    originalName: req.body.originalName,
-                    phoneNo: req.body.phoneNo            
-                });
-                account.password = account.generateHash(account.password);
-        
-                // CREATE NEW ACADEMY
-                let academy = new Academy({
-                    accountId: req.body.loginId,
-                    academyName: req.body.academy.academyName,
-                    address: req.body.academy.address,
-                    ownerName: req.body.academy.ownerName,
-                    academyPhoneNumber: req.body.academy.academyPhoneNumber
-                });        
-                // save in the db
-                account.save( err => {
-                    if(err) throw err;
-                    // save in db
-                    academy.save( err => {
-                        if(err) throw err;
-                        return res.json({ success: true });
-                    })        
                 });
             }
         }
@@ -236,7 +238,7 @@ router.get('/getinfo', (req,res) => {
 });
 
 /*
-    LOGOUT: POS /api/account/logout
+    LOGOUT: POST /api/account/logout
 */
 router.post('/logout', (req, res) => {
     req.session.destroy(err => { if(err) throw err; });
