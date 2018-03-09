@@ -20,27 +20,31 @@ router.get('/', (req, res) => {
     WRITE COURSE: POST /api/course
     BODY SAMPLE: 
     { 
-        coursesClassification: "과학",
-        subjectClassification: "과학",
-        courseName: "물리(과탐)-고2",
-        grade: "고등2",
-        tuition: 400000,
-        dayOfWeek: [
+        "courseType": {"normal" | "special"},
+        "coursesClassification": "과학",
+        "subjectClassification": "과학",
+        "courseName": "물리(과탐)-고2",
+        "grade": "고등2",
+        "tuition": 400000,
+        "dayOfWeek": [
             {
-            "startTime": "18:00",
-            "endTime": "20:00",
-            "day": "월"
+                "startTime": "18:00",
+                "endTime": "20:00",
+                "day": "월"
             },
             {
-            "startTime": "18:00",
-            "endTime": "20:00",
-            "day": "화"
+                "startTime": "18:00",
+                "endTime": "20:00",
+                "day": "화"
             }
-        ]
+        ],
+        "duration":"2018.01.01 ~ 2018.01.02"
     }
     ERROR CODES
         1: NOT LOGGED IN
         2: EMPTY CONTENTS
+        3: BAD REQUEST TYPE
+        4: BAD REQUEST DATA
 */
 router.post('/', (req, res) => {
     // check login status
@@ -88,8 +92,30 @@ router.post('/', (req, res) => {
             code: 2
         });
     }
+    if((typeof req.body.courseType !== 'string') || (req.body.courseType === "")) {
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 2
+        });
+    }
+    if(!req.body.courseType.match('normal') && !req.body.courseType.match('special')) {
+        return res.status(400).json({
+            error: "BAD REQUEST TYPE",
+            code: 3
+        });
+    } 
+    if(req.body.courseType.match('special')){
+        // check request data
+        if(!req.body.duration ){
+            return res.status(400).json({
+                error: "BAD REQUEST DATA",
+                code: 4
+            });            
+        }
+    }
     // CREATE NEW COURSE
     let course = new Course({
+        courseType: req.body.courseType,
         accountId: req.session.loginInfo.loginId,
         coursesClassification: req.body.coursesClassification,
         subjectClassification: req.body.subjectClassification,
@@ -97,7 +123,7 @@ router.post('/', (req, res) => {
         grade: req.body.grade,
         tuition: req.body.tuition,
         dayOfWeek: req.body.dayOfWeek,
-    
+        duration: req.body.duration
     });
 
     // save in db
@@ -162,21 +188,21 @@ router.delete('/:id', (req, res) => {
     MODIFY COURSE: PUT /api/course/:id
     BODY SAMPLE: 
     { 
-        coursesClassification: "과학",
-        subjectClassification: "과학",
-        courseName: "물리(과탐)-고2",
-        grade: "고등2",
-        tuition: 400000,
-        dayOfWeek: [
+        "coursesClassification": "과학",
+        "subjectClassification": "과학",
+        "courseName": "물리(과탐)-고2",
+        "grade": "고등2",
+        "tuition": 400000,
+        "dayOfWeek": [
             {
-            "startTime": "18:00",
-            "endTime": "20:00",
-            "day": "월"
+                "startTime": "18:00",
+                "endTime": "20:00",
+                "day": "월"
             },
             {
-            "startTime": "18:00",
-            "endTime": "20:00",
-            "day": "화"
+                "startTime": "18:00",
+                "endTime": "20:00",
+                "day": "화"
             }
         ]
     }

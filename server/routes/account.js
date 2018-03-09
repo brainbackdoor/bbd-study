@@ -7,7 +7,7 @@ const router = express.Router();
     BODY SAMPLE: 
     {
         // Common Variables
-            "requestType": "{parents | corporate}",
+            "requestType": "{"parents" | "corporate"}",
             "marketingInfo": true,
             "loginId": "bbd@educhoice.com",
             "password": "test",

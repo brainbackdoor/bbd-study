@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 const Schema = mongoose.Schema;
 
 const Course = new Schema({
+    courseType: String,
     accountId: String,
     academyId: String,
     coursesClassification: String,
@@ -18,6 +19,7 @@ const Course = new Schema({
             day: String
         }
     ],
+    duration: String,
     date: {
         created: { type: Date, default: Date.now },
         edited: { type: Date, default: Date.now }
