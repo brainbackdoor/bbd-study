@@ -1,5 +1,6 @@
 import express from 'express';
 import Academy from '../models/academy';
+import Course from '../models/course';
 import mongoose from 'mongoose';
 
 const router = express.Router();
@@ -42,57 +43,6 @@ router.get('/:id', (req, res) => {
             });
         }
         res.json(academy);
-    });
-});
-
-/*
-    DELETE ACADEMY: DELETE /api/academy/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-        4: PERMISSION FAILURE
-*/
-router.delete('/:id', (req, res) => {
-
-    // check academy in validity
-    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
-        return res.status(400).json({
-            error: "INVALID ID",
-            code: 1
-        });
-    }
-
-    // check login status
-    if(typeof req.session.loginInfo === 'undefined') {
-        return res.status(403).json({
-            error: "NOT LOGGED IN",
-            code: 2
-        });
-    }
-
-    // find academy and check for writer
-    Academy.findById(req.params.id, (err, academy) => {
-        if(err) throw err;
-
-        if(!academy) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 3
-            });
-        }
-        if(academy.accountId != req.session.loginInfo.loginId){
-            return res.status(403).json({
-                error: "PERMISSION FAILURE",
-                code: 4
-            });
-        }
-
-        // REMOVE THE ACADEMY
-        Academy.remove({ _id: req.params.id }, err => {
-            if(err) throw err;
-            res.json({ success: true });
-        });
     });
 });
 
@@ -176,7 +126,6 @@ router.put('/:id', (req, res) => {
             });
         }
         
-
         // MODIFY AND SAVE IN DB
         academy.academyName = req.body.academyName;
         academy.address = req.body.address;
@@ -193,5 +142,58 @@ router.put('/:id', (req, res) => {
         });
     });
 });
+
+/*
+    DELETE ACADEMY: DELETE /api/academy/:id
+    ERROR CODES
+        1: INVALID ID
+        2: NOT LOGGED IN
+        3: NO RESOURCE
+        4: PERMISSION FAILURE
+*/
+router.delete('/:id', (req, res) => {
+
+    // check academy in validity
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 1
+        });
+    }
+
+    // check login status
+    if(typeof req.session.loginInfo === 'undefined') {
+        return res.status(403).json({
+            error: "NOT LOGGED IN",
+            code: 2
+        });
+    }
+
+    // find academy and check for writer
+    Academy.findById(req.params.id, (err, academy) => {
+        if(err) throw err;
+
+        if(!academy) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 3
+            });
+        }
+        if(academy.accountId != req.session.loginInfo.loginId){
+            return res.status(403).json({
+                error: "PERMISSION FAILURE",
+                code: 4
+            });
+        }
+
+        // REMOVE THE ACADEMY
+        Academy.remove({ _id: req.params.id }, err => {
+            if(err) throw err;
+            res.json({ success: true });
+        });
+    });
+});
+
+
 
 export default router;
