@@ -5,6 +5,7 @@ import course from './course';
 import event from './event';
 import hashTag from './hashTag';
 import question from './question';
+import reply from './reply';
 
 const router = express.Router();
 router.use('/account', account);
@@ -13,5 +14,6 @@ router.use('/course',course);
 router.use('/event',event);
 router.use('/hashTag',hashTag);
 router.use('/question',question);
+router.use('/reply',reply);
 
 export default router;
