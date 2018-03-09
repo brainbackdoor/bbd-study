@@ -1,6 +1,9 @@
 import express from 'express';
 // import Account from '../models/account';
 import Question from '../models/question';
+import Answer from '../models/answer';
+import Reply from '../models/reply';
+import SearchInquiry from '../dto/searchInquiry';
 import mongoose from 'mongoose';
 
 const router = express.Router();
@@ -16,6 +19,59 @@ router.get('/', (req, res) => {
         res.json(questions);
     })
 });
+
+/*
+    READ QUESTION: GET /api/question/:questionId
+    ERROR CODES
+        1: INVALID ID
+        2: NO RESOURCE  
+*/
+router.get('/:questionId', (req, res) => {
+    // check question in validity
+    if(!mongoose.Types.ObjectId.isValid(req.params.questionId)){
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 1
+        });
+    }
+    //check login status
+    if(typeof req.session.loginInfo === 'undefined') {
+        return res.status(403).json ({
+            error: "NOT LOGGED IN",
+            code: 2
+        });
+    }    
+    // find question and check for writer    
+    Answer.findOne({'questionId':req.params.questionId}, (err, answer) => {
+        if(err) throw err;
+        // if exists, check writer
+        if(answer.accountId !== req.session.loginInfo.loginId && answer.questionerId !== req.session.loginInfo.loginId){
+            return res.status(403).json({
+                error: "PERMISSION FAILURE",
+                code: 3
+            });
+        }
+        if(!answer) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 4
+            });
+        }
+
+        Reply.find({'answerId': answer._id},(err, reply)=> {
+           let result = new SearchInquiry({
+                accountId: answer.accountId,
+                accountName: answer.accountName,
+                answerContent: answer.content,
+                created: answer.date.created,
+                reply: reply
+           });
+           res.json(result); 
+        });
+    });
+});
+
+
 /*
     READ QUESTION: GET /api/question/list
     ERROR CODES
@@ -84,6 +140,7 @@ router.get('/:id', (req, res) => {
                 code: 2
             }); 
         }
+
         res.json(question);
     });
 });

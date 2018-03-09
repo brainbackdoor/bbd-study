@@ -1,24 +1,24 @@
 import express from 'express';
+import Question from '../models/question';
 import Answer from '../models/answer';
-import Reply from '../models/reply';
 import mongoose from 'mongoose';
 
 const router = express.Router();
 /*
-    READ REPLY: GET /api/reply
+    READ ANSWER: GET /api/answer
 */
 router.get('/', (req, res) => {
-    Reply.find()
+    Answer.find()
     .sort({"_id": -1})
     .limit(6)
-    .exec((err, replies) => {
+    .exec((err, answers) => {
         if(err) throw err;
-        res.json(replies);
+        res.json(answers);
     })
 });
 
 /*
-    WRITE REPLY: POST /api/reply/:answerId
+    WRITE ANSWER: POST /api/answer/:questionId
     BODY SAMPLE: 
     { 
         "content": "댓글컨텐츠",
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
         1: NOT LOGGED IN
         2: EMPTY CONTENTS
 */
-router.post('/:answerId', (req, res) => {
+router.post('/:questionId', (req, res) => {
     // check login status
     if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
@@ -43,26 +43,25 @@ router.post('/:answerId', (req, res) => {
             code: 2
         });
     }
-    Answer.findById(req.params.answerId, (err, answer) => {
+    Question.findById(req.params.questionId, (err, question) => {
         if(err) throw err;
-        if(!answer) {
+        if(!question) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 2
             });
         }
-        // CREATE NEW REPLY
-        let reply = new Reply({
+        // CREATE NEW ANSWER
+        let answer = new Answer({
             accountId: req.session.loginInfo.loginId,
-            role: req.session.loginInfo.type,
             accountName: req.session.loginInfo.name,
-            questionId: answer.questionId,
-            answerId: answer._id,
+            questionerId: question.accountId,
+            questionId: question._id,
             content: req.body.content
         });
 
         // save in db
-        reply.save( err => {
+        answer.save( err => {
             if(err) throw err;
             return res.json({ success: true });
         })
@@ -70,7 +69,7 @@ router.post('/:answerId', (req, res) => {
 });
 
 /*
-    DELETE REPLY: DELETE /api/reply/:id
+    DELETE ANSWER: DELETE /api/answer/:id
     ERROR CODES
         1: INVALID ID
         2: NOT LOGGED IN
@@ -79,7 +78,7 @@ router.post('/:answerId', (req, res) => {
 */
 router.delete('/:id', (req, res) => {
 
-    // check reply in validity
+    // check answer in validity
     if(!mongoose.Types.ObjectId.isValid(req.params.id)){
         return res.status(400).json({
             error: "INVALID ID",
@@ -95,24 +94,24 @@ router.delete('/:id', (req, res) => {
         });
     }
 
-    // find reply and check for writer
-    Reply.findById(req.params.id, (err, reply) => {
+    // find answer and check for writer
+    Answer.findById(req.params.id, (err, answer) => {
         if(err) throw err;
 
-        if(!reply) {
+        if(!answer) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 3
             });
         }
-        if(reply.accountId != req.session.loginInfo.loginId){
+        if(answer.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
         }
-        // REMOVE THE REPLY
-        reply.remove({ _id: req.params.id }, err => {
+        // REMOVE THE ANSWER
+        answer.remove({ _id: req.params.id }, err => {
             if(err) throw err;
             res.json({ success: true });
         });
@@ -120,7 +119,7 @@ router.delete('/:id', (req, res) => {
 });
 
 /*
-    MODIFY REPLY: PUT /api/reply/:id
+    MODIFY ANSWER: PUT /api/answer/:id
     BODY SAMPLE: 
     { 
         "content": "댓글컨텐츠"
@@ -134,7 +133,7 @@ router.delete('/:id', (req, res) => {
 */
 router.put('/:id', (req, res) => {
 
-    // check reply id validity
+    // check answer id validity
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
             error: "INVALID ID",
@@ -158,12 +157,12 @@ router.put('/:id', (req, res) => {
         });
     }
 
-    // find reply
-    Reply.findById(req.params.id, (err, reply) => {
+    // find answer
+    Answer.findById(req.params.id, (err, answer) => {
         if(err) throw err;
 
-        // if reply does not exist
-        if(!reply) {
+        // if answer does not exist
+        if(!answer) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 4
@@ -171,7 +170,7 @@ router.put('/:id', (req, res) => {
         }
 
         // if exists, check writer
-        if(reply.accountId != req.session.loginInfo.loginId){
+        if(answer.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5
@@ -179,16 +178,16 @@ router.put('/:id', (req, res) => {
         }
 
         // MODIFY AND SAVE IN DB
-        reply.content =  req.body.content;   
-        reply.date.edited = new Date();
-        reply.is_edited = true;
+        answer.content =  req.body.content;   
+        answer.date.edited = new Date();
+        answer.is_edited = true;
 
-        reply.save((err, reply) => {
+        answer.save((err, answer) => {
             if(err) throw err;
 
             return res.json({
                 success: true,
-                reply
+                answer
             });
         });
     });

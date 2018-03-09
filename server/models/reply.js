@@ -5,8 +5,10 @@ const Schema = mongoose.Schema;
 
 const Reply = new Schema({
     accountId: String,
+    role: String,
     accountName: String,
     questionId: String,
+    answerId: String,
     content: String,
     date: {
         created: { type: Date, default: Date.now },

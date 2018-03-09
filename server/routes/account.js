@@ -210,19 +210,39 @@ router.post('/signin',(req, res) => {
             });
         }
 
-        // alter session
-        let session = req.session;
-        session.loginInfo = {
-            _id: account._id,
-            loginId: account.loginId,
-            type: account.requestType
-        };
-
-        // return success
-        return res.json({
-            success: true
-        });
+        if(account.requestType ==='parents'){
+            // alter session
+            let session = req.session;
+            session.loginInfo = {
+                _id: account._id,
+                loginId: account.loginId,
+                name: account.nickname,
+                type: account.requestType
+            };
+            // return success
+            return res.json({
+                success: true
+            });            
+        } else {
+            Academy.findOne({accountId:req.body.loginId},(err, academy) => {
+                if(err) throw err;
+                // alter session
+                let session = req.session;
+                session.loginInfo = {
+                    _id: account._id,
+                    loginId: account.loginId,
+                    name: academy.academyName,
+                    type: account.requestType
+                }; 
+                // return success
+                return res.json({
+                    success: true
+                });                   
+            });
+           
+        } 
     });
+
 });
 
 /*
