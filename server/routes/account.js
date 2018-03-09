@@ -102,6 +102,7 @@ router.post('/signup', (req, res) => {
                     memberAddress: req.body.memberAddress,
                     nickname: req.body.nickname,          
                 });
+                account.password = account.generateHash(account.password);
                 account.save( err => {
                     if(err) throw err;
                     return res.json({ success: true });
@@ -211,7 +212,8 @@ router.post('/signin',(req, res) => {
         let session = req.session;
         session.loginInfo = {
             _id: account._id,
-            loginId: account.loginId
+            loginId: account.loginId,
+            type: account.requestType
         };
 
         // return success

@@ -6,15 +6,6 @@ import Event from '../models/event';
 import HashTag from '../models/hashTag';
 import SearchAcademy from '../dto/searchAcademy';
 import mongoose from 'mongoose';
-function searchCourses(academy) {
-
-}
-function searchEvents(academy) {
-
-}
-function searchHashTags(academy) {
-
-}
 const router = express.Router();
 /*
     READ ACADEMY: GET /api/academy
