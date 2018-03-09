@@ -22,20 +22,38 @@ router.get('/', (req, res) => {
         1: NO RESOURCE  
 */
 router.get('/list', (req, res) => {
-    // find question and check for writer    
-    Question.find({"accountId":req.session.loginInfo.loginId}, (err, question) => {
-        if(err) throw err;
-        if(!question) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 1
-            });
-        }
-    }).sort({"_id": -1})
-    .exec((err, questions) => {
-        if(err) throw err;
-        res.json(questions);
-    });
+    if(req.session.loginInfo.type ==='parents'){
+        // find question and check for writer    
+        Question.find({"accountId":req.session.loginInfo.loginId}, (err, question) => {
+            if(err) throw err;
+            if(!question) {
+                return res.status(404).json({
+                    error: "NO RESOURCE",
+                    code: 1
+                });
+            }
+        }).sort({"date.edited": -1})
+        .exec((err, questions) => {
+            if(err) throw err;
+            res.json(questions);
+        });
+    } else {
+        // find question and check for writer    
+        Question.find({"receivers.receiverId":req.session.loginInfo.loginId}, (err, question) => {
+            if(err) throw err;
+            if(!question) {
+                return res.status(404).json({
+                    error: "NO RESOURCE",
+                    code: 1
+                });
+            }
+        }).sort({"date.edited": -1})
+        .exec((err, questions) => {
+            if(err) throw err;
+            res.json(questions);
+        });
+    }
+
 });
 /*
     READ QUESTION: GET /api/question/:id
