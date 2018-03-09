@@ -16,68 +16,7 @@ router.get('/', (req, res) => {
     })
 });
 
-/*
-    WRITE ACADEMY: POST /api/academy
-    BODY SAMPLE: 
-    { 
-        "academyName": "codesquad",
-        "address": {
-            "sido": "서울시",
-            "sigungu": "노원구",
-            "dong": "상계동",
-            "latitude": 127.06697859544342,
-            "longitude": 37.66444002512082
-    },
-        "carAvailable": true,
-        "inquiryResponseRate": 0,
-        "introduction": "소개글",
-        "hashTags": {"title":"태그"},    
-    }
-    ERROR CODES
-        1: NOT LOGGED IN
-        2: EMPTY CONTENTS
-*/
-router.post('/', (req, res) => {
-    // check login status
-    if(typeof req.session.loginInfo === 'undefined') {
-        return res.status(403).json({
-            error: "NOT LOGGED IN",
-            code: 1
-        });
-    }
 
-    // check academyName valid
-    if(typeof req.body.academyName !== 'string') {
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
-
-    if(req.body.academyName === "") {
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
-
-    // CREATE NEW ACADEMY
-    let academy = new Academy({
-        accountId: req.session.loginInfo._id,
-        academyName: req.body.academyName,
-        address: req.body.address,
-        carAvailable: false,
-        inquiryResponseRate: 0,
-        introduction: req.body.introduction,
-        hashTags: req.body.hashTags
-    });
-
-    // save in db
-    academy.save( err => {
-        if(err) throw err;
-        return res.json({ success: true });
-    })
-});
 
 /*
     DELETE ACADEMY: DELETE /api/academy/:id
@@ -115,7 +54,7 @@ router.delete('/:id', (req, res) => {
                 code: 3
             });
         }
-        if(academy.accountId != req.session.loginInfo._id){
+        if(academy.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
@@ -136,12 +75,16 @@ router.delete('/:id', (req, res) => {
     { 
         "academyName": "codesquad",
         "address": {
+            "address":"서울 노원구 상계동 455 백산빌딩",
+            "jibunaddress": "서울 노원구 상계동 455",
+            "roadAddress": "서울 노원구 한글비석로 460",
+            "zoneCode": "139820",
             "sido": "서울시",
             "sigungu": "노원구",
             "dong": "상계동",
             "latitude": 127.06697859544342,
             "longitude": 37.66444002512082
-    },
+        },
         "carAvailable": true,
         "inquiryResponseRate": 0,
         "introduction": "소개글",
@@ -199,7 +142,7 @@ router.put('/:id', (req, res) => {
         }
 
         // if exists, check writer
-        if(academy.accountId != req.session.loginInfo._id){
+        if(academy.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5
