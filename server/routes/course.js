@@ -112,6 +112,13 @@ router.post('/', (req, res) => {
                 code: 4
             });            
         }
+    } else {
+        if(req.body.duration ){
+            return res.status(400).json({
+                error: "BAD REQUEST DATA",
+                code: 4
+            });            
+        }       
     }
     // CREATE NEW COURSE
     let course = new Course({
@@ -212,6 +219,8 @@ router.delete('/:id', (req, res) => {
         3: NOT LOGGED IN
         4: NO RESOURCE
         5: PERMISSION FAILURE
+        6: BAD REQUEST TYPE
+        7: BAD REQUEST DATA
 */
 router.put('/:id', (req, res) => {
 
@@ -260,6 +269,34 @@ router.put('/:id', (req, res) => {
             code: 2
         });
     }
+    if((typeof req.body.courseType !== 'string') || (req.body.courseType === "")) {
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 2
+        });
+    }
+    if(!req.body.courseType.match('normal') && !req.body.courseType.match('special')) {
+        return res.status(400).json({
+            error: "BAD REQUEST TYPE",
+            code: 6
+        });
+    } 
+    if(req.body.courseType.match('special')){
+        // check request data
+        if(!req.body.duration ){
+            return res.status(400).json({
+                error: "BAD REQUEST DATA",
+                code: 7
+            });            
+        }
+    } else {
+        if(req.body.duration ){
+            return res.status(400).json({
+                error: "BAD REQUEST DATA",
+                code: 7
+            });            
+        }       
+    }
 
     //check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -290,12 +327,14 @@ router.put('/:id', (req, res) => {
         }
 
         // MODIFY AND SAVE IN DB
+        course.courseType = req.body.courseType;
         course.coursesClassification = req.body.coursesClassification;
         course.subjectClassification = req.body.subjectClassification;
         course.courseName = req.body.courseName;
         course.grade = req.body.grade;
         course.tuition = req.body.tuition;
         course.dayOfWeek = req.body.dayOfWeek;
+        course.duration = req.body.duration;        
         course.date.edited = new Date();
         course.is_edited = true;
 
