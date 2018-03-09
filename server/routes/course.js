@@ -176,7 +176,7 @@ router.delete('/:id', (req, res) => {
                 code: 3
             });
         }
-        if(course.writer != req.session.loginInfo.username){
+        if(course.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
