@@ -1,8 +1,20 @@
 import express from 'express';
 import Academy from '../models/academy';
+import Account from '../models/account';
 import Course from '../models/course';
+import Event from '../models/event';
+import HashTag from '../models/hashTag';
+import SearchAcademy from '../dto/searchAcademy';
 import mongoose from 'mongoose';
+function searchCourses(academy) {
 
+}
+function searchEvents(academy) {
+
+}
+function searchHashTags(academy) {
+
+}
 const router = express.Router();
 /*
     READ ACADEMY: GET /api/academy
@@ -31,8 +43,7 @@ router.get('/:id', (req, res) => {
             code: 1
         });
     }
-
-    // find academy and check for writer
+    // find academy and check for writer    
     Academy.findById(req.params.id, (err, academy) => {
         if(err) throw err;
 
@@ -42,7 +53,38 @@ router.get('/:id', (req, res) => {
                 code: 2
             });
         }
-        res.json(academy);
+        Account.find({ 'loginId': academy.accountId}, (err, account) => {
+            if(err) throw err;
+            if(!account) {
+                return res.status(404).json({
+                    error: "NO RESOURCE",
+                    code: 2
+                });                    
+            }        
+            Course.find({'accountId':academy.accountId}, (err, course) => {
+                Event.find({'accountId':academy.accountId}, (err, event)=> {
+                    HashTag.find({'accountId':academy.accountId}, (err, hashTag) => {
+                        let result = new SearchAcademy({
+                            academyName: academy.academyName,
+                            academyPhoneNumber: academy.academyPhoneNumber,
+                            address: academy.address,
+                            carAvailable: academy.carAvailable,
+                            inquiryResponseRate: academy.inquiryResponseRate,
+                            introduction: academy.introduction,
+                            corporateAccount: {
+                                phoneNo: academy.academyPhoneNumber,
+                                accountName: academy.ownerName,
+                                accountId: account.loginId
+                            },
+                            courses: course,
+                            events: event,
+                            hashTags: hashTag
+                        });
+                        res.json(result); 
+                    });
+                });
+            });
+        });
     });
 });
 

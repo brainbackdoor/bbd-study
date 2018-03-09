@@ -155,7 +155,9 @@ router.post('/signup', (req, res) => {
                 let academy = new Academy({
                     accountId: req.body.loginId,
                     academyName: req.body.academy.academyName,
-                    address: req.body.academy.address
+                    address: req.body.academy.address,
+                    ownerName: req.body.academy.ownerName,
+                    academyPhoneNumber: req.body.academy.academyPhoneNumber
                 });        
                 // save in the db
                 account.save( err => {

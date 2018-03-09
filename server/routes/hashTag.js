@@ -1,27 +1,26 @@
 import express from 'express';
-import Event from '../models/event';
+import HashTag from '../models/hashTag';
 import mongoose from 'mongoose';
 
 const router = express.Router();
 /*
-    READ EVENT: GET /api/event
+    READ HASHTAG: GET /api/hashTag
 */
 router.get('/', (req, res) => {
-    Event.find()
+    HashTag.find()
     .sort({"_id": -1})
     .limit(6)
-    .exec((err, events) => {
+    .exec((err, hashTags) => {
         if(err) throw err;
-        res.json(events);
+        res.json(hashTags);
     })
 });
 
 /*
-    WRITE EVENT: POST /api/event
+    WRITE HASHTAG: POST /api/hashTag
     BODY SAMPLE: 
     { 
-        "title": "이벤트타이틀",
-        "content": "이벤트컨텐츠"
+        "title": "태그타이틀",
     }
     ERROR CODES
         1: NOT LOGGED IN
@@ -43,28 +42,21 @@ router.post('/', (req, res) => {
             code: 2
         });
     }
-    if((typeof req.body.content !== 'string') || (req.body.content === "")) {
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
-    // CREATE NEW EVENT
-    let event = new Event({
+    // CREATE NEW HashTag
+    let hashTag = new HashTag({
         accountId: req.session.loginInfo.loginId,
-        title: req.body.title,
-        content: req.body.content
+        title: req.body.title
     });
 
     // save in db
-    event.save( err => {
+    hashTag.save( err => {
         if(err) throw err;
         return res.json({ success: true });
     })
 });
 
 /*
-    DELETE EVENT: DELETE /api/event/:id
+    DELETE HASHTAG: DELETE /api/hashTag/:id
     ERROR CODES
         1: INVALID ID
         2: NOT LOGGED IN
@@ -73,7 +65,7 @@ router.post('/', (req, res) => {
 */
 router.delete('/:id', (req, res) => {
 
-    // check event in validity
+    // check hashTag in validity
     if(!mongoose.Types.ObjectId.isValid(req.params.id)){
         return res.status(400).json({
             error: "INVALID ID",
@@ -89,24 +81,24 @@ router.delete('/:id', (req, res) => {
         });
     }
 
-    // find event and check for writer
-    Event.findById(req.params.id, (err, event) => {
+    // find hashTag and check for writer
+    HashTag.findById(req.params.id, (err, hashTag) => {
         if(err) throw err;
 
-        if(!event) {
+        if(!hashTag) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 3
             });
         }
-        if(event.accountId != req.session.loginInfo.loginId){
+        if(hashTag.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
         }
-        // REMOVE THE EVENT
-        Event.remove({ _id: req.params.id }, err => {
+        // REMOVE THE HASHTAG
+        HashTag.remove({ _id: req.params.id }, err => {
             if(err) throw err;
             res.json({ success: true });
         });
@@ -114,11 +106,10 @@ router.delete('/:id', (req, res) => {
 });
 
 /*
-    MODIFY EVENT: PUT /api/event/:id
+    MODIFY HASHTAG: PUT /api/hashTag/:id
     BODY SAMPLE: 
     { 
-        "title": "이벤트타이틀",
-        "content": "이벤트컨텐츠"
+        "title": "태그타이틀"
     }
     ERROR CODES
         1: INVALID ID,
@@ -129,7 +120,7 @@ router.delete('/:id', (req, res) => {
 */
 router.put('/:id', (req, res) => {
 
-    // check event id validity
+    // check hashTag id validity
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
             error: "INVALID ID",
@@ -144,12 +135,6 @@ router.put('/:id', (req, res) => {
             code: 2
         });
     }
-    if((typeof req.body.content !== 'string') || (req.body.content === "")) {
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
 
     //check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -159,12 +144,12 @@ router.put('/:id', (req, res) => {
         });
     }
 
-    // find event
-    Event.findById(req.params.id, (err, event) => {
+    // find hashTag
+    HashTag.findById(req.params.id, (err, hashTag) => {
         if(err) throw err;
 
-        // if event does not exist
-        if(!event) {
+        // if hashTag does not exist
+        if(!hashTag) {
             return res.status(404).json({
                 error: "NO RESOURCE",
                 code: 4
@@ -172,7 +157,7 @@ router.put('/:id', (req, res) => {
         }
 
         // if exists, check writer
-        if(event.accountId != req.session.loginInfo.loginId){
+        if(hashTag.accountId != req.session.loginInfo.loginId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5
@@ -180,17 +165,16 @@ router.put('/:id', (req, res) => {
         }
 
         // MODIFY AND SAVE IN DB
-        event.title =  req.body.title;
-        event.content = req.body.content;      
-        event.date.edited = new Date();
-        event.is_edited = true;
+        hashTag.title =  req.body.title;   
+        hashTag.date.edited = new Date();
+        hashTag.is_edited = true;
 
-        event.save((err, event) => {
+        hashTag.save((err, hashTag) => {
             if(err) throw err;
 
             return res.json({
                 success: true,
-                event
+                hashTag
             });
         });
     });
