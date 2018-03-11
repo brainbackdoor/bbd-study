@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 const Schema = mongoose.Schema;
 
 const Event = new Schema({
-    accountId: String,
     title: String,
     content: String,
     date: {

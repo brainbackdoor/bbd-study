@@ -50,6 +50,89 @@ router.get('/', (req, res) => {
         res.json(academies);
     })
 });
+
+/**
+ * @api {post} /api/academy Get Academy list
+ * @apiVersion 0.1.0
+ * @apiName GetAcademies
+ * @apiGroup Academy
+ *
+ * @apiSuccess {String} address 검색 지역명
+ * @apiSuccess {Boolean} carAvailable  차량운행여부
+ * @apiSuccess {String} grade  학년 [개발중]
+ * @apiSuccess {String} subject  과목 [개발중]
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *       "address": {
+ *           "dong": "상계동",
+ *           "sido": "서울",
+ *           "sigungu": "노원구",
+ *           "address": "서울 노원구 상계동 455 백산빌딩",
+ *           "roadAddress": "서울 노원구 한글비석로 460",
+ *           "latitude": 127.06697859544342,
+ *           "longitude": 37.66444002512082
+ *       },
+ *       "subjects": [
+ *           "사회"
+ *       ],
+ *       "grades": [
+ *           "고등3"
+ *       ],
+ *       "courses": [
+ *           {
+ *               "date": {
+ *                   "created": "2018-03-11T19:02:38.147Z",
+ *                   "edited": "2018-03-11T19:02:38.147Z"
+ *               },
+ *               "dayOfWeek": [
+ *                   {
+ *                       "startTime": "16:00",
+ *                       "endTime": "18:00",
+ *                       "day": "월",
+ *                       "_id": "5aa57d4ec08563172f44dca8"
+ *                   }
+ *               ],
+ *               "is_edited": false,
+ *               "courseType": "normal",
+ *               "coursesClassification": "사회",
+ *               "subjectClassification": "한국사",
+ *               "courseName": "한국사 뽀개기",
+ *               "grade": "고등3",
+ *               "tuition": 400000,
+ *               "_id": "5aa57d4ec08563172f44dca9"
+ *           }
+ *       ],
+ *       "events": [],
+ *       "hashTags": [],
+ *       "created": "2018-03-11T18:30:13.171Z",
+ *       "_id": "5aa575b5807c31f359bfbd69",
+ *       "accountId": "5aa575b5807c31f359bfbd68",
+ *       "academyName": "모두의학원",
+ *       "ownerName": "이준",
+ *       "academyPhoneNumber": "07012345678",
+ *       "carAvailable": true,
+ *       "__v": 4
+ *   }
+ */
+router.post('/', (req, res) => {        
+    Academy.find()
+    .where('address.address').regex(req.body.address)
+    .where('carAvailable').equals(req.body.carAvailable)
+    .sort({"_id": -1})
+    .limit(6)
+    .exec((err, academies) => {
+        if(err) throw err;
+        // for(var i = 0;i < academies.length; i ++) {
+        //     if(academies[i].grades.indexOf(req.body.grade) == -1 || academies[i].subjects.indexOf(req.body.subject) == -1){
+        //         academies.splice(i,1);
+        //     } 
+        // }
+        res.json(academies);
+    })
+});
+
 /**
  * @api {get} /api/academy/:id Get Academy inpormation
  * @apiVersion 0.1.0

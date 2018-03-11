@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 const Schema = mongoose.Schema;
 
 const HashTag = new Schema({
-    accountId: String,
     title: String,
     date: {
         created: { type: Date, default: Date.now },

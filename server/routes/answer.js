@@ -108,7 +108,7 @@ router.post('/:questionId', (req, res) => {
         }
         // CREATE NEW ANSWER
         let answer = new Answer({
-            accountId: req.session.loginInfo.loginId,
+            accountId: req.session.loginInfo._id,
             accountName: req.session.loginInfo.name,
             questionerId: question.accountId,
             questionId: question._id,

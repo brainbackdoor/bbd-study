@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 
 const Course = new Schema({
     courseType: String,
-    accountId: String,
     coursesClassification: String,
     subjectClassification: String,
     courseName: String,

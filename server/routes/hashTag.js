@@ -1,43 +1,10 @@
 import express from 'express';
+import Academy from '../models/academy';
 import HashTag from '../models/hashTag';
 import mongoose from 'mongoose';
 
 const router = express.Router();
 
-/**
- * @api {get} /api/hashTag Get HashTag Information [Dev]
- * @apiVersion 0.1.0
- * @apiName GetHashTags
- * @apiGroup HashTag
- * 
- * 
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- * 
- *[
- *   {
- *       "date": {
- *           "created": "2018-03-09T07:48:13.814Z",
- *           "edited": "2018-03-09T07:48:13.815Z"
- *       },
- *       "is_edited": false,
- *       "_id": "5aa23c3d6d0e51514fb618e8",
- *       "accountId": "bbd@educhoice.com",
- *       "title": "태그",
- *       "__v": 0
- *   }
- *]
- * 
- */
-router.get('/', (req, res) => {
-    HashTag.find()
-    .sort({"_id": -1})
-    .limit(6)
-    .exec((err, hashTags) => {
-        if(err) throw err;
-        res.json(hashTags);
-    })
-});
 /**
  * @api {post} /api/hashTag Post HashTag information
  * @apiVersion 0.1.0
@@ -88,17 +55,19 @@ router.post('/', (req, res) => {
             code: 2
         });
     }
-    // CREATE NEW HashTag
-    let hashTag = new HashTag({
-        accountId: req.session.loginInfo.loginId,
-        title: req.body.title
-    });
 
-    // save in db
-    hashTag.save( err => {
-        if(err) throw err;
-        return res.json({ success: true });
-    })
+    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+        // CREATE NEW HashTag
+        let hashTag = new HashTag({
+            title: req.body.title
+        });
+        academy.hashTags.push(hashTag);
+        // save in db
+        academy.save( err => {
+            if(err) throw err;
+            return res.json({ success: true });
+        })        
+    });
 });
 /**
  * @api {delete} /api/hashTag/:id Delete HashTag Information
@@ -169,27 +138,23 @@ router.delete('/:id', (req, res) => {
     }
 
     // find hashTag and check for writer
-    HashTag.findById(req.params.id, (err, hashTag) => {
-        if(err) throw err;
-
-        if(!hashTag) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 3
-            });
-        }
-        if(hashTag.accountId != req.session.loginInfo.loginId){
+    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo._id){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
+        }        
+        for(var i = 0;i < academy.hashTags.length; i ++) {
+            if(academy.hashTags[i]._id == req.params.id){
+                academy.hashTags.splice(i,1);
+                academy.save( err => {
+                    if(err) throw err;
+                    return res.json({ success: true });
+                })     
+            } 
         }
-        // REMOVE THE HASHTAG
-        HashTag.remove({ _id: req.params.id }, err => {
-            if(err) throw err;
-            res.json({ success: true });
-        });
-    });
+    });    
 });
 /**
  * @api {put} /api/hashTag/:id Put HashTag Information [Dev]
@@ -277,40 +242,31 @@ router.put('/:id', (req, res) => {
             code: 3
         });
     }
-
-    // find hashTag
-    HashTag.findById(req.params.id, (err, hashTag) => {
-        if(err) throw err;
-
-        // if hashTag does not exist
-        if(!hashTag) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 4
-            });
-        }
-
-        // if exists, check writer
-        if(hashTag.accountId != req.session.loginInfo.loginId){
+    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo._id){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
-                code: 5
+                code: 4
             });
+        }        
+        for(var i = 0;i < academy.hashTags.length; i ++) {
+           
+            if(academy.hashTags[i]._id == req.params.id){
+                // MODIFY AND SAVE IN DB
+                academy.hashTags[i].title =  req.body.title;    
+                academy.hashTags[i].date.edited = new Date();
+                academy.hashTags[i].is_edited = true;          
+                
+                academy.save((err, academy) => {
+                    if(err) throw err;
+        
+                    return res.json({
+                        success: true,
+                        academy
+                    });
+                });                 
+            }
         }
-
-        // MODIFY AND SAVE IN DB
-        hashTag.title =  req.body.title;   
-        hashTag.date.edited = new Date();
-        hashTag.is_edited = true;
-
-        hashTag.save((err, hashTag) => {
-            if(err) throw err;
-
-            return res.json({
-                success: true,
-                hashTag
-            });
-        });
     });
 });
 

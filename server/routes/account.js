@@ -195,24 +195,25 @@ router.post('/signup', (req, res) => {
                             phoneNo: req.body.phoneNo            
                         });
                         account.password = account.generateHash(account.password);
-                
-                        // CREATE NEW ACADEMY
-                        let academy = new Academy({
-                            accountId: req.body.loginId,
-                            academyName: req.body.academy.academyName,
-                            address: req.body.academy.address,
-                            ownerName: req.body.academy.ownerName,
-                            academyPhoneNumber: req.body.academy.academyPhoneNumber
-                        });        
                         // save in the db
                         account.save( err => {
                             if(err) throw err;
-                            // save in db
-                            academy.save( err => {
-                                if(err) throw err;
-                                return res.status(201).json({ success: true });
-                            })        
-                        });                        
+                        });         
+
+                        // CREATE NEW ACADEMY
+                        let academy = new Academy({
+                            accountId: account._id,
+                            academyName: req.body.academy.academyName,
+                            ownerName: req.body.academy.ownerName,
+                            address: req.body.academy.address,
+                            academyPhoneNumber: req.body.academy.academyPhoneNumber,
+                            carAvailable: req.body.carAvailable
+                        });        
+                        // save in db
+                        academy.save( err => {
+                            if(err) throw err;
+                            return res.status(201).json({ success: true });
+                        });        
                     }
                 });
             }
@@ -287,13 +288,14 @@ router.post('/signin',(req, res) => {
                 success: true
             });            
         } else {
-            Academy.findOne({accountId:req.body.loginId},(err, academy) => {
+            Academy.findOne({accountId:account._id},(err, academy) => {
                 if(err) throw err;
                 // alter session
                 let session = req.session;
                 session.loginInfo = {
                     _id: account._id,
                     loginId: account.loginId,
+                    academyId: academy._id,
                     name: academy.academyName,
                     type: account.requestType
                 }; 

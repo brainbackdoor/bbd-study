@@ -102,7 +102,7 @@ router.post('/:answerId', (req, res) => {
         }
         // CREATE NEW REPLY
         let reply = new Reply({
-            accountId: req.session.loginInfo.loginId,
+            accountId: req.session.loginInfo._id,
             role: req.session.loginInfo.type,
             accountName: req.session.loginInfo.name,
             questionId: answer.questionId,

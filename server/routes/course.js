@@ -1,63 +1,11 @@
 import express from 'express';
+import Academy from '../models/academy';
 import Course from '../models/course';
 import mongoose from 'mongoose';
+import jsonQuery from 'json-query';
 
 const router = express.Router();
 
-/**
- * @api {get} /api/course Get Course Information [Dev]
- * @apiVersion 0.1.0
- * @apiName GetCourses
- * @apiGroup Course
- * 
- * 
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- * 
- *[
- *    {
- *        "date": {
- *            "created": "2018-03-09T05:57:08.473Z",
- *            "edited": "2018-03-09T06:06:34.220Z"
- *        },
- *        "dayOfWeek": [
- *            {
- *                "startTime": "18:00",
- *                "endTime": "20:00",
- *                "day": "월",
- *                "_id": "5aa2246a3e230146f31adc00"
- *            },
- *            {
- *                "startTime": "18:00",
- *                "endTime": "20:00",
- *                "day": "화",
- *                "_id": "5aa2246a3e230146f31adbff"
- *            }
- *        ],
- *        "is_edited": true,
- *        "_id": "5aa222342ae1501ddf695bf7",
- *        "courseType": "special",
- *        "accountId": "bbd@educhoice.com",
- *        "coursesClassification": "물리",
- *        "subjectClassification": "물리",
- *        "courseName": "물리(과탐)-고2",
- *        "grade": "고등2",
- *        "tuition": 400000,
- *        "duration": "2018.01.01 ~ 2018.01.03",
- *        "__v": 1
- *    }
- *]
- * 
- */
-router.get('/', (req, res) => {
-    Course.find()
-    .sort({"_id": -1})
-    .limit(6)
-    .exec((err, courses) => {
-        if(err) throw err;
-        res.json(courses);
-    })
-});
 /**
  * @api {post} /api/course Post Course information
  * @apiVersion 0.1.0
@@ -190,24 +138,32 @@ router.post('/', (req, res) => {
             });            
         }       
     }
-    // CREATE NEW COURSE
-    let course = new Course({
-        courseType: req.body.courseType,
-        accountId: req.session.loginInfo.loginId,
-        coursesClassification: req.body.coursesClassification,
-        subjectClassification: req.body.subjectClassification,
-        courseName: req.body.courseName,
-        grade: req.body.grade,
-        tuition: req.body.tuition,
-        dayOfWeek: req.body.dayOfWeek,
-        duration: req.body.duration
+    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+        // CREATE NEW COURSE
+        let course = new Course({
+            courseType: req.body.courseType,
+            coursesClassification: req.body.coursesClassification,
+            subjectClassification: req.body.subjectClassification,
+            courseName: req.body.courseName,
+            grade: req.body.grade,
+            tuition: req.body.tuition,
+            dayOfWeek: req.body.dayOfWeek,
+            duration: req.body.duration
+        });
+
+        academy.courses.push(course);
+        academy.grades.push(req.body.grade);
+        academy.subjects.push(req.body.coursesClassification);
+  
+        // save in db
+        academy.save( err => {
+            if(err) throw err;
+            return res.json({ success: true });
+        })        
     });
 
-    // save in db
-    course.save( err => {
-        if(err) throw err;
-        return res.json({ success: true });
-    })
+
+
 });
 /**
  * @api {delete} /api/course/:id Delete Course Information
@@ -276,29 +232,24 @@ router.delete('/:id', (req, res) => {
             code: 2
         });
     }
-
-    // find course and check for writer
-    Course.findById(req.params.id, (err, course) => {
-        if(err) throw err;
-
-        if(!course) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 3
-            });
-        }
-        if(course.accountId != req.session.loginInfo.loginId){
+    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo._id){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
+        }        
+        for(var i = 0;i < academy.courses.length; i ++) {
+            if(academy.courses[i]._id == req.params.id){
+                academy.courses.splice(i,1);
+                academy.subjects.splice(i,1);
+                academy.grades.splice(i,1);
+                academy.save( err => {
+                    if(err) throw err;
+                    return res.json({ success: true });
+                })     
+            }
         }
-
-        // REMOVE THE COURSE
-        Course.remove({ _id: req.params.id }, err => {
-            if(err) throw err;
-            res.json({ success: true });
-        });
     });
 });
 /**
@@ -470,46 +421,40 @@ router.put('/:id', (req, res) => {
         });
     }
 
-    // find course
-    Course.findById(req.params.id, (err, course) => {
-        if(err) throw err;
 
-        // if couorse does not exist
-        if(!course) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 4
-            });
-        }
-
-        // if exists, check writer
-        if(course.accountId != req.session.loginInfo.loginId){
+    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo._id){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
-                code: 5
+                code: 4
             });
+        }        
+        for(var i = 0;i < academy.courses.length; i ++) {
+           
+            if(academy.courses[i]._id == req.params.id){
+
+                // MODIFY AND SAVE IN DB
+                academy.courses[i].courseType = req.body.courseType;
+                academy.courses[i].coursesClassification = req.body.coursesClassification;
+                academy.courses[i].subjectClassification = req.body.subjectClassification;
+                academy.courses[i].courseName = req.body.courseName;
+                academy.courses[i].grade = req.body.grade;
+                academy.courses[i].tuition = req.body.tuition;
+                academy.courses[i].dayOfWeek = req.body.dayOfWeek;
+                academy.courses[i].duration = req.body.duration;        
+                academy.courses[i].date.edited = new Date();
+                academy.courses[i].is_edited = true;
+
+                academy.save((err, academy) => {
+                    if(err) throw err;
+        
+                    return res.json({
+                        success: true,
+                        academy
+                    });
+                }); 
+            } 
         }
-
-        // MODIFY AND SAVE IN DB
-        course.courseType = req.body.courseType;
-        course.coursesClassification = req.body.coursesClassification;
-        course.subjectClassification = req.body.subjectClassification;
-        course.courseName = req.body.courseName;
-        course.grade = req.body.grade;
-        course.tuition = req.body.tuition;
-        course.dayOfWeek = req.body.dayOfWeek;
-        course.duration = req.body.duration;        
-        course.date.edited = new Date();
-        course.is_edited = true;
-
-        course.save((err, course) => {
-            if(err) throw err;
-
-            return res.json({
-                success: true,
-                course
-            });
-        });
     });
 });
 
