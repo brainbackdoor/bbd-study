@@ -4,9 +4,33 @@ import Answer from '../models/answer';
 import mongoose from 'mongoose';
 
 const router = express.Router();
-/*
-    READ ANSWER: GET /api/answer
-*/
+
+/**
+ * @api {get} /api/answer Get Answer Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName GetAnswers
+ * @apiGroup Answer
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *        "date": {
+ *            "created": "2018-03-09T18:53:46.131Z",
+ *            "edited": "2018-03-09T18:53:46.131Z"
+ *        },
+ *        "is_edited": false,
+ *        "_id": "5aa2d83a9981b98349922da0",
+ *        "accountId": "bbd@educhoice.com",
+ *        "accountName": "모두의학원",
+ *        "questionerId": "brainbackdoor@modoohakwon.com",
+ *        "questionId": "5aa2bc5eb4b817f1759f0cc2",
+ *        "content": "댓글 컨텐츠",
+ *      "__v": 0
+ *   }
+ * 
+ * 
+ */
 router.get('/', (req, res) => {
     Answer.find()
     .sort({"_id": -1})
@@ -16,17 +40,48 @@ router.get('/', (req, res) => {
         res.json(answers);
     })
 });
+/**
+ * @api {post} /api/answer/:questionId Post Answer Information
+ * @apiVersion 0.1.0
+ * @apiName PostAnswerInformation
+ * @apiGroup Answer
+ * 
+ * @apiParam {String} content 답글 컨텐츠
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 3
+ *     } 
+ */
 
-/*
-    WRITE ANSWER: POST /api/answer/:questionId
-    BODY SAMPLE: 
-    { 
-        "content": "댓글컨텐츠",
-    }
-    ERROR CODES
-        1: NOT LOGGED IN
-        2: EMPTY CONTENTS
-*/
 router.post('/:questionId', (req, res) => {
     // check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -48,7 +103,7 @@ router.post('/:questionId', (req, res) => {
         if(!question) {
             return res.status(404).json({
                 error: "NO RESOURCE",
-                code: 2
+                code: 3
             });
         }
         // CREATE NEW ANSWER
@@ -63,19 +118,60 @@ router.post('/:questionId', (req, res) => {
         // save in db
         answer.save( err => {
             if(err) throw err;
-            return res.json({ success: true });
+            return res.status(201).json({ success: true });
         })
     });
 });
+/**
+ * @api {delete} /api/answer/:questionId Delete Answer Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName DeleteAnswerInformation
+ * @apiGroup Answer
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 4
+ *     } 
+ */
 
-/*
-    DELETE ANSWER: DELETE /api/answer/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-        4: PERMISSION FAILURE
-*/
 router.delete('/:id', (req, res) => {
 
     // check answer in validity
@@ -114,81 +210,6 @@ router.delete('/:id', (req, res) => {
         answer.remove({ _id: req.params.id }, err => {
             if(err) throw err;
             res.json({ success: true });
-        });
-    });
-});
-
-/*
-    MODIFY ANSWER: PUT /api/answer/:id
-    BODY SAMPLE: 
-    { 
-        "content": "댓글컨텐츠"
-    }
-    ERROR CODES
-        1: INVALID ID,
-        2: EMPTY CONTENTS,
-        3: NOT LOGGED IN
-        4: NO RESOURCE
-        5: PERMISSION FAILURE
-*/
-router.put('/:id', (req, res) => {
-
-    // check answer id validity
-    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
-        return res.status(400).json({
-            error: "INVALID ID",
-            code: 1
-        });
-    }
-
-    // check data valid
-    if((typeof req.body.content !== 'string') || (req.body.content === "")) {
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
-
-    //check login status
-    if(typeof req.session.loginInfo === 'undefined') {
-        return res.status(403).json ({
-            error: "NOT LOGGED IN",
-            code: 3
-        });
-    }
-
-    // find answer
-    Answer.findById(req.params.id, (err, answer) => {
-        if(err) throw err;
-
-        // if answer does not exist
-        if(!answer) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 4
-            });
-        }
-
-        // if exists, check writer
-        if(answer.accountId != req.session.loginInfo.loginId){
-            return res.status(403).json({
-                error: "PERMISSION FAILURE",
-                code: 5
-            });
-        }
-
-        // MODIFY AND SAVE IN DB
-        answer.content =  req.body.content;   
-        answer.date.edited = new Date();
-        answer.is_edited = true;
-
-        answer.save((err, answer) => {
-            if(err) throw err;
-
-            return res.json({
-                success: true,
-                answer
-            });
         });
     });
 });

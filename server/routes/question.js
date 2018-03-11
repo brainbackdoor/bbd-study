@@ -7,9 +7,43 @@ import SearchInquiry from '../dto/searchInquiry';
 import mongoose from 'mongoose';
 
 const router = express.Router();
-/*
-    READ QUESTION: GET /api/question
-*/
+
+/**
+ * @api {get} /api/question Get Question Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName GetQuestions
+ * @apiGroup Question
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *[
+ *    {
+ *        "date": {
+ *            "created": "2018-03-09T16:54:54.481Z",
+ *            "edited": "2018-03-09T16:54:54.481Z"
+ *        },
+ *        "receivers": [
+ *            {
+ *                "receiverId": "bbd@educhoice.com",
+ *                "_id": "5aa2bc5eb4b817f1759f0cc1"
+ *            },
+ *            {
+ *                "receiverId": "bbd2@educhoice.com",
+ *                "_id": "5aa2bc5eb4b817f1759f0cc0"
+ *            }
+ *        ],
+ *        "is_edited": false,
+ *        "_id": "5aa2bc5eb4b817f1759f0cc2",
+ *        "accountId": "brainbackdoor@modoohakwon.com",
+ *        "questionTitle": "문의타이틀",
+ *        "questionContent": "문의컨텐츠",
+ *        "__v": 0
+ *    }
+ *]
+ * 
+ * 
+ */
 router.get('/', (req, res) => {
     Question.find()
     .sort({"_id": -1})
@@ -19,14 +53,52 @@ router.get('/', (req, res) => {
         res.json(questions);
     })
 });
+/**
+ * @api {get} /api/question/node/:questionId Get Question Information
+ * @apiVersion 0.1.0
+ * @apiName GetQuestionInformation
+ * @apiGroup Question
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *    "accountId": "bbd@educhoice.com",
+ *    "accountName": "모두의학원",
+ *    "answerContent": "댓글 컨텐츠",
+ *    "created": "2018-03-09T18:53:46.131Z",
+ *    "reply": [
+ *        {
+ *            "_id": "5aa2d8549981b98349922da1",
+ *            "role": "corporate",
+ *            "accountName": "모두의학원",
+ *            "content": "댓글 컨텐츠"
+ *        }
+ *    ],
+ *    "_id": "5aa3804b9679db694a27b96e"
+ *}
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError NO RESOURCE 
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NO RESOURCE 
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 2
+ *     } 
+ * 
+ */
 
-/*
-    READ QUESTION: GET /api/question/:questionId
-    ERROR CODES
-        1: INVALID ID
-        2: NO RESOURCE  
-*/
-router.get('/:questionId', (req, res) => {
+router.get('/node/:questionId', (req, res) => {
     // check question in validity
     if(!mongoose.Types.ObjectId.isValid(req.params.questionId)){
         return res.status(400).json({
@@ -71,12 +143,50 @@ router.get('/:questionId', (req, res) => {
     });
 });
 
-
-/*
-    READ QUESTION: GET /api/question/list
-    ERROR CODES
-        1: NO RESOURCE  
-*/
+/**
+ * @api {get} /api/question/list Get Question List
+ * @apiVersion 0.1.0
+ * @apiName GetQuestionList
+ * @apiGroup Question
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *[
+ *   {
+ *       "date": {
+ *           "created": "2018-03-09T16:54:54.481Z",
+ *           "edited": "2018-03-09T16:54:54.481Z"
+ *       },
+ *       "receivers": [
+ *           {
+ *               "receiverId": "bbd@educhoice.com",
+ *               "_id": "5aa2bc5eb4b817f1759f0cc1"
+ *           },
+ *           {
+ *               "receiverId": "bbd2@educhoice.com",
+ *               "_id": "5aa2bc5eb4b817f1759f0cc0"
+ *           }
+ *       ],
+ *       "is_edited": false,
+ *       "_id": "5aa2bc5eb4b817f1759f0cc2",
+ *       "accountId": "brainbackdoor@modoohakwon.com",
+ *       "questionTitle": "문의타이틀",
+ *       "questionContent": "문의컨텐츠",
+ *       "__v": 0
+ *   }
+ *]
+ * 
+ * @apiError NO RESOURCE 
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE 
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 1
+ *     } 
+ * 
+ */
 router.get('/list', (req, res) => {
     if(req.session.loginInfo.type ==='parents'){
         // find question and check for writer    
@@ -111,58 +221,51 @@ router.get('/list', (req, res) => {
     }
 
 });
-/*
-    READ QUESTION: GET /api/question/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NO RESOURCE  
-*/
-router.get('/:id', (req, res) => {
-    // check question in validity
-    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
-        return res.status(400).json({
-            error: "INVALID ID",
-            code: 1
-        });
-    }
-    // find question and check for writer    
-    Question.findById(req.params.id, (err, question) => {
-        if(err) throw err;
-        if(!question) {
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 2
-            });
-        }
-        if(question.accountId !== req.session.loginInfo.loginId){
-            return res.status(404).json({
-                error: "NO RESOURCE",
-                code: 2
-            }); 
-        }
+/**
+ * @api {post} /api/question Post Question information
+ * @apiVersion 0.1.0
+ * @apiName PostQuestionInformation
+ * @apiGroup Question
+ * 
+ * @apiParam {Array} receivers 학원 ID
+ * @apiParam {String} questionTitle 문의 제목
+ * @apiParam {String} questionContent 문의 내용 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NOT PARENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT PARENTS
+ *     {
+ *       "error": "NOT PARENTS",
+ *       "code" : 3
+ *     } 
+ *
+ */
 
-        res.json(question);
-    });
-});
-/*
-    WRITE QUESTION: POST /api/question
-    BODY SAMPLE: 
-    { 
-        "receivers":[
-            {
-                "receiverId":"bbd@educhoice.com"
-            }
-        ],
-        "questionTitle": "문의타이틀",
-        "questionContent": "문의컨텐츠"
-    }
-    ERROR CODES
-        1: NOT LOGGED IN
-        2: EMPTY CONTENTS
-        3: NOT LOGGED IN
-        4: NOT PARENTS
-        5: NON-EXISTENCE ACCOUNT
-*/
 router.post('/', (req, res) => {
     // check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -208,14 +311,14 @@ router.post('/', (req, res) => {
     if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
-            code: 3
+            code: 1
         });
     }
     // check sender type
     if(req.session.loginInfo.type !== 'parents') {
         return res.status(403).json({
             error: "NOT PARENTS",
-            code: 4
+            code: 3
         });
     }    
     // CREATE NEW QUESTION
@@ -232,14 +335,55 @@ router.post('/', (req, res) => {
         return res.json({ success: true });
     })
 });
-/*
-    DELETE Question: DELETE /api/question/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-        4: PERMISSION FAILURE
-*/
+/**
+ * @api {delete} /api/question/:id Delete Question Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName DeleteQuestionInformation
+ * @apiGroup Question
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 4
+ *     } 
+ */
 router.delete('/:id', (req, res) => {
 
     // check question in validity
@@ -281,21 +425,91 @@ router.delete('/:id', (req, res) => {
         });
     });
 });
+/**
+ * @api {put} /api/question/:id Put Question Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName PutQuestion
+ * @apiGroup Question
+ * 
+ * @apiParam {String} questionTitle 문의 제목
+ * @apiParam {String} questionContent 문의 내용 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *   "success": true,
+ *   "question": {
+ *       "date": {
+ *           "created": "2018-03-10T07:14:16.226Z",
+ *           "edited": "2018-03-10T07:22:51.906Z"
+ *       },
+ *       "receivers": [
+ *           {
+ *               "receiverId": "bbd@educhoice.com",
+ *               "_id": "5aa385c815958aece4131e61"
+ *           },
+ *           {
+ *               "receiverId": "bbd2@educhoice.com",
+ *               "_id": "5aa385c815958aece4131e60"
+ *           }
+ *       ],
+ *       "is_edited": true,
+ *       "_id": "5aa385c815958aece4131e62",
+ *       "accountId": "hohsso@modoohakwon.com",
+ *       "questionTitle": "문의타이틀수정",
+ *       "questionContent": "문의컨텐츠수정",
+ *       "__v": 0
+ *   }
+ *}
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 4
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 5
+ *     } 
+ * 
+ * 
+ */
 
-/*
-    MODIFY QUESTION: PUT /api/question/:id
-    BODY SAMPLE: 
-    { 
-        "questionTitle": "문의타이틀",
-        "questionContent": "문의컨텐츠"
-    }
-    ERROR CODES
-        1: INVALID ID,
-        2: EMPTY CONTENTS,
-        3: NOT LOGGED IN
-        4: NO RESOURCE
-        5: PERMISSION FAILURE
-*/
 router.put('/:id', (req, res) => {
 
     // check question id validity

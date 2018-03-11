@@ -2,48 +2,92 @@ import express from 'express';
 import Account from '../models/account';
 import Academy from '../models/academy';
 const router = express.Router();
-/*
-    ACCOUNT SIGNUP: POST /api/account/signup
-    BODY SAMPLE: 
-    {
-        // Common Variables
-            "requestType": "{"parents" | "corporate"}",
-            "marketingInfo": true,
-            "loginId": "bbd@educhoice.com",
-            "password": "test",
-        // Parent Variables
-            "memberAddress": "경기 부천시 소사구 송내동",
-            "nickname": "bbd",
-        // Corporate Variables
-            "originalName": "이동규",
-            "phoneNo": "010-1234-5678"
-            "academy": {
-                "academyName": "codesquad",
-                "ownerName":"이준",
-                "academyPhoneNumber":"(830) 533-3036",
-                "address": {
-                    "address":"서울 노원구 상계동 455 백산빌딩",
-                    "jibunaddress": "서울 노원구 상계동 455",
-                    "roadAddress": "서울 노원구 한글비석로 460",
-                    "zoneCode": "139820",
-                    "sido": "서울시",
-                    "sigungu": "노원구",
-                    "dong": "상계동",
-                    "latitude": 37.66444002512082,
-                    "longitude": 127.06697859544342
-                }    
-
-            }
-    }
-    ERROR CODES:
-        1: BAD REQUEST TYPE
-        2: BAD PASSWORD
-        3: LOGIN ID EXISTS
-        4: BAD REQUEST DATA
-        5: NICKNAME EXISTS
-        6: EMPTY CONTENTS
-        7: ACADEMY EXISTS
-*/
+ 
+/**
+ * @api {post} /api/account/signup Post Signup Information
+ * @apiVersion 0.1.0
+ * @apiName PostAccountAndAcademy
+ * @apiGroup Account
+ * 
+ * @apiParam {String} requestType 유저 타입 { parents | corporate }
+ * @apiParam {Boolean} marketingInfo 마케팅 수신 동의여부
+ * @apiParam {String} loginId 유저 ID 
+ * @apiParam {String} password 비밀번호
+ * @apiParam {String} memberAddress 주소 [학부모일 경우만 기입]
+ * @apiParam {String} nickname 별명 [학부모일 경우만 기입]
+ * @apiParam {String} originalName 가입자이름 [학원일 경우만 기입]
+ * @apiParam {String} phoneNo 가입자번호 [학원일 경우만 기입]
+ * @apiParam {Academy} academy 학원정보 [학원일 경우만 기입]
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError BAD REQUEST TYPE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD REQUEST TYPE
+ *     {
+ *       "error": "BAD REQUEST TYPE",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError BAD PASSWORD
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD PASSWORD
+ *     {
+ *       "error": "BAD PASSWORD",
+ *       "code" : 2
+ *     }
+ * 
+ * @apiError LOGIN ID EXISTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 409 LOGIN ID EXISTS
+ *     {
+ *       "error": "LOGIN ID EXISTS",
+ *       "code" : 3
+ *     }
+ * 
+ * @apiError BAD REQUEST DATA
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD REQUEST DATA
+ *     {
+ *       "error": "BAD REQUEST DATA",
+ *       "code" : 4
+ *     }
+ * 
+ * @apiError NICKNAME EXISTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 NICKNAME EXISTS
+ *     {
+ *       "error": "NICKNAME EXISTS",
+ *       "code" : 5
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 6
+ *     }
+ * 
+ * @apiError ACADEMY EXISTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 409 ACADEMY EXISTS
+ *     {
+ *       "error": "ACADEMY EXISTS",
+ *       "code" : 7
+ *     }
+ */
 
 router.post('/signup', (req, res) => {
     // check request type
@@ -166,7 +210,7 @@ router.post('/signup', (req, res) => {
                             // save in db
                             academy.save( err => {
                                 if(err) throw err;
-                                return res.json({ success: true });
+                                return res.status(201).json({ success: true });
                             })        
                         });                        
                     }
@@ -175,13 +219,32 @@ router.post('/signup', (req, res) => {
         }
     });  
 });
+/**
+ * @api {post} /api/account/signin Post Signin information
+ * @apiVersion 0.1.0
+ * @apiName Login
+ * @apiGroup Account
+ * 
+ * @apiParam {String} loginId 유저 ID
+ * @apiParam {String} password 비밀번호
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError LOGIN FAILED
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 401 LOGIN FAILED
+ *     {
+ *       "error": "LOGIN FAILED",
+ *       "code" : 1
+ *     }
+ * 
+ */
 
-/*
-    ACCOUNT SIGNIN: POST /api/account/signin
-    BODY SAMPLE: { "loginId": "test", "password": "test" }
-    ERROR CODES:
-        1: LOGIN FAILED
-*/
 router.post('/signin',(req, res) => {
     if(typeof req.body.password !== "string"){
         return res.status(401).json({
@@ -244,10 +307,34 @@ router.post('/signin',(req, res) => {
     });
 
 });
+/**
+ * @api {get} /api/account/getInfo Get Session Information
+ * @apiVersion 0.1.0
+ * @apiName GetLoginInfo
+ * @apiGroup Account
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *    "info": {
+ *        "_id": "5aa2ea5ce7d46c44ccf24589",
+ *        "loginId": "bbd@modoohakwon.com",
+ *        "name": "bbd",
+ *        "type": "parents"
+ *     }
+ * }
+ * 
+ * @apiError LOGIN FAILED
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 401 LOGIN FAILED
+ *     {
+ *       "code" : 1
+ *     }
+ * 
+ */
 
-/*
-    GET CURRENT USER INFO GET /api/account/getInfo
-*/
 router.get('/getinfo', (req,res) => {
     if(typeof req.session.loginInfo ==="undefined "){
         return res.status(401).json({
@@ -256,10 +343,21 @@ router.get('/getinfo', (req,res) => {
     }
     res.json({ info: req.session.loginInfo });
 });
+/**
+ * @api {post} /api/account/logout Post Logout Request
+ * @apiVersion 0.1.0
+ * @apiName Logout
+ * @apiGroup Account
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ *
+ */
 
-/*
-    LOGOUT: POST /api/account/logout
-*/
 router.post('/logout', (req, res) => {
     req.session.destroy(err => { if(err) throw err; });
     return res.json({ success: true });

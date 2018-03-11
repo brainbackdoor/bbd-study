@@ -1,11 +1,17 @@
 {
-  "name": "codelab",
+  "name": "modoohakwon",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf build public/bundle.js",
     "build": "babel server --out-dir build --presets=es2015 && webpack",
-    "start": "node ./build/main.js"
+    "start": "node ./build/main.js",
+    "apidoc": "apidoc -i server/routes -o public/docs"
+  },
+  "apidoc": {
+    "title": "모두의학원",
+    "description": "모두의 학원 서비스 API docs",
+    "url": "http://test.modoohakwon.com"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +19,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "mongoose": "^5.0.6",

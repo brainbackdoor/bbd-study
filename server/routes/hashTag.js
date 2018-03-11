@@ -3,9 +3,32 @@ import HashTag from '../models/hashTag';
 import mongoose from 'mongoose';
 
 const router = express.Router();
-/*
-    READ HASHTAG: GET /api/hashTag
-*/
+
+/**
+ * @api {get} /api/hashTag Get HashTag Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName GetHashTags
+ * @apiGroup HashTag
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * 
+ *[
+ *   {
+ *       "date": {
+ *           "created": "2018-03-09T07:48:13.814Z",
+ *           "edited": "2018-03-09T07:48:13.815Z"
+ *       },
+ *       "is_edited": false,
+ *       "_id": "5aa23c3d6d0e51514fb618e8",
+ *       "accountId": "bbd@educhoice.com",
+ *       "title": "태그",
+ *       "__v": 0
+ *   }
+ *]
+ * 
+ */
 router.get('/', (req, res) => {
     HashTag.find()
     .sort({"_id": -1})
@@ -15,17 +38,40 @@ router.get('/', (req, res) => {
         res.json(hashTags);
     })
 });
+/**
+ * @api {post} /api/hashTag Post HashTag information
+ * @apiVersion 0.1.0
+ * @apiName PostHashTag
+ * @apiGroup HashTag
+ * 
+ * @apiParam {String} title 해쉬태그
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     }
+ * 
+ */
 
-/*
-    WRITE HASHTAG: POST /api/hashTag
-    BODY SAMPLE: 
-    { 
-        "title": "태그타이틀",
-    }
-    ERROR CODES
-        1: NOT LOGGED IN
-        2: EMPTY CONTENTS
-*/
 router.post('/', (req, res) => {
     // check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -54,15 +100,56 @@ router.post('/', (req, res) => {
         return res.json({ success: true });
     })
 });
+/**
+ * @api {delete} /api/hashTag/:id Delete HashTag Information
+ * @apiVersion 0.1.0
+ * @apiName DeleteHashTagInformation
+ * @apiGroup HashTag
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 4
+ *     } 
+ */
 
-/*
-    DELETE HASHTAG: DELETE /api/hashTag/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-        4: PERMISSION FAILURE
-*/
 router.delete('/:id', (req, res) => {
 
     // check hashTag in validity
@@ -104,20 +191,67 @@ router.delete('/:id', (req, res) => {
         });
     });
 });
-
-/*
-    MODIFY HASHTAG: PUT /api/hashTag/:id
-    BODY SAMPLE: 
-    { 
-        "title": "태그타이틀"
-    }
-    ERROR CODES
-        1: INVALID ID,
-        2: EMPTY CONTENTS,
-        3: NOT LOGGED IN
-        4: NO RESOURCE
-        5: PERMISSION FAILURE
-*/
+/**
+ * @api {put} /api/hashTag/:id Put HashTag Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName PutHashTag
+ * @apiGroup HashTag
+ * 
+ * @apiParam {String} title 해쉬태그
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 4
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 5
+ *     } 
+ * 
+ * 
+ */
 router.put('/:id', (req, res) => {
 
     // check hashTag id validity

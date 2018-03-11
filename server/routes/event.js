@@ -3,9 +3,33 @@ import Event from '../models/event';
 import mongoose from 'mongoose';
 
 const router = express.Router();
-/*
-    READ EVENT: GET /api/event
-*/
+
+/**
+ * @api {get} /api/event Get Event Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName GetEventInfo
+ * @apiGroup Event
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * 
+ *[
+ *   {
+ *       "date": {
+ *           "created": "2018-03-09T06:28:40.004Z",
+ *           "edited": "2018-03-09T06:29:23.035Z"
+ *       },
+ *       "is_edited": true,
+ *       "_id": "5aa22998ec1be63d3c76bb19",
+ *       "accountId": "bbd@educhoice.com",
+ *       "title": "이벤트타이틀",
+ *       "content": "컨텐츠수",
+ *       "__v": 0
+ *   }
+ *]
+ * 
+ */
 router.get('/', (req, res) => {
     Event.find()
     .sort({"_id": -1})
@@ -15,18 +39,41 @@ router.get('/', (req, res) => {
         res.json(events);
     })
 });
+/**
+ * @api {post} /api/event Post Event information
+ * @apiVersion 0.1.0
+ * @apiName PostEvent
+ * @apiGroup Event
+ * 
+ * @apiParam {String} title 이벤트제목
+ * @apiParam {String} content 이벤트 컨텐츠
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     }
+ * 
+ */
 
-/*
-    WRITE EVENT: POST /api/event
-    BODY SAMPLE: 
-    { 
-        "title": "이벤트타이틀",
-        "content": "이벤트컨텐츠"
-    }
-    ERROR CODES
-        1: NOT LOGGED IN
-        2: EMPTY CONTENTS
-*/
 router.post('/', (req, res) => {
     // check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -62,15 +109,56 @@ router.post('/', (req, res) => {
         return res.json({ success: true });
     })
 });
+/**
+ * @api {delete} /api/event/:id Delete Event Information
+ * @apiVersion 0.1.0
+ * @apiName DeleteEventInformation
+ * @apiGroup Event
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 4
+ *     } 
+ */
 
-/*
-    DELETE EVENT: DELETE /api/event/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-        4: PERMISSION FAILURE
-*/
 router.delete('/:id', (req, res) => {
 
     // check event in validity
@@ -112,21 +200,68 @@ router.delete('/:id', (req, res) => {
         });
     });
 });
-
-/*
-    MODIFY EVENT: PUT /api/event/:id
-    BODY SAMPLE: 
-    { 
-        "title": "이벤트타이틀",
-        "content": "이벤트컨텐츠"
-    }
-    ERROR CODES
-        1: INVALID ID,
-        2: EMPTY CONTENTS,
-        3: NOT LOGGED IN
-        4: NO RESOURCE
-        5: PERMISSION FAILURE
-*/
+/**
+ * @api {put} /api/event/:id Put Event Information
+ * @apiVersion 0.1.0
+ * @apiName PutEvent
+ * @apiGroup Event
+ * 
+ * @apiParam {String} title 이벤트제목
+ * @apiParam {String} content 이벤트 컨텐츠
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 4
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 5
+ *     } 
+ * 
+ * 
+ */
 router.put('/:id', (req, res) => {
 
     // check event id validity

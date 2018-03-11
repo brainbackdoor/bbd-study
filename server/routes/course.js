@@ -3,9 +3,52 @@ import Course from '../models/course';
 import mongoose from 'mongoose';
 
 const router = express.Router();
-/*
-    READ COURSE: GET /api/course
-*/
+
+/**
+ * @api {get} /api/course Get Course Information [Dev]
+ * @apiVersion 0.1.0
+ * @apiName GetCourses
+ * @apiGroup Course
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * 
+ *[
+ *    {
+ *        "date": {
+ *            "created": "2018-03-09T05:57:08.473Z",
+ *            "edited": "2018-03-09T06:06:34.220Z"
+ *        },
+ *        "dayOfWeek": [
+ *            {
+ *                "startTime": "18:00",
+ *                "endTime": "20:00",
+ *                "day": "월",
+ *                "_id": "5aa2246a3e230146f31adc00"
+ *            },
+ *            {
+ *                "startTime": "18:00",
+ *                "endTime": "20:00",
+ *                "day": "화",
+ *                "_id": "5aa2246a3e230146f31adbff"
+ *            }
+ *        ],
+ *        "is_edited": true,
+ *        "_id": "5aa222342ae1501ddf695bf7",
+ *        "courseType": "special",
+ *        "accountId": "bbd@educhoice.com",
+ *        "coursesClassification": "물리",
+ *        "subjectClassification": "물리",
+ *        "courseName": "물리(과탐)-고2",
+ *        "grade": "고등2",
+ *        "tuition": 400000,
+ *        "duration": "2018.01.01 ~ 2018.01.03",
+ *        "__v": 1
+ *    }
+ *]
+ * 
+ */
 router.get('/', (req, res) => {
     Course.find()
     .sort({"_id": -1})
@@ -15,37 +58,64 @@ router.get('/', (req, res) => {
         res.json(courses);
     })
 });
+/**
+ * @api {post} /api/course Post Course information
+ * @apiVersion 0.1.0
+ * @apiName PostCourse
+ * @apiGroup Course
+ * 
+ * @apiParam {String} courseType 강좌 유형 { normal | special }
+ * @apiParam {String} coursesClassification 과목 대분류
+ * @apiParam {String} subjectClassification 과목 소분류
+ * @apiParam {String} courseName 과목 이름
+ * @apiParam {Number} tuition 수업료
+ * @apiParam {String} grade 학년
+ * @apiParam {Array} dayOfWeek 수업일자
+ * @apiParam {String} duration 수업기간 (특강(courseType:special)에 한함)
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     }
+ * 
+ * @apiError BAD REQUEST TYPE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD REQUEST TYPE
+ *     {
+ *       "error": "BAD REQUEST TYPE",
+ *       "code" : 3
+ *     }
+ * 
+ * @apiError BAD REQUEST DATA
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD REQUEST DATA
+ *     {
+ *       "error": "BAD REQUEST DATA",
+ *       "code" : 4
+ *     }
+ */
 
-/*
-    WRITE COURSE: POST /api/course
-    BODY SAMPLE: 
-    { 
-        "courseType": {"normal" | "special"},
-        "coursesClassification": "과학",
-        "subjectClassification": "과학",
-        "courseName": "물리(과탐)-고2",
-        "grade": "고등2",
-        "tuition": 400000,
-        "dayOfWeek": [
-            {
-                "startTime": "18:00",
-                "endTime": "20:00",
-                "day": "월"
-            },
-            {
-                "startTime": "18:00",
-                "endTime": "20:00",
-                "day": "화"
-            }
-        ],
-        "duration":"2018.01.01 ~ 2018.01.02"
-    }
-    ERROR CODES
-        1: NOT LOGGED IN
-        2: EMPTY CONTENTS
-        3: BAD REQUEST TYPE
-        4: BAD REQUEST DATA
-*/
 router.post('/', (req, res) => {
     // check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -139,15 +209,56 @@ router.post('/', (req, res) => {
         return res.json({ success: true });
     })
 });
+/**
+ * @api {delete} /api/course/:id Delete Course Information
+ * @apiVersion 0.1.0
+ * @apiName DeleteCourseInformation
+ * @apiGroup Course
+ * 
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 4
+ *     } 
+ */
 
-/*
-    DELETE COURSE: DELETE /api/course/:id
-    ERROR CODES
-        1: INVALID ID
-        2: NOT LOGGED IN
-        3: NO RESOURCE
-        4: PERMISSION FAILURE
-*/
 router.delete('/:id', (req, res) => {
 
     // check course in validity
@@ -190,38 +301,91 @@ router.delete('/:id', (req, res) => {
         });
     });
 });
+/**
+ * @api {put} /api/course/:id Put Course Information
+ * @apiVersion 0.1.0
+ * @apiName PutCourseInformation
+ * @apiGroup Course
+ * 
+ * @apiParam {String} courseType 강좌 유형 { normal | special }
+ * @apiParam {String} coursesClassification 과목 대분류
+ * @apiParam {String} subjectClassification 과목 소분류
+ * @apiParam {String} couorseName 과목 이름
+ * @apiParam {String} grade 학년
+ * @apiParam {Array} dayOfWeek 수업일자
+ * @apiParam {String} duration 수업기간 (특강(courseType:special)에 한함)
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ * {
+ *      "success": true
+ * }
+ * 
+ * @apiError INVALID ID
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 INVALID ID
+ *     {
+ *       "error": "INVALID ID",
+ *       "code" : 1
+ *     }
+ * 
+ * @apiError EMPTY CONTENTS
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 EMPTY CONTENTS
+ *     {
+ *       "error": "EMPTY CONTENTS",
+ *       "code" : 2
+ *     } 
+ * 
+ * @apiError NOT LOGGED IN
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 NOT LOGGED IN
+ *     {
+ *       "error": "NOT LOGGED IN",
+ *       "code" : 3
+ *     } 
+ * 
+ * @apiError NO RESOURCE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 NO RESOURCE
+ *     {
+ *       "error": "NO RESOURCE",
+ *       "code" : 4
+ *     } 
+ * 
+ * @apiError PERMISSION FAILURE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 403 PERMISSION FAILURE
+ *     {
+ *       "error": "PERMISSION FAILURE",
+ *       "code" : 5
+ *     } 
+ * 
+ * @apiError BAD REQUEST TYPE
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD REQUEST TYPE
+ *     {
+ *       "error": "BAD REQUEST TYPE",
+ *       "code" : 6
+ *     } 
+ * 
+ * @apiError BAD REQUEST DATA
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 BAD REQUEST DATA
+ *     {
+ *       "error": "BAD REQUEST DATA",
+ *       "code" : 7
+ *     } 
+ * 
+ */
 
-/*
-    MODIFY COURSE: PUT /api/course/:id
-    BODY SAMPLE: 
-    { 
-        "coursesClassification": "과학",
-        "subjectClassification": "과학",
-        "courseName": "물리(과탐)-고2",
-        "grade": "고등2",
-        "tuition": 400000,
-        "dayOfWeek": [
-            {
-                "startTime": "18:00",
-                "endTime": "20:00",
-                "day": "월"
-            },
-            {
-                "startTime": "18:00",
-                "endTime": "20:00",
-                "day": "화"
-            }
-        ]
-    }
-    ERROR CODES
-        1: INVALID ID,
-        2: EMPTY CONTENTS,
-        3: NOT LOGGED IN
-        4: NO RESOURCE
-        5: PERMISSION FAILURE
-        6: BAD REQUEST TYPE
-        7: BAD REQUEST DATA
-*/
 router.put('/:id', (req, res) => {
 
     // check course id validity

@@ -15,9 +15,13 @@ import session from 'express-session';
 
 /* setup routers & static directory */
 import api from './routes';
+import cors from 'cors';
 
 const app = express();
 const port = 3000;
+
+// CORS 설정
+app.use(cors());
 
 app.listen(port, () => {
     console.log('Express is listening on port',port);
@@ -36,7 +40,7 @@ db.on('error', console.error);
 db.once('open', () => { console.log('Connected to mongodb server'); });
 
 // mongoose.connect('mongodb://username:password@host:port/database=');
-mongoose.connect('mongodb://username:password@ds257858.mlab.com:57858/educhoice-be');
+mongoose.connect('mongodb://127.0.0.1:27017/educhoice-be');
 
 
 /* use session */
