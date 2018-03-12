@@ -263,13 +263,13 @@ router.get('/:id', (req, res) => {
                     HashTag.find({'accountId':academy.accountId}, (err, hashTag) => {
                         let result = new SearchAcademy({
                             academyName: academy.academyName,
-                            academyPhoneNumber: academy.academyPhoneNumber,
+                            phoneNo: academy.phoneNo,
                             address: academy.address,
                             carAvailable: academy.carAvailable,
                             inquiryResponseRate: academy.inquiryResponseRate,
                             introduction: academy.introduction,
                             corporateAccount: {
-                                phoneNo: academy.academyPhoneNumber,
+                                phoneNo: academy.phoneNo,
                                 accountName: academy.ownerName,
                                 accountId: account.loginId
                             },
