@@ -206,7 +206,9 @@ router.post('/signup', (req, res) => {
                             academyName: req.body.academy.academyName,
                             ownerName: req.body.academy.ownerName,
                             address: req.body.academy.address,
-                            academyPhoneNumber: req.body.academy.academyPhoneNumber,
+                            phoneNo: req.body.academy.academyPhoneNumber,
+                            inquiryResponseRate: 0,
+                            imageUrl:["https://test"],
                             carAvailable: req.body.carAvailable
                         });        
                         // save in db

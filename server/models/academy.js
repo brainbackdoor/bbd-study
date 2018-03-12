@@ -7,7 +7,7 @@ const Academy = new Schema({
     accountId: String,
     academyName: String,
     ownerName: String,
-    academyPhoneNumber: String,
+    phoneNo: String,
     address: {
         address: String,
         jibunaddress: String,
@@ -71,6 +71,9 @@ const Academy = new Schema({
             }, 
             is_edited: { type: Boolean, default: false }
         }
+    ],
+    imageUrl: [
+        String
     ],
     created: { type: Date, default: Date.now }
 });

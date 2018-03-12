@@ -52,7 +52,7 @@ router.get('/', (req, res) => {
 });
 
 /**
- * @api {post} /api/academy Get Academy list
+ * @api {post} /api/academy Post Academy list
  * @apiVersion 0.1.0
  * @apiName GetAcademies
  * @apiGroup Academy
