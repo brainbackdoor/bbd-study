@@ -3,10 +3,9 @@ public class DogDoorSimulator {
   public static void main(String[] args) {
     DogDoor door = new DogDoor();
     Remote remote = new Remote(door);
-
+    BarkRecognizer recognizer = new BarkRecognizer(door);
     System.out.println("Fido barks to go outside...");
-    remote.pressButton();
-    
+    recognizer.recognize("Woof");
     
     System.out.println("\nFido has gone outside...");
 
@@ -18,8 +17,7 @@ public class DogDoorSimulator {
     	
     System.out.println("\n...but he's stuck outside!");
     System.out.println("\nFido starts barking...");
-    System.out.println("\n...so Gina grabs the remote control");
-    remote.pressButton();
+    recognizer.recognize("Woof");
     System.out.println("\nFido's back inside...");
    
 
