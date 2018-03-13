@@ -27,7 +27,7 @@ const router = express.Router();
  *           "dong": "상계동",
  *           "sido": "서울",
  *           "sigungu": "노원구",
- *           "address": "서울 노원구 상계동 455 백산빌딩",
+ *           "fullAddress": "서울 노원구 상계동 455 백산빌딩",
  *           "roadAddress": "서울 노원구 한글비석로 460",
  *           "latitude": 127.06697859544342,
  *           "longitude": 37.66444002512082
@@ -69,7 +69,7 @@ router.get('/', (req, res) => {
  *           "dong": "상계동",
  *           "sido": "서울",
  *           "sigungu": "노원구",
- *           "address": "서울 노원구 상계동 455 백산빌딩",
+ *           "fullAddress": "서울 노원구 상계동 455 백산빌딩",
  *           "roadAddress": "서울 노원구 한글비석로 460",
  *           "latitude": 127.06697859544342,
  *           "longitude": 37.66444002512082
@@ -118,7 +118,7 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {        
     Academy.find()
-    .where('address.address').regex(req.body.address)
+    .where('address.fullAddress').regex(req.body.address)
     .where('carAvailable').equals(req.body.carAvailable)
     .sort({"_id": -1})
     .limit(6)
@@ -154,7 +154,7 @@ router.post('/', (req, res) => {
  *        "dong": "상계동",
  *        "sido": "서울",
  *        "sigungu": "노원구",
- *        "address": "서울 노원구 상계동 455 백산빌딩",
+ *        "fullAddress": "서울 노원구 상계동 455 백산빌딩",
  *        "roadAddress": "서울 노원구 한글비석로 460",
  *        "latitude": 127.06697859544342,
  *        "longitude": 37.66444002512082
@@ -312,7 +312,7 @@ router.get('/:id', (req, res) => {
  *        "dong": "상계동",
  *        "sido": "서울",
  *        "sigungu": "노원구",
- *        "address": "서울 노원구 상계동 455 백산빌딩",
+ *        "fullAddress": "서울 노원구 상계동 455 백산빌딩",
  *        "roadAddress": "서울 노원구 한글비석로 460",
  *        "latitude": 127.06697859544342,
  *        "longitude": 37.66444002512082
@@ -427,19 +427,19 @@ router.put('/:id', (req, res) => {
         });
     }
 
-    // check contents valid
-    if(typeof req.body.academyName !== 'string'){
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
-    if(req.body.academyName === "") {
-        return res.status(400).json({
-            error: "EMPTY CONTENTS",
-            code: 2
-        });
-    }
+    // // check contents valid
+    // if(typeof req.body.academyName !== 'string'){
+    //     return res.status(400).json({
+    //         error: "EMPTY CONTENTS",
+    //         code: 2
+    //     });
+    // }
+    // if(req.body.academyName === "") {
+    //     return res.status(400).json({
+    //         error: "EMPTY CONTENTS",
+    //         code: 2
+    //     });
+    // }
 
     //check login status
     if(typeof req.session.loginInfo === 'undefined') {
@@ -462,7 +462,7 @@ router.put('/:id', (req, res) => {
         }
 
         // if exists, check writer
-        if(academy.accountId != req.session.loginInfo.loginId){
+        if(academy.accountId != req.session.loginInfo._id){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5
@@ -470,10 +470,10 @@ router.put('/:id', (req, res) => {
         }
         
         // MODIFY AND SAVE IN DB
-        academy.academyName = req.body.academyName;
-        academy.address = req.body.address;
-        academy.carAvailable = req.body.carAvailable;
-        academy.introduction = req.body.introduction;
+        if(typeof req.body.academyName !== "undefined") academy.academyName = req.body.academyName;
+        if(typeof req.body.address !== "undefined") academy.address = req.body.address;
+        if(typeof req.body.carAvailable !== "undefined") academy.carAvailable = req.body.carAvailable;
+        if(typeof req.body.introduction !== "undefined") academy.introduction = req.body.introduction;
         academy.save((err, academy) => {
             if(err) throw err;
 

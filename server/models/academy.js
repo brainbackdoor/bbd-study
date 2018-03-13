@@ -9,10 +9,8 @@ const Academy = new Schema({
     ownerName: String,
     phoneNo: String,
     address: {
-        address: String,
-        jibunaddress: String,
-        roadAddress: String,
-        zonecode: Number,
+        fullAddress: String,
+        detailAddress: String,
         sido: String,
         sigungu: String,
         dong: String,

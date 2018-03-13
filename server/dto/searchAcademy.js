@@ -8,10 +8,8 @@ const SearchAcademy = new Schema({
     academyName: String,
     academyPhoneNumber: String,
     address: {
-        address: String,
-        jibunaddress: String,
-        roadAddress: String,
-        zonecode: Number,
+        fullAddress: String,
+        detailAddress: String,
         sido: String,
         sigungu: String,
         dong: String,
