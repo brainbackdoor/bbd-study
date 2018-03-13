@@ -13,8 +13,7 @@ public class TryHelloWorld {
 	}
 
 	private int gcd(int a, int b) {
-		int c = b;
-		if (a > b) c = a;
+		int c = a > b ? b: a;
 
 		while ((a % c != 0) || (b % c != 0)) c--;
 		return c;
