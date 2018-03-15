@@ -56,4 +56,3 @@ def excel_download(request):
         response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
         return response
 
-class 
