@@ -13,6 +13,7 @@
 [[pythontutor]](http://www.pythontutor.com/visualize.html#mode=edit) - traversal  
 [[codility]](https://app.codility.com/programmers/lessons/1-iterations/) - big-O  
 
+#### 코드실행 시간 계산
 ```
 	private static final Logger log = LoggerFactory.getLogger(SumDivisorTest.class);
 	private int limit = 100000000;
