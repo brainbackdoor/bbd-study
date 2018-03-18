@@ -1,8 +1,4 @@
-<<<<<<< HEAD:devops/docker/step01/README.md
-### Nginx(reverse-proxy) + Docker(node.JS)
-=======
 ### Use Docker-Compose
->>>>>>> project-d/devops/docker/step04:README.md
 
 ---
 #### Docker Basic Commands
