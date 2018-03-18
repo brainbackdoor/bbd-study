@@ -6,12 +6,12 @@
 [약수의 합](https://github.com/brainbackdoor/bbd-study-algorithm/blob/algorithm/programmers/week01/src/task01/SumDivisor.java)
 
 ---
-코드 복잡성확인을 위한 방법
-[[sonarqube]](https://www.sonarqube.org/) - cyclomatic complexity
-[[codacy]](https://app.codacy.com/app/brainbackdoor/bbd-study-algorithm/dashboard?bid=6803008) - churn/complexity
-[[pmd]](http://www.baeldung.com/java-static-analysis-tools)
-[[pythontutor]](http://www.pythontutor.com/visualize.html#mode=edit) - traversal
-[[codility]](https://app.codility.com/programmers/lessons/1-iterations/) - big-O
+### 코드 복잡성확인을 위한 방법  
+[[sonarqube]](https://www.sonarqube.org/) - cyclomatic complexity  
+[[codacy]](https://app.codacy.com/app/brainbackdoor/bbd-study-algorithm/dashboard?bid=6803008) - churn/complexity  
+[[pmd]](http://www.baeldung.com/java-static-analysis-tools)  
+[[pythontutor]](http://www.pythontutor.com/visualize.html#mode=edit) - traversal  
+[[codility]](https://app.codility.com/programmers/lessons/1-iterations/) - big-O  
 
 ```
 	private static final Logger log = LoggerFactory.getLogger(SumDivisorTest.class);
