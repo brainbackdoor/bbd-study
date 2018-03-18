@@ -1,0 +1,5 @@
+.jshintrc
+.tern-project
+build
+node_modules
+node.zip
