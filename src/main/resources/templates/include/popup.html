@@ -1,0 +1,69 @@
+
+<div id="boxes">
+<div id="dialog" class="window">Simple Modal Window |<a href="#"class="close"/>[X]</a></div>
+<div id="dialog1" class="window">Simple Modal Window |<a href="#"class="close"/>[X]</a></div>
+<div id="dialog2" class="window">Simple Modal Window |<a href="#"class="close"/>[X]</a></div>
+<div id="dialog3" class="window">Simple Modal Window |<a href="#"class="close"/>[X]</a></div>
+<div id="mask"></div>
+</div>
+
+<SCRIPT LANGUAGE="JavaScript">
+function Popup(style,size,value1,value2,value3,value4){
+		var divModal = document.getElementById(size);
+		switch(style){
+			case 'login' :	divModal.innerHTML = "<iframe src='/pages/login' marginwidth='0' marginheight='0' scrolling='yes' frameborder='0' height='400' ></iframe>"; break;
+		}
+    var id = divModal;
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+    $('#mask').css({'width':maskWidth,'height':maskHeight});
+    $('#mask').fadeIn(1000);
+    $('#mask').fadeTo("slow",0.8);
+    var winH = $(window).height();
+    var winW = $(window).width();
+    $(id).css('top',  winH/2-$(id).height()/2);
+    $(id).css('left', winW/2-$(id).width()/2);
+    $(id).fadeIn(2000);
+}
+
+
+////////////////////////////////////////
+//Mask Click
+$(document).ready(function() { 
+//if close button is clicked
+      $('.window .close').click(function (e) {
+//Cancel the link behavior
+              e.preventDefault();
+        $('#mask').hide();
+  $('.window').hide();
+      });                
+      //if mask is clicked
+$('#mask').click(function () {
+        $(this).hide();
+  $('.window').hide();
+});                     
+
+      $(window).resize(function () {
+              var box = $('#boxes .window');
+      //Get the screen height and width
+        var maskHeight = $(document).height();
+  var maskWidth = $(window).width();
+    
+  //Set height and width to mask to fill up the whole screen
+      $('#mask').css({'width':maskWidth,'height':maskHeight});
+              
+  //Get the window height and width
+  var winH = $(window).height();
+  var winW = $(window).width();
+      
+  //Set the popup window to center
+  box.css('top',  winH/2 - box.height()/2);
+  box.css('left', winW/2 - box.width()/2);
+      }); 
+});
+$(function() {
+      $( "#datepicker1, #datepicker2" ).datepicker({
+      dateFormat: 'yymmdd'
+});
+});
+</script>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{{> include/head}}
+<script>
+{{> include/util}}
+
+</script>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        {{> include/nav}}
+        <br><br>
+        
+<div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <fieldset disabled>
+								<label for="user_id">이메일 주소 (ID)</label>
+								<input type="email" class="form-control" name="emailId" id="emailId" value="{{sessionedUser.emailId}}">
+							</fieldset>
+                    </div>
+                    <div class="panel-body">
+                    <form name="password_form" method="post" action="/parent/modifyInformation">
+                            <fieldset>
+			  <label for="user_id">계정 정보 수정</label>                            
+              <div class="form-group">
+                  <input type="password" class="form-control" id="password1" name="password1" onkeyup="verify.check()" placeholder="비밀번호 (영문/숫자 조합 8~16자)">
+              </div>
+			  <div class="form-group">
+                  <input type="password" class="form-control" id="password2" name="password2" onkeyup="verify.check()" placeholder="비밀번호 확인">
+              </div>              
+              <div id="password_result"> </div> 
+              <br>
+              <div class="form-group">
+                  <input type="text" class="form-control" id="alias" name="alias"  value="{{sessionedUser.alias}}">
+              </div>
+			  <label for="user_id">휴대폰 인증</label>
+			  <div class="form-group">
+                  <input type="text" class="form-control" placeholder="휴대폰 번호 (-없이 입력)">
+                  <button type="button" class="btn btn-success clearfix pull-right">인증번호 전송</button>	              
+              </div>
+			  <div class="form-group">
+                  <input type="text" class="form-control" placeholder="인증번호">
+                  <button type="button" class="btn btn-success clearfix pull-right">인증</button>	              
+              </div>   
+			  <label for="user_id">지역 변경</label>
+			  <div class="form-group">
+                  <input type="text" class="form-control" placeholder="시 / 군  / 구">
+              </div>                         
+              <button type="submit" class="btn btn-lg btn-success btn-block">확인</button>
+              <button type="button" class="btn btn-lg btn-fail btn-block" onclick="location.href='/pages/index'">취소</button>								
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
