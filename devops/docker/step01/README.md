@@ -1,8 +1,4 @@
-<<<<<<< HEAD:devops/docker/step01/README.md
-### Nginx(reverse-proxy) + Docker(node.JS)
-=======
-### Use Docker-Compose
->>>>>>> project-d/devops/docker/step04:README.md
+### Deploying Souce Code in Docker Container
 
 ---
 #### Docker Basic Commands
@@ -10,9 +6,6 @@
 ```
 #### Container ID check
 docker ps -a
-
-#### Image Check
-docker images
 
 #### Log output
 docker logs <container id>
@@ -41,12 +34,19 @@ docker rmi $(docker images -q)
 
 ##### Image build
 ```
-cd step04
-docker build -t bbd/node-web-app .
-docker build -t bbd/load-balance-nginx nginx/.
+cd step01
+docker build -t ko-dev .
 ```
 
-##### use Docker-compose
+##### Image execution
 ```
-docker-compose up -d
+docker run -dit ko-dev
 ```
+
+##### Enter container && Test
+```
+docker exec -it <container id> /bin/bash
+locale
+git --version
+```
+
