@@ -129,11 +129,15 @@ router.post('/', (req, res) => {
     Academy.find()
     .where('address.fullAddress').regex(req.body.address)
     .where('carAvailable').equals(req.body.carAvailable)
+    .where('searchImpression').equals(true)
     .sort({"_id": -1})
     .limit(6)
     .exec((err, academies) => {
         if(err) throw err;
-        res.json(academies.filter(academy => academy.grades.includes(req.body.grade) && academy.subjects.includes(req.body.subject)));
+        res.json(academies.filter(
+            academy => academy.grades.includes(req.body.grade) 
+            && academy.subjects.includes(req.body.subject)
+        ));
     })
 });
 /**
@@ -244,7 +248,7 @@ router.get('/:id', (req, res) => {
         });
     }
     // find academy and check for writer    
-    Academy.findById(req.params.id, (err, academy) => {
+    Academy.findOne({academyId:req.params.id}, (err, academy) => {
         if(err) throw err;
 
         if(!academy) {
@@ -253,7 +257,7 @@ router.get('/:id', (req, res) => {
                 code: 2
             });
         }
-        Account.find({ 'loginId': academy.accountId}, (err, account) => {
+        Account.find({ 'accountId': academy.accountId}, (err, account) => {
             if(err) throw err;
             if(!account) {
                 return res.status(404).json({
@@ -274,7 +278,7 @@ router.get('/:id', (req, res) => {
                             corporateAccount: {
                                 phoneNo: academy.phoneNo,
                                 accountName: academy.ownerName,
-                                accountId: account.loginId
+                                accountId: account.accountId
                             },
                             courses: course,
                             events: event,
@@ -459,13 +463,14 @@ router.put('/:id', (req, res) => {
         }
         
         // MODIFY AND SAVE IN DB
-        if(typeof req.body.academyName !== "undefined") academy.academyName = req.body.academyName;
+        if(typeof req.body.searchImpression !== "undefined") academy.searchImpression = req.body.searchImpression;
         if(typeof req.body.address !== "undefined") academy.address = req.body.address;
         if(typeof req.body.carAvailable !== "undefined") academy.carAvailable = req.body.carAvailable;
         if(typeof req.body.introduction !== "undefined") academy.introduction = req.body.introduction;
         if(typeof req.body.courses !== "undefined") academy.courses = req.body.courses;
         if(typeof req.body.events !== "undefined") academy.events = req.body.events;
         if(typeof req.body.hashTags !== "undefined") academy.hashTags = req.body.hashTags;
+        
         
         academy.save((err, academy) => {
             if(err) throw err;
@@ -548,7 +553,7 @@ router.delete('/:id', (req, res) => {
                 code: 3
             });
         }
-        if(academy.accountId != req.session.loginInfo.loginId){
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4

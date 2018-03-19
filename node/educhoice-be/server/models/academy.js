@@ -6,7 +6,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const Academy = new Schema({
     academyId: {type: Schema.Types.ObjectId, default: new ObjectId()},
     accountId: String,
-    searchImpression: String,
+    searchImpression: {type:Boolean, default: false},
     academyName: String,
     ownerName: String,
     phoneNo: String,
