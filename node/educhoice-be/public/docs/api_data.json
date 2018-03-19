@@ -111,7 +111,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "  HTTP/1.1 200 OK\n{\n    \"address\": {\n        \"dong\": \"상계동\",\n        \"sido\": \"서울\",\n        \"sigungu\": \"노원구\",\n        \"address\": \"서울 노원구 상계동 455 백산빌딩\",\n        \"roadAddress\": \"서울 노원구 한글비석로 460\",\n        \"latitude\": 127.06697859544342,\n        \"longitude\": 37.66444002512082\n    },\n    \"created\": \"2018-03-09T07:34:39.629Z\",\n    \"_id\": \"5aa2390fa26a0f7a8c5bbabd\",\n    \"accountId\": \"bbd@educhoice.com\",\n    \"academyName\": \"모두의학원\",\n    \"ownerName\": \"이준\",\n    \"academyPhoneNumber\": \"07012345678\",\n    \"__v\": 0\n}",
+          "content": "  HTTP/1.1 200 OK\n{\n    \"address\": {\n        \"dong\": \"상계동\",\n        \"sido\": \"서울\",\n        \"sigungu\": \"노원구\",\n        \"fullAddress\": \"서울 노원구 상계동 455 백산빌딩\",\n        \"roadAddress\": \"서울 노원구 한글비석로 460\",\n        \"latitude\": 127.06697859544342,\n        \"longitude\": 37.66444002512082\n    },\n    \"created\": \"2018-03-09T07:34:39.629Z\",\n    \"_id\": \"5aa2390fa26a0f7a8c5bbabd\",\n    \"accountId\": \"bbd@educhoice.com\",\n    \"academyName\": \"모두의학원\",\n    \"ownerName\": \"이준\",\n    \"academyPhoneNumber\": \"07012345678\",\n    \"__v\": 0\n}",
           "type": "json"
         }
       ]
@@ -183,7 +183,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "    HTTP/1.1 200 OK\n{\n   \"address\": {\n       \"dong\": \"상계동\",\n       \"sido\": \"서울\",\n       \"sigungu\": \"노원구\",\n       \"address\": \"서울 노원구 상계동 455 백산빌딩\",\n       \"roadAddress\": \"서울 노원구 한글비석로 460\",\n       \"latitude\": 127.06697859544342,\n       \"longitude\": 37.66444002512082\n   },\n   \"corporateAccount\": {\n       \"phoneNo\": \"07012345678\",\n       \"accountName\": \"이준\"\n   },\n   \"academyName\": \"모두의학원\",\n   \"academyPhoneNumber\": \"07012345678\",\n   \"courses\": [\n       {\n           \"dayOfWeek\": [\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"월\",\n                   \"_id\": \"5aa2246a3e230146f31adc00\"\n               },\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"화\",\n                   \"_id\": \"5aa2246a3e230146f31adbff\"\n               }\n           ],\n           \"_id\": \"5aa222342ae1501ddf695bf7\",\n           \"courseType\": \"special\",\n           \"accountId\": \"bbd@educhoice.com\",\n           \"coursesClassification\": \"물리\",\n           \"subjectClassification\": \"물리\",\n           \"courseName\": \"물리(과탐)-고2\",\n           \"grade\": \"고등2\",\n           \"tuition\": 400000,\n           \"duration\": \"2018.01.01 ~ 2018.01.03\"\n       }\n   ],\n   \"events\": [\n       {\n           \"_id\": \"5aa22998ec1be63d3c76bb19\",\n           \"title\": \"이벤트타이틀\",\n           \"content\": \"컨텐츠수\"\n       }\n   ],\n   \"hashTags\": [\n       {\n           \"_id\": \"5aa23c3d6d0e51514fb618e8\",\n           \"title\": \"태그\"\n       },\n       {\n           \"_id\": \"5aa248f9fd158d2be65387ea\",\n           \"title\": \"태그\"\n       }\n   ],\n   \"created\": \"2018-03-09T19:39:20.192Z\",\n   \"_id\": \"5aa2e2e8e7d46c44ccf24588\"\n}",
+          "content": "    HTTP/1.1 200 OK\n{\n   \"address\": {\n       \"dong\": \"상계동\",\n       \"sido\": \"서울\",\n       \"sigungu\": \"노원구\",\n       \"fullAddress\": \"서울 노원구 상계동 455 백산빌딩\",\n       \"roadAddress\": \"서울 노원구 한글비석로 460\",\n       \"latitude\": 127.06697859544342,\n       \"longitude\": 37.66444002512082\n   },\n   \"corporateAccount\": {\n       \"phoneNo\": \"07012345678\",\n       \"accountName\": \"이준\"\n   },\n   \"academyName\": \"모두의학원\",\n   \"academyPhoneNumber\": \"07012345678\",\n   \"courses\": [\n       {\n           \"dayOfWeek\": [\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"월\",\n                   \"_id\": \"5aa2246a3e230146f31adc00\"\n               },\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"화\",\n                   \"_id\": \"5aa2246a3e230146f31adbff\"\n               }\n           ],\n           \"_id\": \"5aa222342ae1501ddf695bf7\",\n           \"courseType\": \"special\",\n           \"accountId\": \"bbd@educhoice.com\",\n           \"coursesClassification\": \"물리\",\n           \"subjectClassification\": \"물리\",\n           \"courseName\": \"물리(과탐)-고2\",\n           \"grade\": \"고등2\",\n           \"tuition\": 400000,\n           \"duration\": \"2018.01.01 ~ 2018.01.03\"\n       }\n   ],\n   \"events\": [\n       {\n           \"_id\": \"5aa22998ec1be63d3c76bb19\",\n           \"title\": \"이벤트타이틀\",\n           \"content\": \"컨텐츠수\"\n       }\n   ],\n   \"hashTags\": [\n       {\n           \"_id\": \"5aa23c3d6d0e51514fb618e8\",\n           \"title\": \"태그\"\n       },\n       {\n           \"_id\": \"5aa248f9fd158d2be65387ea\",\n           \"title\": \"태그\"\n       }\n   ],\n   \"created\": \"2018-03-09T19:39:20.192Z\",\n   \"_id\": \"5aa2e2e8e7d46c44ccf24588\"\n}",
           "type": "json"
         }
       ]
@@ -214,6 +214,112 @@
         {
           "title": "Error-Response:",
           "content": "HTTP/1.1 404 NO RESOURCE\n{\n  \"error\": \"NO RESOURCE\",\n  \"code\" : 2\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "server/routes/academy.js",
+    "groupTitle": "Academy"
+  },
+  {
+    "type": "post",
+    "url": "/api/academy",
+    "title": "Post Academy list",
+    "version": "0.1.0",
+    "name": "PostAcademy",
+    "group": "Academy",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Time",
+            "optional": false,
+            "field": "time",
+            "description": "<p>시간 조건  {&quot;day&quot;:[],&quot;startTime&quot;:&quot;09:00&quot;,&quot;endTime&quot;:&quot;22:00&quot;}</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "grade",
+            "description": "<p>학년</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "subject",
+            "description": "<p>과목</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>주소</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "latitude",
+            "description": "<p>위도</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>경도</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "carAvailable",
+            "description": "<p>차량운행여부</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>검색 지역명</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "carAvailable",
+            "description": "<p>차량운행여부</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "grade",
+            "description": "<p>학년 [개발중]</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "subject",
+            "description": "<p>과목 [개발중]</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n{\n      \"address\": {\n          \"dong\": \"상계동\",\n          \"sido\": \"서울\",\n          \"sigungu\": \"노원구\",\n          \"fullAddress\": \"서울 노원구 상계동 455 백산빌딩\",\n          \"roadAddress\": \"서울 노원구 한글비석로 460\",\n          \"latitude\": 127.06697859544342,\n          \"longitude\": 37.66444002512082\n      },\n      \"subjects\": [\n          \"사회\"\n      ],\n      \"grades\": [\n          \"고등3\"\n      ],\n      \"courses\": [\n          {\n              \"date\": {\n                  \"created\": \"2018-03-11T19:02:38.147Z\",\n                  \"edited\": \"2018-03-11T19:02:38.147Z\"\n              },\n              \"dayOfWeek\": [\n                  {\n                      \"startTime\": \"16:00\",\n                      \"endTime\": \"18:00\",\n                      \"day\": \"월\",\n                      \"_id\": \"5aa57d4ec08563172f44dca8\"\n                  }\n              ],\n              \"is_edited\": false,\n              \"courseType\": \"normal\",\n              \"coursesClassification\": \"사회\",\n              \"subjectClassification\": \"한국사\",\n              \"courseName\": \"한국사 뽀개기\",\n              \"grade\": \"고등3\",\n              \"tuition\": 400000,\n              \"_id\": \"5aa57d4ec08563172f44dca9\"\n          }\n      ],\n      \"events\": [],\n      \"hashTags\": [],\n      \"created\": \"2018-03-11T18:30:13.171Z\",\n      \"_id\": \"5aa575b5807c31f359bfbd69\",\n      \"accountId\": \"5aa575b5807c31f359bfbd68\",\n      \"academyName\": \"모두의학원\",\n      \"ownerName\": \"이준\",\n      \"academyPhoneNumber\": \"07012345678\",\n      \"carAvailable\": true,\n      \"__v\": 4\n  }",
           "type": "json"
         }
       ]
@@ -326,7 +432,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "    HTTP/1.1 200 OK\n{\n   \"address\": {\n       \"dong\": \"상계동\",\n       \"sido\": \"서울\",\n       \"sigungu\": \"노원구\",\n       \"address\": \"서울 노원구 상계동 455 백산빌딩\",\n       \"roadAddress\": \"서울 노원구 한글비석로 460\",\n       \"latitude\": 127.06697859544342,\n       \"longitude\": 37.66444002512082\n   },\n   \"corporateAccount\": {\n       \"phoneNo\": \"07012345678\",\n       \"accountName\": \"이준\"\n   },\n   \"academyName\": \"모두의학원\",\n   \"academyPhoneNumber\": \"07012345678\",\n   \"courses\": [\n       {\n           \"dayOfWeek\": [\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"월\",\n                   \"_id\": \"5aa2246a3e230146f31adc00\"\n               },\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"화\",\n                   \"_id\": \"5aa2246a3e230146f31adbff\"\n               }\n           ],\n           \"_id\": \"5aa222342ae1501ddf695bf7\",\n           \"courseType\": \"special\",\n           \"accountId\": \"bbd@educhoice.com\",\n           \"coursesClassification\": \"물리\",\n           \"subjectClassification\": \"물리\",\n           \"courseName\": \"물리(과탐)-고2\",\n           \"grade\": \"고등2\",\n           \"tuition\": 400000,\n           \"duration\": \"2018.01.01 ~ 2018.01.03\"\n       }\n   ],\n   \"events\": [\n       {\n           \"_id\": \"5aa22998ec1be63d3c76bb19\",\n           \"title\": \"이벤트타이틀\",\n           \"content\": \"컨텐츠수\"\n       }\n   ],\n   \"hashTags\": [\n       {\n           \"_id\": \"5aa23c3d6d0e51514fb618e8\",\n           \"title\": \"태그\"\n       },\n       {\n           \"_id\": \"5aa248f9fd158d2be65387ea\",\n           \"title\": \"태그\"\n       }\n   ],\n   \"created\": \"2018-03-09T19:39:20.192Z\",\n   \"_id\": \"5aa2e2e8e7d46c44ccf24588\"\n}",
+          "content": "    HTTP/1.1 200 OK\n{\n   \"address\": {\n       \"dong\": \"상계동\",\n       \"sido\": \"서울\",\n       \"sigungu\": \"노원구\",\n       \"fullAddress\": \"서울 노원구 상계동 455 백산빌딩\",\n       \"roadAddress\": \"서울 노원구 한글비석로 460\",\n       \"latitude\": 127.06697859544342,\n       \"longitude\": 37.66444002512082\n   },\n   \"corporateAccount\": {\n       \"phoneNo\": \"07012345678\",\n       \"accountName\": \"이준\"\n   },\n   \"academyName\": \"모두의학원\",\n   \"academyPhoneNumber\": \"07012345678\",\n   \"courses\": [\n       {\n           \"dayOfWeek\": [\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"월\",\n                   \"_id\": \"5aa2246a3e230146f31adc00\"\n               },\n               {\n                   \"startTime\": \"18:00\",\n                   \"endTime\": \"20:00\",\n                   \"day\": \"화\",\n                   \"_id\": \"5aa2246a3e230146f31adbff\"\n               }\n           ],\n           \"_id\": \"5aa222342ae1501ddf695bf7\",\n           \"courseType\": \"special\",\n           \"accountId\": \"bbd@educhoice.com\",\n           \"coursesClassification\": \"물리\",\n           \"subjectClassification\": \"물리\",\n           \"courseName\": \"물리(과탐)-고2\",\n           \"grade\": \"고등2\",\n           \"tuition\": 400000,\n           \"duration\": \"2018.01.01 ~ 2018.01.03\"\n       }\n   ],\n   \"events\": [\n       {\n           \"_id\": \"5aa22998ec1be63d3c76bb19\",\n           \"title\": \"이벤트타이틀\",\n           \"content\": \"컨텐츠수\"\n       }\n   ],\n   \"hashTags\": [\n       {\n           \"_id\": \"5aa23c3d6d0e51514fb618e8\",\n           \"title\": \"태그\"\n       },\n       {\n           \"_id\": \"5aa248f9fd158d2be65387ea\",\n           \"title\": \"태그\"\n       }\n   ],\n   \"created\": \"2018-03-09T19:39:20.192Z\",\n   \"_id\": \"5aa2e2e8e7d46c44ccf24588\"\n}",
           "type": "json"
         }
       ]
@@ -908,25 +1014,6 @@
     "groupTitle": "Course"
   },
   {
-    "type": "get",
-    "url": "/api/course",
-    "title": "Get Course Information [Dev]",
-    "version": "0.1.0",
-    "name": "GetCourses",
-    "group": "Course",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "    HTTP/1.1 200 OK\n\n[\n   {\n       \"date\": {\n           \"created\": \"2018-03-09T05:57:08.473Z\",\n           \"edited\": \"2018-03-09T06:06:34.220Z\"\n       },\n       \"dayOfWeek\": [\n           {\n               \"startTime\": \"18:00\",\n               \"endTime\": \"20:00\",\n               \"day\": \"월\",\n               \"_id\": \"5aa2246a3e230146f31adc00\"\n           },\n           {\n               \"startTime\": \"18:00\",\n               \"endTime\": \"20:00\",\n               \"day\": \"화\",\n               \"_id\": \"5aa2246a3e230146f31adbff\"\n           }\n       ],\n       \"is_edited\": true,\n       \"_id\": \"5aa222342ae1501ddf695bf7\",\n       \"courseType\": \"special\",\n       \"accountId\": \"bbd@educhoice.com\",\n       \"coursesClassification\": \"물리\",\n       \"subjectClassification\": \"물리\",\n       \"courseName\": \"물리(과탐)-고2\",\n       \"grade\": \"고등2\",\n       \"tuition\": 400000,\n       \"duration\": \"2018.01.01 ~ 2018.01.03\",\n       \"__v\": 1\n   }\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "server/routes/course.js",
-    "groupTitle": "Course"
-  },
-  {
     "type": "post",
     "url": "/api/course",
     "title": "Post Course information",
@@ -961,8 +1048,15 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "couorseName",
+            "field": "courseName",
             "description": "<p>과목 이름</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "tuition",
+            "description": "<p>수업료</p>"
           },
           {
             "group": "Parameter",
@@ -1271,25 +1365,6 @@
     "groupTitle": "Event"
   },
   {
-    "type": "get",
-    "url": "/api/event",
-    "title": "Get Event Information [Dev]",
-    "version": "0.1.0",
-    "name": "GetEventInfo",
-    "group": "Event",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "    HTTP/1.1 200 OK\n\n[\n  {\n      \"date\": {\n          \"created\": \"2018-03-09T06:28:40.004Z\",\n          \"edited\": \"2018-03-09T06:29:23.035Z\"\n      },\n      \"is_edited\": true,\n      \"_id\": \"5aa22998ec1be63d3c76bb19\",\n      \"accountId\": \"bbd@educhoice.com\",\n      \"title\": \"이벤트타이틀\",\n      \"content\": \"컨텐츠수\",\n      \"__v\": 0\n  }\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "server/routes/event.js",
-    "groupTitle": "Event"
-  },
-  {
     "type": "post",
     "url": "/api/event",
     "title": "Post Event information",
@@ -1524,25 +1599,6 @@
         {
           "title": "Error-Response:",
           "content": "HTTP/1.1 403 PERMISSION FAILURE\n{\n  \"error\": \"PERMISSION FAILURE\",\n  \"code\" : 4\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "server/routes/hashTag.js",
-    "groupTitle": "HashTag"
-  },
-  {
-    "type": "get",
-    "url": "/api/hashTag",
-    "title": "Get HashTag Information [Dev]",
-    "version": "0.1.0",
-    "name": "GetHashTags",
-    "group": "HashTag",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "    HTTP/1.1 200 OK\n\n[\n  {\n      \"date\": {\n          \"created\": \"2018-03-09T07:48:13.814Z\",\n          \"edited\": \"2018-03-09T07:48:13.815Z\"\n      },\n      \"is_edited\": false,\n      \"_id\": \"5aa23c3d6d0e51514fb618e8\",\n      \"accountId\": \"bbd@educhoice.com\",\n      \"title\": \"태그\",\n      \"__v\": 0\n  }\n]",
           "type": "json"
         }
       ]
