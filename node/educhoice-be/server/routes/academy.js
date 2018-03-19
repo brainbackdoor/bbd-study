@@ -430,20 +430,6 @@ router.put('/:id', (req, res) => {
         });
     }
 
-    // // check contents valid
-    // if(typeof req.body.academyName !== 'string'){
-    //     return res.status(400).json({
-    //         error: "EMPTY CONTENTS",
-    //         code: 2
-    //     });
-    // }
-    // if(req.body.academyName === "") {
-    //     return res.status(400).json({
-    //         error: "EMPTY CONTENTS",
-    //         code: 2
-    //     });
-    // }
-
     //check login status
     if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json ({
@@ -477,6 +463,10 @@ router.put('/:id', (req, res) => {
         if(typeof req.body.address !== "undefined") academy.address = req.body.address;
         if(typeof req.body.carAvailable !== "undefined") academy.carAvailable = req.body.carAvailable;
         if(typeof req.body.introduction !== "undefined") academy.introduction = req.body.introduction;
+        if(typeof req.body.courses !== "undefined") academy.courses = req.body.courses;
+        if(typeof req.body.events !== "undefined") academy.events = req.body.events;
+        if(typeof req.body.hashTags !== "undefined") academy.hashTags = req.body.hashTags;
+        
         academy.save((err, academy) => {
             if(err) throw err;
 
