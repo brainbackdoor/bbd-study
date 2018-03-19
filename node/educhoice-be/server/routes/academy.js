@@ -54,7 +54,7 @@ router.get('/', (req, res) => {
 /**
  * @api {post} /api/academy Post Academy list
  * @apiVersion 0.1.0
- * @apiName GetAcademy
+ * @apiName PostAcademy
  * @apiGroup Academy
  *
  * @apiParam {Time} time 시간 조건  {"day":[],"startTime":"09:00","endTime":"22:00"}
