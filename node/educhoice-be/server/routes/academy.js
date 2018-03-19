@@ -54,9 +54,17 @@ router.get('/', (req, res) => {
 /**
  * @api {post} /api/academy Post Academy list
  * @apiVersion 0.1.0
- * @apiName GetAcademies
+ * @apiName GetAcademy
  * @apiGroup Academy
  *
+ * @apiParam {Time} time 시간 조건  {"day":[],"startTime":"09:00","endTime":"22:00"}
+ * @apiParam {String} grade 학년
+ * @apiParam {String} subject 과목
+ * @apiParam {String} address 주소
+ * @apiParam {String} latitude 위도
+ * @apiParam {String} longitude 경도
+ * @apiParam {Boolean} carAvailable 차량운행여부
+ * 
  * @apiSuccess {String} address 검색 지역명
  * @apiSuccess {Boolean} carAvailable  차량운행여부
  * @apiSuccess {String} grade  학년 [개발중]
@@ -116,6 +124,7 @@ router.get('/', (req, res) => {
  *       "__v": 4
  *   }
  */
+
 router.post('/', (req, res) => {        
     Academy.find()
     .where('address.fullAddress').regex(req.body.address)
@@ -124,15 +133,9 @@ router.post('/', (req, res) => {
     .limit(6)
     .exec((err, academies) => {
         if(err) throw err;
-        // for(var i = 0;i < academies.length; i ++) {
-        //     if(academies[i].grades.indexOf(req.body.grade) == -1 || academies[i].subjects.indexOf(req.body.subject) == -1){
-        //         academies.splice(i,1);
-        //     } 
-        // }
-        res.json(academies);
+        res.json(academies.filter(academy => academy.grades.includes(req.body.grade) && academy.subjects.includes(req.body.subject)));
     })
 });
-
 /**
  * @api {get} /api/academy/:id Get Academy inpormation
  * @apiVersion 0.1.0
