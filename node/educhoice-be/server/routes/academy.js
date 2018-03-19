@@ -439,7 +439,7 @@ router.put('/:id', (req, res) => {
     }
 
     // find academy
-    Academy.findById(req.params.id, (err, academy) => {
+    Academy.findOne({academyId:req.params.id}, (err, academy) => {
         if(err) throw err;
 
         // if academy does not exist
@@ -451,7 +451,7 @@ router.put('/:id', (req, res) => {
         }
 
         // if exists, check writer
-        if(academy.accountId != req.session.loginInfo._id){
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5

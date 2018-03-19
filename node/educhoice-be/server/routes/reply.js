@@ -102,11 +102,11 @@ router.post('/:answerId', (req, res) => {
         }
         // CREATE NEW REPLY
         let reply = new Reply({
-            accountId: req.session.loginInfo._id,
+            accountId: req.session.loginInfo.accountId,
             role: req.session.loginInfo.type,
             accountName: req.session.loginInfo.name,
             questionId: answer.questionId,
-            answerId: answer._id,
+            answerId: answer.answerId,
             content: req.body.content
         });
 
@@ -202,7 +202,7 @@ router.delete('/:id', (req, res) => {
             });
         }
         // REMOVE THE REPLY
-        reply.remove({ _id: req.params.id }, err => {
+        reply.remove({ replyId: req.params.id }, err => {
             if(err) throw err;
             res.json({ success: true });
         });

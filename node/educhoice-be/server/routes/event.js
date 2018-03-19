@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
         });
     }
 
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
         // CREATE NEW EVENT
         let event = new Event({
             title: req.body.title,
@@ -145,15 +145,15 @@ router.delete('/:id', (req, res) => {
         });
     }
     // find event and check for writer
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
-        if(academy.accountId != req.session.loginInfo._id){
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
         }        
         for(var i = 0;i < academy.events.length; i ++) {
-            if(academy.events[i]._id == req.params.id){
+            if(academy.events[i].eventId == req.params.id){
                 academy.events.splice(i,1);
                 academy.save( err => {
                     if(err) throw err;
@@ -257,8 +257,8 @@ router.put('/:id', (req, res) => {
         });
     }
 
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
-        if(academy.accountId != req.session.loginInfo._id){
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
@@ -266,7 +266,7 @@ router.put('/:id', (req, res) => {
         }        
         for(var i = 0;i < academy.events.length; i ++) {
            
-            if(academy.events[i]._id == req.params.id){
+            if(academy.events[i].eventId == req.params.id){
                 // MODIFY AND SAVE IN DB
                 academy.events[i].title =  req.body.title;
                 academy.events[i].content = req.body.content;      

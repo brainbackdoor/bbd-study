@@ -202,7 +202,7 @@ router.post('/signup', (req, res) => {
 
                         // CREATE NEW ACADEMY
                         let academy = new Academy({
-                            accountId: account._id,
+                            accountId: account.accountId,
                             academyName: req.body.academy.academyName,
                             ownerName: req.body.academy.ownerName,
                             address: req.body.academy.address,
@@ -280,7 +280,7 @@ router.post('/signin',(req, res) => {
             // alter session
             let session = req.session;
             session.loginInfo = {
-                _id: account._id,
+                accountId: account.accountId,
                 loginId: account.loginId,
                 name: account.nickname,
                 type: account.requestType
@@ -290,14 +290,14 @@ router.post('/signin',(req, res) => {
                 success: true
             });            
         } else {
-            Academy.findOne({accountId:account._id},(err, academy) => {
+            Academy.findOne({accountId:account.accountId},(err, academy) => {
                 if(err) throw err;
                 // alter session
                 let session = req.session;
                 session.loginInfo = {
-                    _id: account._id,
+                    accountId: account.accountId,
                     loginId: account.loginId,
-                    academyId: academy._id,
+                    academyId: academy.accountId,
                     name: academy.academyName,
                     type: account.requestType
                 }; 

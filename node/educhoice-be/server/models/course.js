@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const Schema = mongoose.Schema;
-
+const ObjectId = mongoose.Types.ObjectId;
 const Course = new Schema({
+    courseId: {type: Schema.Types.ObjectId, default: new ObjectId()},
     courseType: String,
     coursesClassification: String,
     subjectClassification: String,

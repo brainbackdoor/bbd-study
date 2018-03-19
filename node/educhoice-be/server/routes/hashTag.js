@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
         });
     }
 
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
         // CREATE NEW HashTag
         let hashTag = new HashTag({
             title: req.body.title
@@ -138,15 +138,15 @@ router.delete('/:id', (req, res) => {
     }
 
     // find hashTag and check for writer
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
-        if(academy.accountId != req.session.loginInfo._id){
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
         }        
         for(var i = 0;i < academy.hashTags.length; i ++) {
-            if(academy.hashTags[i]._id == req.params.id){
+            if(academy.hashTags[i].hashTagId == req.params.id){
                 academy.hashTags.splice(i,1);
                 academy.save( err => {
                     if(err) throw err;
@@ -242,8 +242,8 @@ router.put('/:id', (req, res) => {
             code: 3
         });
     }
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
-        if(academy.accountId != req.session.loginInfo._id){
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
@@ -251,7 +251,7 @@ router.put('/:id', (req, res) => {
         }        
         for(var i = 0;i < academy.hashTags.length; i ++) {
            
-            if(academy.hashTags[i]._id == req.params.id){
+            if(academy.hashTags[i].hashTagId == req.params.id){
                 // MODIFY AND SAVE IN DB
                 academy.hashTags[i].title =  req.body.title;    
                 academy.hashTags[i].date.edited = new Date();

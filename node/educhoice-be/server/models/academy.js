@@ -2,9 +2,11 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const Schema = mongoose.Schema;
-
+const ObjectId = mongoose.Types.ObjectId;
 const Academy = new Schema({
+    academyId: {type: Schema.Types.ObjectId, default: new ObjectId()},
     accountId: String,
+    searchImpression: String,
     academyName: String,
     ownerName: String,
     phoneNo: String,
@@ -28,6 +30,7 @@ const Academy = new Schema({
     ],
     courses: [
         {
+            courseId: {type: Schema.Types.ObjectId, default: new ObjectId()},
             courseType: String,
             coursesClassification: String,
             subjectClassification: String,
@@ -51,6 +54,7 @@ const Academy = new Schema({
     ],
     events:[
         {
+            eventId: {type: Schema.Types.ObjectId, default: new ObjectId()},
             title: String,
             content: String,
             date: {
@@ -62,6 +66,7 @@ const Academy = new Schema({
     ],
     hashTags:[
         {
+            hashTagId: {type: Schema.Types.ObjectId, default: new ObjectId()},
             title: String,
             date: {
                 created: { type: Date, default: Date.now },

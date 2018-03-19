@@ -4,6 +4,7 @@ import Question from '../models/question';
 import Answer from '../models/answer';
 import Reply from '../models/reply';
 import SearchInquiry from '../dto/searchInquiry';
+import Academy from '../models/academy';
 import mongoose from 'mongoose';
 
 const router = express.Router();
@@ -117,7 +118,7 @@ router.get('/node/:questionId', (req, res) => {
     Answer.findOne({'questionId':req.params.questionId}, (err, answer) => {
         if(err) throw err;
         // if exists, check writer
-        if(answer.accountId !== req.session.loginInfo.loginId && answer.questionerId !== req.session.loginInfo.loginId){
+        if(answer.accountId !== req.session.loginInfo.accountId && answer.questionerId !== req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 3
@@ -130,7 +131,7 @@ router.get('/node/:questionId', (req, res) => {
             });
         }
 
-        Reply.find({'answerId': answer._id},(err, reply)=> {
+        Reply.find({'answerId': answer.answerId},(err, reply)=> {
            let result = new SearchInquiry({
                 accountId: answer.accountId,
                 accountName: answer.accountName,
@@ -190,7 +191,7 @@ router.get('/node/:questionId', (req, res) => {
 router.get('/list', (req, res) => {
     if(req.session.loginInfo.type ==='parents'){
         // find question and check for writer    
-        Question.find({"accountId":req.session.loginInfo.loginId}, (err, question) => {
+        Question.find({accountId:req.session.loginInfo.accountId}, (err, question) => {
             if(err) throw err;
             if(!question) {
                 return res.status(404).json({
@@ -205,7 +206,7 @@ router.get('/list', (req, res) => {
         });
     } else {
         // find question and check for writer    
-        Question.find({"receivers.receiverId":req.session.loginInfo.loginId}, (err, question) => {
+        Question.find({"receivers.receiverId":req.session.loginInfo.accountId}, (err, question) => {
             if(err) throw err;
             if(!question) {
                 return res.status(404).json({
@@ -283,18 +284,18 @@ router.post('/', (req, res) => {
             code: 2
         });
     }
-    
+
     // req.body.receivers.forEach(function(receiver){
-        // Account.find({'loginId':receiver.receiverId}, (err, account) => {
-        //     if(err) throw err;
-        //     if(account !==''){
-        //         return res.status(404).json({
-        //             error: "NO RESOURCE",
-        //             code: 2
-        //         }); 
-        //     }
-        // });        
-    // })
+    //     Academy.find({accountId:receiver.receiverId}, (err, academy) => {
+    //         if(err) throw err;
+    //         if(academy !==''){
+    //             return res.status(404).json({
+    //                 error: "NO RESOURCE",
+    //                 code: 2
+    //             }); 
+    //         }
+    //     });        
+    // });
     if((typeof req.body.questionTitle !== 'string') || (req.body.questionTitle === "")) {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
@@ -307,13 +308,6 @@ router.post('/', (req, res) => {
             code: 2
         });
     }
-    // check login status
-    if(typeof req.session.loginInfo === 'undefined') {
-        return res.status(403).json({
-            error: "NOT LOGGED IN",
-            code: 1
-        });
-    }
     // check sender type
     if(req.session.loginInfo.type !== 'parents') {
         return res.status(403).json({
@@ -323,8 +317,9 @@ router.post('/', (req, res) => {
     }    
     // CREATE NEW QUESTION
     let question = new Question({
-        accountId: req.session.loginInfo.loginId,
-        receivers: req.body.receivers,
+        accountId: req.session.loginInfo.accountId,
+        accountName: req.session.loginInfo.name,
+        receivers: receivers,
         questionTitle: req.body.questionTitle,
         questionContent: req.body.questionContent
     });
@@ -412,14 +407,14 @@ router.delete('/:id', (req, res) => {
                 code: 3
             });
         }
-        if(question.accountId != req.session.loginInfo.loginId){
+        if(question.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
         }
         // REMOVE THE QUESTION
-        Question.remove({ _id: req.params.id }, err => {
+        Question.remove({ questionId: req.params.id }, err => {
             if(err) throw err;
             res.json({ success: true });
         });
@@ -555,7 +550,7 @@ router.put('/:id', (req, res) => {
         }
 
         // if exists, check writer
-        if(question.accountId != req.session.loginInfo.loginId){
+        if(question.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 5

@@ -108,10 +108,10 @@ router.post('/:questionId', (req, res) => {
         }
         // CREATE NEW ANSWER
         let answer = new Answer({
-            accountId: req.session.loginInfo._id,
+            accountId: req.session.loginInfo.accountId,
             accountName: req.session.loginInfo.name,
             questionerId: question.accountId,
-            questionId: question._id,
+            questionId: question.accountId,
             content: req.body.content
         });
 
@@ -207,7 +207,7 @@ router.delete('/:id', (req, res) => {
             });
         }
         // REMOVE THE ANSWER
-        answer.remove({ _id: req.params.id }, err => {
+        answer.remove({ answerId: req.params.id }, err => {
             if(err) throw err;
             res.json({ success: true });
         });

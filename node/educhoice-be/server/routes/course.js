@@ -138,7 +138,7 @@ router.post('/', (req, res) => {
             });            
         }       
     }
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
         // CREATE NEW COURSE
         let course = new Course({
             courseType: req.body.courseType,
@@ -232,15 +232,15 @@ router.delete('/:id', (req, res) => {
             code: 2
         });
     }
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
-        if(academy.accountId != req.session.loginInfo._id){
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
             });
         }        
         for(var i = 0;i < academy.courses.length; i ++) {
-            if(academy.courses[i]._id == req.params.id){
+            if(academy.courses[i].courseId == req.params.id){
                 academy.courses.splice(i,1);
                 academy.subjects.splice(i,1);
                 academy.grades.splice(i,1);
@@ -422,8 +422,8 @@ router.put('/:id', (req, res) => {
     }
 
 
-    Academy.findOne({accountId:req.session.loginInfo._id}, (err, academy)=> {
-        if(academy.accountId != req.session.loginInfo._id){
+    Academy.findOne({accountId:req.session.loginInfo.accountId}, (err, academy)=> {
+        if(academy.accountId != req.session.loginInfo.accountId){
             return res.status(403).json({
                 error: "PERMISSION FAILURE",
                 code: 4
@@ -431,7 +431,7 @@ router.put('/:id', (req, res) => {
         }        
         for(var i = 0;i < academy.courses.length; i ++) {
            
-            if(academy.courses[i]._id == req.params.id){
+            if(academy.courses[i].courseId == req.params.id){
 
                 // MODIFY AND SAVE IN DB
                 academy.courses[i].courseType = req.body.courseType;

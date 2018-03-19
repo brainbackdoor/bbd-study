@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const Schema = mongoose.Schema;
-
+const ObjectId = mongoose.Types.ObjectId;
 const Account = new Schema({
+    accountId: {type: Schema.Types.ObjectId, default: new ObjectId()},
     // Common Variables
     requestType: String,
     marketingInfo: Boolean,
