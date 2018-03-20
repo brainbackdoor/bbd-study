@@ -143,6 +143,8 @@ router.post('/signup', (req, res) => {
                             loginId: req.body.loginId,
                             password: req.body.password,
                             memberAddress: req.body.memberAddress,
+                            longitude: req.body.longitude,
+                            latitude: req.body.latitude,
                             nickname: req.body.nickname,          
                         });
                         account.password = account.generateHash(account.password);

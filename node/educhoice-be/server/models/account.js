@@ -12,6 +12,8 @@ const Account = new Schema({
     password: String,
     // Parent Variables
     memberAddress: String,
+    longitude: String,
+    latitude: String,
     nickname: String,
     // Corporate Variables
     originalName: String,
