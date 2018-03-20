@@ -152,8 +152,8 @@ router.post('/', (req, res) => {
         });
 
         academy.courses.push(course);
-        academy.grades.push(req.body.grade);
-        academy.subjects.push(req.body.coursesClassification);
+        if(!academy.grades.includes(req.body.grade)) academy.grades.push(req.body.grade);
+        if(!academy.coursesClassification.includes(req.body.coursesClassification)) academy.subjects.push(req.body.coursesClassification);
   
         // save in db
         academy.save( err => {
