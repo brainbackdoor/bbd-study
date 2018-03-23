@@ -285,17 +285,6 @@ router.post('/', (req, res) => {
         });
     }
 
-    // req.body.receivers.forEach(function(receiver){
-    //     Academy.find({accountId:receiver.receiverId}, (err, academy) => {
-    //         if(err) throw err;
-    //         if(academy !==''){
-    //             return res.status(404).json({
-    //                 error: "NO RESOURCE",
-    //                 code: 2
-    //             }); 
-    //         }
-    //     });        
-    // });
     if((typeof req.body.questionTitle !== 'string') || (req.body.questionTitle === "")) {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
@@ -315,20 +304,39 @@ router.post('/', (req, res) => {
             code: 3
         });
     }    
+
+    
     // CREATE NEW QUESTION
-    let question = new Question({
+    var question = new Question({
         accountId: req.session.loginInfo.accountId,
         accountName: req.session.loginInfo.name,
-        receivers: receivers,
+        receivers: new Array,
         questionTitle: req.body.questionTitle,
         questionContent: req.body.questionContent
     });
 
+    req.body.acadmies.forEach(v => {
+        Academy.findOne({academyId:v.academyId}, (err, academy) => {
+                  if(err) throw err;
+                  if(academy ===''){
+                      return res.status(404).json({
+                          error: "NO RESOURCE",
+                          code: 2
+                      }); 
+                  } else {
+                      question.receivers.push({receiacademyIdverId:academy.accountId, academyName:academy.academyName});
+                      question.save( err => {
+                        if(err) throw err;
+                        return res.json({ success: true }); 
+                      });
+                
+                  }
+              });
+      })
+
+
     // save in db
-    question.save( err => {
-        if(err) throw err;
-        return res.json({ success: true });
-    })
+
 });
 /**
  * @api {delete} /api/question/:id Delete Question Information [Dev]
