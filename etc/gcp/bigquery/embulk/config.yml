@@ -9,6 +9,7 @@ in:
     table: address  
     select: "code, sido, sigungu, dong"
     order_by: "code DESC"
+  
 out:
     type: bigquery
     mode: replace
