@@ -1,0 +1,23 @@
+in:
+    type: mysql
+    use_legacy_datetime_code: true
+    host: localhost
+    port: 3306
+    user: root   
+    password: [PASSWORD]   
+    database: [DBNAME] 
+    table: address  
+    select: "code, sido, sigungu, dong"
+    order_by: "code DESC"
+out:
+    type: bigquery
+    mode: replace
+    auth_method: json_key
+    json_keyfile: PATH/TO/your_json.json
+    project: bbd-playground   
+    dataset: my_new_dataset   
+    table: test3   
+    gcs_bucket: playground-bbd   
+    auto_create_gcs_bucket: true 
+    auto_create_table: true 
+    auto_create_dataset: true
