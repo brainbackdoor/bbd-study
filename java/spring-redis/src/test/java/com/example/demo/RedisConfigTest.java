@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -67,5 +70,50 @@ public class RedisConfigTest {
         List<User> users = listOperations.range(KEY_NAME, 0, -1);
         users.stream().forEach(u -> log.debug("{}", u));
     }
+
+
+    @Test
+    public void testListQueue() {
+        ListOperations<String, User> listOperations = redisTemplate.opsForList();
+
+        User user1 = new User("bbd", "M");
+        listOperations.rightPush(KEY_NAME, user1);
+        User user2 = new User("lemon", "F");
+        listOperations.rightPush(KEY_NAME, user2);
+
+        User popUser1 = listOperations.leftPop(KEY_NAME);
+        Assert.assertEquals("bbd", popUser1.getName());
+
+        Assert.assertEquals(1, listOperations.size(KEY_NAME).intValue());
+    }
+
+    @Test
+    public void testSearchListObject() {
+        ListOperations<String, User> listOperations = redisTemplate.opsForList();
+        User user1 = new User("bbd", "M");
+        listOperations.rightPush(KEY_NAME, user1);
+        User user2 = new User("lemon", "F");
+        listOperations.rightPush(KEY_NAME, user2);
+
+        List<User> users = listOperations.range(KEY_NAME, 0, -1);
+        users.stream().forEach(u -> log.debug("{}", u));
+
+        User target1 = new User("bbd", "M");
+        User target2 = new User("bbd", "F");
+        Assert.assertEquals(true, users.contains(target1));
+        Assert.assertEquals(false, users.contains(target2));
+    }
+
+    @Test
+    public void testListPushObject() {
+        ListOperations<String, User> listOperations = redisTemplate.opsForList();
+        User user1 = new User("bbd", "M");
+        User user2 = new User("lemon", "F");
+        listOperations.rightPushAll(KEY_NAME, user1, user2);
+
+        List<User> users = listOperations.range(KEY_NAME, 0, -1);
+        users.stream().forEach(u -> log.debug("{}", u));
+    }
+
 }
 

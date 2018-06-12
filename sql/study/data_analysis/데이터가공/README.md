@@ -50,3 +50,32 @@ SELECT
 FROM access_log
 
 ```
+
+#### 결손값을 디폴트 값으로 대치하기
+
+```sql
+/*
+값이 없는 데이터를 의미하는 NULL
+
+NVL(t1, t2) : t1의 값이 NULL일 경우 t2의 값으로 대체
+(t1과 t2의 데이터 타입은 동일해야 함)
+
+NLV2(t1, t2, t3) : t1의 값이 NOT NULL일 때 t2, NULL일 때 t3의 값으로 대체
+(t2의 데이터 타입으로 t3가 맞춰짐)
+
+COALESCE(expr1,expr2,expr3,…)
+expr1이 NULL이 아니면 expr1값을 그렇지 않으면 COALESCE(expr2,expr3,…)값을 반환
+*/
+/* ORACLE */
+SELECT empno, NVL(mgr, 0) mgr
+  FROM emp  
+ WHERE deptno = 10;
+
+SELECT empno, NVL2(mgr, 1, 0) mgr
+  FROM emp  
+ WHERE deptno = 10;
+
+/* ANSI에서도 가능 */
+SELECT COALESCE(comm,1), comm 
+  FROM emp;
+```
