@@ -15,7 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
+
 import java.util.ArrayList;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -69,6 +71,7 @@ public class RedisConfigTest {
         users.stream().forEach(u -> log.debug("{}", u));
     }
 
+
     @Test
     public void testListQueue() {
         ListOperations<String, User> listOperations = redisTemplate.opsForList();
@@ -111,5 +114,6 @@ public class RedisConfigTest {
         List<User> users = listOperations.range(KEY_NAME, 0, -1);
         users.stream().forEach(u -> log.debug("{}", u));
     }
+
 }
 
