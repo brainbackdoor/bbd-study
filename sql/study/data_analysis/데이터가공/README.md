@@ -79,3 +79,148 @@ SELECT empno, NVL2(mgr, 1, 0) mgr
 SELECT COALESCE(comm,1), comm 
   FROM emp;
 ```
+
+#### 증감 표현
+
+```sql
+SIGN(q2 - q2) 
+/* 양수라면 1, 같으면 0, 음수라면 -1을 리턴 */
+```
+
+#### 최대/최소값 찾기
+
+```sql
+SELECT
+GREATEST(q1, q2, q3, q4)
+, LEAST(q1, q2, q3, q4) 
+FROM ...
+```
+
+#### 평균값 구하기
+
+```sql
+SELECT
+(COALESCE(q1, 0) + COALESCE(q2, 0) + COALESCE(q3, 0) + COALESCE(q4, 0)) 
+/ (SIGN(COALESCE(q1, 0)) + SIGN(COALESCE(q2, 0)) + SIGN(COALESCE(q3, 0)) + SIGN(COALESCE(q4, 0))) AS average
+FROM ...
+```
+
+#### 두 값의 거리 계산하기
+
+```sql
+SELECT
+	ABS(x1 - x2) AS `abs`
+	, SQRT(POWER(x1 - x2, 2)) AS rms
+FROM location_1d
+```
+
+```sql
+SELECT 
+	SQRT(POWER(x1 - x2, 2) + POWER(y1 - y2, 2))AS dist
+FROM location_2d
+```
+
+
+#### RANK 
+
+```sql
+DROP TABLE IF EXISTS popular_products;
+CREATE TABLE popular_products (
+    product_id varchar(255)
+  , category   varchar(255)
+  , score      numeric
+);
+
+INSERT INTO popular_products
+VALUES
+    ('A001', 'action', 94)
+  , ('A002', 'action', 81)
+  , ('A003', 'action', 78)
+  , ('A004', 'action', 64)
+  , ('D001', 'drama' , 90)
+  , ('D002', 'drama' , 82)
+  , ('D003', 'drama' , 78)
+  , ('D004', 'drama' , 58)
+;
+
+
+/* ORACLE의 경우 
+ROW_NUMBER() OVER(ORDER BY score DESC) AS row
+, RANK() OVER(ORDER BY score DESC) AS rank
+, DENSE_RANK() OVER(ORDER BY score DESC) AS dense_rank -- 같은 순위의 경우 처리 
+
+-- 현재 행보다 앞에 있는 행의 값 추출
+, LAG(product_id) OVER(ORDER BY score DESC) AS lag1 
+, LAG(product_id, 2) OVER(ORDER BY score DESC) AS lag2 
+
+
+-- 현재 행보다 뒤에 있는 행의 값 추출
+, LEAD(product_id) OVER(ORDER BY score DESC) AS lead1 
+, LEAD(product_id, 2) OVER(ORDER BY score DESC) AS lead2 
+등으로 가능하나, mysql은 8.0 부터나 생긴다.
+https://dev.mysql.com/doc/refman/8.0/en/window-function-descriptions.html
+이 함수들과 집약 함수를 조합하면 굉장히 많은 부분들을 하나의 쿼리에서도 효율적으로 수행 가능해진다.
+
+
+SELECT
+product_id
+, score
+, rank
+, real_rank AS dense_rank
+FROM
+(
+SELECT
+	product_id
+	, score
+	, ( @rank := @rank + 1 ) AS rank
+	, ( @real_rank := IF ( @last > score, @real_rank:=@real_rank+1, @real_rank ) ) AS real_rank
+	, ( @last := score )
+	FROM popular_products
+	JOIN   ( SELECT @rank := 0, @last := 0, @real_rank := 1 ) AS b 
+	ORDER BY `score` DESC
+) AS a	
+```
+
+#### 열로 표현된 값을 행으로 변환하기
+
+```sql
+DROP TABLE IF EXISTS quarterly_sales;
+CREATE TABLE quarterly_sales (
+    year integer
+  , q1   integer
+  , q2   integer
+  , q3   integer
+  , q4   integer
+);
+
+INSERT INTO quarterly_sales
+VALUES
+    (2015, 82000, 83000, 78000, 83000)
+  , (2016, 85000, 85000, 80000, 81000)
+  , (2017, 92000, 81000, NULL , NULL )
+;
+
+SELECT
+	q.year
+	, CASE 
+		WHEN p.idx = 1 THEN 'q1'
+		WHEN p.idx = 2 THEN 'q2'
+		WHEN p.idx = 3 THEN 'q3'
+		WHEN p.idx = 4 THEN 'q4'		
+	END AS `quarter`
+	
+	, CASE 
+		WHEN p.idx = 1 THEN q.q1
+		WHEN p.idx = 2 THEN q.q2
+		WHEN p.idx = 3 THEN q.q3
+		WHEN p.idx = 4 THEN q.q4		
+	END AS `sales`						
+FROM quarterly_sales AS q
+CROSS JOIN 
+(
+	SELECT 1 AS idx 
+	UNION ALL SELECT 2 AS idx
+	UNION ALL SELECT 3 AS idx
+	UNION ALL SELECT 4 AS idx
+) AS p
+```
