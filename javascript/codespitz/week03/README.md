@@ -218,7 +218,7 @@ const generator = function*(max) {
                                 // 이 후 거기서부터 다시 진행
                                 // routine vs coroutines
         cursor++;           
-    }                           // 빠져나올때 사실상 done = true;  
+    }                           // 빠져나올때 사실상 done = true;
 }
 //generator를 호출할 떄 마다 iterator가 만들어짐
 console.log([...generator(5)]);
