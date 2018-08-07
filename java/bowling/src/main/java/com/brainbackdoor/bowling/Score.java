@@ -7,6 +7,7 @@ import java.util.List;
 
 @Getter
 public class Score {
+
     List<Frame> frames = new ArrayList();
 
     public void add(Frame frame) {
@@ -19,4 +20,10 @@ public class Score {
                 "frames=" + frames +
                 '}';
     }
+
+
+
+
+
+
 }

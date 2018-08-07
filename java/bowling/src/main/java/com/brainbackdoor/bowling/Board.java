@@ -25,7 +25,8 @@ public class Board {
         return sb.toString();
     }
 
-    public String check(int i) {
+    public String result(int i) {
+
         return "X  ";
     }
 }
