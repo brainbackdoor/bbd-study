@@ -20,6 +20,11 @@ public class Frame {
         return point.get(1);
     }
 
+    public int getPoint() {
+        if(point.size() == 2) return point.get(0) + point.get(1);
+        return point.get(0);
+    }
+
     public boolean isNext() {
         return !isStrike();
     }

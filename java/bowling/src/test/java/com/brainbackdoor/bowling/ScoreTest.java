@@ -29,7 +29,7 @@ public class ScoreTest {
         score.add(new Frame().point(8).point(1));
         score.add(new Frame().point(10));
         System.out.println(score);
-        assertEquals(true, score.isChance());
+        assertEquals(true, score.isSpare());
     }
 
     @Test
@@ -46,6 +46,6 @@ public class ScoreTest {
         score.add(new Frame().point(8).point(1));
         score.add(new Frame().point(8).point(2));
         System.out.println(score);
-        assertEquals(true, score.isChance());
+        assertEquals(true, score.isSpare());
     }
 }

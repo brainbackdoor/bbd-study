@@ -11,7 +11,7 @@ public class PlayerTest {
     @Test
     public void onerandom_bowling() throws Exception {
         player.bowling();
-        System.out.println(player.getScore());
+        System.out.println(player.getResult());
     }
 
     @Test

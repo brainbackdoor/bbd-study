@@ -23,15 +23,23 @@ public class Player {
         return (int) (Math.random() * (max + 1));
     }
 
-    public String getScore() {
+    public String getResult() {
         return score.toString();
+    }
+
+    public String getScore() {
+        return score.getScore();
     }
 
     public int getMaxTurn() {
         return score.getSize();
     }
 
-    public boolean isMoreThrow() {
-        return score.isChance();
+    public boolean isSpare() {
+        return score.isSpare();
+    }
+
+    public boolean isStrike() {
+        return score.isStike();
     }
 }
