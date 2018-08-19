@@ -9,8 +9,9 @@ public class PlayerTest {
     Player player = new Player("LDG");
 
     @Test
-    public void onerandom_bowling() {
-        System.out.println(player.bowling());
+    public void onerandom_bowling() throws Exception {
+        player.bowling();
+        System.out.println(player.getScore());
     }
 
     @Test
@@ -18,5 +19,11 @@ public class PlayerTest {
         assertEquals("LDG", player.getName());
     }
 
+    @Test
+    public void isLastStrike() throws Exception {
+        player.bowling();
+
+
+    }
 
 }
