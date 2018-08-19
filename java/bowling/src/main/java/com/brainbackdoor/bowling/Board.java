@@ -19,14 +19,14 @@ public class Board {
         return "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     }
 
-    public String game() {
+    public String show() {
         StringBuilder sb = new StringBuilder();
-        sb.append("|  ").append(player.getName()).append(" |      |      |      |      |      |      |      |      |      |      |");
+        sb.append("|  ").append(player.getName()).append(" |").append(player.getScore());
         return sb.toString();
     }
 
-    public String result(int i) {
-
-        return "X  ";
+    public void game() throws Exception {
+        for (int i = 0; i < player.getMaxTurn(); i++) player.bowling();
+        if(player.isMoreThrow()) player.bowling();
     }
 }

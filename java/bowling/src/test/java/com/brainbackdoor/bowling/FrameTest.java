@@ -7,55 +7,58 @@ import static org.junit.Assert.*;
 public class FrameTest {
 
     @Test
-    public void oneFrame() {
+    public void oneFrame() throws Exception {
         int first = 8;
-        Frame frame = new Frame(1).builder().first(first).second(2).build();
+        Frame frame = new Frame().point(first).point(2);
         System.out.println(frame);
         assertEquals(first, frame.getFirst());
     }
 
     @Test
-    public void frame_strike_check() {
+    public void frame_strike_check() throws Exception {
         int strke = 10;
-        int turn = 1;
 
-        Frame frame = new Frame(turn).builder().first(strke).build();
+        Frame frame = new Frame().point(strke);
         assertEquals(true, frame.isStrike());
     }
 
     @Test
-    public void frame_spare_check() {
+    public void frame_spare_check() throws Exception {
         int first = 8;
         int second = 2;
-        int turn = 1;
 
-        Frame frame = new Frame(turn).builder().first(first).second(second).build();
+        Frame frame = new Frame().point(first).point(second);
         assertEquals(true, frame.isSpare());
 
         first = 10;
-        turn = 2;
-        frame = new Frame(turn).builder().first(first).build();
+        frame = new Frame().point(first);
         assertEquals(false, frame.isSpare());
     }
 
+    @Test(expected = Exception.class)
+    public void strike_exception() throws Exception {
+        int first = 10;
+        int second = 2;
+
+        Frame frame = new Frame().point(first).point(second);
+        assertEquals(true, frame.isSpare());
+    }
+
     @Test
-    public void frame_result() {
+    public void frame_result() throws Exception {
         int strke = 10;
-        int turn = 1;
 
-        Frame frame = new Frame(turn).builder().first(strke).build();
-        assertEquals(Frame.Status.STRIKE, frame.result());
+        Frame frame = new Frame().point(strke);
+        assertEquals(Frame.Status.STRIKE, frame.setStatus());
 
-        turn = 2;
         int first = 8;
         int second = 2;
 
-        frame = new Frame(turn).builder().first(first).second(second).build();
-        assertEquals(Frame.Status.SPARE, frame.result());
+        frame = new Frame().point(first).point(second);
+        assertEquals(Frame.Status.SPARE, frame.setStatus());
 
-        turn = 3;
         second = 1;
-        frame = new Frame(turn).builder().first(first).second(second).build();
-        assertEquals(Frame.Status.OPEN_FRAME, frame.result());
+        frame = new Frame().point(first).point(second);
+        assertEquals(Frame.Status.OPEN_FRAME, frame.setStatus());
     }
 }

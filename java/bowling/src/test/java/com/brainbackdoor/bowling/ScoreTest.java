@@ -7,19 +7,45 @@ import static org.junit.Assert.assertEquals;
 public class ScoreTest {
 
     @Test
-    public void score_show() {
+    public void score_show() throws Exception {
         Score score = new Score();
-        score.add(new Frame(1).builder().first(8).second(2).build());
-        score.add(new Frame(2).builder().first(8).second(2).build());
-        score.add(new Frame(3).builder().first(8).second(2).build());
-        score.add(new Frame(4).builder().first(8).second(2).build());
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(10));
         System.out.println(score);
     }
 
     @Test
-    public void frame_result() {
+    public void last_strike() throws Exception {
         Score score = new Score();
-        score.add(new Frame(1).builder().first(8).second(2).build());
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(10));
+        System.out.println(score);
+        assertEquals(true, score.isChance());
+    }
 
+    @Test
+    public void last_spare() throws Exception {
+        Score score = new Score();
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(1));
+        score.add(new Frame().point(8).point(2));
+        System.out.println(score);
+        assertEquals(true, score.isChance());
     }
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 @Getter
 public class Score {
-
-    List<Frame> frames = new ArrayList();
+    private static final int MAX = 10;
+    List<Frame> frames = new ArrayList(MAX);
 
     public void add(Frame frame) {
         frames.add(frame);
@@ -16,12 +16,19 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" +
-                "frames=" + frames +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        frames.stream().forEach(v -> sb.append("  ").append(v.getResult()).append(" |"));
+        return sb.toString();
     }
 
+    public int getSize() {
+        return MAX;
+    }
 
+    public boolean isChance(){
+        if(frames.get(9).isStrike() || frames.get(9).isSpare()) return true;
+        return false;
+    }
 
 
 

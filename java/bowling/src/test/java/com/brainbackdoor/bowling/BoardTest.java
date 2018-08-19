@@ -23,23 +23,13 @@ public class BoardTest {
 
     @Test
     public void frame_show() {
-        board.frame();
+        assertEquals("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |", board.frame());
     }
 
     @Test
-    @Ignore
-    public void game_show_first_step() {
-        assertEquals("|  LDG |      |      |      |      |      |      |      |      |      |      |", board.game());
+    public void board_show() throws Exception {
+        board.game();
+        System.out.println(board.frame());
+        System.out.println(board.show());
     }
-
-    @Test
-    public void strike_show() {
-        assertEquals("X  ",board.result(10));
-    }
-
-    @Test
-    public void spare_show() {
-        assertEquals("9|/", board.result(9));
-    }
-
 }
