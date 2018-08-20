@@ -27,12 +27,8 @@ public class Player {
         return score.toString();
     }
 
-    public String getScore() {
-        return score.getScore();
-    }
-
-    public int getMaxTurn() {
-        return score.getSize();
+    public int getScore(int index) {
+        return score.getPoint(index);
     }
 
     public boolean isSpare() {
