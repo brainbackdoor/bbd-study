@@ -27,8 +27,8 @@ public class Player {
         return score.toString();
     }
 
-    public String getScore() {
-        return score.getScore();
+    public int getScore(int index) {
+        return score.getPoint(index);
     }
 
     public int getMaxTurn() {

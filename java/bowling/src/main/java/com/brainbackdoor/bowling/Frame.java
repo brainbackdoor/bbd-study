@@ -20,8 +20,8 @@ public class Frame {
         return point.get(1);
     }
 
-    public int getPoint() {
-        if(point.size() == 2) return point.get(0) + point.get(1);
+    public int getPoint(Status status) {
+        if((status == Status.STRIKE || status == Status.OPEN_FRAME) && point.size() == 2) return point.get(0) + point.get(1);
         return point.get(0);
     }
 

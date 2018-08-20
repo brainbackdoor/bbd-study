@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class Board {
-
+    private static final int MAX = 10;
     Player player;
 
     public void print() {
@@ -27,16 +27,35 @@ public class Board {
 
     public String scoreShow() {
         StringBuilder sb = new StringBuilder();
-        sb.append("|      |").append(player.getScore());
+        int totalPoint = 0;
+        sb.append("|      |");
+        for (int i = 0; i < MAX; i++) {
+            totalPoint += player.getScore(i);
+            sb.append("  ").append(totalPoint).append(bar(totalPoint));
+        }
         return sb.toString();
+    }
+
+    private String bar(int totalPoint) {
+        if (lessThenTen(totalPoint)) return "   |";
+        if (moreThenHundred(totalPoint)) return " |";
+        return "  |";
     }
 
     public void game() throws Exception {
         for (int i = 0; i < player.getMaxTurn(); i++) player.bowling();
-        if(player.isSpare()) player.bowling();
-        if(player.isStrike()) {
+        if (player.isSpare()) player.bowling();
+        if (player.isStrike()) {
             player.bowling();
             player.bowling();
         }
+    }
+
+    private boolean moreThenHundred(int totalPoint) {
+        return totalPoint > 100;
+    }
+
+    private boolean lessThenTen(int totalPoint) {
+        return totalPoint < 10;
     }
 }
