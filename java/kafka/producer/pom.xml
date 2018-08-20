@@ -45,6 +45,11 @@
             <artifactId>kafka_2.11</artifactId>
             <version>0.10.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
