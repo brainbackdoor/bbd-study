@@ -43,8 +43,12 @@ public class Board {
     }
 
     public void game() throws Exception {
-        for (int i = 0; i < MAX; i++) player.bowling();
-        if (player.isSpare() || player.isStrike()) player.bowling();
+        for (int i = 0; i < player.getMaxTurn(); i++) player.bowling();
+        if (player.isSpare()) player.bowling();
+        if (player.isStrike()) {
+            player.bowling();
+            player.bowling();
+        }
     }
 
     private boolean moreThenHundred(int totalPoint) {

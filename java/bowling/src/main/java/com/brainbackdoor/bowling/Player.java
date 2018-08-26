@@ -31,6 +31,10 @@ public class Player {
         return score.getPoint(index);
     }
 
+    public int getMaxTurn() {
+        return score.getSize();
+    }
+
     public boolean isSpare() {
         return score.isSpare();
     }
