@@ -120,7 +120,7 @@ ArrayList의 유일한 이점은 get, set
 
 ```java
 /* jsoup 사용하기 */
-
+	public static void main(String[] args) throws IOException {
 		String url = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		
 		// download and parse the document
@@ -144,7 +144,20 @@ ArrayList의 유일한 이점은 get, set
 				System.out.print(node);
 			}
 		}				
+	}
 
+/* DFS - 깊이 우선 탐색 */
+	private static void recursiveDFS(Node node) {
+		if (node instanceof TextNode) {
+			System.out.print(node);
+		}
+		for (Node child: node.childNodes()) {
+			recursiveDFS(child);
+		}
+	}
+/*
+	자식 노드를 탐색하기에 앞서 각 TextNode를 출력하므로 전위 순회에 해당
+*/
 ```
 
 #### 철학으로 가는 길
