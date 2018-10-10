@@ -89,21 +89,63 @@ public class ListClientExample() {
 
 #### ArrayList 클래스
 
-##### 3.1 MyArrayList 메서드 분류하기
-
-##### 3.2 add 메서드 분류하기
-
-##### 3.3 문제 크기
-
-##### 3.4 연결 자료구조
-
-##### 3.6 가비지 컬렉션
-
 #### LinkedList 클래스
 
 #### 이중 연결 리스트
 
+|구분|ArrayList|단일LinkedList|이중LinkedList|
+|---|---|---|---|
+|add(끝)|1|n|1|
+|add(시작)|n|1|1|
+|add(일반적으로)|n|n|n|
+|get/set|1|n|n|
+|indexOf/lastIndexOf|n|n|n|
+|isEmpty/size|1|1|1|
+|remove(끝)|1|n|1|
+|remove(시작)|n|1|1|
+|romove(일반적으로)|n|n|n|
+
+```
+ArrayList의 유일한 이점은 get, set
+실행시간이 시작이나 끝 근처에 요소를 추가하거나 제거하는 연산에 의존한다면 이중 linked list가 좋다
+
+다만, 위의 사항들은 작업하는 리스트가 매우 클 경우에(응용프로그램이 다른 일을 하느라 대부분의 시간을 소모하는 것이 아닐 경우에) 유의미하다.
+
+또한, 실행시간 외에도 공간 측면에서, ArrayList에서 요소들은 한 덩어리의 메모리 안에 나란히 저장되어 거의 낭비되는 공간이 없는데 반해 Linked List의 경우 하나 또는 두 개의 참조가 있는 노드가 필요하다.
+```
+
 #### 트리 순회
+
+##### HTML 파싱하기
+
+```java
+/* jsoup 사용하기 */
+
+		String url = "https://en.wikipedia.org/wiki/Java_(programming_language)";
+		
+		// download and parse the document
+		Connection conn = Jsoup.connect(url);
+		Document doc = conn.get();
+		
+		// select the content text and pull out the paragraphs.
+		Element content = doc.getElementById("mw-content-text");
+
+		Elements paras = content.select("div");
+		Element firstPara = paras.get(0);
+		recursiveDFS(firstPara);
+		System.out.println();
+
+		iterativeDFS(firstPara);
+		System.out.println();
+
+		Iterable<Node> iter = new WikiNodeIterable(firstPara);
+		for (Node node: iter) {
+			if (node instanceof TextNode) {
+				System.out.print(node);
+			}
+		}				
+
+```
 
 #### 철학으로 가는 길
 
