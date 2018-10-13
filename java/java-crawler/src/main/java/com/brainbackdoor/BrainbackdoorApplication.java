@@ -31,28 +31,31 @@ public class BrainbackdoorApplication {
         List<CrawlerInfoVO> crawlerInfos = loadCrawlerInfoCsvFile.load();
 
         crawlerInfos.stream().forEach(v -> {
-            Document doc = getDocument(getUrl(v));
-
-            Elements content = doc.getElementsByClass("thumb");
-
-            Elements paras = content.select("div");
-            Element firstPara = paras.get(0);
-            firstPara.tagName("img").getElementsByAttribute("src").val("src");
-            String fileName = DOWNLOAD_PATH + v.getSearch() + "." +EXTENSION;
-            write(firstPara, fileName);
+            String link = getFirstThumbImageLink(v);
+            String fileName = DOWNLOAD_PATH + v.getSearch() + "." + EXTENSION;
+            write(link, fileName);
         });
     }
 
-    static void write(Element firstPara, String fileName) {
+    static String getFirstThumbImageLink(CrawlerInfoVO v) {
+        Document doc = getDocument(getUrl(v));
+        Elements content = doc.getElementsByClass("thumb");
+        Elements paras = content.select("div");
+        Element firstPara = paras.get(0);
+        firstPara.tagName("img").getElementsByAttribute("src").val("src");
+        return firstPara.tagName("img").getElementsByAttribute("src").attr("src");
+    }
+
+    static void write(String link, String fileName) {
         try {
-            ImageIO.write(getImage(firstPara), EXTENSION, new File(fileName));
+            ImageIO.write(getImage(link), EXTENSION, new File(fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    static BufferedImage getImage(Element firstPara) throws IOException {
-        return ImageIO.read(new URL(firstPara.tagName("img").getElementsByAttribute("src").attr("src")));
+    static BufferedImage getImage(String link) throws IOException {
+        return ImageIO.read(new URL(link));
     }
 
     static String getUrl(CrawlerInfoVO v) {
@@ -62,11 +65,10 @@ public class BrainbackdoorApplication {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return urlEncoding;
+        return SEARCH_URL + urlEncoding;
     }
 
-    static Document getDocument(String urlEncoding) {
-        String url = SEARCH_URL + urlEncoding ;
+    static Document getDocument(String url) {
         try {
             return Jsoup.connect(url).get();
         } catch (IOException e) {
