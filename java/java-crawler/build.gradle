@@ -35,5 +35,7 @@ dependencies {
     implementation 'org.jfree:jfreechart:1.0.19'
     implementation 'org.jsoup:jsoup:1.8.3'
     compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
-
+    compile group: 'io.vertx', name: 'vertx-core', version: '3.5.4'
+    compile group: 'org.vert-x', name: 'vertx-platform', version: '1.2.3.final'
+    compile group: 'org.vert-x', name: 'vertx-lang-java', version: '1.3.1.final'
 }

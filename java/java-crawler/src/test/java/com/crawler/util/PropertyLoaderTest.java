@@ -1,11 +1,10 @@
-package com.brainbackdoor.util;
+package com.crawler.util;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PropertyLoaderTest {
 

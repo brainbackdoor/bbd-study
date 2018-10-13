@@ -1,4 +1,4 @@
-package com.brainbackdoor.vo;
+package com.crawler.vo;
 
 import com.opencsv.bean.CsvBindByPosition;
 

@@ -1,8 +1,8 @@
-package com.brainbackdoor.util;
+package com.crawler.util;
 
 import java.io.IOException;
 import java.io.Reader;
-import com.brainbackdoor.vo.CrawlerInfoVO;
+import com.crawler.vo.CrawlerInfoVO;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
