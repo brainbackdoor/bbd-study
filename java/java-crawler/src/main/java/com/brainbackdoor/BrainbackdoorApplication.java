@@ -1,11 +1,12 @@
 package com.brainbackdoor;
 
-import org.jsoup.Connection;
+import com.brainbackdoor.util.LoadCrawlerInfoCsvFile;
+import com.brainbackdoor.util.PropertyLoader;
+import com.brainbackdoor.vo.CrawlerInfoVO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.imageio.ImageIO;
@@ -13,24 +14,23 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
 public class BrainbackdoorApplication {
-    private static String PATH = "C:/Users/brainbackdoor/Desktop/";
-    private static String EXTENSION = ".gif";
-    private static String SEARCH_URL = "http://search.naver.com/search.naver?where=nexearch&query=";
+    private static String DOWNLOAD_PATH = PropertyLoader.getInstance().getPropertyValue("DOWNLOAD_PATH");
+    private static String EXTENSION = PropertyLoader.getInstance().getPropertyValue("EXTENSION");
+    private static String SEARCH_URL = PropertyLoader.getInstance().getPropertyValue("SEARCH_URL");
+    private static String ENC = PropertyLoader.getInstance().getPropertyValue("ENC");
+    private static LoadCrawlerInfoCsvFile loadCrawlerInfoCsvFile = new LoadCrawlerInfoCsvFile();
 
     public static void main(String[] args) {
-        String search = "클럭 미니 마사지기";
-        List<String> searchList = new ArrayList<>();
-        searchList.add(search);
 
-        searchList.stream().forEach(v -> {
+        List<CrawlerInfoVO> crawlerInfos = loadCrawlerInfoCsvFile.load();
+
+        crawlerInfos.stream().forEach(v -> {
             Document doc = getDocument(getUrl(v));
 
             Elements content = doc.getElementsByClass("thumb");
@@ -38,14 +38,14 @@ public class BrainbackdoorApplication {
             Elements paras = content.select("div");
             Element firstPara = paras.get(0);
             firstPara.tagName("img").getElementsByAttribute("src").val("src");
-            String fileName = PATH + v + EXTENSION;
+            String fileName = DOWNLOAD_PATH + v.getSearch() + "." +EXTENSION;
             write(firstPara, fileName);
         });
     }
 
     static void write(Element firstPara, String fileName) {
         try {
-            ImageIO.write(getImage(firstPara), "gif", new File(fileName));
+            ImageIO.write(getImage(firstPara), EXTENSION, new File(fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,10 +55,10 @@ public class BrainbackdoorApplication {
         return ImageIO.read(new URL(firstPara.tagName("img").getElementsByAttribute("src").attr("src")));
     }
 
-    static String getUrl(String v) {
+    static String getUrl(CrawlerInfoVO v) {
         String urlEncoding = null;
         try {
-            urlEncoding = URLEncoder.encode(v, "UTF-8");
+            urlEncoding = URLEncoder.encode(v.getSearch(), ENC);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

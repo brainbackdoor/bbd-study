@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 public class BrainbackdoorApplicationTests {
 
-    
+
 
     @Test
     public void urlEncodingTest() {
