@@ -17,7 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.concurrent.Future;
 
 @SpringBootApplication
 public class CrawlerApplication {
@@ -31,11 +30,11 @@ public class CrawlerApplication {
 
     public static void main(String[] args) {
         List<CrawlerInfoVO> crawlerInfos = loadCrawlerInfoCsvFile.load();
-        crawlerInfos.stream().forEach(v -> write(getFirstThumbImageLink(v), getFileName(v)));
+        crawlerInfos.stream().parallel().forEach(v -> write(getFirstThumbImageLink(v), getFileName(v)));
     }
 
-    private static String parse(Future<Document> doc) throws InterruptedException, java.util.concurrent.ExecutionException {
-        Elements content = doc.get().getElementsByClass("thumb");
+    private static String parse(Document doc) {
+        Elements content = doc.getElementsByClass("thumb");
         Elements paras = content.select("div");
         Element firstPara = paras.get(0);
         firstPara.tagName("img").getElementsByAttribute("src").val("src");
@@ -49,7 +48,7 @@ public class CrawlerApplication {
     static String getFirstThumbImageLink(CrawlerInfoVO v) {
         try {
             ThreadService threadService = new ThreadService();
-            Future<Document> doc = threadService.send(getUrl(v));
+            Document doc = threadService.send(getUrl(v));
             return parse(doc);
         } catch (Exception e) {
             e.printStackTrace();
