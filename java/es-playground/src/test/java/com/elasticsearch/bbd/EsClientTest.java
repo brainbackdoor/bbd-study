@@ -18,13 +18,18 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class EsClientTest {
 
-
+/*
+2018-07-19 ~ 2018-10-19 까지
+전자신문 / 디지털 타임즈의 기사를 모아둔 자료를 바탕으로 테스트
+자료출처는 https://www.bigkinds.or.kr/ 에서 다운로드 가능
+ */
     private TransportClient client;
 
     @BeforeEach
@@ -44,12 +49,23 @@ class EsClientTest {
         SearchResponse response = client
                 .prepareSearch("news")
                 .setTypes()
-                .setTypes()
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.matchAllQuery())                 // Query
+                .setQuery(QueryBuilders.matchAllQuery())
                 .setFrom(0).setSize(10).setExplain(true)
                 .get();
         assertThat(response.status(), is(RestStatus.OK));
+    }
+
+    @Test
+    void fullTextQueryTest() {
+        SearchResponse response = client
+                .prepareSearch("news")
+                .setTypes()
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.matchQuery("content","자바 개발자"))
+                .setFrom(0).setSize(10).setExplain(true)
+                .get();
+        assertThat(Integer.valueOf(Long.toString(response.getHits().totalHits)), greaterThan(0));
     }
 
     @AfterEach
