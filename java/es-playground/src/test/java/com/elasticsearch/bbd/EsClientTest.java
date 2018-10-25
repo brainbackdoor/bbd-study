@@ -29,6 +29,9 @@ class EsClientTest {
 2018-07-19 ~ 2018-10-19 까지
 전자신문 / 디지털 타임즈의 기사를 모아둔 자료를 바탕으로 테스트
 자료출처는 https://www.bigkinds.or.kr/ 에서 다운로드 가능
+
+Elasticsearch 구동 후
+# java -jar news-data-importer.jar
  */
     private TransportClient client;
 
