@@ -24,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 public class EsRepositoryTest {
     private static final Logger log = LoggerFactory.getLogger(EsRepositoryTest.class);
+    private final String DEFAULT_INDEX = "news";
+    private final String CONTENT = "content";
 
     @Autowired
     private EsRepository esRepository;
@@ -36,15 +38,21 @@ public class EsRepositoryTest {
     @Test
     @DisplayName("Match All Query")
     public void matchAllQueryTest() {
-        assertThat(esRepository.matchAllQuery(new String[]{"news"}).status(), is(RestStatus.OK));
+        assertThat(esRepository.matchAllQuery(new String[]{DEFAULT_INDEX}).status(), is(RestStatus.OK));
     }
 
     @Test
     @DisplayName("Since the standard tokenizer is used by default, the contents are searched after trimming the contents to a blank basis.")
     public void fullTextQueryTest() {
-        assertThat(esRepository.fullTextQuery(new String[]{"news"}, "자바 개발자")
+        assertThat(esRepository.fullTextQuery(new String[]{DEFAULT_INDEX}, CONTENT, "자바 개발자")
                 .getHits().getAt(0)
-                .getSourceAsMap().get("content").toString()
+                .getSourceAsMap().get(CONTENT).toString()
                 .indexOf("자바"), greaterThan(1));
+    }
+
+    @Test
+    @DisplayName("Query index information")
+    public void statTest() {
+        assertThat(esRepository.stat(DEFAULT_INDEX).getShards().length, is(5));
     }
 }
