@@ -1,9 +1,14 @@
 package com.elasticsearch.bbd.repository;
 
 import com.elasticsearch.bbd.config.EsConfig;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.rest.RestStatus;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -14,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -42,12 +48,28 @@ public class EsRepositoryTest {
     }
 
     @Test
-    @DisplayName("Since the standard tokenizer is used by default, the contents are searched after trimming the contents to a blank basis.")
+    @DisplayName("Since the standard tokenizer is used by default, " +
+            "the contents are searched after trimming the contents to a blank basis.")
     public void fullTextQueryTest() {
         assertThat(esRepository.fullTextQuery(new String[]{DEFAULT_INDEX}, CONTENT, "자바 개발자")
                 .getHits().getAt(0)
                 .getSourceAsMap().get(CONTENT).toString()
                 .indexOf("자바"), greaterThan(1));
+    }
+
+    @Test
+    public void fullTestQueryResultTest() throws IOException, JSONException {
+        SearchResponse response = esRepository.fullTextQuery(
+                new String[]{DEFAULT_INDEX}, CONTENT, "자바 개발자");
+        JSONObject json = toJson(response);
+        System.out.println(json.getJSONObject("hits").getJSONArray("hits"));
+    }
+
+    private JSONObject toJson(SearchResponse response) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(response);
+        Map<String, Object> map = mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
+        return  new JSONObject(map);
     }
 
     @Test
