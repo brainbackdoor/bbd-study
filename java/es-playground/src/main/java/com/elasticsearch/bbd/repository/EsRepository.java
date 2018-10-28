@@ -5,6 +5,9 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +20,7 @@ public class EsRepository {
         this.client = client;
     }
 
-    public SearchResponse matchAllQuery(String... index) {
+    public SearchResponse matchAll(String... index) {
         return client
                 .prepareSearch(index)
                 .setTypes()
@@ -27,13 +30,19 @@ public class EsRepository {
                 .get();
     }
 
-    public SearchResponse fullTextQuery(String[] index, String name, String content) {
+    public SearchResponse fullTextMatch(String[] index, String name, String content) {
         return client
                 .prepareSearch(index)
                 .setTypes()
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setFetchSource(new String[]{"title", "content"}, null)
+                .setFetchSource(new String[]{"title", "press", "content", "pubDate"}, null)
                 .setQuery(QueryBuilders.matchQuery(name, content))
+                .get();
+    }
+
+    public SearchResponse aggrTermQuery(String term, String field) {
+        return client.prepareSearch()
+                .addAggregation(AggregationBuilders.terms(term).field(field).size(20))
                 .get();
     }
 
