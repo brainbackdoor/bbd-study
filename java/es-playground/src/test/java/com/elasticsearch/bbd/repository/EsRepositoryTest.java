@@ -1,7 +1,11 @@
 package com.elasticsearch.bbd.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -11,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -54,14 +60,34 @@ public class EsRepositoryTest {
         SearchResponse response = esRepository.fullTextMatch(
                 new String[]{DEFAULT_INDEX}, CONTENT, "자바 개발자");
         List result = Arrays.asList(response.getHits().getHits());
-        System.out.println(result.get(0));
         assertThat(result.size(), greaterThan(0));
     }
 
     @Test
-    public void termQueryTest() {
-        SearchResponse response = esRepository.aggrTermQuery("keywords", "keywords");
+    @DisplayName("Field-based aggregate function")
+    public void aggrQueryTest() {
+        SearchResponse response = esRepository.aggrTermQuery("keywords", "keywords", 20);
         assertThat(response.getAggregations().getAsMap().size(), greaterThan(0));
+    }
+
+    @Test
+    @DisplayName("Extract Bucket Information from Aggregate Function Results")
+    public void getBucketAggrTest() {
+        List<? extends Terms.Bucket> buckets = esRepository.getBucket("keywords", "keywords", 20);
+        assertThat(buckets.get(0).getKey(), is("시장,5615"));
+    }
+
+    public Map<String, Object> toMap(Object obj) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(mapper.writeValueAsString(obj), new TypeReference<Map<Object, Object>>() {
+            });
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Test

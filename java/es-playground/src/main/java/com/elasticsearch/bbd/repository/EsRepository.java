@@ -8,8 +8,14 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class EsRepository {
@@ -40,13 +46,20 @@ public class EsRepository {
                 .get();
     }
 
-    public SearchResponse aggrTermQuery(String term, String field) {
+    public SearchResponse aggrTermQuery(String term, String field, int size) {
         return client.prepareSearch()
-                .addAggregation(AggregationBuilders.terms(term).field(field).size(20))
+                .addAggregation(AggregationBuilders.terms(term).field(field).size(size).showTermDocCountError(true))
                 .get();
     }
 
     public IndicesStatsResponse stat(String index) {
         return client.admin().indices().prepareStats(index).get();
+    }
+
+    public List getBucket(String term, String field, int size) {
+        Terms terms = aggrTermQuery(term, field, size).getAggregations().get(term);
+        return terms.getBuckets().stream()
+                .map((k) -> (((Terms.Bucket) k).getKey() + "," + ((Terms.Bucket) k).getDocCount()))
+                .collect(Collectors.toList());
     }
 }
