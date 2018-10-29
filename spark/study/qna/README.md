@@ -1,5 +1,7 @@
 >https://spark.apache.org/docs/latest/rdd-programming-guide.html#which-storage-level-to-choose
 
+## 1주차
+
 #### 질문1. Shared Memory Data Parallelism (SDP)와 Distributed Data Parallelism (DDP)의 공통점과 차이점을 얘기해주세요.
 ```
 SDP란 One compute에서 메모리를 공유해서 처리하는 것으로, 데이터를 일단 쪼갠 뒤, 각 Worker 혹은 Thead가 병렬적으로 처리하고 이를 결합하는 것을 말합니다.
@@ -83,4 +85,45 @@ val lengthsRdd = wordsRdd.map(_.length) -> lazy하기 때문에 아직 아무 �
 val totalChars = lengthsRdd.reduce() -> 이때 실행이 됨.
 
 http://knight76.tistory.com/entry/%ED%8E%8C-lazy-evaluation%EB%8A%90%EA%B8%8B%ED%95%9C-%EA%B3%84%EC%82%B0%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%9C-%EC%A2%8B%EC%9D%80-%EC%84%A4%EB%AA%85-%EA%B7%B8%EB%A6%BC-%EC%9E%90%EB%A3%8C
+```
+---
+
+## 2주차
+
+#### 질문 1. foldLeft 와 aggregate 둘다 inputType과 outputType이 다른데 왜 aggregate 만 병렬 처리가 가능한지 설명해주세요. 
+```scala
+foldLeft is not parallelizable
+def foldLeft[B](f: (B, A) => B): B
+val xs = List(1, 2, 3, 4)
+val res = xs.foldLeft("")((str: String, i: Int) => str + i)
+scala에서는 type casting이 되므로 되지만, Spark의 경우 병렬처리를 하므로 문제소지가 있다.
+
+List(1,2) => "12"
+List(3,4) => "34"
+이기 떄문에 그 다음작업에서 타입 에러가 난다.
+
+def aggregate[B](z: => B)(seqop: (B, A) => B, combop: (B,B)=> B):B
+병렬처리 가능하고 retury type 변경도 가능하다. 잘 모를 경우 가급적 aggregate를 쓰는 것이 문제 소지를 줄일 수 있다.
+```
+#### 질문 2. pairRDD는 어떤 데이터 구조에 적합한지 설명해주세요. 또 pairRDD는 어떻게 만드나요? 
+```
+pairRDD는 Key-value 구조로, 데이터를 편리하게 집계, 정렬, 조인할 수 있다.
+pairRDD를 만들기 위해서는 여러가지 방법이 있는데 우선, SparkContext의 일부메서드는 Pari RDD를 반환한다. 그리고 자바에서는 JavaSparkContext의 paralleizePairs 메서드에 Tuple2[K,V] 객체로 구성된 리스트를 전달하면 JavaPairRDD 객체를 생성할 수 있다. 또한 mapToPair Transformation 연산자를 통해 생성할 수도 있다. 
+```
+#### 질문 3. groupByKey()와 mapValues()를 통해 나온 결과를 reduce()를 사용해서도 똑같이 만들 수 있습니다. 그렇지만 reduce를 쓴느 것이 더 효율적인 이유는 무엇일까요? 
+```
+https://www.linkedin.com/pulse/groupbykey-vs-reducebykey-neeraj-sen/
+reduceByKey는 우선 같은 파티션 내에서 진행하지만, groupByKey의 경우 셔플이 선행되므로 네트워크 비용이 크다.
+```
+#### 질문 4. join 과 leftOuterJoin, rightOuterJoin이 어떻게 다른지 설명하세요. 
+```
+join은 RDBMS의 inner join과 같다. (두 RDD 중 어느 한쪽에만 있는 키의 요소는 결과 RDD에서 제외)
+leftOuterJoin은 두번쨰 RDD에만 있는 요소는 결과 RDD에서 제외된다.
+rightOuterJoin leftOuterJoin의 반대이다.
+```
+#### 질문 5. Shuffling은 무엇인가요? 이것은 distributed data paraellism의 성능에 어떤 영향을 가져오나요? 
+```
+Suffling이란, 파티션 간의 물리적인 데이터 이동을 의미한다.
+이는 새로운 RDD의 파티션을 만들려고 여러 파티션의 데이터를 합칠 떄 발생한다. 가령 Partitioner를 명시적으로 변경하거나(파티션 개수를 변경하거나 사용자 정의 Paritioner를 적용하는 경우), Partitioner를 제거하는 경우에 발생한다.
+셔플링을 기점으로 Stage를 나누고 앞 단계를 Shuffle-Map task, 다음 Stage부터 Driver에 반환할때 까지를 Result Task라고 한다. Map Task의 결과를 중간 파일에 기록하며(주로 운영체제의 파일시스템 캐시에만 저장), 이후 Reduce Task가 이 파일을 읽어들인다. 중간 파일을 디스크에 기록하는 작업도 부담이지만, 결국 셔플링할 데이터를 네트워크로 전송해야 하기 때문에 스파크 잡의 셔플링 횟수를 최소한으로 줄이도록 노력해야 한다.
 ```
