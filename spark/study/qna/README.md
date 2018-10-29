@@ -92,18 +92,13 @@ http://knight76.tistory.com/entry/%ED%8E%8C-lazy-evaluation%EB%8A%90%EA%B8%8B%ED
 
 #### 질문 1. foldLeft 와 aggregate 둘다 inputType과 outputType이 다른데 왜 aggregate 만 병렬 처리가 가능한지 설명해주세요. 
 ```scala
-foldLeft is not parallelizable
-def foldLeft[B](f: (B, A) => B): B
+aggregate의 경우 'combop: (B,B)=> B'가 있어 병렬 처리가 가능하다. 
+foldLeft를 쓸 경우 예를 들면, 
 val xs = List(1, 2, 3, 4)
 val res = xs.foldLeft("")((str: String, i: Int) => str + i)
-scala에서는 type casting이 되므로 되지만, Spark의 경우 병렬처리를 하므로 문제소지가 있다.
-
 List(1,2) => "12"
 List(3,4) => "34"
-이기 떄문에 그 다음작업에서 타입 에러가 난다.
-
-def aggregate[B](z: => B)(seqop: (B, A) => B, combop: (B,B)=> B):B
-병렬처리 가능하고 retury type 변경도 가능하다. 잘 모를 경우 가급적 aggregate를 쓰는 것이 문제 소지를 줄일 수 있다.
+Scala에서는 Type Casting이 되지만, Spakr에서는 이 다음 작업에서 Type Error가 발생한다.
 ```
 #### 질문 2. pairRDD는 어떤 데이터 구조에 적합한지 설명해주세요. 또 pairRDD는 어떻게 만드나요? 
 ```
