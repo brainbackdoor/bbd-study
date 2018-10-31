@@ -99,16 +99,22 @@ val res = xs.foldLeft("")((str: String, i: Int) => str + i)
 List(1,2) => "12"
 List(3,4) => "34"
 Scala에서는 Type Casting이 되지만, Spakr에서는 이 다음 작업에서 Type Error가 발생한다.
+
+즉, foldLeft는 시퀀셜하게 처리되기 때문에 병렬처리가 불가능하다. 만약 두개 콜렉션으로 나눠서 병렬처리한다고 했을때, 아웃풋 타입이 바뀌기때문에 두개의 아웃풋을 합치려고 할 때 타입 에러가 나서 더이상 동일한 함수를 적용할수 없다.
+반면 aggregate는 seqop과 combop 펑션으로 이루어져있어, chunk로 나눠 처리된 결과를 combop함수를 통해 합칠수 있기 때문에 리턴 타입 변환과 병렬처리가 모두 가능하다.
 ```
 #### 질문 2. pairRDD는 어떤 데이터 구조에 적합한지 설명해주세요. 또 pairRDD는 어떻게 만드나요? 
 ```
 pairRDD는 Key-value 구조로, 데이터를 편리하게 집계, 정렬, 조인할 수 있다.
-pairRDD를 만들기 위해서는 여러가지 방법이 있는데 우선, SparkContext의 일부메서드는 Pari RDD를 반환한다. 그리고 자바에서는 JavaSparkContext의 paralleizePairs 메서드에 Tuple2[K,V] 객체로 구성된 리스트를 전달하면 JavaPairRDD 객체를 생성할 수 있다. 또한 mapToPair Transformation 연산자를 통해 생성할 수도 있다. 
+pairRDD를 만들기 위해서는 여러가지 방법이 있는데 우선, SparkContext의 일부메서드는 Pair RDD를 반환한다. 그리고 자바에서는 JavaSparkContext의 paralleizePairs 메서드에 Tuple2[K,V] 객체로 구성된 리스트를 전달하면 JavaPairRDD 객체를 생성할 수 있다. 또한 mapToPair Transformation 연산자를 통해 생성할 수도 있다. 
 ```
 #### 질문 3. groupByKey()와 mapValues()를 통해 나온 결과를 reduce()를 사용해서도 똑같이 만들 수 있습니다. 그렇지만 reduce를 쓴느 것이 더 효율적인 이유는 무엇일까요? 
 ```
 https://www.linkedin.com/pulse/groupbykey-vs-reducebykey-neeraj-sen/
 reduceByKey는 우선 같은 파티션 내에서 진행하지만, groupByKey의 경우 셔플이 선행되므로 네트워크 비용이 크다.
+
+즉, data 가 더 많이 project down 되고, 실제로 셔플이 진행되서 project down 된 데이터를 워커노드가 교환할 경우 네트워크 비용이 그렇지 않을 경우에 비해 현저히 감소하기 때문이다.
+https://databricks.gitbooks.io/databricks-spark-knowledge-base/content/best_practices/prefer_reducebykey_over_groupbykey.html
 ```
 #### 질문 4. join 과 leftOuterJoin, rightOuterJoin이 어떻게 다른지 설명하세요. 
 ```
@@ -121,4 +127,22 @@ rightOuterJoin leftOuterJoin의 반대이다.
 Suffling이란, 파티션 간의 물리적인 데이터 이동을 의미한다.
 이는 새로운 RDD의 파티션을 만들려고 여러 파티션의 데이터를 합칠 떄 발생한다. 가령 Partitioner를 명시적으로 변경하거나(파티션 개수를 변경하거나 사용자 정의 Paritioner를 적용하는 경우), Partitioner를 제거하는 경우에 발생한다.
 셔플링을 기점으로 Stage를 나누고 앞 단계를 Shuffle-Map task, 다음 Stage부터 Driver에 반환할때 까지를 Result Task라고 한다. Map Task의 결과를 중간 파일에 기록하며(주로 운영체제의 파일시스템 캐시에만 저장), 이후 Reduce Task가 이 파일을 읽어들인다. 중간 파일을 디스크에 기록하는 작업도 부담이지만, 결국 셔플링할 데이터를 네트워크로 전송해야 하기 때문에 스파크 잡의 셔플링 횟수를 최소한으로 줄이도록 노력해야 한다.
+```
+![](./spark.png)
+```
+저기에서 transformation은  map 하고 groupByKey가 있는데, input을 (k,v)형태로 만들어주고, groupBy 가 가능해서, map -> GroupByKey -> reduce 순서대로 진행이 된다.
+```
+```
+map이나 reduce 내부의 함수를 쓸때 외부정보를 빌려오면 간단해지는 경우가 종종 있다.
+예를 들어보면 category 에는 카테고리 id 정보가 들어있는데 그 id 들을 카테고리 이름으로 변환해주어야 하는경우.
+category.map(id => categoryNameMap.getOrElse(id, ""))
+이렇게 쓰게되면 기본적으로 spark에서는 function 자체를 serialize 해서  여러 노드로 분산하기 때문 categoryNameMap 자체가 serialize되서 여러 worker 노드로 여러번 발송되게 된다.
+이때 categoryNameMap 용량이 크다면 network overhead가 많이 발생하는데,
+이럴 때 categoryNameMap 정보를 각 worker 노드에 미리 공유하여 쓸 수 있도록 한 기능이 Braodcasting 이다.
+
+https://spark.apache.org/docs/latest/rdd-programming-guide.html#broadcast-variables
+
+Broadcast variables allow the programmer to keep a read-only variable cached on each machine rather than shipping a copy of it with tasks. They can be used, for example, to give every node a copy of a large input dataset in an efficient manner. Spark also attempts to distribute broadcast variables using efficient broadcast algorithms to reduce communication cost.
+
+This means that explicitly creating broadcast variables is only useful when tasks across multiple stages need the same data or when caching the data in deserialized form is important.
 ```
