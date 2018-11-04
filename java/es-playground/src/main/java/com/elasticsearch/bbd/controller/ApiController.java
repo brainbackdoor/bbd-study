@@ -1,5 +1,6 @@
 package com.elasticsearch.bbd.controller;
 
+import com.elasticsearch.bbd.model.Suggest;
 import com.elasticsearch.bbd.repository.EsRepository;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -21,6 +22,11 @@ public class ApiController {
                                 @RequestParam(required = false) String content) {
         if (content == null) return esRepository.matchAll(new String[]{index});
         return esRepository.fullTextMatch(new String[]{index}, name, content);
+    }
+
+    @PostMapping("/{index}/_search")
+    public SearchResponse suggest(@PathVariable("index") String index, @RequestBody Suggest body) {
+        return esRepository.suggestQuery(new String[]{index}, body.getName(), body.getField(), body.getText());
     }
 
     @GetMapping("/aggregation")

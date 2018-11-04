@@ -7,6 +7,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -94,5 +95,15 @@ public class EsRepositoryTest {
     @DisplayName("Query index information")
     public void statTest() {
         assertThat(esRepository.stat(DEFAULT_INDEX).getShards().length, is(5));
+    }
+
+    @Test
+    public void suggestQueryTest() {
+        assertThat(esRepository
+                .suggestQuery(new String[]{"idx1"}, "term", "suggest", "샴성전자")
+                .getSuggest().getSuggestion("term").getEntries().get(0).getOptions().get(0).getText().toString(), is("ㅅㅏㅁㅅㅓㅇㅈㅓㄴㅈㅏ"));
+        System.out.println(esRepository
+                .suggestQuery(new String[]{"idx1"}, "term", "suggest", "샴성전자")
+                .getSuggest().getSuggestion("term").getEntries().get(0).getOptions().get(0).getScore());
     }
 }

@@ -9,6 +9,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -61,5 +63,11 @@ public class EsRepository {
         return terms.getBuckets().stream()
                 .map((k) -> (((Terms.Bucket) k).getKey() + "," + ((Terms.Bucket) k).getDocCount()))
                 .collect(Collectors.toList());
+    }
+
+    public SearchResponse suggestQuery(String[] index, String name, String field, String text) {
+        return client.prepareSearch(index)
+                .suggest(new SuggestBuilder()
+                        .addSuggestion(name, SuggestBuilders.termSuggestion(field).text(text))).get();
     }
 }
