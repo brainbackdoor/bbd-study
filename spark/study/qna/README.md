@@ -146,3 +146,29 @@ Broadcast variables allow the programmer to keep a read-only variable cached on 
 
 This means that explicitly creating broadcast variables is only useful when tasks across multiple stages need the same data or when caching the data in deserialized form is important.
 ```
+---
+```
+1. 셔플링은 무엇이고 언제 발생하나요? 
+Suffling이란, 파티션 간의 물리적인 데이터 이동을 의미한다.
+이는 새로운 RDD의 파티션을 만들려고 여러 파티션의 데이터를 합칠 때 발생한다. 가령 Partitioner를 명시적으로 변경하거나(파티션 개수를 변경하거나 사용자 정의 Paritioner를 적용하는 경우), Partitioner를 제거하는 경우에 발생한다.
+
+2. 파티션은 무엇인가요? 파티션의 특징을 2가지 알려주세요. 
+RDD 데이터의 일부를 의미한다. 스파크는 파일 내용을 여러 파티션으로 분할해 클러스터 노드에 고르게 분산 저장할 수도 있고, 여러 파티션을 노드 하나에 저장할 수도 있다. 
+특징??
+
+3. 스파크에서 제공하는 partitioning 의 종류 두가지를 각각 설명해주세요. 
+HashPartitoner
+RangePartitioner?
+
+
+4. 파티셔닝은 어떻게 퍼포먼스를 높여주나요? 
+
+
+5. rdd 의 toDebugString 의 결과값은 무엇을 보여주나요? 
+
+6. 파티션 된 rdd에 map 을 실행하면 결과물의 파티션은 어떻게 될까요? mapValues의 경우는 어떤가요? 
+
+7. Narrow Dependency 와 Wide Dependency를 설명해주세요. 각 Dependency를 만드는 operation은 무엇이 있을까요? 
+
+8. Lineage 는 어떻게 Fault Tolerance를 가능하게 하나요? 
+```
