@@ -147,28 +147,46 @@ Broadcast variables allow the programmer to keep a read-only variable cached on 
 This means that explicitly creating broadcast variables is only useful when tasks across multiple stages need the same data or when caching the data in deserialized form is important.
 ```
 ---
+#### 질문 1. 셔플링은 무엇이고 언제 발생하나요? 
 ```
-1. 셔플링은 무엇이고 언제 발생하나요? 
 Suffling이란, 파티션 간의 물리적인 데이터 이동을 의미한다.
 이는 새로운 RDD의 파티션을 만들려고 여러 파티션의 데이터를 합칠 때 발생한다. 가령 Partitioner를 명시적으로 변경하거나(파티션 개수를 변경하거나 사용자 정의 Paritioner를 적용하는 경우), Partitioner를 제거하는 경우에 발생한다.
+```
 
-2. 파티션은 무엇인가요? 파티션의 특징을 2가지 알려주세요. 
+#### 질문 2. 파티션은 무엇인가요? 파티션의 특징을 2가지 알려주세요. 
+```
 RDD 데이터의 일부를 의미한다. 스파크는 파일 내용을 여러 파티션으로 분할해 클러스터 노드에 고르게 분산 저장할 수도 있고, 여러 파티션을 노드 하나에 저장할 수도 있다. 
-특징??
+같은 파티션에 있는 tuple(key, value)는 같은 머신에 있어야 한다. 각 노드는 한 개 이상의 파티션을 가지고 있어야 한다. 파티션 개수를 설정할 수 있고 기본적으로는 executor node의 총 코어 개수와 같다.
+```
 
-3. 스파크에서 제공하는 partitioning 의 종류 두가지를 각각 설명해주세요. 
-HashPartitoner
-RangePartitioner?
+#### 질문 3. 스파크에서 제공하는 partitioning 의 종류 두가지를 각각 설명해주세요. 
+```
+HashPartitoner는 기본 Partitioner로, pairRDD 키의 hash를 단순한 mod 공식(partitionIndex = hashCode % numberOfPartitions)에 대입해 파티션 번호를 계산한다. 따라서 key의 분배가 균등하지 않을 수 있다. 하지만 대규모 데이터셋을 상대적으로 적은 수의 파티션으로 나눔면 대체로 데이터를 고르게 분산시킬 수 있다. 별도로 매개변수(spark.default.parallelism)를 세팅하지 않으면 클러스터 코어개수를 대신 사용하여 파티션 개수를 지정한다.
+RangePartitioner는 정렬된 RDD의 데이터를 거의 같은 범위 간격으로 분할할 수 있다. 대상 RDD에서 샘플링한 데이터를 기반으로 범위 경계를 설정한다. range partitioner를 사용하면 key에 대한 정렬이 되고 key에 대한 정렬된 범위 set을 가지고 있게 된다.
+```
 
+#### 질문 4. 파티셔닝은 어떻게 퍼포먼스를 높여주나요? 
+```
+불필요한 셔플링을 줄여, network 비용을 낮춰(latency가 감소) 성능을 향상시킨다.
+```
 
-4. 파티셔닝은 어떻게 퍼포먼스를 높여주나요? 
+#### 질문 5. rdd 의 toDebugString 의 결과값은 무엇을 보여주나요? 
+```
+RDD Lineage Graph를 보여준다. 이를 통해 셔플이 언제 예정되었는지 확인할 수 있다.
+```
 
+#### 질문 6. 파티션 된 rdd에 map 을 실행하면 결과물의 파티션은 어떻게 될까요? mapValues의 경우는 어떤가요? 
+```
+map을 사용할 경우 key가 변경될 수 있지만, mapValues의 경우 key가 보존된다.
+```
 
-5. rdd 의 toDebugString 의 결과값은 무엇을 보여주나요? 
+#### 질문 7. Narrow Dependency 와 Wide Dependency를 설명해주세요. 각 Dependency를 만드는 operation은 무엇이 있을까요? 
+```
+Narrow Dependency의 경우 parent-child 관계가 1:1로, 셔플이 필요없어서 파이프라인처럼 최적화할 수 있다. (map, mapValues, flatMap, filter, mapPartitions, mapPartitionWithIndex 등의 function이 해당되며 join의 경우에도 co-partitioned input의 경우 해당된다.)
+Wide Dependency는 1:다 관계로, 셔플로 인해 모든 데이터를 네트워크에 보내야 하므로 상대적으로 느리다. (groupByKey 등이 해당된다.)
+```
 
-6. 파티션 된 rdd에 map 을 실행하면 결과물의 파티션은 어떻게 될까요? mapValues의 경우는 어떤가요? 
-
-7. Narrow Dependency 와 Wide Dependency를 설명해주세요. 각 Dependency를 만드는 operation은 무엇이 있을까요? 
-
-8. Lineage 는 어떻게 Fault Tolerance를 가능하게 하나요? 
+#### 질문 8. Lineage 는 어떻게 Fault Tolerance를 가능하게 하나요? 
+```
+Lineage graph를 그리고 있어, 장애 발생시 체크포인트 파일에 저장해둔 데이터를 읽어들여 장애 발생 이전 스냅샷 지점부터 Lineage를 다시 계산한다.
 ```
