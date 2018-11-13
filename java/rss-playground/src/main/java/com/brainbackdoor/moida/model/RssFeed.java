@@ -1,5 +1,6 @@
 package com.brainbackdoor.moida.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rometools.rome.feed.rss.Item;
@@ -19,13 +20,24 @@ public class RssFeed extends AbstractRssFeedView {
     @Override
     public List<Item> buildFeedItems(Map<String, Object> model
             , HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return Arrays.asList(mapping(model));
+        return Arrays.asList(new Item());
     }
 
-    private static Item mapping(Map model) throws IOException {
+    Feed mapping(Map<String, Object> model) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return  mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .readValue(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(model), Item.class);
+        System.out.println(model);
+        return mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .readValue(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(model), Feed.class);
     }
+    private static class Feed {
+        String author;
+        String title;
+        public String getAuthor() {
+            return author;
+        }
 
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+    }
 }
