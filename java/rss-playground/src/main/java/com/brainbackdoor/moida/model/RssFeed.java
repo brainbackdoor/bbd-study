@@ -16,28 +16,27 @@ import java.util.Map;
 
 @Component
 public class RssFeed extends AbstractRssFeedView {
+    ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public List<Item> buildFeedItems(Map<String, Object> model
             , HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return Arrays.asList(new Item());
+        if(model.containsKey("article")) return Arrays.asList(setItem(model));
+        return null;
     }
 
-    Feed mapping(Map<String, Object> model) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(model);
-        return mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .readValue(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(model), Feed.class);
+    private Item setItem(Map<String, Object> model) throws IOException {
+        Article article = getArticle(model);
+        Item item = new Item();
+        item.setAuthor(article.getAuthor());
+        item.setTitle(article.getTitle());
+        item.setLink(article.getLink());
+        return item;
     }
-    private static class Feed {
-        String author;
-        String title;
-        public String getAuthor() {
-            return author;
-        }
 
-        public void setAuthor(String author) {
-            this.author = author;
-        }
+    private Article getArticle(Map<String, Object> model) throws IOException {
+        return mapper
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    .readValue(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(model.get("article")), Article.class);
     }
 }

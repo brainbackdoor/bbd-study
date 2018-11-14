@@ -1,9 +1,6 @@
 package com.brainbackdoor.moida.model;
 
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rometools.rome.feed.rss.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 
 @SpringBootTest
@@ -24,35 +23,20 @@ class RssFeedTest {
     @Autowired
     private RssFeed rssFeed;
 
-    Map map;
-
     @BeforeEach
     void setUp () {
+        article = Article.builder().author("bbd").build();
         map = new HashMap();
-        map.put("author", "bbd");
+        map.put("article", article);
     }
+
+    Map map;
+    Article article;
 
     @Test
-    void buildFeedItems() throws Exception {
-        rssFeed.buildFeedItems(map, null, null);
+    void buildItems() throws Exception {
+        Item item = (Item) rssFeed.buildFeedItems(map, null, null).get(0);
+        assertThat(item.getAuthor(),is(article.getAuthor()));
     }
 
-    @Test
-    void mapping() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(map));
-        System.out.println(mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).convertValue(map, Feed.class).getAuthor());
-    }
-    private static class Feed extends Item {
-        String author;
-        String title;
-        String content;
-        public String getAuthor() {
-            return author;
-        }
-
-        public void setAuthor(String author) {
-            this.author = author;
-        }
-    }
 }
