@@ -1,4 +1,4 @@
-package com.brainbackdoor.moida.controllers;
+package com.brainbackdoor.moida.controller;
 
 import com.brainbackdoor.moida.model.Article;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +32,7 @@ public class RssControllerTest {
 
     @Before
     public void setUp () {
-        article = Article.builder().author("bbd").link("brainbackdoor.tistory.com").build();
+        article = Article.builder().author("bbd").link("http://brainbackdoor.tistory.com/rss").build();
         map = new HashMap();
         map.put("article", article);
         MockitoAnnotations.initMocks(this);

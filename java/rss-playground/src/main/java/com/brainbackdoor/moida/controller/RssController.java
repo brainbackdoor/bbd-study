@@ -1,13 +1,13 @@
-package com.brainbackdoor.moida.controllers;
+package com.brainbackdoor.moida.controller;
 
 import com.brainbackdoor.moida.model.RssFeed;
+import com.brainbackdoor.moida.service.RssService;
 import com.rometools.rome.feed.rss.Item;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import com.rometools.rome.feed.synd.SyndEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +21,9 @@ public class RssController {
     @Autowired
     private RssFeed view;
 
+    @Autowired
+    private RssService rssService;
+
     @GetMapping("/")
     public ResponseEntity init() {
         return new ResponseEntity(HttpStatus.OK);
@@ -28,9 +31,9 @@ public class RssController {
 
     @ResponseBody
     @PostMapping("/rss")
-    public List<Item> getFeed(@RequestBody Map map
+    public SyndEntry getFeed(@RequestBody Map map
             , HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return view.buildFeedItems(map, request, response);
+        return rssService.request(view.buildFeedItems(map, request, response));
     }
 
 }
