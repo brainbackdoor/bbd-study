@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +32,6 @@ class FeedTest {
         map.put("blogLink", "https://brainbackdoor.tistory.com");
         Feed feed = new Feed(Rss.buildFeedItems(map), syndFeed);
         assertThat(feed.getMember().getName(), is("bbd"));
+        assertThat(feed.getFeedHistory().getCreatedDate().getHour(), is(LocalDateTime.now().getHour()));
     }
 }
