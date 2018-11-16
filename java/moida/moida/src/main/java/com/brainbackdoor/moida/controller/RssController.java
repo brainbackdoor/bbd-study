@@ -24,7 +24,7 @@ public class RssController {
 
     @ResponseBody
     @PostMapping("/rss")
-    public Feed getFeed(@RequestBody Map map) throws Exception {
+    public Feed getMemberFeed(@RequestBody Map map) throws Exception {
         return rssService.request(Rss.buildFeedItems(map));
     }
 
