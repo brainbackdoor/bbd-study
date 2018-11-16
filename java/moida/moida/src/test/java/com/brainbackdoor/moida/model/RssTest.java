@@ -1,8 +1,7 @@
 package com.brainbackdoor.moida.model;
 
 
-import com.brainbackdoor.moida.model.rss.RssFeed;
-import com.rometools.rome.feed.rss.Item;
+import com.brainbackdoor.moida.model.rss.Rss;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
@@ -11,25 +10,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-class RssFeedTest {
-
-    @Autowired
-    private RssFeed rssFeed;
+class RssTest {
 
     @BeforeEach
     void setUp () {
@@ -40,8 +33,10 @@ class RssFeedTest {
 
     @Test
     void buildItems() throws Exception {
-        Item item = (Item) rssFeed.buildFeedItems(member.get(), null, null).get(0);
-        assertThat(item.getAuthor(),is(member.getName()));
+        Map<String, Object> map = new HashMap();
+        map.put("name", "bbd");
+        map.put("blogLink", "https://brainbackdoor.tistory.com");
+        assertThat(Rss.buildFeedItems(map).getName(),is(member.getName()));
     }
 
     @Test

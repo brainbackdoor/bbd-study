@@ -46,10 +46,13 @@ public class RssControllerTest {
 
     @Test
     public void getRss() throws Exception {
+        Map<String, Object> map = new HashMap();
+        map.put("name ", "bbd");
+        map.put("blogLink", "https://brainbackdoor.tistory.com");
         ObjectMapper mapper = new ObjectMapper();
         mockMvc.perform(post("/rss")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(member.get()))
+                .content(mapper.writeValueAsString(map))
         ).andExpect(status().isOk()).andDo(print());
     }
 }
