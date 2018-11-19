@@ -12,4 +12,12 @@ public class Form {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private Member author;
+    //TODO: Get FORM from DB
+
+    //TODO: PUT FORM
+    public Form (List<Item> items, Member author) {
+        this.items = items;
+        this.author = author;
+        this.createdDate = LocalDateTime.now();
+    }
 }
