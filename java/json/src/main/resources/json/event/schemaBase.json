@@ -1,0 +1,28 @@
+{
+  "title": "BaseProperties",
+  "description": "BaseProperties",
+  "type": "object",
+  "properties": {
+    "base_properties": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ua": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ts": {
+          "type": "number",
+          "minimum": 1
+        },
+        "required": [
+          "url",
+          "ts"
+        ]
+      }
+    }
+  }
+}

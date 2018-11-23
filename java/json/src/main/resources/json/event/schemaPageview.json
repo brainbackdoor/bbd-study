@@ -1,0 +1,36 @@
+{
+  "title": "Pageview",
+  "description": "Pageview",
+  "type": "object",
+  "properties": {
+    "base_properties": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ua": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ts": {
+          "type": "number",
+          "minimum": 1
+        },
+        "required": [
+          "url",
+          "ts"
+        ]
+      }
+    },
+    "campaign": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required": [
+      "base_properties",
+      "campaign"
+    ]
+  }
+}
