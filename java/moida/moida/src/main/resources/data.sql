@@ -1,2 +1,1 @@
-INSERT INTO member(name) VALUES ('싸비1');
-INSERT INTO member(name) VALUES ('싸비2');
+INSERT INTO member (name, fbLink, blogLink) VALUES ('aa', 'brainbackdoor', 'www.tistory.com/brainbackdoor');

@@ -33,15 +33,11 @@ class FeedbackTest {
     Member member;
 
     @Test
-    void createFeedback() throws Exception {
-        Map<String, Object> map = new HashMap();
-        map.put("name", "bbd");
-        map.put("blogLink", "https://brainbackdoor.tistory.com");
-        Feed feed = new Feed(Rss.buildFeedItems(map), syndFeed);
+    void createFeedback() {
+        Feed feed = new Feed(member, syndFeed);
         Feedback feedback = new Feedback(feed, member,"댓글");
 
         assertThat(feedback.getContent(), is("댓글"));
         assertThat(feedback.getMember().getName(), is("bbd"));
-        assertThat(feedback.getFeed().getTitle(), is("Why? What? How?"));
     }
 }

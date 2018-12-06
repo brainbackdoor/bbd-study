@@ -16,7 +16,6 @@ public class FeedHistory extends History{
 
     public FeedHistory(Feed feed) {
         this.createdDate = LocalDateTime.now();
-        this.feed = feed;
         this.contents = "...";
     }
 }
