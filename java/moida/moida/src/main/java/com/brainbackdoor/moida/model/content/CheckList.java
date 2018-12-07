@@ -10,4 +10,5 @@ public class CheckList {
     Member member;
     int point;
     List<CheckListHistory> checkListHistories;
+    //TODO: PUT CheckList
 }

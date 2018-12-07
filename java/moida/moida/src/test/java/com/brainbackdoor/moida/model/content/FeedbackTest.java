@@ -20,24 +20,25 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FeedbackTest {
-
     private String URL = "https://brainbackdoor.tistory.com/rss";
 
     @BeforeEach
     void setUp() throws IOException, FeedException {
         syndFeed = new SyndFeedInput().build(new XmlReader(new URL(URL)));
         member = Member.builder().name("bbd").blogLink("https://brainbackdoor.tistory.com").build();
+        feed = new Feed(member, syndFeed);
     }
-
+    Feed feed;
     SyndFeed syndFeed;
     Member member;
 
     @Test
     void createFeedback() {
-        Feed feed = new Feed(member, syndFeed);
-        Feedback feedback = new Feedback(feed, member,"댓글");
+        Feedback feedback = new Feedback(member,"댓글");
+        feed.add(feedback);
 
         assertThat(feedback.getContent(), is("댓글"));
         assertThat(feedback.getMember().getName(), is("bbd"));
+        assertThat(feed.getFeedbacks().get(0), is(feedback));
     }
 }

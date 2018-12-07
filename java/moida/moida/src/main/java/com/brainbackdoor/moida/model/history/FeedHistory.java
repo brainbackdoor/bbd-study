@@ -1,21 +1,21 @@
 package com.brainbackdoor.moida.model.history;
 
+import com.brainbackdoor.moida.model.Member;
 import com.brainbackdoor.moida.model.rss.Feed;
-import com.rometools.rome.feed.synd.SyndFeed;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Getter
 public class FeedHistory extends History{
-    Feed feed;
+    Member member;
+    String title;
+
 
     public FeedHistory(Feed feed) {
+        this.member = feed.getMember();
+        this.title = feed.getTitle();
         this.createdDate = LocalDateTime.now();
-        this.contents = "...";
+        //TODO: write contents
     }
 }

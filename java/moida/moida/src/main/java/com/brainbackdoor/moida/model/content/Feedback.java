@@ -8,14 +8,12 @@ import java.time.LocalDateTime;
 
 @Getter
 public class Feedback {
-    private Feed feed;
     private Member member;
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
-    public Feedback(Feed feed, Member member, String content) {
-        this.feed = feed;
+    public Feedback(Member member, String content) {
         this.member = member;
         this.content = content;
         this.createdDate = LocalDateTime.now();

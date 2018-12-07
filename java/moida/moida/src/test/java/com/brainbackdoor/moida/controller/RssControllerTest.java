@@ -23,8 +23,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+
+
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class RssControllerTest {
     @Autowired
     private WebApplicationContext webAppContext;

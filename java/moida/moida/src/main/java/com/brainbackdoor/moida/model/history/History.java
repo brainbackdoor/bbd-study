@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public abstract class History {
+public class History {
     LocalDateTime createdDate;
     String contents;
 }

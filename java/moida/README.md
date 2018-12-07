@@ -30,6 +30,7 @@ RSS를 통해 멤버의 글을 받아온다.
 -- link
 -- version
 -- List<FeedHistory>
+-- List<Feedback>
 
 - FeedHistory
 -- idx

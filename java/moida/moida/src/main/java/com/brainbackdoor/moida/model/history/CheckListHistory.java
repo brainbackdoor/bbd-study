@@ -13,6 +13,6 @@ public class CheckListHistory extends History {
 
     public CheckListHistory(Feed feed) {
         this.createdDate = LocalDateTime.now();
-        this.contents = "...";
+        //TODO: write contents
     }
 }
