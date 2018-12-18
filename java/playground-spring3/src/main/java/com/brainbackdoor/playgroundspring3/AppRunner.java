@@ -1,6 +1,7 @@
 package com.brainbackdoor.playgroundspring3;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
@@ -17,10 +18,16 @@ public class AppRunner implements ApplicationRunner {
     @Autowired
     BookRepository bookRepository;
 
+    @Value("${app.name}")
+    String appName;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Environment environment = ctx.getEnvironment();
-        System.out.println(Arrays.toString(environment.getActiveProfiles()));
-        System.out.println(Arrays.toString(environment.getDefaultProfiles()));
+        //-Dapp.name=spring5
+        //app.properties : app.name=spring
+        System.out.println(environment.getProperty("app.name"));
+        System.out.println(appName);
+        // output : spring5 즉, vm options이 우선순위가 높다.
     }
 }
