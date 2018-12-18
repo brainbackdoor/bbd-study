@@ -1,16 +1,20 @@
 package com.brainbackdoor.playgroundspring5;
 
-import org.springframework.context.ApplicationEvent;
 /*
-    ApplicationEventPublisher
-    이벤트 프로그래밍에 필요한 인터페이스 제공. 옵저버 패턴 구현체
+    비침투성, Transparent.. => 내 코드에 스프링 코드가 노출되지 않는 것
+    이것이 POJO기반의 프로그래밍
  */
-public class MyEvent extends ApplicationEvent {
+public class MyEvent {
     private int data;
+    private Object source;
 
     public MyEvent(Object source, int data) {
-        super(source);
+        this.source = source;
         this.data = data;
+    }
+
+    public Object getSource() {
+        return source;
     }
 
     public int getData() {
