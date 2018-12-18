@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class Single {
 
     @Autowired
-    Proto proto;
+    Proto proto; // proxy bean이 주입
 
     public Proto getProto() {
         return proto;
