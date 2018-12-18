@@ -19,16 +19,16 @@ public class AppRunner implements ApplicationRunner {
 
     @Autowired
     ApplicationContext resourceLoader;
-
+    //https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#resources
     @Override
     public void run(ApplicationArguments args) throws Exception {
         System.out.println(resourceLoader.getClass());
 
-        Resource resource = resourceLoader.getResource("classpath:test.txt");
+        Resource resource = resourceLoader.getResource("test.txt");
 
-        System.out.println(resource.getClass()); // classpath prifix를 썻기때문에..
+        System.out.println(resource.getClass()); // ServletContextResource
 
-        System.out.println(resource.exists());
-        System.out.println(resource.getDescription());
+        System.out.println(resource.exists()); // false
+        System.out.println(resource.getDescription()); // ERROR
     }
 }
