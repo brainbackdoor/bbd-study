@@ -16,11 +16,19 @@ public class AppRunner implements ApplicationRunner {
     @Value("#{1 eq 1}")
     boolean trueOrFalse;
 
+    @Value("${my.value}")
+    int myValue;
+
+    @Value("#{${my.value} eq 100}")
+    boolean isMyValue100;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         System.out.println("====================");
         System.out.println(value);
         System.out.println(greeting);
         System.out.println(trueOrFalse);
+        System.out.println(myValue);
+        System.out.println(isMyValue100);
     }
 }
