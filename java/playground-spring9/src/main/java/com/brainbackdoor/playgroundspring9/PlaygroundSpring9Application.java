@@ -1,6 +1,7 @@
 package com.brainbackdoor.playgroundspring9;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 /*
     Spring AOP
@@ -17,7 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PlaygroundSpring9Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(PlaygroundSpring9Application.class, args);
+        SpringApplication app = new SpringApplication(PlaygroundSpring9Application.class);
+        app.setWebApplicationType(WebApplicationType.NONE);
+        app.run(args);
+        //Spring을 Web Application을 띄우지 않고,
+        //Server mode가 아닌 상태로 띄우는 방식
+        //이러면 끄지않아도 자동으로 꺼짐
     }
 
 }
