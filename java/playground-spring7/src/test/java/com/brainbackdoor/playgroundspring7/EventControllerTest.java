@@ -13,7 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest({
+        EventFormatter.class,
+        EventController.class})
+//@WebMvcTest({EventConverter.StringToEventConverter.class, EventController.class})
+// Formatter나 Controller가 제대로 빈으로 등록이 안되면 테스트가 깨질 우려가 있음
 public class EventControllerTest {
     @Autowired
     MockMvc mockMvc;
