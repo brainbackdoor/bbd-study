@@ -27,4 +27,15 @@ public class PlaygroundSpring9Application {
     }
 
 }
+/*
+    매번 프록시 클래스를 작성해야 하는가?
+    여러 클래스 여러 메소드에 적용하려면?
+    So Spring AOP!!
+    Spring IoC 컨테이너가 제공하는 기반 시설과 Dynamic Proxy를 사용하여 문제 해결
+    - 동적 프록시 : 동적으로 프록시 객체를 생성하는 방법
+        - 자바가 제공하는 방법은 인터페이스 기반 프록시 생성
+        - CGlib은 클래스 기반 프록시도 지원
+    - Spring IoC : 기존 빈을 대체하는 동적 프록시 빈을 만들어 등록시켜준다.
+        - AbstractAutoProxyCreator implements BeanPostProcessor
+ */
 
