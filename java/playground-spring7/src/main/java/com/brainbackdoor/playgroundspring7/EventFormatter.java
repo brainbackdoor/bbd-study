@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 // Formatter도 빈으로 등록해서 써도 된다.
+@Component
 public class EventFormatter implements Formatter<Event> {
 
     @Override
