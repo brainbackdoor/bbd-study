@@ -8,6 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Transactional
 @Component
@@ -55,12 +60,29 @@ public class JpaRunner implements ApplicationRunner {
 //        comment.setComment("흙");
 //        post.addComment(comment1);
 
-        Session session = entityManager.unwrap(Session.class);
-//        session.save(post);
+//        Session session = entityManager.unwrap(Session.class);
+////        session.save(post);
+//
+//        Post post1 = session.get(Post.class, 1L);
+//        System.out.println(post1.getTitle());
+////        post1.getComments().stream().forEach(v-> System.out.println(v.getComment()));
+//        post1.getComments().forEach(v-> System.out.println(v.getComment()));
 
-        Post post1 = session.get(Post.class, 1L);
-        System.out.println(post1.getTitle());
-//        post1.getComments().stream().forEach(v-> System.out.println(v.getComment()));
-        post1.getComments().forEach(v-> System.out.println(v.getComment()));
+//        TypedQuery<Post> query = entityManager.createQuery("SELECT p FROM Post AS p", Post.class);
+//        List<Post> posts = query.getResultList();
+//        posts.forEach(System.out::println);
+
+        // Type-Safe한 방식
+//        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Post> query = builder.createQuery(Post.class);
+//        Root<Post> root = query.from(Post.class);
+//        query.select(root);
+//        List<Post> posts = entityManager.createQuery(query).getResultList();
+//        posts.forEach(System.out::println);
+
+        //Native Query
+        List<Post> posts = entityManager.createNativeQuery("Select * FROM Post", Post.class)
+                .getResultList();
+        posts.forEach(System.out::println);
     }
 }
