@@ -43,19 +43,24 @@ public class JpaRunner implements ApplicationRunner {
 //        System.out.println(bbd.getUsername());
 //        //transaction이 끝나면 detached 상태로 변함
 
-
-        Post post = new Post();
-        post.setTitle("Spring Data");
-
-        Comment comment = new Comment();
-        comment.setComment("우왕");
-        post.addComment(comment);
-
-        Comment comment1 = new Comment();
-        comment.setComment("흙");
-        post.addComment(comment1);
+//
+//        Post post = new Post();
+//        post.setTitle("Spring Data");
+//
+//        Comment comment = new Comment();
+//        comment.setComment("우왕");
+//        post.addComment(comment);
+//
+//        Comment comment1 = new Comment();
+//        comment.setComment("흙");
+//        post.addComment(comment1);
 
         Session session = entityManager.unwrap(Session.class);
-        session.save(post);
+//        session.save(post);
+
+        Post post1 = session.get(Post.class, 1L);
+        System.out.println(post1.getTitle());
+//        post1.getComments().stream().forEach(v-> System.out.println(v.getComment()));
+        post1.getComments().forEach(v-> System.out.println(v.getComment()));
     }
 }
