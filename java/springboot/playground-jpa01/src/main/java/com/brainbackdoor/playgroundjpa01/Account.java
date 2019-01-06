@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -16,19 +18,16 @@ public class Account {
 
     private String password;
 
-    @Temporal(TemporalType.TIME)
-    private Date created = new Date();
+    @OneToMany(mappedBy = "owner")
+    private Set<Study> studies = new HashSet<>();
 
-    private String yes;
+    public Set<Study> getStudies() {
+        return studies;
+    }
 
-    @Transient
-    private String no;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "street", column = @Column(name = "homeAddress"))
-    })
-    private Address homeAddress;
+    public void setStudies(Set<Study> studies) {
+        this.studies = studies;
+    }
 
     public Long getId() {
         return id;
