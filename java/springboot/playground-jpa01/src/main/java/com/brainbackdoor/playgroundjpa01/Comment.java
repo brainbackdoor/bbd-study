@@ -17,7 +17,7 @@ public class Comment {
     @ManyToOne
     private Post post;
 
-    private Integer likeCount;
+    private Integer likeCount = 0;
 
     private Date crated;
 
