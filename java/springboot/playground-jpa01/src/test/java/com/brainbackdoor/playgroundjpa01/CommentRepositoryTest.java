@@ -35,5 +35,11 @@ public class CommentRepositoryTest {
         assertThat(byId).isEmpty();
 
         Comment comment1 = byId.orElseThrow(IllegalArgumentException::new);
+
+    }
+
+    @Test
+    public void crud2() {
+
     }
 }

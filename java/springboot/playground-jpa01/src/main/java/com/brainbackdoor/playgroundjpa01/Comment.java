@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Entity
 public class Comment {
@@ -15,6 +16,26 @@ public class Comment {
 
     @ManyToOne
     private Post post;
+
+    private Integer likeCount;
+
+    private Date crated;
+
+    public Date getCrated() {
+        return crated;
+    }
+
+    public void setCrated(Date crated) {
+        this.crated = crated;
+    }
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public Long getId() {
         return id;
