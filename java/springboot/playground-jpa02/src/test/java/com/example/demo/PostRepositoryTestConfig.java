@@ -10,7 +10,7 @@ public class PostRepositoryTestConfig {
 //    public PostListener postListener() {
 //        return new PostListener();
 //    }
-    
+
     @Bean
     public ApplicationListener<PostPusblishedEvent> postListener() {
         return event -> {
