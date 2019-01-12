@@ -107,7 +107,8 @@ public class PostRepositoryTest {
 
             복잡하므로 이렇게 구현하기보다는,
             Application 로직으로 작성하는게 낫다!!
-         *
+         */
+
         Optional<Post> byId = postRepository.findById(spring.getId());
         assertThat(byId.get().getTitle()).isEqualTo(hibernate);
     }
