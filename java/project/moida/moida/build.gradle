@@ -33,7 +33,5 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.190'
-    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.0.0'
-    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
 
 }

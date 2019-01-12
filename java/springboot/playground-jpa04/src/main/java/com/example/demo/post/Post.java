@@ -4,9 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+//@NamedQuery(name = "Post.findByTitle", query = "SELECT p FROM Post AS p WHERE p.title = ?1")
 public class Post {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String title;
