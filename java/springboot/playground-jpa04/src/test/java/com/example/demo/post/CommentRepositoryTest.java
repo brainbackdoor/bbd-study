@@ -10,12 +10,32 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 public class CommentRepositoryTest {
     @Autowired
-    CommentRepository commentRepository;
+    CommentRepository comments;
+
+    @Autowired
+    PostRepository posts;
 
     @Test
     public void getComment() {
-        commentRepository.getById(1L);
+//        comments.getById(1L);
+//
+//        comments.findById(1L);
+//
+//        comments.findByPost_Id(1L);
 
-        commentRepository.findById(1L);
+        Post post = new Post();
+        post.setTitle("jpa");
+        Post savedPost = posts.save(post);
+
+        Comment comment = new Comment();
+        comment.setPost(savedPost);
+        comment.setUp(10);
+        comment.setDown(1);
+
+        comments.save(comment);
+        comments.findByPost_Id(savedPost.getId(), CommentSummary.class).forEach(c -> {
+            System.out.println("==============");
+            System.out.println(c.getVotes());
+        });
     }
 }
