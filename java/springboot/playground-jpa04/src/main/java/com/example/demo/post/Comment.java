@@ -30,6 +30,9 @@ public class Comment {
 
     private boolean best;
 
+    @Enumerated(value = EnumType.STRING) // 반드시 String으로 바꿔 쓰자
+    private CommentStatus commentStatus;
+
     @CreatedDate
     private Date created;
 
@@ -95,6 +98,6 @@ public class Comment {
     @PrePersist
     public void prePersist() {
         System.out.println("Pre Persist is called");
-        
+
     }
 }
