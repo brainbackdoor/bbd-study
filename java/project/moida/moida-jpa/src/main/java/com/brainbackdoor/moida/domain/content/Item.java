@@ -1,17 +1,11 @@
 package com.brainbackdoor.moida.domain.content;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-@ToString
-@Getter
-@Setter
 public class Item {
     @Id
     @GeneratedValue
@@ -20,4 +14,28 @@ public class Item {
     private String content;
 
     private boolean confirm;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
 }
