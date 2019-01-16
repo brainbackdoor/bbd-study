@@ -20,7 +20,7 @@ public class Feed {
     Member member;
     String title;
     String link;
-    SyndContent description;
+    SyndContnt description;
     LocalDateTime createdDate;
     String version;
     History feedHistory;

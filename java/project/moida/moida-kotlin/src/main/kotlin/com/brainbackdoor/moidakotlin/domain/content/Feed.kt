@@ -6,8 +6,8 @@ import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import java.net.URL
 
-class Feed(
-        member: Member
+data class Feed(
+        val member: Member
 ) {
     var url: String = member.blogLink + "/rss"
 

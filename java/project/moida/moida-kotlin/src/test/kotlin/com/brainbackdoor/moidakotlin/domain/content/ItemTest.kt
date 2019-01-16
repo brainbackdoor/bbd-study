@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class ItemTest {
     @Autowired lateinit var itemRepository: ItemRepository
     @Test
-    fun `H2 연동테스트` () {
+    fun `H2 연동 테스트` () {
         val item = Item("두괄식으로 써야 한다.", false)
         itemRepository.save(item)
 
