@@ -1,4 +1,9 @@
 package com.brainbackdoor.slackgit
 
-class Attachments {
-}
+import java.lang.reflect.Field
+
+data class Attachment(
+        var text: String = "",
+        var ref: String = "",
+        var sha: String = ""
+)
