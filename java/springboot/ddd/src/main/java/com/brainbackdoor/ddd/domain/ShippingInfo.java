@@ -1,37 +1,29 @@
 package com.brainbackdoor.ddd.domain;
 
 public class ShippingInfo {
-    private String receiverName;
-    private String receiverPhoneNumber;
-    private String shippingAddress1;
-    private String shippingAddress2;
-    private String shippingZipCode;
+    private Receiver receiver;
+    private Address address;
 
-    public ShippingInfo(String receiverName, String receiverPhoneNumber, String shippingAddress1, String shippingAddress2, String shippingZipCode) {
-        this.receiverName = receiverName;
-        this.receiverPhoneNumber = receiverPhoneNumber;
-        this.shippingAddress1 = shippingAddress1;
-        this.shippingAddress2 = shippingAddress2;
-        this.shippingZipCode = shippingZipCode;
+    public ShippingInfo(Receiver receiver, Address address) {
+        this.receiver = receiver;
+        this.address = address;
     }
 
     public String getReceiverName() {
-        return receiverName;
+        return receiver.getName();
     }
 
     public String getReceiverPhoneNumber() {
-        return receiverPhoneNumber;
+        return receiver.getPhoneNumber();
     }
 
     public String getShippingAddress1() {
-        return shippingAddress1;
+        return address.getAddress1();
     }
 
     public String getShippingAddress2() {
-        return shippingAddress2;
+        return address.getAddress2();
     }
 
-    public String getShippingZipCode() {
-        return shippingZipCode;
-    }
+
 }

@@ -1,7 +1,5 @@
 package com.brainbackdoor.ddd.domain;
 
-import java.util.stream.IntStream;
-
 public class Money {
     private int value;
 
@@ -12,4 +10,14 @@ public class Money {
     public int getValue() {
         return value;
     }
+
+    public Money add(Money money) {
+        return new Money(this.value + money.value);
+    }
+
+    public Money muliply(int multiplier) {
+        return new Money(value * multiplier);
+    }
+
+
 }

@@ -1,11 +1,12 @@
 package com.brainbackdoor.ddd.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
+    private String orderNumber;
     private OrderState state;
     private ShippingInfo shippingInfo;
-
     private List<OrderLine> orderLines;
     private int totalAmounts;
 
@@ -56,6 +57,19 @@ public class Order {
 
     public void completePayment() {
         //TODO: 결제완료로 변경하기
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderNumber.equals(order.orderNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderNumber);
     }
 
 }
