@@ -97,7 +97,9 @@ L4스위치의 NAT구성과 DSR구성
 
 VRRP의 구조
 keepalived의 구조상의 문제
+- garp 의 지연송신(STP 컨버전스로 인한 지연현상///)
 keepalived 다중화
 keepalived 응용
+- vrrp 기능만 독립적으로 사용 가능
 ```
 
