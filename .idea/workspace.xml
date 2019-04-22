@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2483c186-65e8-4f63-8d1e-2bee4b0138ca" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/devops/infra/fiveWeek/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Bank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Expression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Sum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Dollar.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Dollar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Franc.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Franc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Money.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/project/tdd/src/main/java/com/brainbackdoor/tdd/Money.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/project/tdd/src/test/java/com/brainbackdoor/tdd/DollarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/project/tdd/src/test/java/com/brainbackdoor/tdd/DollarTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/project/tdd/src/test/java/com/brainbackdoor/tdd/FrancTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/project/tdd/src/test/java/com/brainbackdoor/tdd/FrancTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,12 +72,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/devops/infra/fiveWeek/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="503">
-                <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+              <first_editor relative-caret-position="179">
+                <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/books/refactoring/chapter02/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="-258" />
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/java/books/refactoring/chapter06/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="416">
+                <caret line="79" column="3" selection-start-line="79" selection-start-column="3" selection-end-line="79" selection-end-column="3" />
               </first_editor>
               <second_editor />
             </state>
@@ -124,18 +137,19 @@
     <handled-path value="$PROJECT_DIR$/javascript/node/express-jwt/node_modules" />
     <handled-path value="$PROJECT_DIR$/javascript/node/express-mongoose/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-675" />
+    <option name="y" value="-1330" />
     <option name="width" value="1680" />
-    <option name="height" value="944" />
+    <option name="height" value="947" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -146,30 +160,47 @@
             <path>
               <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
               <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
-              <item name="devops" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
-              <item name="devops" type="462c0819:PsiDirectoryNode" />
-              <item name="infra" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
-              <item name="devops" type="462c0819:PsiDirectoryNode" />
-              <item name="infra" type="462c0819:PsiDirectoryNode" />
-              <item name="fiveWeek" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
               <item name="etc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
               <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="books" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="books" type="462c0819:PsiDirectoryNode" />
+              <item name="refactoring" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="books" type="462c0819:PsiDirectoryNode" />
+              <item name="refactoring" type="462c0819:PsiDirectoryNode" />
+              <item name="chapter02" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="books" type="462c0819:PsiDirectoryNode" />
+              <item name="refactoring" type="462c0819:PsiDirectoryNode" />
+              <item name="chapter06" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bbd-study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bbd-study" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="codesquad" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -279,10 +310,10 @@
     <option name="totallyTimeSpent" value="310000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="961" extended-state="6" />
+    <frame x="-675" y="-1330" width="1680" height="947" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2771673" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2802198" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -299,7 +330,7 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3785961" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" visible="true" weight="0.32911393" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="10" visible="true" weight="0.33216375" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -336,6 +367,20 @@
                 </list>
               </option>
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -410,8 +455,26 @@
     <entry file="file://$PROJECT_DIR$/devops/infra/fiveWeek/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="503">
-            <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+          <first_editor relative-caret-position="179">
+            <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/books/refactoring/chapter02/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="-258" />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/books/refactoring/chapter06/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="416">
+            <caret line="79" column="3" selection-start-line="79" selection-start-column="3" selection-end-line="79" selection-end-column="3" />
           </first_editor>
           <second_editor />
         </state>
