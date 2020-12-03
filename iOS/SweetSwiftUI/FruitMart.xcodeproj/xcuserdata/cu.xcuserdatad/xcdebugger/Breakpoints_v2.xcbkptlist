@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "CDC99CC6-D8A6-4F71-8312-3AF76C91DCBD"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CD97D120-85F9-49C0-812D-E4AECF8B2979"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FruitMart/Source/User Interface/Home/ProductDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "placeOrder()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CD97D120-85F9-49C0-812D-E4AECF8B2979 - 955e1d3f83455339"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FruitMart.ProductDetailView.placeOrder() -&gt; ()"
+                  moduleName = "FruitMart"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cu/Workspaces/practice/iOS/SweetSwiftUI/FruitMart/Source/User%20Interface/Home/ProductDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "207">
+               </Location>
+               <Location
+                  uuid = "CD97D120-85F9-49C0-812D-E4AECF8B2979 - 8c401be98366632a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in FruitMart_PreviewReplacement_ProductDetailView_6):FruitMart.ProductDetailView.(__preview__placeOrder in _35FE3EFFA99D8A7429279934A786B3CB)() -&gt; ()"
+                  moduleName = "ProductDetailView.6.preview-thunk.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cu/Workspaces/practice/iOS/SweetSwiftUI/FruitMart/Source/User%20Interface/Home/ProductDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "129">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2704091B-2039-45A0-A712-59D836C88A08"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FruitMart/Source/User Interface/Home/ProductDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "confirmAlert"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "2704091B-2039-45A0-A712-59D836C88A08 - d88f71b6dc347bca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in FruitMart.ProductDetailView.confirmAlert.getter : SwiftUI.Alert"
+                  moduleName = "FruitMart"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cu/Workspaces/practice/iOS/SweetSwiftUI/FruitMart/Source/User%20Interface/Home/ProductDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  uuid = "2704091B-2039-45A0-A712-59D836C88A08 - 6f83ab7731eb4adb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in (extension in FruitMart_PreviewReplacement_ProductDetailView_6):FruitMart.ProductDetailView.(__preview__confirmAlert in _35FE3EFFA99D8A7429279934A786B3CB).getter : SwiftUI.Alert"
+                  moduleName = "ProductDetailView.6.preview-thunk.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cu/Workspaces/practice/iOS/SweetSwiftUI/FruitMart/Source/User%20Interface/Home/ProductDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1FF0F96D-3B9D-4DB3-9CCB-DBC231174E09"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FruitMart/Source/User Interface/Home/ProductDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "confirmAlert"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "1FF0F96D-3B9D-4DB3-9CCB-DBC231174E09 - d88f71b6dc347b8c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in FruitMart.ProductDetailView.confirmAlert.getter : SwiftUI.Alert"
+                  moduleName = "FruitMart"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cu/Workspaces/practice/iOS/SweetSwiftUI/FruitMart/Source/User%20Interface/Home/ProductDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "27">
+               </Location>
+               <Location
+                  uuid = "1FF0F96D-3B9D-4DB3-9CCB-DBC231174E09 - 6f83ab7731eb4a9d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in (extension in FruitMart_PreviewReplacement_ProductDetailView_6):FruitMart.ProductDetailView.(__preview__confirmAlert in _35FE3EFFA99D8A7429279934A786B3CB).getter : SwiftUI.Alert"
+                  moduleName = "ProductDetailView.6.preview-thunk.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cu/Workspaces/practice/iOS/SweetSwiftUI/FruitMart/Source/User%20Interface/Home/ProductDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD796191-301C-48C4-A92F-5318D233773B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FruitMart/Source/Helper/Extension/Store.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "placeOrder(product:quantity:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5EE70290-0063-4E26-8671-97A3B571E7E6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FruitMart/Source/Helper/Extension/Store.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "placeOrder(product:quantity:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "120F97D7-7A87-4F5F-BF13-BF091252975A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FruitMart/Source/Helper/Extension/Store.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "placeOrder(product:quantity:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
