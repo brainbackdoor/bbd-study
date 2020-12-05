@@ -6,8 +6,6 @@ import java.util.function.BinaryOperator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.round;
-
 public class Calculator {
     public static final String CRITERIA_FOR_SPLIT = " ";
     public static final String PATTERN_OPERATOR_PREFIX = "[1-9](\\+|-|\\*|/).";
@@ -74,7 +72,7 @@ public class Calculator {
         }
 
         static int run(int first, int second, String operator) {
-            return (int) find(operator).calculate.apply(first, second);
+            return find(operator).calculate.apply(first, second);
         }
 
         private static Operator find(String operator) {
