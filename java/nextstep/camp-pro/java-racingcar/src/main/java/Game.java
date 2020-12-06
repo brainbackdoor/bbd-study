@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
-    int count;
-    int round;
+    private final int count;
+    private final int round;
 
     public Game(int count, int round) {
         if (count <= 0 || round <= 0) {
@@ -9,5 +12,16 @@ public class Game {
 
         this.count = count;
         this.round = round;
+    }
+
+    public GameResult run() {
+        Cars cars = new Cars(count);
+        List<RoundResult> results = new ArrayList();
+
+        for(int i = 0; i < round; i++) {
+            results.add(cars.racing());
+        }
+
+        return new GameResult(results);
     }
 }

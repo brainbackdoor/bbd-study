@@ -6,6 +6,10 @@ public class RandomUtils {
     private RandomUtils() {
     }
 
+    public static int run() {
+        return nextInt(0, 9);
+    }
+
     public static int nextInt(final int startInclusive, final int endInclusive) {
         if (startInclusive > endInclusive) {
             throw new IllegalArgumentException();

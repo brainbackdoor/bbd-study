@@ -1,6 +1,6 @@
 public class Car {
     public static final int CRITERIA_FOR_MOVING = 4;
-    int position = 0;
+    private int position = 0;
 
     public Car() {
     }
@@ -18,5 +18,9 @@ public class Car {
 
     private boolean isNotZeroToTen(int score) {
         return score < 0 || score > 9;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

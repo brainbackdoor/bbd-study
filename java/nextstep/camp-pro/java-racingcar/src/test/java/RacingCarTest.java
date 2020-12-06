@@ -37,7 +37,4 @@ public class RacingCarTest {
         .hasMessage("전진하는 조건은 0에서 9 사이에서 값이어야 합니다.")
         ;
     }
-
-
-
 }
