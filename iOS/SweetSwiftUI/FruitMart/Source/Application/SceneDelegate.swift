@@ -16,8 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     configureAppearance()
     
-    let rootView = Home()
-        .accentColor(Color.primary)
+    let rootView = MainTabView()
         .environmentObject(Store())
     
     if let windowScene = scene as? UIWindowScene {
@@ -36,5 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().titleTextAttributes = [
             .foregroundColor: UIColor(named: "peach")!
         ]
+        
+        UITableView.appearance().backgroundColor = .clear
     }
 }
+
+
