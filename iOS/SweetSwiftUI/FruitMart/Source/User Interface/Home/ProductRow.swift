@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ProductRow: View {
     let product: Product
+    @EnvironmentObject var store: Store
+    @Binding var quickOrder: Product?
     
     var body: some View {
         HStack {
@@ -56,16 +58,22 @@ struct ProductRow: View {
             Image(systemName: "cart")
                 .foregroundColor(Color.peach)
                 .frame(width: 32, height: 32)
+                .onTapGesture {
+                    self.orderProduct()
+                }
         }
         .padding([.leading, .bottom], 12)
         .padding([.top, .trailing])
     }
     
-
+    func orderProduct() {
+        quickOrder = product
+        store.placeOrder(product: product, quantity: 1)
+    }
 }
 
 struct ProductRow_Previews: PreviewProvider {
     static var previews: some View {
-        ProductRow(product: productSamples[0])
+        ProductRow(product: productSamples[0], quickOrder: .constant(nil))
     }
 }

@@ -11,6 +11,7 @@ import SwiftUI
 struct ProductDetailView: View {
     @State private var quantity: Int = 1
     @State private var showingAlert: Bool = false
+    @State private var showingPopup: Bool = false
     @EnvironmentObject private var store: Store
     
     let product: Product
@@ -30,7 +31,9 @@ struct ProductDetailView: View {
             productImage
             orderView
         }
-        .modifier(Popup(size: CGSize(width: 200, height: 200), style: .dimmed, message: Text("팝업")))
+        .popup(isPresented: $showingPopup, style: .dimmed) {
+            OrderCompletedMessage()
+        }
         .edgesIgnoringSafeArea(.top)
         .alert(isPresented: $showingAlert, content: {
             confirmAlert
@@ -91,6 +94,7 @@ struct ProductDetailView: View {
     
     func placeOrder() {
         store.placeOrder(product: product, quantity: quantity)
+        showingPopup = true
     }
     
     var priceInfo: some View {
