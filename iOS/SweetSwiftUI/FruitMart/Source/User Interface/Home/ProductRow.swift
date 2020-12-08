@@ -12,12 +12,16 @@ struct ProductRow: View {
     let product: Product
     @EnvironmentObject var store: Store
     @Binding var quickOrder: Product?
+    @State private var willAppear: Bool = false
     
     var body: some View {
         HStack {
             productImage
             productionDescription
         }
+        .opacity(willAppear ? 1 : 0)
+        .animation(.easeInOut(duration: 0.4))
+        .onAppear {self.willAppear = true}
         .frame(height: 150)
         .background(Color.primary.colorInvert())
         .cornerRadius(6)

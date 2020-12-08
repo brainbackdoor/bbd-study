@@ -17,6 +17,11 @@
 		805485CC257DA2B9004FDA23 /* OrderCompletedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485CB257DA2B9004FDA23 /* OrderCompletedMessage.swift */; };
 		805485D3257DB518004FDA23 /* FavoriteProductScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485D2257DB518004FDA23 /* FavoriteProductScrollView.swift */; };
 		805485D6257DCBAF004FDA23 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485D5257DCBAF004FDA23 /* MainTabView.swift */; };
+		805485E2257F238D004FDA23 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485E1257F238D004FDA23 /* Recipe.swift */; };
+		805485E6257F23F5004FDA23 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485E5257F23F5004FDA23 /* RecipeView.swift */; };
+		805485ED257F39A0004FDA23 /* Stripes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485EC257F39A0004FDA23 /* Stripes.swift */; };
+		805485F0257F3AD7004FDA23 /* ShapeClipModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485EF257F3AD7004FDA23 /* ShapeClipModifier.swift */; };
+		805485F3257F3B77004FDA23 /* AnyTransitionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805485F2257F3B77004FDA23 /* AnyTransitionExtension.swift */; };
 		8081CDB3256E48D7001EB31B /* ProductRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8081CDB2256E48D7001EB31B /* ProductRow.swift */; };
 		8081CDB7256E8145001EB31B /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8081CDB6256E8145001EB31B /* ColorExtension.swift */; };
 		8081CDBC256E86D4001EB31B /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8081CDBB256E86D4001EB31B /* Product.swift */; };
@@ -46,6 +51,11 @@
 		805485CB257DA2B9004FDA23 /* OrderCompletedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCompletedMessage.swift; sourceTree = "<group>"; };
 		805485D2257DB518004FDA23 /* FavoriteProductScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteProductScrollView.swift; sourceTree = "<group>"; };
 		805485D5257DCBAF004FDA23 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		805485E1257F238D004FDA23 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = SOURCE_ROOT; };
+		805485E5257F23F5004FDA23 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
+		805485EC257F39A0004FDA23 /* Stripes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stripes.swift; sourceTree = "<group>"; };
+		805485EF257F3AD7004FDA23 /* ShapeClipModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeClipModifier.swift; sourceTree = "<group>"; };
+		805485F2257F3B77004FDA23 /* AnyTransitionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTransitionExtension.swift; sourceTree = "<group>"; };
 		8081CDB2256E48D7001EB31B /* ProductRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRow.swift; sourceTree = "<group>"; };
 		8081CDB6256E8145001EB31B /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		8081CDBB256E86D4001EB31B /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Product.swift; path = FruitMart/Source/Helper/Extension/Product.swift; sourceTree = SOURCE_ROOT; };
@@ -131,6 +141,7 @@
 		5238EAE1240BAD5D0079E99D /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				805485E4257F23E5004FDA23 /* Recipe */,
 				5238EAE5240BAE840079E99D /* Home */,
 			);
 			path = "User Interface";
@@ -160,6 +171,7 @@
 				8081CDBB256E86D4001EB31B /* Product.swift */,
 				80D7BB152570411100A81AA5 /* Store.swift */,
 				80FF30652578B7F800C5F162 /* Order.swift */,
+				805485E1257F238D004FDA23 /* Recipe.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,11 +202,20 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		805485E4257F23E5004FDA23 /* Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				805485E5257F23F5004FDA23 /* RecipeView.swift */,
+			);
+			path = Recipe;
+			sourceTree = "<group>";
+		};
 		8081CDB5256E7F4A001EB31B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				8081CDB6256E8145001EB31B /* ColorExtension.swift */,
 				80D7BB1225703F8200A81AA5 /* BundleExtension.swift */,
+				805485F2257F3B77004FDA23 /* AnyTransitionExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -211,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				80D15FD12578DB1000B3C477 /* Popup.swift */,
+				805485EF257F3AD7004FDA23 /* ShapeClipModifier.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -221,6 +243,7 @@
 				80D7BB1D257052ED00A81AA5 /* Preview.swift */,
 				80D15FC52578D4E700B3C477 /* Symbol.swift */,
 				80D15FC82578D73000B3C477 /* ResizedImage.swift */,
+				805485EC257F39A0004FDA23 /* Stripes.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -299,15 +322,20 @@
 			files = (
 				805485D3257DB518004FDA23 /* FavoriteProductScrollView.swift in Sources */,
 				80D15FC92578D73000B3C477 /* ResizedImage.swift in Sources */,
+				805485F0257F3AD7004FDA23 /* ShapeClipModifier.swift in Sources */,
 				8081CDB3256E48D7001EB31B /* ProductRow.swift in Sources */,
 				5238EACC240BAC920079E99D /* AppDelegate.swift in Sources */,
+				805485E6257F23F5004FDA23 /* RecipeView.swift in Sources */,
+				805485F3257F3B77004FDA23 /* AnyTransitionExtension.swift in Sources */,
 				80D7BB1E257052ED00A81AA5 /* Preview.swift in Sources */,
 				80D7BB2F2574CEC200A81AA5 /* FavoriteButton.swift in Sources */,
 				80D7BB2C2574C1F600A81AA5 /* QuantitySelector.swift in Sources */,
 				5238EACE240BAC920079E99D /* SceneDelegate.swift in Sources */,
 				80D7BB162570411100A81AA5 /* Store.swift in Sources */,
+				805485E2257F238D004FDA23 /* Recipe.swift in Sources */,
 				80D15FD22578DB1000B3C477 /* Popup.swift in Sources */,
 				80D7BB1325703F8200A81AA5 /* BundleExtension.swift in Sources */,
+				805485ED257F39A0004FDA23 /* Stripes.swift in Sources */,
 				5238EAD0240BAC920079E99D /* Home.swift in Sources */,
 				8081CDB7256E8145001EB31B /* ColorExtension.swift in Sources */,
 				805485CC257DA2B9004FDA23 /* OrderCompletedMessage.swift in Sources */,
