@@ -13,9 +13,11 @@ struct Order: Identifiable {
     
     let id: Int
     let product: Product
-    let quentity: Int
+    let quantity: Int
     
     var price: Int {
-        product.price * quentity
+        product.price * quantity
     }
 }
+
+extension Order: Codable {}

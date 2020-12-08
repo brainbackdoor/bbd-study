@@ -18,7 +18,7 @@ final class Store : ObservableObject {
     
     func placeOrder(product: Product, quantity: Int) {
         let nextID = Order.orderSequence.next()!
-        let order = Order(id: nextID, product: product, quentity: quantity)
+        let order = Order(id: nextID, product: product, quantity: quantity)
         orders.append(order)
     }
 }
