@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RacingCarTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-12-06T00:40:01" hostname="cuui-MacBookPro.local" time="0.052">
+  <properties/>
+  <testcase name="go(Integer, Integer)[1]" classname="RacingCarTest" time="0.041"/>
+  <testcase name="go(Integer, Integer)[2]" classname="RacingCarTest" time="0.001"/>
+  <testcase name="valid(int)[1]" classname="RacingCarTest" time="0.002"/>
+  <testcase name="valid(int)[2]" classname="RacingCarTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

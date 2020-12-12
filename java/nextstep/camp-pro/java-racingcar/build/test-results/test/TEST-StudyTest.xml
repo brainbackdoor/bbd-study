@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="StudyTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2020-12-06T00:40:02" hostname="cuui-MacBookPro.local" time="0.039">
+  <properties/>
+  <testcase name="remove(String, String)[1]" classname="StudyTest" time="0.003"/>
+  <testcase name="remove(String, String)[2]" classname="StudyTest" time="0.001"/>
+  <testcase name="remove(String, String)[3]" classname="StudyTest" time="0.001"/>
+  <testcase name="remove(String, String)[4]" classname="StudyTest" time="0.0"/>
+  <testcase name="select(String, Integer, char)[1]" classname="StudyTest" time="0.001"/>
+  <testcase name="select(String, Integer, char)[2]" classname="StudyTest" time="0.001"/>
+  <testcase name="select(String, Integer, char)[3]" classname="StudyTest" time="0.001"/>
+  <testcase name="split(String, String[])[1]" classname="StudyTest" time="0.006"/>
+  <testcase name="split(String, String[])[2]" classname="StudyTest" time="0.0"/>
+  <testcase name="split(String, String[])[3]" classname="StudyTest" time="0.001"/>
+  <testcase name="split(String, String[])[4]" classname="StudyTest" time="0.0"/>
+  <testcase name="indexOfBoundsException(String, Integer)[1]" classname="StudyTest" time="0.001"/>
+  <testcase name="indexOfBoundsException(String, Integer)[2]" classname="StudyTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="StringCalculatorTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2020-12-06T00:40:02" hostname="cuui-MacBookPro.local" time="0.045">
+  <properties/>
+  <testcase name="calculate()" classname="StringCalculatorTest" time="0.005"/>
+  <testcase name="plus(String, int)[1]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="plus(String, int)[2]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="plus(String, int)[3]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="plus(String, int)[4]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="minus(String, int)[1]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="minus(String, int)[2]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="minus(String, int)[3]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="minus(String, int)[4]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="round(String, int)[1]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="round(String, int)[2]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="round(String, int)[3]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="round(String, int)[4]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="space(String)[1]" classname="StringCalculatorTest" time="0.001"/>
+  <testcase name="space(String)[2]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="space(String)[3]" classname="StringCalculatorTest" time="0.002"/>
+  <testcase name="space(String)[4]" classname="StringCalculatorTest" time="0.0"/>
+  <testcase name="space(String)[5]" classname="StringCalculatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
