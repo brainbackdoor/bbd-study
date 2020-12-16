@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LottoGameTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-16T13:46:42" hostname="cuui-MacBookPro.local" time="0.804">
+  <properties/>
+  <testcase name="수익률을_계산한다(List, int, double)[1]" classname="LottoGameTest" time="0.049"/>
+  <testcase name="수익률을_계산한다(List, int, double)[2]" classname="LottoGameTest" time="0.001"/>
+  <testcase name="수익률을_계산한다(List, int, double)[3]" classname="LottoGameTest" time="0.001"/>
+  <testcase name="수익률을_계산한다(List, int, double)[4]" classname="LottoGameTest" time="0.001"/>
+  <testcase name="수익률을_계산한다(List, int, double)[5]" classname="LottoGameTest" time="0.001"/>
+  <testcase name="당첨번호를_비교해본다(int[], String, int, Score, int)[1]" classname="LottoGameTest" time="0.722"/>
+  <testcase name="당첨번호를_비교해본다(int[], String, int, Score, int)[2]" classname="LottoGameTest" time="0.003"/>
+  <testcase name="당첨번호를_비교해본다(int[], String, int, Score, int)[3]" classname="LottoGameTest" time="0.003"/>
+  <testcase name="당첨번호를_비교해본다(int[], String, int, Score, int)[4]" classname="LottoGameTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
