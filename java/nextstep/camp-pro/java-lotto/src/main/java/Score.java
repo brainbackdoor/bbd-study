@@ -1,4 +1,9 @@
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum Score {
     FIRST(6, false, 2000000000.0),
@@ -7,6 +12,10 @@ public enum Score {
     FOURTH(4, false, 50000.0),
     FIFTH(3, false, 5000.0);
 
+
+    private static final Map<Integer, Score> SCORE_MAP =
+        Collections.unmodifiableMap(Stream.of(values())
+            .collect(Collectors.toMap(Score::getMatch, Function.identity())));
 
     private final int match;
     private final boolean bonus;
@@ -19,25 +28,22 @@ public enum Score {
     }
 
     public static double calculate(Score score, int count) {
-        return find(score).winning * count;
+        return score.winning * count;
     }
 
     public static Score find(int match, boolean bonus) {
-        if (bonus && match == SECOND.match) {
+        if (match == SECOND.match && bonus) {
             return SECOND;
         }
-        return Arrays.stream(Score.values())
-            .filter(v -> v.match == match)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("당첨이 아닙니다."))
-            ;
+
+        if(SCORE_MAP.containsKey(match)) {
+            return SCORE_MAP.get(match);
+        }
+
+        throw new IllegalArgumentException("당첨이 아닙니다.");
     }
 
-    private static Score find(Score score) {
-        return Arrays.stream(Score.values())
-            .filter(v -> v.equals(score))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("당첨이 아닙니다."))
-            ;
+    private int getMatch() {
+        return match;
     }
 }
