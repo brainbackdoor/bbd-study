@@ -1,0 +1,1517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="camp.nextstep.archive.ConversationServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-12-17T02:30:42" hostname="cuui-MacBookPro.local" time="3.935">
+  <properties/>
+  <testcase name="동시에 여러번 아카이빙 기능을 사용하더라도 중복하여 저장되지 않는다()" classname="camp.nextstep.archive.ConversationServiceTest" time="2.759"/>
+  <testcase name="슬랙 히스토리 저장 테스트()" classname="camp.nextstep.archive.ConversationServiceTest" time="1.174"/>
+  <system-out><![CDATA[11:30:38,973 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+11:30:38,973 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+11:30:38,973 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/Users/cu/Workspaces/office/service/archive/build/resources/main/logback.xml]
+11:30:39,017 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+11:30:39,018 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+11:30:39,022 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+11:30:39,045 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+11:30:39,045 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+11:30:39,045 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+11:30:39,046 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+11:30:39,046 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+11:30:39,046 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+11:30:39,046 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@7a23d4f5 - Registering current configuration as safe fallback point
+
+11:30:39.097 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Neither @ContextConfiguration nor @ContextHierarchy found for test class [camp.nextstep.archive.ConversationServiceTest], using SpringBootContextLoader
+11:30:39.102 [INFO ] [Test worker] [o.s.t.c.s.AbstractContextLoader] - Could not detect default resource locations for test class [camp.nextstep.archive.ConversationServiceTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+11:30:39.103 [INFO ] [Test worker] [o.s.t.c.s.AnnotationConfigContextLoaderUtils] - Could not detect default configuration classes for test class [camp.nextstep.archive.ConversationServiceTest]: ConversationServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:30:39.191 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Found @SpringBootConfiguration camp.nextstep.Application for test class camp.nextstep.archive.ConversationServiceTest
+11:30:39.252 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+11:30:39.263 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@46de0796, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@33355156, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@6c6190f, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@3eb3443b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@86716cc, org.springframework.test.context.transaction.TransactionalTestExecutionListener@11c14977, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@27f92421, org.springframework.test.context.event.EventPublishingTestExecutionListener@3cf2e79, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@332e99ba, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@28bff459, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@46891543, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3ccf470d, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@7bebfa67]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.6.RELEASE)
+
+11:30:39.679 [INFO ] [Test worker] [c.n.archive.ConversationServiceTest] - Starting ConversationServiceTest on cuui-MacBookPro.local with PID 13413 (started by cu in /Users/cu/Workspaces/office/service/archive)
+11:30:39.679 [INFO ] [Test worker] [c.n.archive.ConversationServiceTest] - The following profiles are active: test
+11:30:40.104 [INFO ] [Test worker] [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+11:30:40.164 [INFO ] [Test worker] [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 55ms. Found 1 JPA repository interfaces.
+11:30:40.598 [INFO ] [Test worker] [o.h.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+11:30:40.648 [INFO ] [Test worker] [org.hibernate.Version] - HHH000412: Hibernate ORM core version 5.4.12.Final
+11:30:40.751 [INFO ] [Test worker] [o.h.annotations.common.Version] - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+11:30:40.844 [INFO ] [Test worker] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+11:30:40.981 [INFO ] [Test worker] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+11:30:40.994 [INFO ] [Test worker] [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table conversation if exists
+Hibernate: 
+    
+    drop table reply if exists
+Hibernate: 
+    
+    create table conversation (
+       id bigint generated by default as identity,
+        created_date timestamp not null,
+        updated_date timestamp not null,
+        conversation_time timestamp,
+        message clob,
+        user_id varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table reply (
+       id bigint generated by default as identity,
+        created_date timestamp not null,
+        updated_date timestamp not null,
+        message clob,
+        reply_time timestamp,
+        user_id varchar(255),
+        conversation_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table reply 
+       add constraint fk_reply_conversation 
+       foreign key (conversation_id) 
+       references conversation
+11:30:41.398 [INFO ] [Test worker] [o.h.e.t.j.p.i.JtaPlatformInitiator] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:30:41.403 [INFO ] [Test worker] [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+11:30:41.917 [WARN ] [Test worker] [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+11:30:42.109 [INFO ] [Test worker] [o.s.s.c.ThreadPoolTaskExecutor] - Initializing ExecutorService 'applicationTaskExecutor'
+11:30:42.375 [INFO ] [Test worker] [c.n.archive.ConversationServiceTest] - Started ConversationServiceTest in 3.087 seconds (JVM running for 4.098)
+11:30:42.413 [INFO ] [Test worker] [o.s.t.c.t.TransactionContext] - Began transaction (1) for test context [DefaultTestContext@6319df4e testClass = ConversationServiceTest, testInstance = camp.nextstep.archive.ConversationServiceTest@69d530a1, testMethod = 동시에 여러번 아카이빙 기능을 사용하더라도 중복하여 저장되지 않는다@ConversationServiceTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4928a5c2 testClass = ConversationServiceTest, locations = '{}', classes = '{class camp.nextstep.Application}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@11406824, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@595032d2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@273ed2b3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@270a1565], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@2f31443a]; rollback [true]
+Hibernate: 
+    select
+        conversati0_.id as id1_0_,
+        conversati0_.created_date as created_2_0_,
+        conversati0_.updated_date as updated_3_0_,
+        conversati0_.conversation_time as conversa4_0_,
+        conversati0_.message as message5_0_,
+        conversati0_.user_id as user_id6_0_ 
+    from
+        conversation conversati0_ 
+    order by
+        conversati0_.conversation_time asc
+Hibernate: 
+    insert 
+    into
+        conversation
+        (id, created_date, updated_date, conversation_time, message, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?)
+11:30:44.535 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.515780]
+11:30:44.538 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.515780]
+11:30:44.539 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [TIMESTAMP] - [2020-12-14T17:09:34.023]
+11:30:44.539 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [TypeScript 공부하기 좋은 책 추천해주세요!]
+11:30:44.541 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.550 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.549520]
+11:30:44.550 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.549520]
+11:30:44.551 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [1]
+11:30:44.551 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@UJ71KDD37> 준이 알려주세요]
+11:30:44.551 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T19:11:37.023]
+11:30:44.551 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.553 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.552941]
+11:30:44.553 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.552941]
+11:30:44.553 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [1]
+11:30:44.553 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USULAAW94>]
+11:30:44.554 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T20:54:38.024]
+11:30:44.554 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [UTF7JUWER]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.555 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.555106]
+11:30:44.555 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.555106]
+11:30:44.555 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [1]
+11:30:44.556 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [do it typescript...?]
+11:30:44.556 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T21:02:22.024]
+11:30:44.556 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.557 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.557111]
+11:30:44.557 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.557111]
+11:30:44.557 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [1]
+11:30:44.557 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [신뢰감이 느껴지는 프사...]
+11:30:44.558 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T21:02:39.024]
+11:30:44.558 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        conversation
+        (id, created_date, updated_date, conversation_time, message, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?)
+11:30:44.559 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.558950]
+11:30:44.559 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.558950]
+11:30:44.559 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [TIMESTAMP] - [2020-12-12T19:43:38.003]
+11:30:44.559 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [여러분들은 모니터 어떻게 쓰시나요? 모니터 알아보는 중인데 제품 추천 받습니다! :smile:]
+11:30:44.560 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.561 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.560693]
+11:30:44.561 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.560693]
+11:30:44.561 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.561 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://mitem.gmarket.co.kr/Item?goodsCode=838293343|http://mitem.gmarket.co.kr/Item?goodsCode=838293343>]
+11:30:44.562 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:45:09.003]
+11:30:44.562 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.563 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.563269]
+11:30:44.564 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.563269]
+11:30:44.564 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.564 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USS0JT5LL>]
+11:30:44.565 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:45:59.003]
+11:30:44.565 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.567 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.566285]
+11:30:44.567 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.566285]
+11:30:44.567 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.567 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [4k 사나요?]
+11:30:44.568 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:48:39.004]
+11:30:44.568 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.569 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.569259]
+11:30:44.570 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.569259]
+11:30:44.570 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.570 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [QHD 정도면 될 것 같아요 !]
+11:30:44.570 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:48:53.004]
+11:30:44.570 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.572 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.571565]
+11:30:44.572 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.571565]
+11:30:44.572 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.572 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [브랜드는 lg, 알파스캔, 델선호하는데
+모델은 모니터전문가가 추천해줄듯ㅎㅎ <@USULAAW94>]
+11:30:44.572 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:50:39.004]
+11:30:44.572 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.574 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.573602]
+11:30:44.574 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.573602]
+11:30:44.574 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.574 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [최근에 모니터 주문하신 <@USSEHDCP7>]
+11:30:44.574 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:51:05.004]
+11:30:44.574 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.575 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.575526]
+11:30:44.576 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.575526]
+11:30:44.576 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.576 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [5k사서 2배율로 보면 화질 엄청나다던데]
+11:30:44.576 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:51:41.005]
+11:30:44.576 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.577 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.577240]
+11:30:44.577 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.577240]
+11:30:44.578 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.578 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USS0JT5LL> 너가 쓰는게 4K 울트라파인인가?]
+11:30:44.578 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:01.005]
+11:30:44.578 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.579 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.579144]
+11:30:44.579 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.579144]
+11:30:44.579 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.579 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [무적권 4k..]
+11:30:44.580 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:12.006]
+11:30:44.580 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.581 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.581231]
+11:30:44.581 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.581231]
+11:30:44.581 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.581 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [응응]
+11:30:44.582 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:15.006]
+11:30:44.582 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.583 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.583013]
+11:30:44.583 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.583013]
+11:30:44.583 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.583 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [근데 4k하면 보여요? 32인치 정도 써야하나]
+11:30:44.584 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:39.006]
+11:30:44.584 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.585 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.585136]
+11:30:44.585 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.585136]
+11:30:44.585 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.586 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [4k 사서 qhd 해상도로 보면 돼]
+11:30:44.586 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:53:07.007]
+11:30:44.586 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.587 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.587275]
+11:30:44.588 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.587275]
+11:30:44.588 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.588 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그럼 QHD 사는거랑 다른거야 ?]
+11:30:44.588 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:53:19.007]
+11:30:44.588 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.590 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.589535]
+11:30:44.590 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.589535]
+11:30:44.590 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.590 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [엉엉 그 화면에서 보이는 크기는 똑같은데 qhd모니터는 어떤 네모를 10개 픽셀로 보여준다면 4k로 사면 똑같은 크기의 네모를 한 15개정도의 픽셀로 표현하는?]
+11:30:44.590 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:05.009]
+11:30:44.591 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.592 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.591925]
+11:30:44.592 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.591925]
+11:30:44.592 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.592 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그냥 더 선명하고 디테일하게 표현이 가능하다...정도?]
+11:30:44.592 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:29.010]
+11:30:44.592 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.594 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.593586]
+11:30:44.594 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.593586]
+11:30:44.594 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.594 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그냥 좋다는거군]
+11:30:44.594 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:36.010]
+11:30:44.594 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.595 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.595411]
+11:30:44.596 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.595411]
+11:30:44.596 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.596 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [어차피 돈 들일거 4k 5k로 가라?]
+11:30:44.596 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:41.010]
+11:30:44.596 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.597 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.597173]
+11:30:44.597 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.597173]
+11:30:44.597 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.597 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [24인치 2개 vs 32인치 1개는 어떻게 생각함]
+11:30:44.597 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:05.011]
+11:30:44.597 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.598 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.598550]
+11:30:44.599 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.598550]
+11:30:44.599 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.599 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [돈만 있다면...ㅋㅋㅋ]
+11:30:44.599 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:13.011]
+11:30:44.599 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.600 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.599975]
+11:30:44.600 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.599975]
+11:30:44.600 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.600 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [음 난 2개? ㅎㅅㅎ]
+11:30:44.600 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:26.011]
+11:30:44.600 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.601 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.601482]
+11:30:44.602 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.601482]
+11:30:44.602 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.602 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [굳 참고하겠습니다]
+11:30:44.602 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:43.012]
+11:30:44.602 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.603 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.603062]
+11:30:44.603 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.603062]
+11:30:44.603 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.603 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [나도 듀얼로살듯]
+11:30:44.603 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:56.012]
+11:30:44.603 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.605 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.604601]
+11:30:44.605 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.604601]
+11:30:44.605 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.605 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [브랜드는 다 상관없음? 홍빈이가 말한거 사면 되나]
+11:30:44.605 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:58.012]
+11:30:44.605 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.606 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.606412]
+11:30:44.607 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.606412]
+11:30:44.607 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.607 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [브랜드차이도큼 ㅋㅋ]
+11:30:44.607 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:57:07.012]
+11:30:44.607 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.608 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.608189]
+11:30:44.608 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.608189]
+11:30:44.608 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.608 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [엘지나 델쓰는게 좋을걸?]
+11:30:44.609 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:57:24.013]
+11:30:44.609 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.610 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.609892]
+11:30:44.610 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.609892]
+11:30:44.610 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.610 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [나도 바꿔도 델이라 엘지 살듯]
+11:30:44.610 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:57:51.013]
+11:30:44.610 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.612 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.611753]
+11:30:44.612 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.611753]
+11:30:44.612 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.612 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [ㅇㅋ 감사합니다 고수님들]
+11:30:44.612 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:58:02.013]
+11:30:44.612 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.613 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.613415]
+11:30:44.613 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.613415]
+11:30:44.614 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.614 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [나같은 경우에는 4k 27인치 하나 살때 델이랑 엘지 두고 고민했는데, 델이 엘지보다 보증기간 길어서 델로 골랐음 ! 모델마다 보증기간 어떨지 모르겠지만 보증기간도 고려해봐도 좋을듯 !]
+11:30:44.614 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:59:41.013]
+11:30:44.614 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSEHDCP7]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.615 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.614937]
+11:30:44.615 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.614937]
+11:30:44.615 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.615 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [스티치가 쓰는 울트라파인이 체감성능은 제일 좋을듯.. 맥 타겟으로 나와서 호환성도좋고]
+11:30:44.615 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:59:50.014]
+11:30:44.615 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.617 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.617037]
+11:30:44.617 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.617037]
+11:30:44.617 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.617 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그래? <@USS0JT5LL> 그럼 그거 나 주라]
+11:30:44.617 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:00:12.014]
+11:30:44.617 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.619 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.618695]
+11:30:44.619 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.618695]
+11:30:44.619 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.619 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [ㅋㅋㅋㅋ 내거 넘 쪼끄만해 엘지 울트라파인 27인치 5k인데...넘비싸...]
+11:30:44.619 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:00:40.015]
+11:30:44.619 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.621 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.620555]
+11:30:44.621 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.620555]
+11:30:44.621 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.621 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://prod.danawa.com/info/?pcode=9509199&amp;keyword=울트라파인&amp;cate=112757> 이게 나라냐]
+11:30:44.621 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:02:13.015]
+11:30:44.621 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.623 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.622500]
+11:30:44.623 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.622500]
+11:30:44.623 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.623 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://m.danawa.com/product/product.html?code=8417295&amp;relationMenuType=recommend&amp;cateCode=112757|http://m.danawa.com/product/product.html?code=8417295&amp;relationMenuType=recommend&amp;cateCode=112757>
+이정도가 4k 최대 타협선일듯]
+11:30:44.626 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:03:46.015]
+11:30:44.626 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.628 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.628055]
+11:30:44.628 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.628055]
+11:30:44.628 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.629 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [짱이다 저걸로 알아봐야겠군 다들 고맙스빈당]
+11:30:44.629 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:04:53.016]
+11:30:44.629 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.630 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.630325]
+11:30:44.630 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.630325]
+11:30:44.631 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.631 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<https://www.coupang.com/vp/products/1478286582?itemId=2539722450&amp;vendorItemId=70532343444&amp;q=dell+4k+%EC%9A%B8%ED%8A%B8%EB%9D%BC&amp;itemsCount=36&amp;searchId=18eefb14882d463b81ce1bd99d8f2d16&amp;rank=2&amp;isAddedCart=>
+이건 방금 광순이가 올려준거랑 고민하다 제가 산거에요!]
+11:30:44.631 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:05:52.016]
+11:30:44.631 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSEHDCP7]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.633 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.632555]
+11:30:44.633 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.632555]
+11:30:44.633 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.633 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [델것도좋은듯... 루터회관 느낌으로 ㅋㅋ]
+11:30:44.633 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:07:08.016]
+11:30:44.633 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.635 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.634486]
+11:30:44.635 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.634486]
+11:30:44.635 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.635 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [오 나도 동글이 산거 고민하고 있었눈데]
+11:30:44.635 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:30.017]
+11:30:44.635 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.637 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.636587]
+11:30:44.637 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.636587]
+11:30:44.637 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.637 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [물론 중고...]
+11:30:44.637 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:36.017]
+11:30:44.637 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.639 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.638519]
+11:30:44.639 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.638519]
+11:30:44.639 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.639 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [저게 루터꺼임 ?]
+11:30:44.639 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:42.017]
+11:30:44.639 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.640 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.640355]
+11:30:44.640 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.640355]
+11:30:44.641 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.641 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [루터보다 좋은거]
+11:30:44.641 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:55.018]
+11:30:44.641 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.642 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.642112]
+11:30:44.642 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.642112]
+11:30:44.642 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.642 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [루터는 아마 2718q]
+11:30:44.642 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:11:02.018]
+11:30:44.643 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.644 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.643829]
+11:30:44.644 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.643829]
+11:30:44.644 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.644 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://m.11st.co.kr/MW/Product/productBasicInfo.tmall?prdNo=3087555009&amp;XSITE=1001364056&amp;gclid=Cj0KCQiA8dH-BRD_ARIsAC24umanKD_w2yP8Obrg0TUGmlcYdHmxXC8zZz0R0kCcrF_LS2-izgk4_moaAjtCEALw_wcB|http://m.11st.co.kr/MW/Product/productBasicInfo.tmall?prdNo=3087555009&amp;XSITE=1001364056&amp;gclid=Cj0KCQiA8dH-BRD_ARIsAC24umanKD_w2yP8Obrg0TUGmlcYdHmxXC8zZz0R0kCcrF_LS2-izgk4_moaAjtCEALw_wcB>]
+11:30:44.647 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:40:39.018]
+11:30:44.647 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.649 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.648540]
+11:30:44.649 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.648540]
+11:30:44.649 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.649 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USU9U5YTH> 이건 왜 다른거보다 저렴한거임 ??]
+11:30:44.649 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:44:07.019]
+11:30:44.649 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.650 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.650401]
+11:30:44.650 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.650401]
+11:30:44.651 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.651 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USSE7HSC8> 이건 VA패널, 위에 껀 IPS패널. 색 재현도가 IPS가 더 좋음. 그래픽작업용이면 IPS가 맞는데 코딩용으로 굳이? 라는 생각이... 내것도 이거 한세대 전 모델 VA패널이야]
+11:30:44.651 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:48:08.021]
+11:30:44.651 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.652 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.652276]
+11:30:44.652 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.652276]
+11:30:44.652 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.653 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [세상에 모니터 하나 사는거 겁나 어렵네.. 암튼 감사요 ㅎㅎ]
+11:30:44.653 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:48:31.022]
+11:30:44.653 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:44.654 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:44.653956]
+11:30:44.654 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:44.653956]
+11:30:44.654 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [2]
+11:30:44.654 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [울트라파인 27인치 5k 중고로 구했슴다 결국 ! 다들 감사 ㅎㅎ]
+11:30:44.655 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-16T14:50:05.025]
+11:30:44.655 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    select
+        conversati0_.id as id1_0_,
+        conversati0_.created_date as created_2_0_,
+        conversati0_.updated_date as updated_3_0_,
+        conversati0_.conversation_time as conversa4_0_,
+        conversati0_.message as message5_0_,
+        conversati0_.user_id as user_id6_0_ 
+    from
+        conversation conversati0_ 
+    order by
+        conversati0_.conversation_time asc
+Hibernate: 
+    select
+        conversati0_.id as id1_0_,
+        conversati0_.created_date as created_2_0_,
+        conversati0_.updated_date as updated_3_0_,
+        conversati0_.conversation_time as conversa4_0_,
+        conversati0_.message as message5_0_,
+        conversati0_.user_id as user_id6_0_ 
+    from
+        conversation conversati0_ 
+    order by
+        conversati0_.conversation_time asc
+Hibernate: 
+    select
+        conversati0_.id as id1_0_,
+        conversati0_.created_date as created_2_0_,
+        conversati0_.updated_date as updated_3_0_,
+        conversati0_.conversation_time as conversa4_0_,
+        conversati0_.message as message5_0_,
+        conversati0_.user_id as user_id6_0_ 
+    from
+        conversation conversati0_ 
+    order by
+        conversati0_.conversation_time asc
+11:30:45.163 [INFO ] [Test worker] [o.s.t.c.t.TransactionContext] - Rolled back transaction for test: [DefaultTestContext@6319df4e testClass = ConversationServiceTest, testInstance = camp.nextstep.archive.ConversationServiceTest@69d530a1, testMethod = 동시에 여러번 아카이빙 기능을 사용하더라도 중복하여 저장되지 않는다@ConversationServiceTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4928a5c2 testClass = ConversationServiceTest, locations = '{}', classes = '{class camp.nextstep.Application}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@11406824, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@595032d2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@273ed2b3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@270a1565], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]
+11:30:45.166 [INFO ] [Test worker] [o.s.t.c.t.TransactionContext] - Began transaction (1) for test context [DefaultTestContext@6319df4e testClass = ConversationServiceTest, testInstance = camp.nextstep.archive.ConversationServiceTest@48edb3a0, testMethod = 슬랙 히스토리 저장 테스트@ConversationServiceTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4928a5c2 testClass = ConversationServiceTest, locations = '{}', classes = '{class camp.nextstep.Application}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@11406824, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@595032d2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@273ed2b3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@270a1565], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@2f31443a]; rollback [true]
+Hibernate: 
+    select
+        conversati0_.id as id1_0_,
+        conversati0_.created_date as created_2_0_,
+        conversati0_.updated_date as updated_3_0_,
+        conversati0_.conversation_time as conversa4_0_,
+        conversati0_.message as message5_0_,
+        conversati0_.user_id as user_id6_0_ 
+    from
+        conversation conversati0_ 
+    order by
+        conversati0_.conversation_time asc
+Hibernate: 
+    insert 
+    into
+        conversation
+        (id, created_date, updated_date, conversation_time, message, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?)
+11:30:46.269 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.268464]
+11:30:46.269 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.268464]
+11:30:46.269 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [TIMESTAMP] - [2020-12-14T17:09:34.023]
+11:30:46.269 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [TypeScript 공부하기 좋은 책 추천해주세요!]
+11:30:46.269 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.271 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.270674]
+11:30:46.271 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.270674]
+11:30:46.271 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [3]
+11:30:46.271 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@UJ71KDD37> 준이 알려주세요]
+11:30:46.271 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T19:11:37.023]
+11:30:46.271 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.272 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.272278]
+11:30:46.272 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.272278]
+11:30:46.272 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [3]
+11:30:46.272 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USULAAW94>]
+11:30:46.273 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T20:54:38.024]
+11:30:46.273 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [UTF7JUWER]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.274 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.273817]
+11:30:46.274 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.273817]
+11:30:46.274 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [3]
+11:30:46.274 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [do it typescript...?]
+11:30:46.274 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T21:02:22.024]
+11:30:46.274 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.275 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.275224]
+11:30:46.275 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.275224]
+11:30:46.275 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [3]
+11:30:46.275 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [신뢰감이 느껴지는 프사...]
+11:30:46.275 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-14T21:02:39.024]
+11:30:46.276 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        conversation
+        (id, created_date, updated_date, conversation_time, message, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?)
+11:30:46.277 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.276791]
+11:30:46.277 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.276791]
+11:30:46.277 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [TIMESTAMP] - [2020-12-12T19:43:38.003]
+11:30:46.277 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [여러분들은 모니터 어떻게 쓰시나요? 모니터 알아보는 중인데 제품 추천 받습니다! :smile:]
+11:30:46.277 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.278 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.278123]
+11:30:46.278 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.278123]
+11:30:46.278 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.278 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://mitem.gmarket.co.kr/Item?goodsCode=838293343|http://mitem.gmarket.co.kr/Item?goodsCode=838293343>]
+11:30:46.278 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:45:09.003]
+11:30:46.279 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.280 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.279829]
+11:30:46.280 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.279829]
+11:30:46.280 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.280 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USS0JT5LL>]
+11:30:46.280 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:45:59.003]
+11:30:46.280 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.281 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.281407]
+11:30:46.281 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.281407]
+11:30:46.282 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.282 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [4k 사나요?]
+11:30:46.282 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:48:39.004]
+11:30:46.282 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.283 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.283441]
+11:30:46.284 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.283441]
+11:30:46.284 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.284 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [QHD 정도면 될 것 같아요 !]
+11:30:46.284 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:48:53.004]
+11:30:46.284 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.285 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.285386]
+11:30:46.286 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.285386]
+11:30:46.286 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.286 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [브랜드는 lg, 알파스캔, 델선호하는데
+모델은 모니터전문가가 추천해줄듯ㅎㅎ <@USULAAW94>]
+11:30:46.286 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:50:39.004]
+11:30:46.286 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.287 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.287270]
+11:30:46.288 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.287270]
+11:30:46.288 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.288 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [최근에 모니터 주문하신 <@USSEHDCP7>]
+11:30:46.288 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:51:05.004]
+11:30:46.288 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USUL1HAA2]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.289 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.289250]
+11:30:46.289 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.289250]
+11:30:46.290 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.290 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [5k사서 2배율로 보면 화질 엄청나다던데]
+11:30:46.290 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:51:41.005]
+11:30:46.290 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.291 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.291352]
+11:30:46.291 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.291352]
+11:30:46.292 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.292 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USS0JT5LL> 너가 쓰는게 4K 울트라파인인가?]
+11:30:46.292 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:01.005]
+11:30:46.292 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.293 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.292940]
+11:30:46.293 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.292940]
+11:30:46.293 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.293 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [무적권 4k..]
+11:30:46.293 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:12.006]
+11:30:46.293 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.294 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.294183]
+11:30:46.294 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.294183]
+11:30:46.294 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.294 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [응응]
+11:30:46.294 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:15.006]
+11:30:46.294 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.295 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.295288]
+11:30:46.295 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.295288]
+11:30:46.295 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.295 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [근데 4k하면 보여요? 32인치 정도 써야하나]
+11:30:46.295 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:52:39.006]
+11:30:46.295 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.296 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.296540]
+11:30:46.296 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.296540]
+11:30:46.296 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.297 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [4k 사서 qhd 해상도로 보면 돼]
+11:30:46.297 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:53:07.007]
+11:30:46.297 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.297741]
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.297741]
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그럼 QHD 사는거랑 다른거야 ?]
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:53:19.007]
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.298 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.298714]
+11:30:46.299 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.298714]
+11:30:46.299 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.299 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [엉엉 그 화면에서 보이는 크기는 똑같은데 qhd모니터는 어떤 네모를 10개 픽셀로 보여준다면 4k로 사면 똑같은 크기의 네모를 한 15개정도의 픽셀로 표현하는?]
+11:30:46.299 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:05.009]
+11:30:46.299 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.300 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.299934]
+11:30:46.300 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.299934]
+11:30:46.300 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.300 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그냥 더 선명하고 디테일하게 표현이 가능하다...정도?]
+11:30:46.300 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:29.010]
+11:30:46.300 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.301 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.301076]
+11:30:46.301 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.301076]
+11:30:46.301 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.301 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그냥 좋다는거군]
+11:30:46.301 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:36.010]
+11:30:46.301 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.302 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.302331]
+11:30:46.302 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.302331]
+11:30:46.302 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.302 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [어차피 돈 들일거 4k 5k로 가라?]
+11:30:46.302 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:55:41.010]
+11:30:46.302 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.303 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.303569]
+11:30:46.303 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.303569]
+11:30:46.304 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.304 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [24인치 2개 vs 32인치 1개는 어떻게 생각함]
+11:30:46.304 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:05.011]
+11:30:46.304 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.304 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.304673]
+11:30:46.305 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.304673]
+11:30:46.305 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.305 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [돈만 있다면...ㅋㅋㅋ]
+11:30:46.305 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:13.011]
+11:30:46.305 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.306 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.305661]
+11:30:46.306 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.305661]
+11:30:46.306 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.306 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [음 난 2개? ㅎㅅㅎ]
+11:30:46.306 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:26.011]
+11:30:46.306 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.307 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.306909]
+11:30:46.307 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.306909]
+11:30:46.307 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.307 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [굳 참고하겠습니다]
+11:30:46.307 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:43.012]
+11:30:46.307 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.308 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.308051]
+11:30:46.308 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.308051]
+11:30:46.308 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.308 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [나도 듀얼로살듯]
+11:30:46.308 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:56.012]
+11:30:46.308 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.309 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.309136]
+11:30:46.309 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.309136]
+11:30:46.309 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.309 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [브랜드는 다 상관없음? 홍빈이가 말한거 사면 되나]
+11:30:46.309 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:56:58.012]
+11:30:46.309 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.310 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.310115]
+11:30:46.310 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.310115]
+11:30:46.310 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.310 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [브랜드차이도큼 ㅋㅋ]
+11:30:46.310 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:57:07.012]
+11:30:46.310 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.311 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.311200]
+11:30:46.311 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.311200]
+11:30:46.311 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.311 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [엘지나 델쓰는게 좋을걸?]
+11:30:46.311 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:57:24.013]
+11:30:46.311 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.312 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.312397]
+11:30:46.312 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.312397]
+11:30:46.312 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.312 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [나도 바꿔도 델이라 엘지 살듯]
+11:30:46.312 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:57:51.013]
+11:30:46.312 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.313 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.313402]
+11:30:46.313 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.313402]
+11:30:46.313 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.313 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [ㅇㅋ 감사합니다 고수님들]
+11:30:46.313 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:58:02.013]
+11:30:46.314 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.315 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.314618]
+11:30:46.315 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.314618]
+11:30:46.315 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.315 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [나같은 경우에는 4k 27인치 하나 살때 델이랑 엘지 두고 고민했는데, 델이 엘지보다 보증기간 길어서 델로 골랐음 ! 모델마다 보증기간 어떨지 모르겠지만 보증기간도 고려해봐도 좋을듯 !]
+11:30:46.315 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:59:41.013]
+11:30:46.315 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSEHDCP7]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.316 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.316276]
+11:30:46.316 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.316276]
+11:30:46.316 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.316 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [스티치가 쓰는 울트라파인이 체감성능은 제일 좋을듯.. 맥 타겟으로 나와서 호환성도좋고]
+11:30:46.316 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T19:59:50.014]
+11:30:46.316 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.317 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.317399]
+11:30:46.317 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.317399]
+11:30:46.317 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.317 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [그래? <@USS0JT5LL> 그럼 그거 나 주라]
+11:30:46.317 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:00:12.014]
+11:30:46.317 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.318 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.318473]
+11:30:46.318 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.318473]
+11:30:46.318 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.318 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [ㅋㅋㅋㅋ 내거 넘 쪼끄만해 엘지 울트라파인 27인치 5k인데...넘비싸...]
+11:30:46.319 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:00:40.015]
+11:30:46.319 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.319 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.319580]
+11:30:46.319 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.319580]
+11:30:46.319 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.319 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://prod.danawa.com/info/?pcode=9509199&amp;keyword=울트라파인&amp;cate=112757> 이게 나라냐]
+11:30:46.320 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:02:13.015]
+11:30:46.320 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.320 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.320571]
+11:30:46.320 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.320571]
+11:30:46.320 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.321 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://m.danawa.com/product/product.html?code=8417295&amp;relationMenuType=recommend&amp;cateCode=112757|http://m.danawa.com/product/product.html?code=8417295&amp;relationMenuType=recommend&amp;cateCode=112757>
+이정도가 4k 최대 타협선일듯]
+11:30:46.321 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:03:46.015]
+11:30:46.321 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.321 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.321711]
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.321711]
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [짱이다 저걸로 알아봐야겠군 다들 고맙스빈당]
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:04:53.016]
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.322667]
+11:30:46.322 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.322667]
+11:30:46.323 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.323 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<https://www.coupang.com/vp/products/1478286582?itemId=2539722450&amp;vendorItemId=70532343444&amp;q=dell+4k+%EC%9A%B8%ED%8A%B8%EB%9D%BC&amp;itemsCount=36&amp;searchId=18eefb14882d463b81ce1bd99d8f2d16&amp;rank=2&amp;isAddedCart=>
+이건 방금 광순이가 올려준거랑 고민하다 제가 산거에요!]
+11:30:46.323 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:05:52.016]
+11:30:46.323 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSEHDCP7]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.323755]
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.323755]
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [델것도좋은듯... 루터회관 느낌으로 ㅋㅋ]
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:07:08.016]
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USULAAW94]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.324 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.324713]
+11:30:46.325 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.324713]
+11:30:46.325 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.325 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [오 나도 동글이 산거 고민하고 있었눈데]
+11:30:46.325 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:30.017]
+11:30:46.325 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.326 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.325657]
+11:30:46.326 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.325657]
+11:30:46.326 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.326 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [물론 중고...]
+11:30:46.326 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:36.017]
+11:30:46.326 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.327 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.326819]
+11:30:46.327 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.326819]
+11:30:46.327 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.327 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [저게 루터꺼임 ?]
+11:30:46.327 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:42.017]
+11:30:46.327 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.328 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.327882]
+11:30:46.328 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.327882]
+11:30:46.328 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.328 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [루터보다 좋은거]
+11:30:46.328 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:10:55.018]
+11:30:46.328 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.329 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.328833]
+11:30:46.329 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.328833]
+11:30:46.329 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.329 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [루터는 아마 2718q]
+11:30:46.329 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:11:02.018]
+11:30:46.329 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USS0JT5LL]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.330 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.329818]
+11:30:46.330 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.329818]
+11:30:46.330 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.330 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<http://m.11st.co.kr/MW/Product/productBasicInfo.tmall?prdNo=3087555009&amp;XSITE=1001364056&amp;gclid=Cj0KCQiA8dH-BRD_ARIsAC24umanKD_w2yP8Obrg0TUGmlcYdHmxXC8zZz0R0kCcrF_LS2-izgk4_moaAjtCEALw_wcB|http://m.11st.co.kr/MW/Product/productBasicInfo.tmall?prdNo=3087555009&amp;XSITE=1001364056&amp;gclid=Cj0KCQiA8dH-BRD_ARIsAC24umanKD_w2yP8Obrg0TUGmlcYdHmxXC8zZz0R0kCcrF_LS2-izgk4_moaAjtCEALw_wcB>]
+11:30:46.330 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:40:39.018]
+11:30:46.330 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.331 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.330962]
+11:30:46.331 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.330962]
+11:30:46.331 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.331 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USU9U5YTH> 이건 왜 다른거보다 저렴한거임 ??]
+11:30:46.331 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:44:07.019]
+11:30:46.331 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.332 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.332200]
+11:30:46.332 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.332200]
+11:30:46.332 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.332 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [<@USSE7HSC8> 이건 VA패널, 위에 껀 IPS패널. 색 재현도가 IPS가 더 좋음. 그래픽작업용이면 IPS가 맞는데 코딩용으로 굳이? 라는 생각이... 내것도 이거 한세대 전 모델 VA패널이야]
+11:30:46.332 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:48:08.021]
+11:30:46.332 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USU9U5YTH]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.333 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.333250]
+11:30:46.333 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.333250]
+11:30:46.333 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.333 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [세상에 모니터 하나 사는거 겁나 어렵네.. 암튼 감사요 ㅎㅎ]
+11:30:46.333 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-12T20:48:31.022]
+11:30:46.333 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    insert 
+    into
+        reply
+        (id, created_date, updated_date, conversation_id, message, reply_time, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+11:30:46.334 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [1] as [TIMESTAMP] - [2020-12-17T11:30:46.334286]
+11:30:46.334 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [2] as [TIMESTAMP] - [2020-12-17T11:30:46.334286]
+11:30:46.334 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [3] as [BIGINT] - [4]
+11:30:46.334 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [4] as [CLOB] - [울트라파인 27인치 5k 중고로 구했슴다 결국 ! 다들 감사 ㅎㅎ]
+11:30:46.334 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [5] as [TIMESTAMP] - [2020-12-16T14:50:05.025]
+11:30:46.334 [TRACE] [Test worker] [o.h.type.descriptor.sql.BasicBinder] - binding parameter [6] as [VARCHAR] - [USSE7HSC8]
+Hibernate: 
+    select
+        conversati0_.id as id1_0_,
+        conversati0_.created_date as created_2_0_,
+        conversati0_.updated_date as updated_3_0_,
+        conversati0_.conversation_time as conversa4_0_,
+        conversati0_.message as message5_0_,
+        conversati0_.user_id as user_id6_0_ 
+    from
+        conversation conversati0_ 
+    order by
+        conversati0_.conversation_time asc
+11:30:46.339 [INFO ] [Test worker] [o.s.t.c.t.TransactionContext] - Rolled back transaction for test: [DefaultTestContext@6319df4e testClass = ConversationServiceTest, testInstance = camp.nextstep.archive.ConversationServiceTest@48edb3a0, testMethod = 슬랙 히스토리 저장 테스트@ConversationServiceTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4928a5c2 testClass = ConversationServiceTest, locations = '{}', classes = '{class camp.nextstep.Application}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@11406824, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@595032d2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@273ed2b3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@270a1565], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
