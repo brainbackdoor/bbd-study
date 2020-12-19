@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="camp.nextstep.archive.ConversationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-12-17T02:30:38" hostname="cuui-MacBookPro.local" time="0.037">
-  <properties/>
-  <testcase name="대화 객체를 생성한다()" classname="camp.nextstep.archive.ConversationTest" time="0.034"/>
-  <testcase name="대화에 응답을 추가한다()" classname="camp.nextstep.archive.ConversationTest" time="0.003"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

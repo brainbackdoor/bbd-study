@@ -1,118 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="camp.nextstep.slack.SlackRepositoryTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-17T02:30:47" hostname="cuui-MacBookPro.local" time="4.054">
+<testsuite name="camp.nextstep.slack.SlackRepositoryTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-12-19T13:33:17" hostname="cuui-MacBookPro.local" time="1.107">
   <properties/>
-  <testcase name="Slack Timestamp to LocalDateTime()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.002"/>
-  <testcase name="Slack 특정 채널의 히스토리(Thread 포함)를 조회한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="1.365"/>
-  <testcase name="Slack 특정 채널의 특정 시간대 Thread를 조회한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.509"/>
-  <testcase name="특정 시점 이후의 Slack 특정 채널의 히스토리를 조회한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.514"/>
-  <testcase name="URL QueryParam을 매핑한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.002"/>
-  <testcase name="Slack User 리스트를 조회한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.831"/>
-  <testcase name="Slack 특정 채널의 히스토리를 조회한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.825"/>
-  <testcase name="LocalDateTime to Slack Timestamp()" classname="camp.nextstep.slack.SlackRepositoryTest" time="0.001"/>
-  <system-out><![CDATA[11:30:46.369 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Neither @ContextConfiguration nor @ContextHierarchy found for test class [camp.nextstep.slack.SlackRepositoryTest], using SpringBootContextLoader
-11:30:46.370 [INFO ] [Test worker] [o.s.t.c.s.AbstractContextLoader] - Could not detect default resource locations for test class [camp.nextstep.slack.SlackRepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-11:30:46.370 [INFO ] [Test worker] [o.s.t.c.s.AnnotationConfigContextLoaderUtils] - Could not detect default configuration classes for test class [camp.nextstep.slack.SlackRepositoryTest]: SlackRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-11:30:46.376 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Found @SpringBootConfiguration camp.nextstep.Application for test class camp.nextstep.slack.SlackRepositoryTest
-11:30:46.377 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-11:30:46.378 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@376bbc47, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@18d27957, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@7df2871, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@11305774, org.springframework.test.context.support.DirtiesContextTestExecutionListener@7bd35891, org.springframework.test.context.transaction.TransactionalTestExecutionListener@70408e7d, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@e22aca4, org.springframework.test.context.event.EventPublishingTestExecutionListener@1d3ad1e3, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@7ccc0505, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@80b5f87, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@135785ae, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@58a9ebee, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@445139d3]
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v2.2.6.RELEASE)
-
-11:30:46.394 [INFO ] [Test worker] [c.nextstep.slack.SlackRepositoryTest] - Starting SlackRepositoryTest on cuui-MacBookPro.local with PID 13413 (started by cu in /Users/cu/Workspaces/office/service/archive)
-11:30:46.394 [INFO ] [Test worker] [c.nextstep.slack.SlackRepositoryTest] - The following profiles are active: test
-11:30:46.564 [INFO ] [Test worker] [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-11:30:46.577 [INFO ] [Test worker] [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 12ms. Found 1 JPA repository interfaces.
-11:30:46.780 [INFO ] [Test worker] [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 0 (http)
-11:30:46.786 [INFO ] [Test worker] [o.a.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-auto-1"]
-11:30:46.787 [INFO ] [Test worker] [o.a.catalina.core.StandardService] - Starting service [Tomcat]
-11:30:46.787 [INFO ] [Test worker] [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.33]
-11:30:46.880 [INFO ] [Test worker] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
-11:30:46.880 [INFO ] [Test worker] [o.s.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 484 ms
-11:30:46.953 [INFO ] [Test worker] [n.r.s.b.l.a.LogbackAccessContext] - Configured the Logback-access: context=[default], config=[classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml]
-11:30:47.000 [INFO ] [Test worker] [o.h.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
-11:30:47.004 [INFO ] [Test worker] [com.zaxxer.hikari.HikariDataSource] - HikariPool-2 - Starting...
-11:30:47.004 [INFO ] [Test worker] [com.zaxxer.hikari.HikariDataSource] - HikariPool-2 - Start completed.
-11:30:47.004 [INFO ] [Test worker] [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-Hibernate: 
-    
-    drop table conversation if exists
-11:30:47.039 [WARN ] [Test worker] [o.h.t.s.i.ExceptionHandlerLoggedImpl] - GenerationTarget encountered exception accepting command : Error executing DDL "
-    drop table conversation if exists" via JDBC Statement
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    drop table conversation if exists" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlString(SchemaDropperImpl.java:375)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlStrings(SchemaDropperImpl.java:359)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:241)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:154)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:126)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:112)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:145)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:314)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1237)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1855)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1792)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:595)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1108)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:868)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:126)
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
-	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:123)
-	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:118)
-	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
-	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:43)
-	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:98)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassTestDescriptor.java:352)
-	at org.junit.jupiter.engine.descriptor.JupiterTestDescriptor.executeAndMaskThrowable(JupiterTestDescriptor.java:204)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassTestDescriptor.java:352)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
-	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1624)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
-	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
-	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
-	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.invokeTestInstancePostProcessors(ClassTestDescriptor.java:351)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.instantiateAndPostProcessTestInstance(ClassTestDescriptor.java:270)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstancesProvider$2(ClassTestDescriptor.java:259)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstancesProvider$3(ClassTestDescriptor.java:263)
-	at java.base/java.util.Optional.orElseGet(Optional.java:362)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstancesProvider$4(ClassTestDescriptor.java:262)
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:98)
+  <testcase name="Slack 특정 채널의 히스토리(Thread 포함)를 조회한다()" classname="camp.nextstep.slack.SlackRepositoryTest" time="1.107">
+    <failure message="org.opentest4j.AssertionFailedError: &#10;Expecting:&#10; &lt;false&gt;&#10;to be equal to:&#10; &lt;true&gt;&#10;but was not." type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: 
+Expecting:
+ &lt;false&gt;
+to be equal to:
+ &lt;true&gt;
+but was not.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at camp.nextstep.slack.SlackRepositoryTest.Slack 특정 채널의 히스토리(Thread 포함)를 조회한다(SlackRepositoryTest.kt:77)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:628)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:117)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:184)
 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:97)
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:68)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:107)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:180)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:127)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:135)
 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:107)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:75)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1510)
 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
@@ -170,22 +89,57 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "CONVERSATION" because "FK_REPLY_CONVERSATION" depends on it; SQL statement:
+</failure>
+  </testcase>
+  <system-out><![CDATA[22:33:13,207 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+22:33:13,208 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+22:33:13,208 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/Users/cu/Workspaces/office/service/archive/build/resources/main/logback.xml]
+22:33:13,251 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+22:33:13,251 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+22:33:13,256 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+22:33:13,274 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+22:33:13,274 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+22:33:13,274 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+22:33:13,274 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+22:33:13,274 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+22:33:13,274 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+22:33:13,275 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@394d8d6e - Registering current configuration as safe fallback point
 
-    drop table conversation if exists [90107-200]
-	at org.h2.message.DbException.getJdbcSQLException(DbException.java:576)
-	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
-	at org.h2.message.DbException.get(DbException.java:205)
-	at org.h2.command.ddl.DropTable.prepareDrop(DropTable.java:98)
-	at org.h2.command.ddl.DropTable.update(DropTable.java:124)
-	at org.h2.command.CommandContainer.update(CommandContainer.java:198)
-	at org.h2.command.Command.executeUpdate(Command.java:251)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:228)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 123 common frames omitted
+22:33:13.327 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Neither @ContextConfiguration nor @ContextHierarchy found for test class [camp.nextstep.slack.SlackRepositoryTest], using SpringBootContextLoader
+22:33:13.335 [INFO ] [Test worker] [o.s.t.c.s.AbstractContextLoader] - Could not detect default resource locations for test class [camp.nextstep.slack.SlackRepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+22:33:13.336 [INFO ] [Test worker] [o.s.t.c.s.AnnotationConfigContextLoaderUtils] - Could not detect default configuration classes for test class [camp.nextstep.slack.SlackRepositoryTest]: SlackRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:33:13.444 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Found @SpringBootConfiguration camp.nextstep.Application for test class camp.nextstep.slack.SlackRepositoryTest
+22:33:13.505 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+22:33:13.518 [INFO ] [Test worker] [o.s.b.t.c.SpringBootTestContextBootstrapper] - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@467dab2c, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2d7c1969, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@732c3b78, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@29382b27, org.springframework.test.context.support.DirtiesContextTestExecutionListener@237d1e7, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4fcd2799, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5da832e3, org.springframework.test.context.event.EventPublishingTestExecutionListener@35a14b62, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@9251cd8, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@2f72038a, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@335103ad, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@c94b4fe, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@2d76ba68]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.6.RELEASE)
+
+22:33:13.785 [INFO ] [Test worker] [c.nextstep.slack.SlackRepositoryTest] - Starting SlackRepositoryTest on cuui-MacBookPro.local with PID 39552 (started by cu in /Users/cu/Workspaces/office/service/archive)
+22:33:13.785 [INFO ] [Test worker] [c.nextstep.slack.SlackRepositoryTest] - The following profiles are active: test
+22:33:14.287 [INFO ] [Test worker] [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:33:14.337 [INFO ] [Test worker] [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 44ms. Found 1 JPA repository interfaces.
+22:33:14.921 [INFO ] [Test worker] [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 0 (http)
+22:33:14.934 [INFO ] [Test worker] [o.a.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-auto-1"]
+22:33:14.934 [INFO ] [Test worker] [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+22:33:14.935 [INFO ] [Test worker] [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.33]
+22:33:15.035 [INFO ] [Test worker] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+22:33:15.035 [INFO ] [Test worker] [o.s.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 1230 ms
+22:33:15.139 [INFO ] [Test worker] [n.r.s.b.l.a.LogbackAccessContext] - Configured the Logback-access: context=[default], config=[classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml]
+22:33:15.272 [INFO ] [Test worker] [o.h.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+22:33:15.348 [INFO ] [Test worker] [org.hibernate.Version] - HHH000412: Hibernate ORM core version 5.4.12.Final
+22:33:15.486 [INFO ] [Test worker] [o.h.annotations.common.Version] - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+22:33:15.576 [INFO ] [Test worker] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+22:33:15.721 [INFO ] [Test worker] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+22:33:15.742 [INFO ] [Test worker] [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table conversation if exists
 Hibernate: 
     
     drop table reply if exists
@@ -200,174 +154,6 @@ Hibernate:
         user_id varchar(255),
         primary key (id)
     )
-11:30:47.045 [WARN ] [Test worker] [o.h.t.s.i.ExceptionHandlerLoggedImpl] - GenerationTarget encountered exception accepting command : Error executing DDL "
-    create table conversation (
-       id bigint generated by default as identity,
-        created_date timestamp not null,
-        updated_date timestamp not null,
-        conversation_time timestamp,
-        message clob,
-        user_id varchar(255),
-        primary key (id)
-    )" via JDBC Statement
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    create table conversation (
-       id bigint generated by default as identity,
-        created_date timestamp not null,
-        updated_date timestamp not null,
-        conversation_time timestamp,
-        message clob,
-        user_id varchar(255),
-        primary key (id)
-    )" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439)
-	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423)
-	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314)
-	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166)
-	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135)
-	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:156)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:314)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1237)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1855)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1792)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:595)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1108)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:868)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:126)
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
-	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:123)
-	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:118)
-	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
-	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:43)
-	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:98)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassTestDescriptor.java:352)
-	at org.junit.jupiter.engine.descriptor.JupiterTestDescriptor.executeAndMaskThrowable(JupiterTestDescriptor.java:204)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassTestDescriptor.java:352)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
-	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1624)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
-	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
-	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
-	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.invokeTestInstancePostProcessors(ClassTestDescriptor.java:351)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.instantiateAndPostProcessTestInstance(ClassTestDescriptor.java:270)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstancesProvider$2(ClassTestDescriptor.java:259)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstancesProvider$3(ClassTestDescriptor.java:263)
-	at java.base/java.util.Optional.orElseGet(Optional.java:362)
-	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstancesProvider$4(ClassTestDescriptor.java:262)
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:98)
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:97)
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:68)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:107)
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:107)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:75)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1510)
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1510)
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
-	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
-	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:220)
-	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:188)
-	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:202)
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:181)
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128)
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:99)
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:79)
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:75)
-	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
-	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
-	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
-	at com.sun.proxy.$Proxy2.stop(Unknown Source)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.stop(TestWorker.java:132)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
-	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:182)
-	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:164)
-	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:412)
-	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
-	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:48)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
-	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
-	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CONVERSATION" already exists; SQL statement:
-
-    create table conversation (
-       id bigint generated by default as identity,
-        created_date timestamp not null,
-        updated_date timestamp not null,
-        conversation_time timestamp,
-        message clob,
-        user_id varchar(255),
-        primary key (id)
-    ) [42101-200]
-	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
-	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
-	at org.h2.message.DbException.get(DbException.java:205)
-	at org.h2.message.DbException.get(DbException.java:181)
-	at org.h2.command.ddl.CreateTable.update(CreateTable.java:89)
-	at org.h2.command.CommandContainer.update(CommandContainer.java:198)
-	at org.h2.command.Command.executeUpdate(Command.java:251)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:228)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 123 common frames omitted
 Hibernate: 
     
     create table reply (
@@ -386,13 +172,13 @@ Hibernate:
        add constraint fk_reply_conversation 
        foreign key (conversation_id) 
        references conversation
-11:30:47.049 [INFO ] [Test worker] [o.h.e.t.j.p.i.JtaPlatformInitiator] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-11:30:47.049 [INFO ] [Test worker] [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
-11:30:47.144 [WARN ] [Test worker] [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-11:30:47.198 [INFO ] [Test worker] [o.s.s.c.ThreadPoolTaskExecutor] - Initializing ExecutorService 'applicationTaskExecutor'
-11:30:47.312 [INFO ] [Test worker] [o.a.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-auto-1"]
-11:30:47.324 [INFO ] [Test worker] [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port(s): 60974 (http) with context path ''
-11:30:47.324 [INFO ] [Test worker] [c.nextstep.slack.SlackRepositoryTest] - Started SlackRepositoryTest in 0.945 seconds (JVM running for 9.047)
+22:33:16.228 [INFO ] [Test worker] [o.h.e.t.j.p.i.JtaPlatformInitiator] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+22:33:16.234 [INFO ] [Test worker] [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:33:16.652 [WARN ] [Test worker] [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+22:33:16.832 [INFO ] [Test worker] [o.s.s.c.ThreadPoolTaskExecutor] - Initializing ExecutorService 'applicationTaskExecutor'
+22:33:17.088 [INFO ] [Test worker] [o.a.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-auto-1"]
+22:33:17.103 [INFO ] [Test worker] [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port(s): 55931 (http) with context path ''
+22:33:17.105 [INFO ] [Test worker] [c.nextstep.slack.SlackRepositoryTest] - Started SlackRepositoryTest in 3.562 seconds (JVM running for 4.574)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
