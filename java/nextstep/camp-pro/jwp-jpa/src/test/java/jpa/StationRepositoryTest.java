@@ -20,6 +20,9 @@ class StationRepositoryTest {
     @Autowired
     private LineStationRepository lineStations;
 
+    @Autowired
+    private MemberRepository members;
+
     @Test
     void 역을_추가한다() {
         Station expected = new Station("잠실역");
@@ -58,6 +61,21 @@ class StationRepositoryTest {
         assertThat(lines).contains(line);
     }
 
+    @Test
+    void 사용자는_여러_즐겨찾기를_가질_수_있다() {
+        Member member = new Member("brainbackdoor@gmail.com");
+
+        즐겨찾기를_추가한다(member, "강남역", "잠실역");
+        즐겨찾기를_추가한다(member, "역삼역", "잠실역");
+
+        assertThat(member.findFavorites()).hasSizeGreaterThan(0);
+    }
+
+    private Member 즐겨찾기를_추가한다(Member member, String upLine, String downLine) {
+        member.addFavorite(new Favorite(역을_생성한다(upLine), 역을_생성한다(downLine)));
+        return members.save(member);
+    }
+
     private LineStation 노선에_역을_등록한다(Line line, Station station) {
         LineStation lineStation = new LineStation(line, station);
 
@@ -65,7 +83,10 @@ class StationRepositoryTest {
     }
 
     private Station 역을_생성한다(String name) {
-        return stations.save(new Station(name));
+        Station station = stations.findByName(name);
+        return (station == null)
+            ? stations.save(new Station(name))
+            : station;
     }
 
     private Line 노선을_생성한다(String name) {

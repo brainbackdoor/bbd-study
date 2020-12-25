@@ -6,17 +6,17 @@ jpa/Application.java
  jpa.Application
 jpa/LineStationRepository.java
  jpa.LineStationRepository
+jpa/Station.java
+ jpa.Station
 jpa/Member.java
  jpa.Member
-jpa/Favorite.java
- jpa.Favorite
 jpa/Line.java
  jpa.Line
 jpa/LineRepository.java
  jpa.LineRepository
 jpa/LineStation.java
  jpa.LineStation
-jpa/Station.java
- jpa.Station
+jpa/Favorite.java
+ jpa.Favorite
 jpa/StationRepository.java
  jpa.StationRepository
