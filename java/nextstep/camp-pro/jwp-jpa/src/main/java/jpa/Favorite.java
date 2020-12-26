@@ -1,36 +1,21 @@
 package jpa;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
 
 @Entity
-public class Favorite {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Favorite extends BaseEntity {
+    private Long memberId;
 
-    private LocalDateTime createDate;
-    private LocalDateTime modifiedDate;
+    private Long upLineId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @OneToOne
-    private Station upLine;
-
-    @OneToOne
-    private Station downLine;
+    private Long downLineId;
 
     public Favorite() {
     }
 
-    public Favorite(Station upLine, Station downLine) {
-        this.upLine = upLine;
-        this.downLine = downLine;
-    }
-
-    public void addMember(Member member) {
-        this.member = member;
+    public Favorite(Long memberId, Long upLineId, Long downLineId) {
+        this.memberId = memberId;
+        this.upLineId = upLineId;
+        this.downLineId = downLineId;
     }
 }

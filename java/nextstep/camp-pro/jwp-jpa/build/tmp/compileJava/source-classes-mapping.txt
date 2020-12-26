@@ -1,22 +1,24 @@
 jpa/MemberRepository.java
  jpa.MemberRepository
-jpa/FavoriteRepository.java
- jpa.FavoriteRepository
-jpa/Application.java
- jpa.Application
 jpa/LineStationRepository.java
  jpa.LineStationRepository
-jpa/Station.java
- jpa.Station
-jpa/Member.java
- jpa.Member
+jpa/BaseEntity.java
+ jpa.BaseEntity
 jpa/Line.java
  jpa.Line
-jpa/LineRepository.java
- jpa.LineRepository
-jpa/LineStation.java
- jpa.LineStation
 jpa/Favorite.java
  jpa.Favorite
+jpa/Member.java
+ jpa.Member
+jpa/LineRepository.java
+ jpa.LineRepository
+jpa/Application.java
+ jpa.Application
+jpa/LineStation.java
+ jpa.LineStation
+jpa/Station.java
+ jpa.Station
+jpa/FavoriteRepository.java
+ jpa.FavoriteRepository
 jpa/StationRepository.java
  jpa.StationRepository

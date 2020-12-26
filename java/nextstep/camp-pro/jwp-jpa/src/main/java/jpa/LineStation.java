@@ -1,14 +1,11 @@
 package jpa;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class LineStation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LineStation extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "station_id")

@@ -1,7 +1,8 @@
 package jpa;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,14 +10,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Entity
-public class Station {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private LocalDateTime createDate;
-    private LocalDateTime modifiedDate;
-
+public class Station extends BaseEntity {
     @OneToMany(mappedBy = "station")
     private List<LineStation> lines = new ArrayList();
 
@@ -32,10 +26,6 @@ public class Station {
 
     public void add(LineStation line) {
         this.lines.add(line);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

@@ -23,6 +23,9 @@ class StationRepositoryTest {
     @Autowired
     private MemberRepository members;
 
+    @Autowired
+    private FavoriteRepository favorites;
+
     @Test
     void 역을_추가한다() {
         Station expected = new Station("잠실역");
@@ -68,12 +71,11 @@ class StationRepositoryTest {
         즐겨찾기를_추가한다(member, "강남역", "잠실역");
         즐겨찾기를_추가한다(member, "역삼역", "잠실역");
 
-        assertThat(member.findFavorites()).hasSizeGreaterThan(0);
+        assertThat(favorites.findByMemberId(member.getId())).hasSizeGreaterThan(0);
     }
 
-    private Member 즐겨찾기를_추가한다(Member member, String upLine, String downLine) {
-        member.addFavorite(new Favorite(역을_생성한다(upLine), 역을_생성한다(downLine)));
-        return members.save(member);
+    private Favorite 즐겨찾기를_추가한다(Member member, String upLine, String downLine) {
+        return favorites.save(new Favorite(member.getId(), 역을_생성한다(upLine).getId(), 역을_생성한다(downLine).getId()));
     }
 
     private LineStation 노선에_역을_등록한다(Line line, Station station) {
